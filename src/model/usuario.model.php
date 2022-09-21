@@ -30,10 +30,10 @@ where usuario.eliminado=0 order by idUsuario desc" );
 
 
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT idUsuario,idPersona,dni,primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,fecha_nacimiento,sexo,anexo,correo,perfil.nombre as perfil from usuario
-inner join perfil on perfil.idPerfil=usuario.Perfil_id
-inner join persona on persona.idPersona=usuario.Persona_id
- where idUsuario=$idUsuario;" );
+        $stmt = $this->bd->prepare("SELECT idUsuario,idPersona,primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,fecha_nacimiento,sexo,correo,perfil.nombre as perfil from usuario
+        inner join perfil on perfil.idPerfil=usuario.Perfil_id
+        inner join persona on persona.idPersona=usuario.Persona_id
+        where idUsuario=$idUsuario;" );
         
 
         if (!$stmt->execute()) {
@@ -136,7 +136,6 @@ inner join persona on persona.idPersona=usuario.Persona_id
         {       
         	//instanciamos a la clase conexion 
             $this->bd = new Conexion();
-        	
             //preparamos la consulta sql para verificar si el usuario existe en la BD
             $stmt = $this->bd->prepare("SELECT * FROM usuario WHERE login=:Login and eliminado=0");
             $stmt->bindParam(':Login', $usuario->__GET('login'));
@@ -144,16 +143,14 @@ inner join persona on persona.idPersona=usuario.Persona_id
             $stmt->execute();
             //almacenamos los registros obtenidos de la consulta
             $usuario_registrado=$stmt->fetch(PDO::FETCH_ASSOC);
-            
             //verificamos si se han encontrado registros
             if($stmt->rowCount() > 0)
             {
-
                 //si se an encontrado registros comparamos las contraseñas
-                if(strtolower($usuario->__GET('password'))==strtolower($usuario_registrado['password']))
+                if(strtolower($usuario->__GET('password'))==strtolower($usuario_registrado['Password']))
                 {
                     //validamos que el usuario este activo en la BD 
-                    if($usuario_registrado['activo']==1)
+                    if($usuario_registrado['Estado']==1)
 	                {
 	                    //devolvemos los datos del  usuario
 	                    return $usuario_registrado;
@@ -165,6 +162,7 @@ inner join persona on persona.idPersona=usuario.Persona_id
                 }
                 else
                 {
+                    print_r("entro al else");
                     return FALSE;
                 }
             }

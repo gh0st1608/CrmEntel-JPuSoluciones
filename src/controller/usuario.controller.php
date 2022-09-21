@@ -159,6 +159,7 @@ class UsuarioController{
         $usuario->__SET('login',$Login);
         $usuario->__SET('password',$Password);
         //validamos al usuario en el clase modelo del usuario
+        //print_r($usuario);
         $usuario_registrado = $this->model->Validar_Usuario($usuario);
          
          //validamos que el resultado de la validacion sea diferente a FALSE

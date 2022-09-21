@@ -6,15 +6,15 @@ class Usuario
 
     private $idUsuario;
     private $Persona_id;
-    private $login;
-    private $password;
+    private $Login;
     private $Perfil_id;
-    private $fecha_registro;
-    private $ingresado_por;
-    private $modificado_por;
-    private $fecha_modificacion;
-    private $activo;
-    private $eliminado;
+    private $Password;
+    private $Estado;
+    private $Fecha_registro;
+    private $Ingresado_por;
+    private $Modificado_por;
+    private $Fecha_modificacion;
+    private $Eliminado;
 
     public function __GET($atributo){ 
 

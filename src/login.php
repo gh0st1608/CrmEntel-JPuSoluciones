@@ -14,7 +14,9 @@ if($usuario->Verificar_InicioSesion()==TRUE)
   {
     //almacenamos los datos enviados del formulario;
     $Login = $_POST['Usuario'];
-    $Password = $_POST['Password'];    
+    $Password = $_POST['Password'];
+
+        
     //verificar si existe el usuario y la contraseña
     if($usuario->Iniciar_Sesion($Login,$Password))
     {

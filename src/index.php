@@ -15,10 +15,8 @@ if(!$User->Verificar_InicioSesion()){
     ini_set('max_execution_time', -1);
     require_once 'controller/index.controller.php';
     date_default_timezone_set('America/Lima');
-                     
-
-    define( 'RUTA_HTTP', 'http://' . $_SERVER['HTTP_HOST'] . '/CSA-SpartaX' );
-
+    //define( 'RUTA_HTTP', 'http://' . $_SERVER['HTTP_HOST'] . '/CSA-SpartaX' );
+    define( 'RUTA_HTTP', 'http://' . $_SERVER['HTTP_HOST']);
     // Todo esta lógica hara el papel de un FrontController
     if(isset($_REQUEST['c'])=='' || isset($_REQUEST['c'])==''){
 
