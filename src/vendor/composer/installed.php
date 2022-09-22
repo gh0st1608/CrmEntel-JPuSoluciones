@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'michael/src',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'composer/ca-bundle' => array(
+            'pretty_version' => '1.3.3',
+            'version' => '1.3.3.0',
+            'reference' => '30897edbfb15e784fe55587b4f73ceefd3c4d98c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/./ca-bundle',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'michael/src' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'ua-parser/uap-php' => array(
+            'pretty_version' => 'v3.9.14',
+            'version' => '3.9.14.0',
+            'reference' => 'b796c5ea5df588e65aeb4e2c6cce3811dec4fed6',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ua-parser/uap-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
