@@ -1,9 +1,6 @@
 <?php
 require_once 'controller/usuario.controller.php';
-require_once "vendor/autoload.php";
 
-
-use UAParser\Parser;
 $usuario = new UsuarioController();
 $resultado="";
 
@@ -38,23 +35,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
   }  
 }
   
-$nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']); // CAPTURA IP 
  
-
- 
-$agenteDeUsuario = $_SERVER["HTTP_USER_AGENT"];
-$parseador = Parser::create();
-$resultado = $parseador->parse($agenteDeUsuario);
- 
-$dispositivo = $resultado->device->family;
-$familiaSistema = $resultado->os->family; 
-
- 
-print_r( $nombre_host );
-print_r( '---2---' ); 
-print_r( $familiaSistema);
-print_r( '----------------');
-print_r( $dispositivo); 
 
  
 ?>

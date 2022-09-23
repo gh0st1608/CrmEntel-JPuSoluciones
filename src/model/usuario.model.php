@@ -184,14 +184,31 @@ where usuario.eliminado=0 order by idUsuario desc" );
             $stmt = $this->bd->prepare( "CALL procInsertLogSesion(:Login,:Password,:LoggedIn,:IP,:Dispositivo,:NombreDispositivo)"     );
             $stmt->bindParam(':Login', $loginiciosesion->__GET('login'));
             $stmt->bindParam(':Password', $loginiciosesion->__GET('password'));
-            $stmt->bindParam(':LoggedIn', $loginiciosesion->__GET('ip_usuario'));
-            $stmt->bindParam(':IP', $loginiciosesion->__GET('loggedin'));
+            $stmt->bindParam(':LoggedIn', $loginiciosesion->__GET('loggedin'));
+            $stmt->bindParam(':IP', $loginiciosesion->__GET('ip_usuario'));
             $stmt->bindParam(':Dispositivo', $loginiciosesion->__GET('dispositivo'));
             $stmt->bindParam(':NombreDispositivo', $loginiciosesion->__GET('nombredispositivo'));
             //ejecutamos la consulta sql        
             $stmt->execute();
             //almacenamos los registros obtenidos de la consulta
-            $stmt->fetch(PDO::FETCH_ASSOC);
+            $login_registro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            //verificamos si se han encontrado registros
+            //si se an encontrado registros comparamos las contraseñas
+           
+            //validamos que el usuario este activo en la BD 
+           // print_r($login_registro['Estado']);
+            if( $login_registro['Estado']==1)
+            {
+                //devolvemos los datos del  usuario
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }	
+        
+ 
             
         }
         catch(PDOException $e)
