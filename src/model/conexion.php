@@ -3,7 +3,7 @@
    private $tipo_de_base = 'mysql';
    private $host = 'db';
    private $nombre_de_base = 'myDb';
-   private $usuario = 'root';
+   private $usuario = 'user';
    //private $contrasena = ''; 
    private $contrasena = 'passlocalhost123';
    public function __construct() {

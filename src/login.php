@@ -1,8 +1,12 @@
 <?php
 require_once 'controller/usuario.controller.php';
+
 $usuario = new UsuarioController();
 $resultado="";
 
+
+
+ 
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {
@@ -21,7 +25,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     if($usuario->Iniciar_Sesion($Login,$Password))
     {
       //si existe redireccionar al index.php
-      $usuario->redirect('index.php');
+      $usuario->redirect('index.php');  
     }
     else
     { 
@@ -30,6 +34,10 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     } 
   }  
 }
+  
+ 
+
+ 
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,6 +82,34 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
+          <div class="row" >
+            <div class="col-md-12">
+            <p class="openBtn2"><a href="#">Recuperar Contraseña</a></p>
+            </div>
+          </div>
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            <!-- Modal contenido-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Recuperar Contraseña</h4>
+                </div>
+                <div class="modal-body">
+                <div class="form-group has-feedback">
+                  <input type="input" class="form-control" name="Correo" placeholder="Ingresar Correo">
+                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                  <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar Sesión</b></button>
@@ -89,5 +125,13 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     <!-- Bootstrap 3.3.5 -->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
    
+    <script>
+        /* Llamando al fichero CargarContenido.php */
+        $('.openBtn2').on('click',function(){
+            $('.modal-body').load('RecuperarContraseña.php',function(){
+                $('#myModal').modal({show:true});
+            });
+        });
+    </script>
   </body>
 </html>
