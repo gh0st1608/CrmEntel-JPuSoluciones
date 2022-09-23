@@ -1,6 +1,10 @@
 <?php
 require_once 'model/usuario.model.php';
 require_once 'entity/usuario.entity.php';
+require_once 'entity/logsesion.entity.php';
+require_once "vendor/autoload.php";
+ 
+use UAParser\Parser;
 //ini_set("session.cookie_lifetime","216000");
 //ini_set("session.gc_maxlifetime","216000");
 session_start();
@@ -152,7 +156,29 @@ class UsuarioController{
      /**============================Login===========================================*/  
 
     public function Iniciar_Sesion($Login,$Password)
-    {        
+    {   
+        // log inicio session
+        $loginiciosesion = new LogSesion();
+        //asignamos valores a las variables de la entidad
+        $loginiciosesion->__SET('login',$Login);
+        $loginiciosesion->__SET('password',$Password);
+ 
+        $ip_usuario = gethostbyaddr($_SERVER['REMOTE_ADDR']); // CAPTURA IP 
+ 
+        $agenteDeUsuario = $_SERVER["HTTP_USER_AGENT"];
+        $parseador = Parser::create();
+        $resultado = $parseador->parse($agenteDeUsuario); 
+        
+        $nombredispositivo = $resultado->device->family; // captura 
+        $dispositivo = $resultado->os->family; 
+
+        $loginiciosesion->__SET('ip_usuario',$ip_usuario);
+        $loginiciosesion->__SET('dispositivo',$dispositivo);
+        $loginiciosesion->__SET('nombredispositivo',$nombredispositivo); 
+    /*  ----------------------------------- */
+      
+ 
+
         //instanciamos ala entidad usuario.
         $usuario = new Usuario();
         //asignamos valores a las variables de la entidad
@@ -161,19 +187,42 @@ class UsuarioController{
         //validamos al usuario en el clase modelo del usuario
         //print_r($usuario);
         $usuario_registrado = $this->model->Validar_Usuario($usuario);
-         
          //validamos que el resultado de la validacion sea diferente a FALSE
         if(!$usuario_registrado==FALSE){
-            //creamos variables de session del idUsuario y el perfil
-            $_SESSION['Usuario_Actual'] = $usuario_registrado['idUsuario'];
-            $_SESSION['Tipo_sistema'] = 'Prejudicial';
-            $_SESSION['Perfil_Actual'] = $usuario_registrado['Perfil_id'];
-            $_SESSION['Persona_Actual'] = $usuario_registrado['Persona_id'];
-            //confirmamos que el usuario y la contraseña son correctas
-            return TRUE;
+          
+
+            $LoggedIn = "Si";
+            $loginiciosesion->__SET('loggedin',$LoggedIn); 
+            $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion); 
+ 
+         
+            if(!$log_inicio_session==FALSE){
+                //creamos variables de session del idUsuario y el perfil
+                $_SESSION['Usuario_Actual'] = $usuario_registrado['idUsuario'];
+                $_SESSION['Tipo_sistema'] = 'Prejudicial';
+                $_SESSION['Perfil_Actual'] = $usuario_registrado['Perfil_id'];
+                $_SESSION['Persona_Actual'] = $usuario_registrado['Persona_id'];
+                $_SESSION['Login'] = $log_inicio_session['Login'];
+                $_SESSION['IP'] = $log_inicio_session['IP'];
+                $_SESSION['Dispositivo'] = $log_inicio_session['Dispositivo'];
+                $_SESSION['NombreDispositivo'] = $log_inicio_session['NombreDispositivo'];
+                //confirmamos que el usuario y la contraseña son correctas
+                
+                return TRUE;
+                
+            }  
+            else  
+            {
+                return FALSE;
+            } 
         }else{
+            $LoggedIn = "No";
+            $loginiciosesion->__SET('loggedin',$LoggedIn); 
+            $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion);    
+ 
              //confirmamos que el usuario y la contraseña son incorrectas
              return FALSE;
+             
         }
                                
     }
@@ -198,8 +247,16 @@ class UsuarioController{
     }    
   
     public function CerrarSesion(){
+
+        
+        $this->model->CierreSesion();      
         session_destroy();
-        unset($_SESSION['Usuario_Actual']);     
+        unset($_SESSION['Usuario_Actual']); 
+        unset($_SESSION['Login'] ) ;
+        unset($_SESSION['IP'] ) ;
+        unset($_SESSION['Dispositivo'])  ;
+        unset($_SESSION['NombreDispositivo'] );
+        
         header('Location: login.php');           
        
     }

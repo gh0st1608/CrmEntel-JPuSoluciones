@@ -172,6 +172,84 @@ where usuario.eliminado=0 order by idUsuario desc" );
             echo $e->getMessage();
         }
     }
+    
 
-  
+    public function AddLogInicioSession(LogSesion $loginiciosesion)
+    {
+        try
+        {       
+        	//instanciamos a la clase conexion 
+            $this->bd = new Conexion();
+            //preparamos la consulta sql para verificar si el usuario existe en la BD
+            $stmt = $this->bd->prepare( "CALL procInsertLogSesion(:Login,:Password,:LoggedIn,:IP,:Dispositivo,:NombreDispositivo)"     );
+            $stmt->bindParam(':Login', $loginiciosesion->__GET('login'));
+            $stmt->bindParam(':Password', $loginiciosesion->__GET('password'));
+            $stmt->bindParam(':LoggedIn', $loginiciosesion->__GET('loggedin'));
+            $stmt->bindParam(':IP', $loginiciosesion->__GET('ip_usuario'));
+            $stmt->bindParam(':Dispositivo', $loginiciosesion->__GET('dispositivo'));
+            $stmt->bindParam(':NombreDispositivo', $loginiciosesion->__GET('nombredispositivo'));
+            //ejecutamos la consulta sql        
+            $stmt->execute();
+            //almacenamos los registros obtenidos de la consulta
+            $login_registro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            //verificamos si se han encontrado registros
+            //si se an encontrado registros comparamos las contraseñas
+           
+            //validamos que el usuario este activo en la BD 
+           // print_r($login_registro['Estado']);
+            if( $login_registro['Estado']==1)
+            {
+                
+                return $login_registro;
+            }
+            else
+            {
+                return FALSE;
+            }	
+        
+ 
+            
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+
+    public function CierreSesion()
+    {
+        try
+        {       
+           
+            $Login =  $_SESSION['Login']  ;
+            $ip_usuario =  $_SESSION['IP']  ;
+            $dispositivo = $_SESSION['Dispositivo']  ;
+            $NombreDispositivo = $_SESSION['NombreDispositivo'] ;
+
+
+            //instanciamos a la clase conexion 
+            $this->bd = new Conexion();
+            //preparamos la consulta sql para verificar si el usuario existe en la BD
+            $stmt = $this->bd->prepare( "CALL ProcUpdateLogSesion(:Login,'','',:IP,:Dispositivo,:NombreDispositivo)"     );
+            $stmt->bindParam(':Login', $Login);
+            $stmt->bindParam(':IP', $ip_usuario);
+            $stmt->bindParam(':Dispositivo', $dispositivo);
+            $stmt->bindParam(':NombreDispositivo', $NombreDispositivo);
+            //ejecutamos la consulta sql        
+            $stmt->execute();
+        
+ 
+            
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+
+
+ 
+
+
 }
