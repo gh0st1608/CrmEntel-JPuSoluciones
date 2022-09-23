@@ -25,7 +25,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     if($usuario->Iniciar_Sesion($Login,$Password))
     {
       //si existe redireccionar al index.php
-      $usuario->redirect('index.php');
+      $usuario->redirect('index.php');  
     }
     else
     { 

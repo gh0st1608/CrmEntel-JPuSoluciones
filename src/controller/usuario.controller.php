@@ -194,14 +194,18 @@ class UsuarioController{
             $LoggedIn = "Si";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
             $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion); 
-
-            print_r($log_inicio_session);
+ 
+         
             if(!$log_inicio_session==FALSE){
                 //creamos variables de session del idUsuario y el perfil
                 $_SESSION['Usuario_Actual'] = $usuario_registrado['idUsuario'];
                 $_SESSION['Tipo_sistema'] = 'Prejudicial';
                 $_SESSION['Perfil_Actual'] = $usuario_registrado['Perfil_id'];
                 $_SESSION['Persona_Actual'] = $usuario_registrado['Persona_id'];
+                $_SESSION['Login'] = $log_inicio_session['Login'];
+                $_SESSION['IP'] = $log_inicio_session['IP'];
+                $_SESSION['Dispositivo'] = $log_inicio_session['Dispositivo'];
+                $_SESSION['NombreDispositivo'] = $log_inicio_session['NombreDispositivo'];
                 //confirmamos que el usuario y la contraseña son correctas
                 
                 return TRUE;
@@ -243,9 +247,16 @@ class UsuarioController{
     }    
   
     public function CerrarSesion(){
-            
+
+        
+        $this->model->CierreSesion();      
         session_destroy();
-        unset($_SESSION['Usuario_Actual']);     
+        unset($_SESSION['Usuario_Actual']); 
+        unset($_SESSION['Login'] ) ;
+        unset($_SESSION['IP'] ) ;
+        unset($_SESSION['Dispositivo'])  ;
+        unset($_SESSION['NombreDispositivo'] );
+        
         header('Location: login.php');           
        
     }

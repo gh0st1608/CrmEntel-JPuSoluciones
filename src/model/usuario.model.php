@@ -200,8 +200,8 @@ where usuario.eliminado=0 order by idUsuario desc" );
            // print_r($login_registro['Estado']);
             if( $login_registro['Estado']==1)
             {
-                //devolvemos los datos del  usuario
-                return TRUE;
+                
+                return $login_registro;
             }
             else
             {
@@ -217,5 +217,39 @@ where usuario.eliminado=0 order by idUsuario desc" );
         }
     }
 
-  
+    public function CierreSesion()
+    {
+        try
+        {       
+           
+            $Login =  $_SESSION['Login']  ;
+            $ip_usuario =  $_SESSION['IP']  ;
+            $dispositivo = $_SESSION['Dispositivo']  ;
+            $NombreDispositivo = $_SESSION['NombreDispositivo'] ;
+
+
+            //instanciamos a la clase conexion 
+            $this->bd = new Conexion();
+            //preparamos la consulta sql para verificar si el usuario existe en la BD
+            $stmt = $this->bd->prepare( "CALL ProcUpdateLogSesion(:Login,'','',:IP,:Dispositivo,:NombreDispositivo)"     );
+            $stmt->bindParam(':Login', $Login);
+            $stmt->bindParam(':IP', $ip_usuario);
+            $stmt->bindParam(':Dispositivo', $dispositivo);
+            $stmt->bindParam(':NombreDispositivo', $NombreDispositivo);
+            //ejecutamos la consulta sql        
+            $stmt->execute();
+        
+ 
+            
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+
+
+ 
+
+
 }
