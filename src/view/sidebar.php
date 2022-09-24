@@ -52,6 +52,8 @@
         <ul class="treeview-menu">                
           <li>
             <li><a href="index.php?c=Persona"><i class="fa fa-circle-o" aria-hidden="true"></i> Persona</a></li>
+            <li><a href="index.php?c=Categoria"><i class="fa fa-circle-o" aria-hidden="true"></i> Categoria</a></li>
+            <li><a href="index.php?c=SubCategoria"><i class="fa fa-circle-o" aria-hidden="true"></i> SubCategoria</a></li>
           </li>
         </ul>
       </li>

@@ -12,6 +12,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `myDb`
@@ -118,112 +122,6 @@ CREATE TABLE `categoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-CREATE TABLE `ficha_venta` (
-  `idFicha_Venta` int(11) NOT NULL AUTO_INCREMENT,
-  `DE_Telf_Llamada_Venta` char(9) DEFAULT NULL,
-  `DE_Base_Llamada` int(11) NOT NULL DEFAULT '0',
-  `DE_Campana_Netcall` int(11) NOT NULL DEFAULT '0',
-  `DE_Sub_Campana` int(11) NOT NULL DEFAULT '0',
-  `DE_Detalle_Sub_Campana` int(11) NOT NULL DEFAULT '0',
-  `DE_CF_Max_Linea_Movil` int(11) NOT NULL DEFAULT '0',
-  `DE_Tipo_Etiqueta` int(11) NOT NULL DEFAULT '0',
-  `DE_CF_Max_Linea_Pack` float DEFAULT NULL,
-  `DE_Monto_Disp_Finan_Equipos` float DEFAULT NULL,
-  `DE_Cant_Meses_Finan_Equipos` int(11) NOT NULL DEFAULT '0',
-  `DE_Cliente_Entel` int(11) NOT NULL DEFAULT '0',
-  `DE_Cliente_Promo_Dscto` int(11) NOT NULL DEFAULT '0',
-  `Cliente_id` int(11) NOT NULL,
-  `DF_Email_Facturacion_Otros` varchar(45) DEFAULT NULL,
-  `DF_Ubigeo_Facturacion` int(11) NOT NULL DEFAULT '0',
-  `DF_Domicilio_Facturacion` varchar(255) DEFAULT NULL,
-  `RE_Tipo_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Rango_Entrega_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Rango_Horario_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Tienda_Retiro` int(11) NOT NULL DEFAULT '0',
-  `RE_Retail_Retiro` int(11) NOT NULL DEFAULT '0',
-  `RE_Fecha_Entrega` date DEFAULT NULL,
-  `RE_Venta_Entrega_para` int(11) NOT NULL DEFAULT '0',
-  `RE_Venta_Destino_para` int(11) NOT NULL DEFAULT '0',
-  `RE_Ubigeo_Entrega` int(11) NOT NULL DEFAULT '0',
-  `RE_Tipo_Direccion_Entrega` int(11) NOT NULL DEFAULT '0',
-  `RE_Direccion_Entrega` varchar(255) DEFAULT NULL,
-  `RE_Referencia_Principales` varchar(255) DEFAULT NULL,
-  `RE_Referencias_Adicionales` varchar(255) DEFAULT NULL,
-  `RE_Coordenadas_Direccion_Entrega` varchar(255) DEFAULT NULL,
-  `RE_Telefono_Contacto1` char(11) DEFAULT NULL,
-  `RE_Telefono_Contacto2` char(11) DEFAULT NULL,
-  `RE_Tipo_Contacto_Ol` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Ofrecimiento` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Venta` int(11) NOT NULL DEFAULT '0',
-  `RV_Operador_Cedente` int(11) NOT NULL DEFAULT '0',
-  `RV_Origen` int(11) NOT NULL DEFAULT '0',
-  `RV_Linea_Portar` char(9) DEFAULT NULL,
-  `RV_Plan_Tarifario` int(11) NOT NULL DEFAULT '0',
-  `RV_Cargo_Fijo_Plan` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Producto` int(11) NOT NULL DEFAULT '0',
-  `RV_Accesorio_Regalo` int(11) NOT NULL DEFAULT '0',
-  `RV_SKU_Accesorio_Regalo1` varchar(45) DEFAULT NULL,
-  `RV_SKU_Accesorio_Regalo2` varchar(45) DEFAULT NULL,
-  `RV_SKU_Pack` varchar(45) DEFAULT NULL,
-  `RV_Precio_Equipo_Inicial_Total` float DEFAULT NULL,
-  `RV_Cuota_Equipo_Mensual` float DEFAULT NULL,
-  `RV_Cant_Accesorios` int(11) NOT NULL DEFAULT '0',
-  `RV_SKU_Accesorio1` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio1` float DEFAULT NULL,
-  `RV_SKU_Accesorio2` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio2` float DEFAULT NULL,
-  `RV_SKU_Accesorio3` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio3` float DEFAULT NULL,
-  `RV_SKU_Accesorio4` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio4` float DEFAULT NULL,
-  `RV_SKU_Accesorio5` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio5` float DEFAULT NULL,
-  `RV_Tipo_Pago` int(11) NOT NULL DEFAULT '0',
-  `RV_Promociones_Bancos` int(11) NOT NULL DEFAULT '0',
-  `Supervisor_Vendedor` int(11) NOT NULL DEFAULT '0',
-  `Comentarios_Vendedor` text NOT NULL,
-  `Ingresado_por_Vendedor` int(11) NOT NULL,
-  `Fecha_Registro_Vendedor` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `VBO_Estado_Venta_BO` int(11) NOT NULL DEFAULT '0',
-  `VBO_Sub_Estado_Venta_BO` int(11) NOT NULL DEFAULT '0',
-  `RBO_Cantidad_Ordenes_Ficha` int(11) DEFAULT NULL,
-  `RBO_Orden_One_Click1` varchar(45) DEFAULT NULL,
-  `RBO_Orden_One_Click2` varchar(45) DEFAULT NULL,
-  `RBO_Orden_One_Click3` varchar(45) DEFAULT NULL,
-  `FBO_Ficha_Limpia` int(11) NOT NULL DEFAULT '0',
-  `FBO_Errores_Comunes_Ficha` int(11) NOT NULL DEFAULT '0',
-  `DGBO_Tipo_Atencion_Final` int(11) NOT NULL DEFAULT '0',
-  `DGBO_BO_Validador_Gestor` int(11) NOT NULL DEFAULT '0',
-  `DGBO_BO_Recupero_Repro_Gestor` int(11) NOT NULL DEFAULT '0',
-  `Comentarios_BackOffice` text,
-  `Modificado_por_BackOffice` int(11) NOT NULL DEFAULT '0',
-  `Fecha_Modificacion_BackOffice` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idFicha_Venta`),
-  KEY `Cliente_id` (`Cliente_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE `cliente` (
-  `idCliente` int(11) NOT NULL AUTO_INCREMENT,
-  `TipoDocumento` char(4) NOT NULL,
-  `Documento` char(11) NOT NULL,
-  `Nombre_Cliente` varchar(45) NOT NULL,
-  `Apellido_Paterno` varchar(45) NOT NULL,
-  `Apellido_Materno` varchar(45) NOT NULL,
-  `Nacionalidad` varchar(45) DEFAULT NULL,
-  `Lugar_Nacimiento` varchar(45) DEFAULT NULL,
-  `Fecha_Nacimiento` date DEFAULT NULL,
-  `Nombre_Padre` varchar(45) DEFAULT NULL,
-  `Nombre_Madre` varchar(45) DEFAULT NULL,
-  `Estado` tinyint(1) DEFAULT '1',
-  `Ingresado_por` int(11) NOT NULL DEFAULT '0',
-  `Fecha_Registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`idCliente`),
-  UNIQUE KEY `Documento` (`Documento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 --
 -- Estructura de tabla para la tabla `EstadoKanBan`
@@ -416,18 +314,14 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 --
 
 CREATE TABLE `subcategoria` (
-  `idSubCategoria` int(11) NOT NULL AUTO_INCREMENT,
+  `idSubCategoria` int(11) NOT NULL,
   `Categoria_id` int(11) DEFAULT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
-  `Aplicar_Logica` tinyint(3) DEFAULT '0',
-  `Logica_Json` text,
   `Estado` tinyint(1) DEFAULT '1',
   `Ingresado_por` int(11) NOT NULL DEFAULT '0',
   `Fecha_Registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`idSubCategoria`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+  `Eliminado` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -512,6 +406,12 @@ ALTER TABLE `persona`
   ADD UNIQUE KEY `dni` (`Documento`);
 
 --
+-- Indices de la tabla `subcategoria`
+--
+ALTER TABLE `subcategoria`
+  ADD PRIMARY KEY (`idSubCategoria`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -558,6 +458,11 @@ ALTER TABLE `permiso`
 ALTER TABLE `persona`
   MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
+--
+-- AUTO_INCREMENT de la tabla `subcategoria`
+--
+ALTER TABLE `subcategoria`
+  MODIFY `idSubCategoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
