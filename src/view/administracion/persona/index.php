@@ -36,14 +36,14 @@
 	                    <tbody>
 	                    	<?php foreach ($personas as $persona): ?>
 	                    	<tr>
-	                    		<td><?php echo $persona['idPersona']; ?></td>
-	                    		<td><?php echo $persona['codigo']; ?></td>
-	                    		<td><?php echo $persona['apellido_paterno'].' '.$persona['apellido_materno'].' '.$persona['primer_nombre'].' '.$persona['segundo_nombre']; ?></td>
-	                    		<td><?php echo $persona['celular']; ?></td>
-	                    		<td><?php echo $persona['correo']; ?></td>
-	                    		<td><?php echo $persona['anexo']; ?></td>
-	                    		<td><?php echo $persona['tipo_horario']; ?></td>
-	                    		<?php if ($persona['activo']==1): ?>
+	                    		<td><?php echo  $persona['idPersona']; ?></td>
+	                    		<td><?php echo $persona['Documento']; ?></td>
+	                    		<td><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></td>
+	                    		<td><?php echo $persona['Celular']; ?></td>
+	                    		<td><?php echo $persona['Correo']; ?></td>
+	                    		<td><?php echo '---';//echo $persona['anexo']; ?></td>
+	                    		<td><?php echo '---';//echo $persona['tipo_horario']; ?></td>
+	                    		<?php if ($persona['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
@@ -53,7 +53,7 @@
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
                                		<?php if ($_SESSION['Perfil_Actual']==1): ?>
-                               		<a class="btn btn-danger btn-xs EliminarPersona" data-id="<?php echo $persona['idPersona']; ?>" data-persona="<?php echo $persona['apellido_paterno'].' '.$persona['apellido_materno'].' '.$persona['primer_nombre'].' '.$persona['segundo_nombre']; ?>">
+                               		<a class="btn btn-danger btn-xs EliminarPersona" data-id="<?php echo $persona['idPersona']; ?>" data-persona="<?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>
                                		<?php endif; ?>

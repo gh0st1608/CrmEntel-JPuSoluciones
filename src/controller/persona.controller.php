@@ -141,13 +141,13 @@ class PersonaController{
     }
 
     public function Eliminar(){
-        $origen = new Origen();
-        $origen->__SET('idOrigen',$_REQUEST['idOrigen']);      
-        $origen->__SET('modificado_por',$_SESSION['Usuario_Actual']);
-        $origen->__SET('eliminado',1); 
-        $eliminar_origen = $this->model->Eliminar($origen);  
+        $persona = new Persona();
+        $persona->__SET('idPersona',$_REQUEST['idPersona']);      
+        $persona->__SET('modificado_por',$_SESSION['Usuario_Actual']);
+        $persona->__SET('eliminado',1); 
+        $eliminar_persona = $this->model->Eliminar($persona);  
          
-        if($eliminar_origen=='error'){
+        if($eliminar_persona=='error'){
             echo 'No se Ha Podido Eliminar el Origen';
             header('Location: index.php?c=Cartera');            
         }else{

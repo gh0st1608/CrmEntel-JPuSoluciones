@@ -25,12 +25,12 @@ class CategoriaModel
     public function Consultar(Categoria $categoria)
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM contacto WHERE idCategoria = :idCategoria;");
-        $stmt->bindParam(':idCategoria', $contacto->__GET('idCategoria'));
+        $stmt = $this->bd->prepare("SELECT * FROM categoria WHERE idCategoria = :idCategoria;");
+        $stmt->bindParam(':idCategoria', $categoria->__GET('idCategoria'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
-        $objCategoria = new Contacto();     
+        $objCategoria = new Categoria();     
         $objCategoria->__SET('idCategoria',$row->idCategoria);
         $objCategoria->__SET('Nombre',$row->Nombre);
         $objCategoria->__SET('Estado',$row->Estado); 
@@ -81,7 +81,7 @@ class CategoriaModel
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE categoria SET  Eliminado=:Eliminado WHERE idCategoria = :idCategoria");
+        $stmt = $this->bd->prepare("UPDATE categoria SET  Ingresado_por=:Ingresado_por,Eliminado=:Eliminado WHERE idCategoria = :idCategoria");
 
         $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));         
         $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por'));

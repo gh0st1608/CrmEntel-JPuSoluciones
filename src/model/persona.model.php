@@ -188,15 +188,15 @@ where persona.eliminado=0 and idUsuario is NULL" );
         }
     }
 
-    public function Eliminar(Origen $origen)
+    public function Eliminar(Persona $persona)
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE origen SET  modificado_por=:modificado_por,eliminado=:eliminado WHERE idOrigen = :idOrigen");
+        $stmt = $this->bd->prepare("UPDATE origen SET  modificado_por=:modificado_por,eliminado=:eliminado WHERE idPersona = :idPersona");
 
-        $stmt->bindParam(':idOrigen',$origen->__GET('idOrigen'));         
-        $stmt->bindParam(':modificado_por',$origen->__GET('modificado_por'));
-        $stmt->bindParam(':eliminado',$origen->__GET('eliminado'));    
+        $stmt->bindParam(':idPersona',$persona->__GET('idPersona'));         
+        $stmt->bindParam(':modificado_por',$persona->__GET('modificado_por'));
+        $stmt->bindParam(':eliminado',$persona->__GET('eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
