@@ -6,7 +6,7 @@ $resultado="";
 
 
 
- 
+
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {

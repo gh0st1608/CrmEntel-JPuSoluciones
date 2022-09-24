@@ -133,7 +133,7 @@ where usuario.eliminado=0 order by idUsuario desc" );
 	public function Validar_Usuario(Usuario $usuario)
     {
         try
-        {       
+        {   $_SESSION['Estado_usuario'] = 1;
         	//instanciamos a la clase conexion 
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
