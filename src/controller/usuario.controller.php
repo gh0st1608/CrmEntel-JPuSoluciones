@@ -188,13 +188,14 @@ class UsuarioController{
         //print_r($usuario);
         $usuario_registrado = $this->model->Validar_Usuario($usuario);
          //validamos que el resultado de la validacion sea diferente a FALSE
-        if(!$usuario_registrado==FALSE){
+     
+        if(!$usuario_registrado==FALSE ){
           
 
             $LoggedIn = "Si";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
             $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion); 
- 
+            
          
             if(!$log_inicio_session==FALSE){
                 //creamos variables de session del idUsuario y el perfil
@@ -215,16 +216,19 @@ class UsuarioController{
             {
                 return FALSE;
             } 
-        }else{
+        }else 
+        {   
             $LoggedIn = "No";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
             $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion);    
  
-             //confirmamos que el usuario y la contraseña son incorrectas
-             return FALSE;
-             
-        }
-                               
+            //Usuario o Contraseña Incorrecta
+ 
+            return FALSE;
+ 
+        } 
+        
+                   
     }
 
     public function Verificar_InicioSesion()

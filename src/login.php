@@ -20,23 +20,28 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     $Login = $_POST['Usuario'];
     $Password = $_POST['Password'];
 
-        
+    $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password);
     //verificar si existe el usuario y la contraseña
-    if($usuario->Iniciar_Sesion($Login,$Password))
-    {
+ 
+    if ($_SESSION['Estado_usuario'] == 1 )
+    { 
+  
       //si existe redireccionar al index.php
       $usuario->redirect('index.php');  
-    }
-    else
-    { 
-      //si no existe mostrar el siguiente mensaje   
-     $resultado = "Usuario o Contraseña Incorrecta";
     } 
+    elseif($_SESSION['Estado_usuario'] == 2)
+    {
+      
+       //si no existe mostrar el siguiente mensaje   
+       $resultado = "Usuario Blqueado";
+    }
+    else{
+      $resultado = "Usuario o Contraseña Incorrecta";
+    }
   }  
 }
-  
+   
  
-
  
 ?>
 <!DOCTYPE html>
@@ -82,6 +87,8 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
+        <?php if ($_SESSION['intentoSesion'] == 3  ) { 
+                $_SESSION['intentoSesion'] = 0           ?>
           <div class="row" >
             <div class="col-md-12">
             <p class="openBtn2"><a href="#">Recuperar Contraseña</a></p>
@@ -110,6 +117,8 @@ if($usuario->Verificar_InicioSesion()==TRUE)
             </div>
             </div>
           </div>
+          <?php }  ?>
+
           <div class="row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar Sesión</b></button>

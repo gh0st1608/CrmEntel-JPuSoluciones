@@ -150,22 +150,41 @@ where usuario.eliminado=0 order by idUsuario desc" );
                 if(strtolower($usuario->__GET('password'))==strtolower($usuario_registrado['Password']))
                 {
                     //validamos que el usuario este activo en la BD 
-                    if($usuario_registrado['Estado']==1)
-	                {
+                    if($usuario_registrado['Estado'] == 1 )
+	                {   
+                        $_SESSION['Estado_usuario'] = 1;
 	                    //devolvemos los datos del  usuario
 	                    return $usuario_registrado;
 	                }
+                    elseif ($usuario_registrado['Estado'] == 2 ) {
+                        $_SESSION['Estado_usuario'] = 2;
+                        return FALSE;
+   
+                    }       
 	                else
-	                {
+	                {   
+                        $_SESSION['Estado_usuario'] = 3;
 	                    return FALSE;
+   
                 	}	
                 }
                 else
                 {
-                    print_r("entro al else");
+                    $_SESSION['Estado_usuario'] = 3;
+                     // contador
+                    if (is_null($_SESSION['intentoSesion']) || $_SESSION['intentoSesion'] == 0  ){
+                        $_SESSION['intentoSesion']  = 1 ;
+
+                    }
+                    else{
+                        $_SESSION['intentoSesion'] = $_SESSION['intentoSesion'] + 1 ;
+                    }
+                    $intentoSesion= $_SESSION['intentoSesion'];
+ 
                     return FALSE;
                 }
             }
+            
         }
         catch(PDOException $e)
         {
@@ -204,7 +223,8 @@ where usuario.eliminado=0 order by idUsuario desc" );
                 return $login_registro;
             }
             else
-            {
+            {   
+                $_SESSION['EstadoUsuario'] = 'Usuario bloqueado';
                 return FALSE;
             }	
         
