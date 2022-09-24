@@ -62,9 +62,9 @@ class CategoriaModel
   
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO categoria(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
-        $stmt->bindValue(':Nombre', $contacto->__GET('Nombre'),PDO::PARAM_STR);
-        $stmt->bindValue(':Estado', $contacto->__GET('Estado'),PDO::PARAM_STR);
-        $stmt->bindValue(':Ingresado_por', $contacto->__GET('Ingresado_por'),PDO::PARAM_INT);     
+        $stmt->bindValue(':Nombre', $categoria->__GET('Nombre'),PDO::PARAM_STR);
+        $stmt->bindValue(':Estado', $categoria->__GET('Estado'),PDO::PARAM_STR);
+        $stmt->bindValue(':Ingresado_por', $categoria->__GET('Ingresado_por'),PDO::PARAM_INT);     
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
@@ -83,9 +83,9 @@ class CategoriaModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE categoria SET  Eliminado=:Eliminado WHERE idCategoria = :idCategoria");
 
-        $stmt->bindParam(':idCategoria',$contacto->__GET('idCategoria'));         
-        $stmt->bindParam(':Ingresado_por',$contacto->__GET('Ingresado_por'));
-        $stmt->bindParam(':Eliminado',$contacto->__GET('Eliminado'));    
+        $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));         
+        $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por'));
+        $stmt->bindParam(':Eliminado',$categoria->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

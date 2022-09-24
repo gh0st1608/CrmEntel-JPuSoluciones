@@ -63,7 +63,7 @@ class CategoriaController{
 
     public function Registrar(){
         
-        $categoria = new Contacto();
+        $categoria = new Categoria();
         $categoria->__SET('Nombre',$_REQUEST['Nombre']);
         $categoria->__SET('Estado',$_REQUEST['Estado']);
         $categoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);     
@@ -72,9 +72,9 @@ class CategoriaController{
          
         if($registrar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Registrar');
-            echo 'No se Ha Podido Registrar';
+           // echo 'No se Ha Podido Registrar';
          }else{
-            echo 'Registrado Correctamente';
+           // echo 'Registrado Correctamente';
             header('Location: index.php?c=Categoria');
          }
     }
