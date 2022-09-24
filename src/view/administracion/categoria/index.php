@@ -25,6 +25,7 @@
 		                    	<th>ID</th>                    
 			                    <th style="vertical-align: middle;">Nombre</th>
 								<th style="vertical-align: middle;">Estado</th>
+								<th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>
 	                    </thead>
 	                    <tbody>
@@ -32,7 +33,11 @@
 	                    	<tr>
 	                    		<td><?php echo $categoria['idCategoria']; ?></td>
 	                    		<td><?php echo $categoria['Nombre']; ?></td>
-								<td><?php echo $categoria['Estado']; ?></td>
+								<?php if ($categoria['Estado']==0):?>
+                                <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
+                                <?php else: ?>
+                                <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
+                                <?php endif ?>
 								<td class="a_center">                            		
                             		<a href="?c=Categoria&a=v_Actualizar&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   

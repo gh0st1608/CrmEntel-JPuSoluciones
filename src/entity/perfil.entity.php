@@ -5,13 +5,13 @@ class Perfil
 
 
     private $idPerfil;
-    private $nombre;
-    private $fecha_registro;
-    private $ingresado_por;
-    private $modificado_por;
-    private $fecha_modificacion;
-    private $activo;
-    private $eliminado;
+    private $Nombre;
+    private $Estado;
+    private $Ingresado_por;
+    private $Fecha_registro;
+    private $Modificado_por;
+    private $Fecha_Modificacion;
+    private $Eliminado;
 
     public function __GET($atributo){ 
 

@@ -48,14 +48,14 @@ class PerfilController{
     public function Actualizar(){
         $perfil = new Perfil();
         $perfil->__SET('idPerfil',$_REQUEST['idPerfil']);
-        $perfil->__SET('nombre',$_REQUEST['nombre']);   
-        $perfil->__SET('modificado_por',$_SESSION['Usuario_Actual']);
-        $perfil->__SET('activo',$_REQUEST['activo']);       
+        $perfil->__SET('Nombre',$_REQUEST['Nombre']);   
+        $perfil->__SET('Modificado_por',$_SESSION['Usuario_Actual']);
+        $perfil->__SET('Estado',$_REQUEST['Estado']);       
         $actualizar_perfil = $this->model->Actualizar($perfil);  
          
         if($actualizar_perfil=='error'){
-            header('Location: index.php?c=Perfil&a=v_Actualizar&idUsuario='. $perfil->__GET('idPerfil'));
-            echo 'No se Ha Podido Actualizar el Usuario';
+            header('Location: index.php?c=Perfil&a=v_Actualizar&idPerfil='. $perfil->__GET('idPerfil'));
+            echo 'No se Ha Podido Actualizar el Perfil';
          }else{
             echo 'Usuario Actualizado Correctamente';
             header('Location: index.php?c=Perfil');
@@ -64,8 +64,9 @@ class PerfilController{
 
     public function Registrar(){
         $perfil = new Perfil(); 
-        $perfil->__SET('nombre',$_REQUEST['nombre']);         
-        $perfil->__SET('ingresado_por',$_SESSION['Usuario_Actual']);
+        $perfil->__SET('Nombre',$_REQUEST['Nombre']);
+        $perfil->__SET('Nombre',$_REQUEST['Nombre']);           
+        $perfil->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_perfil = $this->model->Registrar($perfil);  
          
         if($registrar_perfil=='error'){
@@ -80,8 +81,8 @@ class PerfilController{
     public function Eliminar(){
         $perfil = new Perfil();
         $perfil->__SET('idPerfil',$_REQUEST['idPerfil']);      
-        $perfil->__SET('modificado_por',$_SESSION['Usuario_Actual']);
-        $perfil->__SET('eliminado',1); 
+        $perfil->__SET('Modificado_por',$_SESSION['Usuario_Actual']);
+        $perfil->__SET('Eliminado',1); 
         $eliminar_perfil = $this->model->eliminar($perfil);  
          
         if($eliminar_perfil=='error'){

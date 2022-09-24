@@ -26,11 +26,11 @@ class SubCategoriaModel
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM subcategoria WHERE idSubCategoria = :idSubCategoria;");
-        $stmt->bindParam(':idSubCategoria', $contacto->__GET('idSubCategoria'));
+        $stmt->bindParam(':idSubCategoria', $subcategoria->__GET('idSubCategoria'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
-        $objSubCategoria = new Contacto();     
+        $objSubCategoria = new SubCategoria();     
         $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);
         $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objSubCategoria->__SET('Nombre',$row->Nombre);
@@ -43,10 +43,10 @@ class SubCategoriaModel
       
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE subcategoria SET  Categoria_id=:Categoria_id,Nombre=:Nombre,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
-        $stmt->bindParam(':idSubCategoria',$contacto->__GET('idSubCategoria'));
-        $stmt->bindParam(':Categoria_id',$contacto->__GET('Categoria_id'));
-        $stmt->bindParam(':Nombre',$contacto->__GET('Nombre'));         
-        $stmt->bindParam(':Estado',$contacto->__GET('Estado')); 
+        $stmt->bindParam(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));
+        $stmt->bindParam(':Categoria_id',$subcategoria->__GET('Categoria_id'));
+        $stmt->bindParam(':Nombre',$subcategoria->__GET('Nombre'));         
+        $stmt->bindParam(':Estado',$subcategoria->__GET('Estado')); 
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());
@@ -62,10 +62,10 @@ class SubCategoriaModel
   
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO subcategoria(Categoria_id,Nombre,Estado,Ingresado_por) VALUES(:Categoria_id,:Nombre,:Estado,:Ingresado_por)");
-        $stmt->bindValue(':Categoria_id', $contacto->__GET('Categoria_id'),PDO::PARAM_INT); 
-        $stmt->bindValue(':Nombre', $contacto->__GET('Nombre'),PDO::PARAM_STR);
-        $stmt->bindValue(':Estado', $contacto->__GET('Estado'),PDO::PARAM_STR);
-        $stmt->bindValue(':Ingresado_por', $contacto->__GET('Ingresado_por'),PDO::PARAM_INT);     
+        $stmt->bindValue(':Categoria_id', $subcategoria->__GET('Categoria_id'),PDO::PARAM_INT); 
+        $stmt->bindValue(':Nombre', $subcategoria->__GET('Nombre'),PDO::PARAM_STR);
+        $stmt->bindValue(':Estado', $subcategoria->__GET('Estado'),PDO::PARAM_STR);
+        $stmt->bindValue(':Ingresado_por', $subcategoria->__GET('Ingresado_por'),PDO::PARAM_INT);     
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
@@ -78,15 +78,15 @@ class SubCategoriaModel
         }
     }
 
-    public function Eliminar(Contacto $contacto)
+    public function Eliminar(SubCategoria $subcategoria)
     {
        
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE subcategoria SET  Ingresado_por=:Ingresado_por,Eliminado=:Eliminado WHERE idSubCategoria = :idSubCategoria");
 
-        $stmt->bindParam(':idSubCategoria',$contacto->__GET('idSubCategoria'));         
-        $stmt->bindParam(':Ingresado_por',$contacto->__GET('Ingresado_por'));
-        $stmt->bindParam(':Eliminado',$contacto->__GET('Eliminado'));    
+        $stmt->bindParam(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));         
+        $stmt->bindParam(':Ingresado_por',$subcategoria->__GET('Ingresado_por'));
+        $stmt->bindParam(':Eliminado',$subcategoria->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

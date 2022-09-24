@@ -49,7 +49,8 @@ class CategoriaController{
         $categoria = new Categoria();
         $categoria->__SET('idCategoria',$_REQUEST['idCategoria']);
         $categoria->__SET('Nombre',$_REQUEST['Nombre']);              
-        $categoria->__SET('Estado',$_SESSION['Estado']);    
+        $categoria->__SET('Estado',$_REQUEST['Estado']);
+        $categoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);    
         $actualizar_categoria = $this->model->Actualizar($categoria);  
          
         if($actualizar_categoria=='error'){
@@ -75,12 +76,12 @@ class CategoriaController{
            // echo 'No se Ha Podido Registrar';
          }else{
            // echo 'Registrado Correctamente';
-            header('Location: index.php?c=Categoria');
+            header('Location: index.php?c=Categoria=Index');
          }
     }
 
     public function Eliminar(){
-        $categoria = new Contacto();
+        $categoria = new Categoria();
         $categoria->__SET('idCategoria',$_REQUEST['idCategoria']);      
         $categoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $categoria->__SET('Eliminado',1); 

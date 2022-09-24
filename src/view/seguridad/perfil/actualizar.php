@@ -5,7 +5,7 @@
 	</h1>
 	<ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li><a href="index.php?c=Usuario">Perfil</a></li>
+            <li><a href="index.php?c=Perfil">Perfil</a></li>
             <li class="active">Actualizar</li>
           </ol>
 </section>
@@ -30,30 +30,22 @@ $Perfil= $this->Consultar($_REQUEST['idPerfil']);
 	    				<input type="hidden" name="idPerfil" value="<?php echo $Perfil->__GET('idPerfil'); ?>" />
 					    <div class="form-group col-md-12">
 					        <label>Perfil</label>
-					        <input type="text" name="nombre" value="<?php echo $Perfil->__GET('nombre'); ?>" class="form-control" placeholder="" />
+					        <input type="text" name="Nombre" value="<?php echo $Perfil->__GET('Nombre'); ?>" class="form-control" placeholder="" />
 					    </div>						    
-					    
 					    <div class="form-group col-md-12">
 					      <label>Activo</label>
 					      <label class="radio-inline">
-					          <input type="radio" name="activo" id="estado_activo" value="1" <?php if ($Perfil->__GET('activo')==1) { echo 'checked';  } ?>> SI
+					          <input type="radio" name="Estado" id="Estado" value="0" <?php if ($Perfil->__GET('Estado')==0) { echo 'checked';  } ?>> SI
 					      </label>
 					      <label class="radio-inline">
-					          <input type="radio" name="activo" id="estado_inactivo" value="0" <?php if ($Perfil->__GET('activo')==0) { echo 'checked'; }  ?>> NO
+					          <input type="radio" name="Estado" id="Estado" value="1" <?php if ($Perfil->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
 					      </label>					    
 					    </div> 
-					  
-
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12" style="margin-bottom:1em;">
-					        
 					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
-					      
 					    </div>
 					     <div class="col-md-6 col-sm-12" style="margin-bottom:1em;">
-
-					       
-					    
 					        <a href="index.php?c=Perfil" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
 					    </div>  
 					  </div>
@@ -76,12 +68,8 @@ $Perfil= $this->Consultar($_REQUEST['idPerfil']);
 	                    label: "Actualizar",
 	                    className: "btn-primary",
 	                    callback: function() {
-	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmActualizarPerfil" ).submit();
-	                         
-
-	                       
+	                        //console.log('Eliminado al usuario');  
+	                              $( "#frmActualizarPerfil" ).submit();                     
 	                    }
 	                },
 	                danger: {

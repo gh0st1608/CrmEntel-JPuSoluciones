@@ -19,8 +19,6 @@ class PerfilModel
         }else{            
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        
-
     }
 
     public function Consultar(Perfil $pefil)
@@ -29,27 +27,27 @@ class PerfilModel
         $stmt = $this->bd->prepare("SELECT * FROM perfil WHERE idPerfil = :idPerfil");
         $stmt->bindParam(':idPerfil', $pefil->__GET('idPerfil'));
         $stmt->execute();
-       $row = $stmt->fetch(PDO::FETCH_OBJ);      
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
-        $objPerfil = new Usuario();     
+        $objPerfil = new Perfil();     
         $objPerfil->__SET('idPerfil',$row->idPerfil);
-        $objPerfil->__SET('nombre',$row->nombre);
-        $objPerfil->__SET('activo',$row->activo);  
+        $objPerfil->__SET('Nombre',$row->Nombre);
+        $objPerfil->__SET('Estado',$row->Estado);  
 
         
         return $objPerfil;
     }
 
-    public function Actualizar(Perfil $pefil)
+    public function Actualizar(Perfil $perfil)
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE perfil SET  nombre = :nombre,modificado_por=:modificado_por,activo=:activo WHERE idPerfil = :idPerfil");
+        $stmt = $this->bd->prepare("UPDATE perfil SET  Nombre = :Nombre,Modificado_por=:Modificado_por,Estado=:Estado WHERE idPerfil = :idPerfil");
 
         $stmt->bindParam(':idPerfil',$pefil->__GET('idPerfil'));
-        $stmt->bindParam(':nombre',$pefil->__GET('nombre'));          
-        $stmt->bindParam(':modificado_por',$pefil->__GET('modificado_por'));
-        $stmt->bindParam(':activo',$pefil->__GET('activo'));    
+        $stmt->bindParam(':Nombre',$pefil->__GET('Nombre'));
+        $stmt->bindParam(':Estado',$pefil->__GET('Estado'));          
+        $stmt->bindParam(':Modificado_por',$pefil->__GET('Modificado_por'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
@@ -59,14 +57,15 @@ class PerfilModel
         }
     }    
 
-    public function Registrar(Perfil $pefil)
+    public function Registrar(Perfil $perfil)
     {
        
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO perfil(nombre,ingresado_por) VALUES(:nombre,:ingresado_por)");
-        $stmt->bindValue(':nombre', $pefil->__GET('nombre'),PDO::PARAM_STR);       
-        $stmt->bindValue(':ingresado_por', $pefil->__GET('ingresado_por'),PDO::PARAM_INT);
+        $stmt = $this->bd->prepare("INSERT INTO perfil(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
+        $stmt->bindValue(':Nombre', $perfil->__GET('Nombre'),PDO::PARAM_STR);
+        $stmt->bindValue(':Estado', $perfil->__GET('Estado'),PDO::PARAM_INT);  
+        $stmt->bindValue(':Ingresado_por', $perfil->__GET('Ingresado_por'),PDO::PARAM_INT);
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
             // echo($errors[2]);
@@ -83,11 +82,11 @@ class PerfilModel
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE perfil SET  modificado_por=:modificado_por,eliminado=:eliminado WHERE idPerfil = :idPerfil");
+        $stmt = $this->bd->prepare("UPDATE perfil SET  Modificado_por=:Modificado_por,Eliminado=:Eliminado WHERE idPerfil = :idPerfil");
 
         $stmt->bindParam(':idPerfil',$perfil->__GET('idPerfil'));         
-        $stmt->bindParam(':modificado_por',$perfil->__GET('modificado_por'));
-        $stmt->bindParam(':eliminado',$perfil->__GET('eliminado'));    
+        $stmt->bindParam(':Modificado_por',$perfil->__GET('Modificado_por'));
+        $stmt->bindParam(':Eliminado',$perfil->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

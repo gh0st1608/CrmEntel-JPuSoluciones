@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 23-09-2022 a las 05:41:19
+-- Tiempo de generación: 24-09-2022 a las 20:12:14
 -- Versión del servidor: 5.7.39
 -- Versión de PHP: 8.0.19
 
@@ -12,15 +12,22 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `myDb`
 --
+CREATE DATABASE IF NOT EXISTS `myDb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `myDb`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `ProcInsertLogSesion`$$
 CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
   
   IF (P_Password = '' OR  P_Login = '' )
@@ -83,10 +90,26 @@ IdEstadoKanBanDetalle		)
 select 0 as Estado;
 
 END IF;
+--
+SET @intento  = 0   ; 
 
+SELECT COUNT(1) INTO @intento  FROM log_sesion
+WHERE LoggedIn = 'No' 
+and Login = P_Login
+and IdEstadoKanBanDetalle = 2;
+--
+  
+  IF  @intento >=3
+  THEN 
+   update usuario 
+   set Estado = 2
+   where Login = P_Login;
+ 
+  END IF;
  
 END$$
 
+DROP PROCEDURE IF EXISTS `ProcUpdateLogSesion`$$
 CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
  
     UPDATE  log_sesion   
@@ -108,6 +131,7 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `categoria`
 --
 
+DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `idCategoria` int(11) NOT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
@@ -117,118 +141,26 @@ CREATE TABLE `categoria` (
   `Eliminado` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(29, 'demo4', 0, 1, '2022-09-24 19:37:25', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(30, '123456', 0, 1, '2022-09-24 19:38:52', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(31, 'demo4', 0, 1, '2022-09-24 19:51:40', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(32, 'registrar', 0, 1, '2022-09-24 19:52:05', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(33, 'asdas', 0, 1, '2022-09-24 19:54:07', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(34, 'asdasd', 0, 1, '2022-09-24 19:56:14', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(35, 'adadsads', 0, 1, '2022-09-24 19:56:47', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(36, 'adadsads', 0, 1, '2022-09-24 19:58:14', 0);
+
 -- --------------------------------------------------------
-CREATE TABLE `ficha_venta` (
-  `idFicha_Venta` int(11) NOT NULL AUTO_INCREMENT,
-  `DE_Telf_Llamada_Venta` char(9) DEFAULT NULL,
-  `DE_Base_Llamada` int(11) NOT NULL DEFAULT '0',
-  `DE_Campana_Netcall` int(11) NOT NULL DEFAULT '0',
-  `DE_Sub_Campana` int(11) NOT NULL DEFAULT '0',
-  `DE_Detalle_Sub_Campana` int(11) NOT NULL DEFAULT '0',
-  `DE_CF_Max_Linea_Movil` int(11) NOT NULL DEFAULT '0',
-  `DE_Tipo_Etiqueta` int(11) NOT NULL DEFAULT '0',
-  `DE_CF_Max_Linea_Pack` float DEFAULT NULL,
-  `DE_Monto_Disp_Finan_Equipos` float DEFAULT NULL,
-  `DE_Cant_Meses_Finan_Equipos` int(11) NOT NULL DEFAULT '0',
-  `DE_Cliente_Entel` int(11) NOT NULL DEFAULT '0',
-  `DE_Cliente_Promo_Dscto` int(11) NOT NULL DEFAULT '0',
-  `Cliente_id` int(11) NOT NULL,
-  `DF_Email_Facturacion_Otros` varchar(45) DEFAULT NULL,
-  `DF_Ubigeo_Facturacion` int(11) NOT NULL DEFAULT '0',
-  `DF_Domicilio_Facturacion` varchar(255) DEFAULT NULL,
-  `RE_Tipo_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Rango_Entrega_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Rango_Horario_Despacho` int(11) NOT NULL DEFAULT '0',
-  `RE_Tienda_Retiro` int(11) NOT NULL DEFAULT '0',
-  `RE_Retail_Retiro` int(11) NOT NULL DEFAULT '0',
-  `RE_Fecha_Entrega` date DEFAULT NULL,
-  `RE_Venta_Entrega_para` int(11) NOT NULL DEFAULT '0',
-  `RE_Venta_Destino_para` int(11) NOT NULL DEFAULT '0',
-  `RE_Ubigeo_Entrega` int(11) NOT NULL DEFAULT '0',
-  `RE_Tipo_Direccion_Entrega` int(11) NOT NULL DEFAULT '0',
-  `RE_Direccion_Entrega` varchar(255) DEFAULT NULL,
-  `RE_Referencia_Principales` varchar(255) DEFAULT NULL,
-  `RE_Referencias_Adicionales` varchar(255) DEFAULT NULL,
-  `RE_Coordenadas_Direccion_Entrega` varchar(255) DEFAULT NULL,
-  `RE_Telefono_Contacto1` char(11) DEFAULT NULL,
-  `RE_Telefono_Contacto2` char(11) DEFAULT NULL,
-  `RE_Tipo_Contacto_Ol` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Ofrecimiento` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Venta` int(11) NOT NULL DEFAULT '0',
-  `RV_Operador_Cedente` int(11) NOT NULL DEFAULT '0',
-  `RV_Origen` int(11) NOT NULL DEFAULT '0',
-  `RV_Linea_Portar` char(9) DEFAULT NULL,
-  `RV_Plan_Tarifario` int(11) NOT NULL DEFAULT '0',
-  `RV_Cargo_Fijo_Plan` int(11) NOT NULL DEFAULT '0',
-  `RV_Tipo_Producto` int(11) NOT NULL DEFAULT '0',
-  `RV_Accesorio_Regalo` int(11) NOT NULL DEFAULT '0',
-  `RV_SKU_Accesorio_Regalo1` varchar(45) DEFAULT NULL,
-  `RV_SKU_Accesorio_Regalo2` varchar(45) DEFAULT NULL,
-  `RV_SKU_Pack` varchar(45) DEFAULT NULL,
-  `RV_Precio_Equipo_Inicial_Total` float DEFAULT NULL,
-  `RV_Cuota_Equipo_Mensual` float DEFAULT NULL,
-  `RV_Cant_Accesorios` int(11) NOT NULL DEFAULT '0',
-  `RV_SKU_Accesorio1` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio1` float DEFAULT NULL,
-  `RV_SKU_Accesorio2` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio2` float DEFAULT NULL,
-  `RV_SKU_Accesorio3` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio3` float DEFAULT NULL,
-  `RV_SKU_Accesorio4` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio4` float DEFAULT NULL,
-  `RV_SKU_Accesorio5` varchar(45) DEFAULT NULL,
-  `RV_Precio_Accesorio5` float DEFAULT NULL,
-  `RV_Tipo_Pago` int(11) NOT NULL DEFAULT '0',
-  `RV_Promociones_Bancos` int(11) NOT NULL DEFAULT '0',
-  `Supervisor_Vendedor` int(11) NOT NULL DEFAULT '0',
-  `Comentarios_Vendedor` text NOT NULL,
-  `Ingresado_por_Vendedor` int(11) NOT NULL,
-  `Fecha_Registro_Vendedor` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `VBO_Estado_Venta_BO` int(11) NOT NULL DEFAULT '0',
-  `VBO_Sub_Estado_Venta_BO` int(11) NOT NULL DEFAULT '0',
-  `RBO_Cantidad_Ordenes_Ficha` int(11) DEFAULT NULL,
-  `RBO_Orden_One_Click1` varchar(45) DEFAULT NULL,
-  `RBO_Orden_One_Click2` varchar(45) DEFAULT NULL,
-  `RBO_Orden_One_Click3` varchar(45) DEFAULT NULL,
-  `FBO_Ficha_Limpia` int(11) NOT NULL DEFAULT '0',
-  `FBO_Errores_Comunes_Ficha` int(11) NOT NULL DEFAULT '0',
-  `DGBO_Tipo_Atencion_Final` int(11) NOT NULL DEFAULT '0',
-  `DGBO_BO_Validador_Gestor` int(11) NOT NULL DEFAULT '0',
-  `DGBO_BO_Recupero_Repro_Gestor` int(11) NOT NULL DEFAULT '0',
-  `Comentarios_BackOffice` text,
-  `Modificado_por_BackOffice` int(11) NOT NULL DEFAULT '0',
-  `Fecha_Modificacion_BackOffice` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idFicha_Venta`),
-  KEY `Cliente_id` (`Cliente_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE `cliente` (
-  `idCliente` int(11) NOT NULL AUTO_INCREMENT,
-  `TipoDocumento` char(4) NOT NULL,
-  `Documento` char(11) NOT NULL,
-  `Nombre_Cliente` varchar(45) NOT NULL,
-  `Apellido_Paterno` varchar(45) NOT NULL,
-  `Apellido_Materno` varchar(45) NOT NULL,
-  `Nacionalidad` varchar(45) DEFAULT NULL,
-  `Lugar_Nacimiento` varchar(45) DEFAULT NULL,
-  `Fecha_Nacimiento` date DEFAULT NULL,
-  `Nombre_Padre` varchar(45) DEFAULT NULL,
-  `Nombre_Madre` varchar(45) DEFAULT NULL,
-  `Estado` tinyint(1) DEFAULT '1',
-  `Ingresado_por` int(11) NOT NULL DEFAULT '0',
-  `Fecha_Registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`idCliente`),
-  UNIQUE KEY `Documento` (`Documento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 --
 -- Estructura de tabla para la tabla `EstadoKanBan`
 --
 
+DROP TABLE IF EXISTS `EstadoKanBan`;
 CREATE TABLE `EstadoKanBan` (
   `IdEstadoKanBan` int(11) NOT NULL,
   `NomEstadoKanBan` varchar(100) NOT NULL,
@@ -247,6 +179,7 @@ INSERT INTO `EstadoKanBan` (`IdEstadoKanBan`, `NomEstadoKanBan`, `Estado`) VALUE
 -- Estructura de tabla para la tabla `EstadoKanBanDetalle`
 --
 
+DROP TABLE IF EXISTS `EstadoKanBanDetalle`;
 CREATE TABLE `EstadoKanBanDetalle` (
   `IdEstadoKanBanDetalle` int(11) NOT NULL,
   `IdEstadoKanBan` int(11) NOT NULL,
@@ -268,6 +201,7 @@ INSERT INTO `EstadoKanBanDetalle` (`IdEstadoKanBanDetalle`, `IdEstadoKanBan`, `N
 -- Estructura de tabla para la tabla `interfaz`
 --
 
+DROP TABLE IF EXISTS `interfaz`;
 CREATE TABLE `interfaz` (
   `idInterfaz` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
@@ -299,6 +233,7 @@ INSERT INTO `interfaz` (`idInterfaz`, `Nombre`, `Url`, `Nivel`, `Modulo_Principa
 -- Estructura de tabla para la tabla `log_sesion`
 --
 
+DROP TABLE IF EXISTS `log_sesion`;
 CREATE TABLE `log_sesion` (
   `idLog_Sesion` int(11) NOT NULL,
   `Login` varchar(20) DEFAULT NULL,
@@ -316,9 +251,7 @@ CREATE TABLE `log_sesion` (
 -- Volcado de datos para la tabla `log_sesion`
 --
 
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(69, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:10', '2022-09-23 05:40:47', 1);
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(70, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:22', '2022-09-23 05:40:47', 1);
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(71, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:41', '2022-09-23 05:40:47', 1);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(274, '16110401', '16110401', 'Si', '172.19.0.1', 'Windows', 'Other', '2022-09-24 17:56:13', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -326,6 +259,7 @@ INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`,
 -- Estructura de tabla para la tabla `perfil`
 --
 
+DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE `perfil` (
   `idPerfil` int(11) NOT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
@@ -352,6 +286,7 @@ INSERT INTO `perfil` (`idPerfil`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Re
 -- Estructura de tabla para la tabla `permiso`
 --
 
+DROP TABLE IF EXISTS `permiso`;
 CREATE TABLE `permiso` (
   `idPermiso` int(11) NOT NULL,
   `Perfil_id` int(11) NOT NULL DEFAULT '0',
@@ -379,6 +314,7 @@ INSERT INTO `permiso` (`idPermiso`, `Perfil_id`, `Interfaz_id`, `Acceder`, `Esta
 -- Estructura de tabla para la tabla `persona`
 --
 
+DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
   `idPersona` int(11) NOT NULL,
   `Tipo_Documento` char(10) DEFAULT NULL,
@@ -415,19 +351,16 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 -- Estructura de tabla para la tabla `subcategoria`
 --
 
+DROP TABLE IF EXISTS `subcategoria`;
 CREATE TABLE `subcategoria` (
-  `idSubCategoria` int(11) NOT NULL AUTO_INCREMENT,
+  `idSubCategoria` int(11) NOT NULL,
   `Categoria_id` int(11) DEFAULT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
-  `Aplicar_Logica` tinyint(3) DEFAULT '0',
-  `Logica_Json` text,
   `Estado` tinyint(1) DEFAULT '1',
   `Ingresado_por` int(11) NOT NULL DEFAULT '0',
   `Fecha_Registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Eliminado` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`idSubCategoria`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+  `Eliminado` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -435,6 +368,7 @@ CREATE TABLE `subcategoria` (
 -- Estructura de tabla para la tabla `usuario`
 --
 
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `Persona_id` int(11) NOT NULL DEFAULT '0',
@@ -453,7 +387,7 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(1, 1, 1, '16110401', '16110401', 1, 0, '2019-02-06 13:49:59', 1, '2019-02-06 14:21:13', 0);
+INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(1, 1, 1, '16110401', '16110401', 1, 0, '2019-02-06 13:49:59', 1, '2022-09-24 17:56:06', 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(2, 2, 4, '19020601', '19020601', 1, 1, '2019-02-06 14:21:26', 1, '2022-09-20 18:55:21', 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(3, 3, 9, '19020602', '19020602', 1, 1, '2019-02-06 14:26:07', NULL, NULL, 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(4, 4, 9, '19020603', '19020603', 1, 1, '2019-02-06 14:26:15', NULL, NULL, 0);
@@ -512,6 +446,12 @@ ALTER TABLE `persona`
   ADD UNIQUE KEY `dni` (`Documento`);
 
 --
+-- Indices de la tabla `subcategoria`
+--
+ALTER TABLE `subcategoria`
+  ADD PRIMARY KEY (`idSubCategoria`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -526,7 +466,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `interfaz`
@@ -538,7 +478,7 @@ ALTER TABLE `interfaz`
 -- AUTO_INCREMENT de la tabla `log_sesion`
 --
 ALTER TABLE `log_sesion`
-  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -558,6 +498,11 @@ ALTER TABLE `permiso`
 ALTER TABLE `persona`
   MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
+--
+-- AUTO_INCREMENT de la tabla `subcategoria`
+--
+ALTER TABLE `subcategoria`
+  MODIFY `idSubCategoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
