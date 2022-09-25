@@ -60,7 +60,7 @@
 	
 	$(document).ready(function() {
 		$(".EliminarPerfil").click(function(event) {
-			idUsuario=$(this).attr('data-id');
+			idPerfil=$(this).attr('data-id');
 			bootbox.dialog({
             message: "¿Estas seguro de eliminar el perfil  "+$(this).attr('data-nombre')+"?",
             title: "Eliminar Perfil",

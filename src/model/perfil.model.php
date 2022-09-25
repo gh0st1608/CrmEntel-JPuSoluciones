@@ -44,10 +44,10 @@ class PerfilModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE perfil SET  Nombre = :Nombre,Modificado_por=:Modificado_por,Estado=:Estado WHERE idPerfil = :idPerfil");
 
-        $stmt->bindParam(':idPerfil',$pefil->__GET('idPerfil'));
-        $stmt->bindParam(':Nombre',$pefil->__GET('Nombre'));
-        $stmt->bindParam(':Estado',$pefil->__GET('Estado'));          
-        $stmt->bindParam(':Modificado_por',$pefil->__GET('Modificado_por'));    
+        $stmt->bindParam(':idPerfil',$perfil->__GET('idPerfil'));
+        $stmt->bindParam(':Nombre',$perfil->__GET('Nombre'));
+        $stmt->bindParam(':Estado',$perfil->__GET('Estado'));          
+        $stmt->bindParam(':Modificado_por',$perfil->__GET('Modificado_por'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
