@@ -57,7 +57,7 @@ class PerfilController{
             header('Location: index.php?c=Perfil&a=v_Actualizar&idPerfil='. $perfil->__GET('idPerfil'));
             echo 'No se Ha Podido Actualizar el Perfil';
          }else{
-            echo 'Usuario Actualizado Correctamente';
+            echo 'Perfil Actualizado Correctamente';
             header('Location: index.php?c=Perfil');
          }
     }
@@ -65,7 +65,7 @@ class PerfilController{
     public function Registrar(){
         $perfil = new Perfil(); 
         $perfil->__SET('Nombre',$_REQUEST['Nombre']);
-        $perfil->__SET('Nombre',$_REQUEST['Nombre']);           
+        $perfil->__SET('Estado',$_REQUEST['Estado']);           
         $perfil->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_perfil = $this->model->Registrar($perfil);  
          
