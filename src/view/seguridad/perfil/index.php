@@ -32,8 +32,8 @@
 	                    	<?php foreach ($perfiles as $perfil): ?>
 	                    	<tr>
 	                    		<td><?php echo $perfil['idPerfil']; ?></td>
-	                    		<td><?php echo $perfil['nombre']; ?></td>
-	                    		<?php if ($perfil['activo']==1): ?>
+	                    		<td><?php echo $perfil['Nombre']; ?></td>
+	                    		<?php if ($perfil['Estado']==0): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
@@ -42,7 +42,7 @@
                             		<a href="?c=Perfil&a=v_Actualizar&idPerfil=<?php echo $perfil['idPerfil']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<a class="btn btn-danger btn-xs EliminarPerfil" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['nombre']; ?>">
+                               		<a class="btn btn-danger btn-xs EliminarPerfil" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>                             		
                                	</td>
@@ -71,7 +71,7 @@
                     callback: function() {
                         //console.log('Eliminado al usuario');
                         
-                              window.location.href = "?c=Perfil&a=Eliminar&idPerfil="+idUsuario;
+                              window.location.href = "?c=Perfil&a=Eliminar&idPerfil="+idPerfil;
                          
 
                        

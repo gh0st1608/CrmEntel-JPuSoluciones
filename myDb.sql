@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 23-09-2022 a las 05:41:19
+-- Tiempo de generación: 24-09-2022 a las 17:29:16
 -- Versión del servidor: 5.7.39
 -- Versión de PHP: 8.0.19
 
@@ -87,7 +87,22 @@ IdEstadoKanBanDetalle		)
 select 0 as Estado;
 
 END IF;
+--
+SET @intento  = 0   ; 
 
+SELECT COUNT(1) INTO @intento  FROM log_sesion
+WHERE LoggedIn = 'No' 
+and Login = P_Login
+and IdEstadoKanBanDetalle = 2;
+--
+  
+  IF  @intento >=3
+  THEN 
+   update usuario 
+   set Estado = 2
+   where Login = P_Login;
+ 
+  END IF;
  
 END$$
 
@@ -214,9 +229,19 @@ CREATE TABLE `log_sesion` (
 -- Volcado de datos para la tabla `log_sesion`
 --
 
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(69, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:10', '2022-09-23 05:40:47', 1);
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(70, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:22', '2022-09-23 05:40:47', 1);
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(71, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-23 05:40:41', '2022-09-23 05:40:47', 1);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(240, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:33', '2022-09-24 06:38:35', 1);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(241, '16110401', 'asdasd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:44', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(242, '16110401', 'asdasd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:47', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(243, '16110401', 'asd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:50', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(244, '16110401', 'asd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:53', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(245, '16110401', 'asdasd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:38:58', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(246, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:41:26', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(247, '16110401', 'asdasdasd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:42:59', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(248, '16110401', 'asdadsadsads', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:43:03', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(249, 'asdasd', 'asdads', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:44:38', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(250, '16110401', 'asdasdasd', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 06:45:13', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(251, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 16:48:24', NULL, 2);
+INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES(252, '16110401', '16110401', 'No', '172.19.0.1', 'Windows', 'Other', '2022-09-24 16:48:27', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -347,7 +372,7 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(1, 1, 1, '16110401', '16110401', 1, 0, '2019-02-06 13:49:59', 1, '2019-02-06 14:21:13', 0);
+INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(1, 1, 1, '16110401', '16110401', 2, 0, '2019-02-06 13:49:59', 1, '2022-09-24 06:38:50', 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(2, 2, 4, '19020601', '19020601', 1, 1, '2019-02-06 14:21:26', 1, '2022-09-20 18:55:21', 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(3, 3, 9, '19020602', '19020602', 1, 1, '2019-02-06 14:26:07', NULL, NULL, 0);
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(4, 4, 9, '19020603', '19020603', 1, 1, '2019-02-06 14:26:15', NULL, NULL, 0);
@@ -438,7 +463,7 @@ ALTER TABLE `interfaz`
 -- AUTO_INCREMENT de la tabla `log_sesion`
 --
 ALTER TABLE `log_sesion`
-  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`

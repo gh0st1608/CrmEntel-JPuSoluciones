@@ -49,7 +49,8 @@ class CategoriaController{
         $categoria = new Categoria();
         $categoria->__SET('idCategoria',$_REQUEST['idCategoria']);
         $categoria->__SET('Nombre',$_REQUEST['Nombre']);              
-        $categoria->__SET('Estado',$_SESSION['Estado']);    
+        $categoria->__SET('Estado',$_REQUEST['Estado']);
+        $categoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);    
         $actualizar_categoria = $this->model->Actualizar($categoria);  
          
         if($actualizar_categoria=='error'){
@@ -72,12 +73,13 @@ class CategoriaController{
        
         if($registrar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Registrar');
-            echo 'No se Ha Podido Registrar';
-         } else{
-            print($registrar_categoria);
-            echo 'Registrado Correctamente';
-            header('Location: https://www.linkedin.com/feed');
-          }
+ 
+           // echo 'No se Ha Podido Registrar';
+         }else{
+           // echo 'Registrado Correctamente';
+            header('Location: index.php?c=Categoria=Index');
+         }
+ 
     }
 
     public function Eliminar(){

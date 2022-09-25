@@ -152,30 +152,36 @@ where persona.eliminado=0 and idUsuario is NULL" );
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO persona(primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,dni,codigo,celular,fecha_ingreso,fecha_nacimiento,sexo,tipo_horario,horario_entrada,horario_salida,sueldo,correo,anexo,Area_id,Cargo_id,Sede_id,ingresado_por) VALUES(:primer_nombre,:segundo_nombre,:apellido_paterno,:apellido_materno,:dni,:codigo,:celular,:fecha_ingreso,:fecha_nacimiento,:sexo,:tipo_horario,:horario_entrada,:horario_salida,:sueldo,:correo,:anexo,:Area_id,:Cargo_id,:Sede_id,:ingresado_por)");
 
-      
+
+          $stmt = $this->bd->prepare("INSERT INTO persona(primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,documento,
+                                                celular,fecha_ingreso,correo
+                                             ) VALUES
+                                                (:primer_nombre,:segundo_nombre,:apellido_paterno,:apellido_materno,:dni,
+                                                :celular,:fecha_ingreso,:correo
+                                                )");
+ 
         $stmt->bindParam(':primer_nombre',$persona->__GET('primer_nombre'));
         $stmt->bindParam(':segundo_nombre',$persona->__GET('segundo_nombre'));
         $stmt->bindParam(':apellido_paterno',$persona->__GET('apellido_paterno'));
         $stmt->bindParam(':apellido_materno',$persona->__GET('apellido_materno'));
-        $stmt->bindParam(':dni',$persona->__GET('dni'));
-        $stmt->bindParam(':codigo',$persona->__GET('codigo'));
-        $stmt->bindParam(':celular',$persona->__GET('celular'));
+       $stmt->bindParam(':dni',$persona->__GET('dni'));
+     //   $stmt->bindParam(':codigo',$persona->__GET('codigo'));
+       $stmt->bindParam(':celular',$persona->__GET('celular'));
         $stmt->bindParam(':fecha_ingreso',$persona->__GET('fecha_ingreso'));
-        $stmt->bindParam(':fecha_nacimiento',$persona->__GET('fecha_nacimiento'));
-        $stmt->bindParam(':sexo',$persona->__GET('sexo'));
-        $stmt->bindParam(':tipo_horario',$persona->__GET('tipo_horario'));
-        $stmt->bindParam(':horario_entrada',$persona->__GET('horario_entrada'));
-        $stmt->bindParam(':horario_salida',$persona->__GET('horario_salida'));
-        $stmt->bindParam(':sueldo',$persona->__GET('sueldo'));
+       // $stmt->bindParam(':fecha_nacimiento',$persona->__GET('fecha_nacimiento'));
+      //  $stmt->bindParam(':sexo',$persona->__GET('sexo'));
+      //  $stmt->bindParam(':tipo_horario',$persona->__GET('tipo_horario'));
+      //  $stmt->bindParam(':horario_entrada',$persona->__GET('horario_entrada'));
+     //   $stmt->bindParam(':horario_salida',$persona->__GET('horario_salida'));
+      //  $stmt->bindParam(':sueldo',$persona->__GET('sueldo'));
         $stmt->bindParam(':correo',$persona->__GET('correo'));
-        $stmt->bindParam(':anexo',$persona->__GET('anexo'));
-        $stmt->bindParam(':Area_id',$persona->__GET('Area_id'));
-        $stmt->bindParam(':Cargo_id',$persona->__GET('Cargo_id'));
-        $stmt->bindParam(':Sede_id',$persona->__GET('Sede_id'));
-        $stmt->bindParam(':ingresado_por',$persona->__GET('ingresado_por')); 
-
+     //   $stmt->bindParam(':anexo',$persona->__GET('anexo'));
+      //  $stmt->bindParam(':Area_id',$persona->__GET('Area_id'));
+     //   $stmt->bindParam(':Cargo_id',$persona->__GET('Cargo_id'));
+      //  $stmt->bindParam(':Sede_id',$persona->__GET('Sede_id'));
+     //   $stmt->bindParam(':ingresado_por',$persona->__GET('ingresado_por'));  
+ 
         if (!$stmt->execute()) {
             //$errors = $stmt->errorInfo();
              //echo($errors[2]);
@@ -192,7 +198,7 @@ where persona.eliminado=0 and idUsuario is NULL" );
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE origen SET  modificado_por=:modificado_por,eliminado=:eliminado WHERE idPersona = :idPersona");
+        $stmt = $this->bd->prepare("UPDATE persona SET  modificado_por=:modificado_por, eliminado=:eliminado WHERE idPersona = :idPersona");
 
         $stmt->bindParam(':idPersona',$persona->__GET('idPersona'));         
         $stmt->bindParam(':modificado_por',$persona->__GET('modificado_por'));

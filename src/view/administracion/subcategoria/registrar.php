@@ -1,7 +1,7 @@
 <?php
 require_once 'controller/categoria.controller.php';
 
-$categoria = new CarteraController;
+$categoria = new CategoriaController;
 
 $categorias = $categoria->Listar(); 
 
@@ -32,8 +32,8 @@ $categorias = $categoria->Listar();
 					        <input type="text" name="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
 						<div class="form-group col-md-3">
-							<select name="cboListarCategorias" id="cboListarCategorias" class="form-control">
-								<option value="0">-- Seleccionar Categoría--</option>      
+							<select name="Categoria_id" id="Categoria_id" class="form-control">
+							<option value="0">-- Seleccionar Categoría--</option>      
 							<?php foreach ($categorias as $categoria): ?>                
 								<option value="<?php echo $categoria['idCategoria']; ?>"><?php echo $categoria['Nombre']; ?></option>                      
 							<?php endforeach; ?>           
@@ -51,7 +51,7 @@ $categorias = $categoria->Listar();
 					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
 					    </div>
 					     <div class="col-md-6 col-sm-12">
-					        <a href="index.php?c=Persona" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
+					        <a href="index.php?c=SubCategoria" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
 					    </div>  
 					  </div>
 					</form>                    

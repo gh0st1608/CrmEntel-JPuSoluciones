@@ -1,3 +1,8 @@
+<?php require_once 'controller/categoria.controller.php'; 
+$categoria = new CategoriaController;
+
+
+?>
  <!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
@@ -24,20 +29,25 @@
 	                      	<tr>                      
 		                    	<th>ID</th>                    
 			                    <th style="vertical-align: middle;">Nombre</th>
+								<th style="vertical-align: middle;">Categoria</th>
 			                    <th style="vertical-align: middle;">Estado</th>
+								<th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>
 	                    </thead>
 	                    <tbody>
 	                    	<?php foreach ($subcategorias as $subcategoria): ?>
+					 
 	                    	<tr>
 	                    		<td><?php echo $subcategoria['idSubCategoria']; ?></td>
 	                    		<td><?php echo $subcategoria['Nombre']; ?></td>
-	                    		<?php if ($subcategoria['Estado']==1): ?>
+								<?php  $categoria -> Consultar($subcategoria['Categoria_id']);?>
+								<td><?php   echo $categoria -> Nombre;?></td> 
+	                    	 	<?php if ($subcategoria['Estado']==0):?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
                                 <?php endif ?>
-                            	<td class="a_center">                            		
+								<td class="a_center">                            		
                             		<a href="?c=SubCategoria&a=v_Actualizar&idSubCategoria=<?php echo $subcategoria['idSubCategoria']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
@@ -61,7 +71,7 @@
 	
 	$(document).ready(function() {
 		$(".EliminarSubCategoria").click(function(event) {
-			idPersona=$(this).attr('data-id');
+			idSubCategoria=$(this).attr('data-id');
 			bootbox.dialog({
             message: "¿Estas seguro de eliminar a <b>"+$(this).attr('data-subcategoria')+"</b>?",
             title: "Eliminar SubCategoria",

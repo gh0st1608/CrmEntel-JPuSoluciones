@@ -32,6 +32,7 @@ class CategoriaModel
 
         $objCategoria = new Categoria();     
         $objCategoria->__SET('idCategoria',$row->idCategoria);
+        $objCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objCategoria->__SET('Nombre',$row->Nombre);
         $objCategoria->__SET('Estado',$row->Estado); 
         return $objCategoria;
@@ -81,7 +82,9 @@ class CategoriaModel
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE categoria SET  Ingresado_por=:Ingresado_por,Eliminado=:Eliminado WHERE idCategoria = :idCategoria");
+ 
+        $stmt = $this->bd->prepare("UPDATE categoria SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idCategoria = :idCategoria");
+ 
 
         $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));         
         $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por'));
