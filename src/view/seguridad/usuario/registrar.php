@@ -1,5 +1,5 @@
  <!-- Content Header (Page header) -->
-<section class="content-header">  
+ <section class="content-header">  
 	<h1>
 		Modulo Seguridad
 	</h1>
@@ -27,10 +27,11 @@ $perfil = new PerfilController;
 	    			<form id="frmRegistrarUsuario" action="?c=Usuario&a=Registrar" method="post" enctype="multipart/form-data" role="form">	    				
 					    <div class="form-group col-md-12">
 					        <label>Perfil</label>
-					        <select name="Perfil_id" id="Perfil" class="form-control">       
+					        <select name="Perfil_id" id="Perfil" class="form-control">
+							<option value="">-- Seleccionar Perfil --</option>       
 					          <?php $perfiles = $perfil->Listar(); ?>
-					          <?php foreach ($perfiles as $perfil): ?>                     
-					            <option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['nombre']; ?></option>                      
+					          <?php foreach ($perfiles as $perfil): ?>                      
+					            <option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['Nombre']; ?></option>                      
 					          <?php endforeach; ?>           
 					        </select>
 					    </div>
@@ -40,13 +41,13 @@ $perfil = new PerfilController;
 					        	<option value="">-- Seleccionar Persona --</option>       
 					          	<?php $personas = $persona->Listar_Sin_Usuario(); ?>
 					          	<?php foreach ($personas as $persona): ?>                     
-					            <option value="<?php echo $persona['idPersona']; ?>" data-codigo="<?php echo $persona['codigo']; ?>"><?php echo $persona['apellido_paterno'].' '.$persona['apellido_materno'].' '.$persona['primer_nombre'].' '.$persona['segundo_nombre']; ?></option>                      
+					            <option value="<?php echo $persona['idPersona']; ?>" data-codigo="<?php echo $persona['codigo']; ?>"><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></option>                      
 					          <?php endforeach; ?>           
 					        </select>
 					    </div>
 					    <div class="form-group col-md-12">
 					        <label>Usuario</label>
-					        <input type="text" id="login" name="login" value="" class="form-control" placeholder=""  readonly="true" required />
+					        <input type="text" id="Login" name="Login" value="" class="form-control" placeholder=""  readonly="true" required />
 					    </div>
 					    <div class="form-group col-md-12">
 					        <label>Contraseña</label>
@@ -102,9 +103,7 @@ $perfil = new PerfilController;
 	                        //console.log('Eliminado al usuario');
 	                        
 	                              $( "#frmRegistrarUsuario" ).submit();
-	                         
-
-	                       
+    
 	                    }
 	                },
 	                danger: {

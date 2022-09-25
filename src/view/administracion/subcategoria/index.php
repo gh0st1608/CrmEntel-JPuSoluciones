@@ -40,8 +40,8 @@ $categoria = new CategoriaController;
 	                    	<tr>
 	                    		<td><?php echo $subcategoria['idSubCategoria']; ?></td>
 	                    		<td><?php echo $subcategoria['Nombre']; ?></td>
-								<?php  $categoria -> Consultar($subcategoria['Categoria_id']);?>
-								<td><?php   echo $categoria -> Nombre;?></td> 
+								<?php $nombre = $categoria -> Consultar($subcategoria['Categoria_id']);?>
+								<td><?php   echo $nombre -> Nombre;?></td> 
 	                    	 	<?php if ($subcategoria['Estado']==0):?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>

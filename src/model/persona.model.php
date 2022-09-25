@@ -26,8 +26,8 @@ class PersonaModel
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM persona 
-LEFT JOIN usuario on usuario.Persona_id=persona.idPersona
-where persona.eliminado=0 and idUsuario is NULL" );
+        LEFT JOIN usuario on usuario.Persona_id=persona.idPersona
+        where persona.eliminado=0;");  //and idUsuario is NULL
         $stmt->execute();
 
         if (!$stmt->execute()) {

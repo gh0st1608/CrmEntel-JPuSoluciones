@@ -6,12 +6,12 @@ class Usuario
 
     private $idUsuario;
     private $Persona_id;
-    private $Login;
     private $Perfil_id;
+    private $Login;
     private $Password;
     private $Estado;
-    private $Fecha_registro;
     private $Ingresado_por;
+    private $Fecha_registro;
     private $Modificado_por;
     private $Fecha_modificacion;
     private $Eliminado;

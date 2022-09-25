@@ -15,7 +15,7 @@
 
  if (!isset($_REQUEST['idUsuario'])==''){
 
-  require_once 'controller/persona.controller.php'; 
+require_once 'controller/persona.controller.php'; 
 require_once 'controller/perfil.controller.php'; 
 $persona = new PersonaController;
 $perfil = new PerfilController;
