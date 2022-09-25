@@ -70,14 +70,16 @@ class CategoriaController{
         $categoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);     
        
         $registrar_categoria = $this->model->Registrar($categoria);  
-         
+       
         if($registrar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Registrar');
+ 
            // echo 'No se Ha Podido Registrar';
          }else{
            // echo 'Registrado Correctamente';
             header('Location: index.php?c=Categoria=Index');
          }
+ 
     }
 
     public function Eliminar(){

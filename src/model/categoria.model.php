@@ -82,7 +82,9 @@ class CategoriaModel
     {
        
         $this->bd = new Conexion();
+ 
         $stmt = $this->bd->prepare("UPDATE categoria SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idCategoria = :idCategoria");
+ 
 
         $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));         
         $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por'));
