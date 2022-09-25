@@ -272,10 +272,6 @@ public function sumar_array_key_value($array_query, $clave, $valor) {
   return $nuevo;
 }
 
-                
-
-
-
  }   
 
 

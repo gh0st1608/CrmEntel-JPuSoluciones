@@ -18,16 +18,17 @@ class UsuarioController{
     }
     /**==========================Vistas=======================================*/
 
-    public function validarPermiso ($idPerfil = 0,$idVista=0){
-
+    public function validarPermiso ($idPerfil,$idVista){
+        print_r($idPerfil);
+        print_r($idVista);
       try
         {
              ini_set('memory_limit', -1); 
-        $this->pdo = new Conexion();
+            $this->pdo = new Conexion();
             $result = array();
 
-            $stm = $this->pdo->prepare("SELECT acceder     FROM Permiso
-                WHERE Vista_id = $idVista
+            $stm = $this->pdo->prepare("SELECT acceder FROM Permiso
+                WHERE Interfaz_id = $idVista
                 AND Perfil_id=$idPerfil");
             $stm->execute();
                    
@@ -44,13 +45,14 @@ class UsuarioController{
 
     public function Index(){
         $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
-     
+        print_r($permiso);
         if($permiso['acceder']==1){         
       
             require_once 'view/header.php';
             require_once 'view/seguridad/usuario/index.php';
             require_once 'view/footer.php';       
         }else{
+          print_r($permiso);
           header('Location: index.php?c=index&a=denegado');
         }
 
