@@ -73,10 +73,10 @@ class CategoriaController{
        
         if($registrar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Registrar');
- 
-           // echo 'No se Ha Podido Registrar';
+            echo 'No se Ha Podido Registrar';
+            
          }else{
-           // echo 'Registrado Correctamente';
+            echo 'Registrado Correctamente';
             header('Location: index.php?c=Categoria=Index');
          }
  

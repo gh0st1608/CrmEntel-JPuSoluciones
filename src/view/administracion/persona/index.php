@@ -41,7 +41,7 @@
 	                    		<td><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></td>
 	                    		<td><?php echo $persona['Celular']; ?></td>
 	                    		<td><?php echo $persona['Correo']; ?></td>
-	                    		<?php if ($persona['Estado']==0): ?>
+	                    		<?php if ($persona['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>

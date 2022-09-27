@@ -14,7 +14,7 @@
 		<div class="col-sm-12 col-md-6 col-md-offset-3">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			<h3 class='box-title'><i class="fa fa-users"></i> Registrar Perfil</h3>
+	      			<h3 class='box-title'><i class="fa fa-users"></i> Registrar Interfaz</h3>
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmRegistrarPerfil" action="?c=Perfil&a=Registrar" method="post" enctype="multipart/form-data" role="form">

@@ -27,8 +27,8 @@
 					    <div class="form-group col-md-2">
 					        <label>Estado</label>
 					        <select name="Estado" id="Estado" class="form-control">
-					            <option value="0">Activo</option> 
-					            <option value="1">Inactivo</option> 
+					            <option value="1">Activo</option> 
+					            <option value="0">Inactivo</option> 
 					        </select>
 					    </div>					   
 					  <div class="col-md-12" style="margin-top:2em;">

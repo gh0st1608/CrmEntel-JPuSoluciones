@@ -72,16 +72,19 @@ class SubcategoriaController{
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']); 
 
         $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);
-
         if ($subcategoria -> Aplicar_Logica == 1)
         {
             $subcategorias = json_decode($_REQUEST['Data'],TRUE);
 
-            foreach ( $subcategorias as $subcategoria )
-            {
-                $subcategoria->__SET('Nombre',$subcategoria['Nombre']);
-                $subcategoria->__SET('Estado',$subcategoria['Estado']);
-                $registrar_subcategoria = $this->model->Registrar($subcategoria);
+            foreach ($subcategorias as $subcategoria1 )
+            {   
+                foreach ($subcategoria1 as $valor )
+                {
+                    $subcategoria->__SET('Nombre',$valor['Nombre']);
+                    $subcategoria->__SET('Estado',$valor['Estado']);
+                    print_r($subcategoria);
+                    $registrar_subcategoria = $this->model->Registrar($subcategoria);
+                }
             }
         }
         else

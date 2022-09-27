@@ -2,19 +2,16 @@
     "Cargo": 
     [
         {
-        "Id": 1,
-        "Nombre": "Gerente",
-        "Estado": 0
+        "Nombre": "CARGO 1",
+        "Estado": 1
         },
         {
-        "Id": 2,
-        "Item": "Recursos Humanos",
-        "Estado": 0
+        "Nombre": "CARGO 2",
+        "Estado": 1
         },
         {
-        "Id": 3,
-        "Item": "Supervisor",
-        "Estado": 0
+        "Nombre": "CARGO 3",
+        "Estado": 1
         }
     ]
 }
