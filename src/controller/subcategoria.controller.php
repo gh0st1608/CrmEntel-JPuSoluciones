@@ -70,16 +70,28 @@ class SubcategoriaController{
         //$subcategoria->__SET('Data',$_REQUEST['Data']);
         $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']); 
-        $subcategorias = json_decode($_REQUEST['Data'],TRUE);
 
-        foreach ( $subcategorias as $subcategoria )
+        $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);
+
+        if ($subcategoria -> Aplicar_Logica == 1)
         {
-            $subcategoria->__SET('Nombre',$subcategoria['Nombre']);
-            $subcategoria->__SET('Estado',$subcategoria['Estado']);
+            $subcategorias = json_decode($_REQUEST['Data'],TRUE);
+
+            foreach ( $subcategorias as $subcategoria )
+            {
+                $subcategoria->__SET('Nombre',$subcategoria['Nombre']);
+                $subcategoria->__SET('Estado',$subcategoria['Estado']);
+                $registrar_subcategoria = $this->model->Registrar($subcategoria);
+            }
+        }
+        else
+        {
+            $subcategoria->__SET('Nombre',$_REQUEST['Nombre']);
+            $subcategoria->__SET('Estado',1);
             $registrar_subcategoria = $this->model->Registrar($subcategoria);
         }
+
  
-         
         if($registrar_subcategoria=='error'){
             header('Location: index.php?c=SubCategoria&a=v_Registrar');
             echo 'No se Ha Podido Registrar';

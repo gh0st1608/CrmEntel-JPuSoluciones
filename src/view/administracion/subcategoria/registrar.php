@@ -49,7 +49,7 @@ $categorias = $categoria->Listar();
 					        </select>
 					    </div>
 						<div class="form-group col-md-12 Data" style="display:none;">
-					        <label>SubCategoria</label>
+					        <label>Logica Json</label>
 					        <textarea name="Data" id="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
 							</textarea>
 					    </div>					   
@@ -109,17 +109,23 @@ $categorias = $categoria->Listar();
 		});
 
 	$(document).ready(function () {
-	$('#Logica').on('change',function(){
-        var selectValor = $(this).val();
-        
-		//alert (selectValor);
+		$('#btnSubmit').attr("disabled", true);
+			$('#Data').keyup(function () {
+				var buttonDisabled = $('#Data').val().length == 0;
+				$('#btnSubmit').attr("disabled", buttonDisabled);
+			});
+		});
 
-        if (selectValor == '1') {
-            $('.Data').show();
-        }else {
-          $('.Data').hide();
-            //alert('esta es la opcion 2')
-        }
-    });
+	$(document).ready(function () {
+		$('#Logica').on('change',function(){
+			var selectValor = $(this).val();
+			if (selectValor == '1') {
+				$('.Data').show();
+				$('#Nombre').prop("disabled",true)
+			}else {
+			$('.Data').hide();
+				//alert('esta es la opcion 2')
+			}
+		});
 	});
 </script>
