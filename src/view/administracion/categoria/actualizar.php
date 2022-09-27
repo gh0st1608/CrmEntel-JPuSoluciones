@@ -28,20 +28,23 @@ $categoria= $this->Consultar($_REQUEST['idCategoria']);
 	    		<div class="box-body">
 	    			<form id="frmActualizarCategoria" action="?c=Categoria&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
 	    				<input type="hidden" name="idCategoria" value="<?php echo $categoria->__GET('idCategoria'); ?>" /> 
-					    <div class="form-group col-md-3">
-					        <label>Nombre Categoria</label>
-					        <input type="text" name="Nombre" value="<?php echo $categoria->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
-					    </div>
-					    					    
 					    <div class="form-group col-md-12">
-					      <label>Activo</label>
-					      <label class="radio-inline">
-					          <input type="radio" name="Estado" id="Estado" value="0" <?php if ($categoria->__GET('Estado')==0) { echo 'checked';  } ?>> SI
-					      </label>
-					      <label class="radio-inline">
-					          <input type="radio" name="Estado" id="Estado" value="1" <?php if ($categoria->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
-					      </label>					    
-					    </div>
+					        <label>Categoria</label>
+					        <input type="text" name="Nombre" value="<?php echo $categoria->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
+					    </div>				    
+					    <div class="form-group col-md-4">
+					      <label>Estado</label>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="radio-inline">
+								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($categoria->__GET('Estado')==0) { echo 'checked';  } ?>> SI
+							</label>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="radio-inline">
+								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($categoria->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
+							</label>	
+						</div>	
 						
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12"> 
@@ -88,9 +91,10 @@ $categoria= $this->Consultar($_REQUEST['idCategoria']);
 	                }
 	            }
         	}); 
-		});
-
-		
+		});	
 	});
+
+
+	
 </script>
 <?php }/*--- END REQUESt*/ ?>

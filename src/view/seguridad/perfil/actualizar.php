@@ -15,7 +15,7 @@
 
  if (!isset($_REQUEST['idPerfil'])==''){
 
-$Perfil= $this->Consultar($_REQUEST['idPerfil']);
+$perfil= $this->Consultar($_REQUEST['idPerfil']);
 
   ?>
 <section class="content">
@@ -27,20 +27,24 @@ $Perfil= $this->Consultar($_REQUEST['idPerfil']);
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmActualizarPerfil" action="?c=Perfil&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
-	    				<input type="hidden" name="idPerfil" value="<?php echo $Perfil->__GET('idPerfil'); ?>" />
+	    				<input type="hidden" name="idPerfil" value="<?php echo $perfil->__GET('idPerfil'); ?>" />
 					    <div class="form-group col-md-12">
 					        <label>Perfil</label>
-					        <input type="text" name="Nombre" value="<?php echo $Perfil->__GET('Nombre'); ?>" class="form-control" placeholder="" />
+					        <input type="text" name="Nombre" value="<?php echo $perfil->__GET('Nombre'); ?>" class="form-control" placeholder="" />
 					    </div>						    
-					    <div class="form-group col-md-12">
-					      <label>Activo</label>
-					      <label class="radio-inline">
-					          <input type="radio" name="Estado" id="Estado" value="0" <?php if ($Perfil->__GET('Estado')==0) { echo 'checked';  } ?>> SI
-					      </label>
-					      <label class="radio-inline">
-					          <input type="radio" name="Estado" id="Estado" value="1" <?php if ($Perfil->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
-					      </label>					    
-					    </div> 
+					    <div class="form-group col-md-4">
+					      <label>Estado</label>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="radio-inline">
+								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($perfil->__GET('Estado')==0) { echo 'checked';  } ?>> SI
+							</label>
+						</div>
+						<div class="form-group col-md-4">
+							<label class="radio-inline">
+								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($perfil->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
+							</label>	
+						</div>		
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12" style="margin-bottom:1em;">
 					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    

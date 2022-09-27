@@ -3,7 +3,7 @@ require_once 'model/subcategoria.model.php';
 require_once 'entity/subcategoria.entity.php';
 
 
-class subcategoriaController{    
+class SubcategoriaController{    
   
     private $model;
     
@@ -38,7 +38,7 @@ class subcategoriaController{
 
     public function Consultar($idSubCategoria)
     {
-        $subcategoria = new subcategoria();
+        $subcategoria = new SubCategoria();
         $subcategoria->__SET('idSubCategoria',$idSubcategoria);
 
         $consulta = $this->model->Consultar($subcategoria);
@@ -46,7 +46,7 @@ class subcategoriaController{
     }
 
     public function Actualizar(){
-        $subcategoria = new subcategoria();
+        $subcategoria = new SubCategoria();
         $subcategoria->__SET('idSubCategoria',$_REQUEST['idSubCategoria']);
         $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
         $subcategoria->__SET('Nombre',$_REQUEST['Nombre']);  
@@ -65,7 +65,7 @@ class subcategoriaController{
 
     public function Registrar(){
         
-        $subcategoria = new subcategoria();
+        $subcategoria = new SubCategoria();
         $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
         $subcategoria->__SET('Nombre',$_REQUEST['Nombre']);
         $subcategoria->__SET('Estado',$_REQUEST['Estado']);     
@@ -82,7 +82,7 @@ class subcategoriaController{
     }
 
     public function Eliminar(){
-        $subcategoria = new subcategoria();
+        $subcategoria = new SubCategoria();
         $subcategoria->__SET('idSubCategoria',$_REQUEST['idSubCategoria']);      
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $subcategoria->__SET('Eliminado',1); 
