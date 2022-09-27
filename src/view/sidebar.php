@@ -1,3 +1,12 @@
+<?php
+$interfaces_modulo = new InterfazController();
+
+ 
+$interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
+ 
+ 
+
+?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
   <!-- sidebar: style can be found in sidebar.less -->
@@ -24,90 +33,34 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
 
-    
-
+ 
     <ul class="sidebar-menu"> 
       <li class="header">Menú de Navegacion</li>
+      <?php foreach ($interfaces_modulo as $modulo): ?>
       <li class="treeview">
-        <a href="#">
+        <a href="#"> 
           <i class="fa fa-lock"></i>
-          <span>Seguridad</span>
+          <span><?php echo $modulo['Nombre'] ; ?> </span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">                
           <li>
-            <li><a href="index.php?c=Usuario"><i class="fa fa-circle-o" aria-hidden="true"></i> Usuarios</a></li>
-            <li><a href="index.php?c=Perfil"><i class="fa fa-circle-o" aria-hidden="true"></i> Perfiles</a></li>
-            <li><a href="index.php?c=Interface"><i class="fa fa-circle-o" aria-hidden="true"></i> Interfaces</a></li>
-            <li><a href="index.php?c=Permiso"><i class="fa fa-circle-o" aria-hidden="true"></i> Permiso</a></li>                 
+           <? $interfaces_nivel = new InterfazController();
+             $idInterfaz_superior = $modulo['idInterfaz'] ;
+             $interfaces_nivel =  $interfaces_nivel->ListarNivel($idInterfaz_superior );
+           ?>
+            <?php foreach ($interfaces_nivel as $nivel): ?>
+              <li><a href=<?php echo  $nivel['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel['Nombre'] ; ?> </a></li>
+              
+            <?php endforeach; ?>
           </li>
         </ul>
       </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <span>Administración</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">                
-          <li>
-            <li><a href="index.php?c=Persona"><i class="fa fa-circle-o" aria-hidden="true"></i> Persona</a></li>
-            <li><a href="index.php?c=Categoria"><i class="fa fa-circle-o" aria-hidden="true"></i> Categoria</a></li>
-            <li><a href="index.php?c=SubCategoria"><i class="fa fa-circle-o" aria-hidden="true"></i> SubCategoria</a></li>
-          </li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <span>Ventas</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">                
-          <li>
-            <li><a href="index.php?c=#"><i class="fa fa-circle-o" aria-hidden="true"></i> #</a></li>
-          </li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <span>Procesos</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">                
-          <li>
-            <li><a href="index.php?c=#"><i class="fa fa-circle-o" aria-hidden="true"></i> #</a></li>
-          </li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <span>Reportes</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">                
-          <li>
-            <li><a href="index.php?c=#"><i class="fa fa-circle-o" aria-hidden="true"></i> #</a></li>
-          </li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <span>Dashboard</span>
-          <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">                
-          <li>
-            <li><a href="index.php?c=#"><i class="fa fa-circle-o" aria-hidden="true"></i> #</a></li>
-          </li>
-        </ul>
-      </li>
-
+      <?php endforeach; ?>
       <li>            
     </ul>
+
+    
  
   </section>
   <!-- /.sidebar -->

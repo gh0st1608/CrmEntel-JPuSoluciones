@@ -1,6 +1,7 @@
 <?php
 include_once 'model/conexion.php';
 require_once 'controller/usuario.controller.php'; 
+require 'controller/interfaz.controller.php'; 
 require_once 'includes.controller.php';
 
 class IndexController extends IncludesController{    
