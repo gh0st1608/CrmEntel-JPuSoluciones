@@ -1,0 +1,43 @@
+{
+    "Cargo": 
+    [
+        {
+        "Id": 1,
+        "Nombre": "Gerente",
+        "Estado": 0
+        },
+        {
+        "Id": 2,
+        "Item": "Recursos Humanos",
+        "Estado": 0
+        },
+        {
+        "Id": 3,
+        "Item": "Supervisor",
+        "Estado": 0
+        }
+    ],
+    "TipoDocumento":
+    [
+        {
+            "Id": 1,
+            "Nombre": "DNI",
+            "Estado": 0
+        },
+            {
+            "Id": 2,
+            "Item": "CE",
+            "Estado": 0
+        },
+        {
+            "Id": 3,
+            "Item": "RUC",
+            "Estado": 0
+        },
+        {
+            "Id": 4,
+            "Item": "Pasaporte",
+            "Estado": 0
+        }    
+    ]
+}

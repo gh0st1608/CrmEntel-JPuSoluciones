@@ -23,12 +23,11 @@
 	                    <thead>
 	                      	<tr>                      
 		                    	<th>ID</th>                    
-			                    <th style="vertical-align: middle;">Codigo</th>
+			                    <th style="vertical-align: middle;">Cargo</th>
+								<th style="vertical-align: middle;">Documento</th>
 			                    <th style="vertical-align: middle;">Nombres y Apellidos</th>
 			                    <th style="vertical-align: middle;">Celular</th>
-			                    <th style="vertical-align: middle;">Correo</th>
-			                    <th style="vertical-align: middle;">Anexo</th>
-			                    <th style="vertical-align: middle;">Tipo Horario</th>
+			                    <th style="vertical-align: middle;">Fecha de Nacimiento</th>
 			                    <th style="vertical-align: middle;">Estado</th>
 			                    <th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>
@@ -37,13 +36,12 @@
 	                    	<?php foreach ($personas as $persona): ?>
 	                    	<tr>
 	                    		<td><?php echo  $persona['idPersona']; ?></td>
+								<td><?php echo  $persona['Perfil_id']; ?></td>
 	                    		<td><?php echo $persona['Documento']; ?></td>
 	                    		<td><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></td>
 	                    		<td><?php echo $persona['Celular']; ?></td>
 	                    		<td><?php echo $persona['Correo']; ?></td>
-	                    		<td><?php echo '---';//echo $persona['anexo']; ?></td>
-	                    		<td><?php echo '---';//echo $persona['tipo_horario']; ?></td>
-	                    		<?php if ($persona['Estado']==1): ?>
+	                    		<?php if ($persona['Estado']==0): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>

@@ -1,0 +1,15 @@
+{
+"Categoria":
+    [
+        {
+            "Id": 1,
+            "Nombre": "Cargo",
+            "Estado": 0
+        },
+        {
+            "Id": 2,
+            "Item": "TipoDocumento",
+            "Estado": 0
+        }
+    ]
+}

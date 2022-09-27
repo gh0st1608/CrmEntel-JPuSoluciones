@@ -66,11 +66,19 @@ class SubcategoriaController{
     public function Registrar(){
         
         $subcategoria = new SubCategoria();
+
+        //$subcategoria->__SET('Data',$_REQUEST['Data']);
         $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
-        $subcategoria->__SET('Nombre',$_REQUEST['Nombre']);
-        $subcategoria->__SET('Estado',$_REQUEST['Estado']);     
-        $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);     
-        $registrar_subcategoria = $this->model->Registrar($subcategoria);  
+        $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']); 
+        $subcategorias = json_decode($_REQUEST['Data'],TRUE);
+
+        foreach ( $subcategorias as $subcategoria )
+        {
+            $subcategoria->__SET('Nombre',$subcategoria['Nombre']);
+            $subcategoria->__SET('Estado',$subcategoria['Estado']);
+            $registrar_subcategoria = $this->model->Registrar($subcategoria);
+        }
+ 
          
         if($registrar_subcategoria=='error'){
             header('Location: index.php?c=SubCategoria&a=v_Registrar');

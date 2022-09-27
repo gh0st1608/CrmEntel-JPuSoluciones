@@ -31,7 +31,7 @@ $categorias = $categoria->Listar();
 					        <label>SubCategoria</label>
 					        <input type="text" name="Nombre" id="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-12">
 							<label>Categoria</label>
 							<select name="Categoria_id" id="Categoria_id" class="form-control">
 							<option value="0">-- Seleccionar Categoría--</option>      
@@ -40,12 +40,17 @@ $categorias = $categoria->Listar();
 							<?php endforeach; ?>           
 				        	</select>
 				    	</div>
-					    <div class="form-group col-md-6">
+					    <div class="form-group col-md-12">
 					        <label>Estado</label>
 					        <select name="Estado" id="Estado" class="form-control">
 					            <option value="0">Activo</option> 
 					            <option value="1">Inactivo</option> 
 					        </select>
+					    </div>
+						<div class="form-group col-md-12">
+					        <label>SubCategoria</label>
+					        <textarea name="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
+							</textarea>
 					    </div>					   
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">

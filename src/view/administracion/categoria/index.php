@@ -33,7 +33,7 @@
 	                    	<tr>
 	                    		<td><?php echo $categoria['idCategoria']; ?></td>
 	                    		<td><?php echo $categoria['Nombre']; ?></td>
-								<?php if ($categoria['Estado']==0):?>
+								<?php if ($categoria['Estado']==1):?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
