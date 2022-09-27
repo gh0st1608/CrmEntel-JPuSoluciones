@@ -33,7 +33,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     {
       
        //si no existe mostrar el siguiente mensaje   
-       $resultado = "Usuario Blqueado";
+       $resultado = "Usuario Bloqueado";
     }
     else{
       $resultado = "Usuario o Contraseña Incorrecta";
@@ -91,7 +91,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 $_SESSION['intentoSesion'] = 0           ?>
           <div class="row" >
             <div class="col-md-12">
-            <p class="openBtn2"><a href="#">Recuperar Contraseña</a></p>
+            <p class="openBtn2" style="text-align: right;"><a href="#">Recuperar Contraseña</a></p>
             </div>
           </div>
           <div class="modal fade" id="myModal" role="dialog">

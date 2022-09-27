@@ -1,0 +1,20 @@
+{
+    "Cargo": 
+    [
+        {
+        "Id": 1,
+        "Nombre": "Gerente",
+        "Estado": 0
+        },
+        {
+        "Id": 2,
+        "Item": "Recursos Humanos",
+        "Estado": 0
+        },
+        {
+        "Id": 3,
+        "Item": "Supervisor",
+        "Estado": 0
+        }
+    ]
+}
