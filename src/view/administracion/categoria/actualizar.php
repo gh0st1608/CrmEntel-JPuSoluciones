@@ -37,12 +37,12 @@ $categoria= $this->Consultar($_REQUEST['idCategoria']);
 						</div>
 						<div class="form-group col-md-4">
 							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($categoria->__GET('Estado')==0) { echo 'checked';  } ?>> SI
+								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($categoria->__GET('Estado')==1) { echo 'checked';  } ?>> SI
 							</label>
 						</div>
 						<div class="form-group col-md-4">
 							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($categoria->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
+								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($categoria->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
 							</label>	
 						</div>	
 						

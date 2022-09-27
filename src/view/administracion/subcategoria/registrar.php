@@ -41,15 +41,16 @@ $categorias = $categoria->Listar();
 				        	</select>
 				    	</div>
 					    <div class="form-group col-md-12">
-					        <label>Estado</label>
-					        <select name="Estado" id="Estado" class="form-control">
-					            <option value="0">Activo</option> 
-					            <option value="1">Inactivo</option> 
+					        <label>Aplicar Lógica</label>
+					        <select name="Logica" id="Logica" class="form-control">
+							    <option value="">¿Aplicar Logica?</option>
+								<option value="0">No</option>
+					            <option value="1">Si</option> 
 					        </select>
 					    </div>
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-12 Data" style="display:none;">
 					        <label>SubCategoria</label>
-					        <textarea name="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
+					        <textarea name="Data" id="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
 							</textarea>
 					    </div>					   
 					  <div class="col-md-12" style="margin-top:2em;">
@@ -106,4 +107,19 @@ $categorias = $categoria->Listar();
 				$('#btnSubmit').attr("disabled", buttonDisabled);
 			});
 		});
+
+	$(document).ready(function () {
+	$('#Logica').on('change',function(){
+        var selectValor = $(this).val();
+        
+		//alert (selectValor);
+
+        if (selectValor == '1') {
+            $('.Data').show();
+        }else {
+          $('.Data').hide();
+            //alert('esta es la opcion 2')
+        }
+    });
+	});
 </script>
