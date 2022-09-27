@@ -83,8 +83,14 @@ class InterfazController{
         
         $interfaz = new Interfaz();
         $interfaz->__SET('Nombre',$_REQUEST['Nombre']);
-        $interfaz->__SET('Estado',$_REQUEST['Estado']);
-        $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);     
+        $interfaz->__SET('Url',$_REQUEST['Url']);
+        $interfaz->__SET('Nivel',$_REQUEST['Nivel']);
+        $interfaz->__SET('Modulo_Principal',$_REQUEST['ModPrincipal']);
+        $interfaz->__SET('IdInterfaz_Superior',$_REQUEST['ModSuperior']);
+        $interfaz->__SET('Orden',$_REQUEST['Orden']);
+        $interfaz->__SET('Icono',$_REQUEST['Icono']);
+        $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
+        $interfaz->__SET('Estado',$_REQUEST['Estado']);    
        
         $registrar_interfaz = $this->model->Registrar($interfaz);  
        

@@ -33,7 +33,7 @@
 	                    	<tr>
 	                    		<td><?php echo $perfil['idPerfil']; ?></td>
 	                    		<td><?php echo $perfil['Nombre']; ?></td>
-	                    		<?php if ($perfil['Estado']==0): ?>
+	                    		<?php if ($perfil['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>

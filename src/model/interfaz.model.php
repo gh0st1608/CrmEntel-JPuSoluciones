@@ -105,8 +105,14 @@ class InterfazModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO Interfaz(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
         $stmt->bindValue(':Nombre', $Interfaz->__GET('Nombre'),PDO::PARAM_STR);
+        $stmt->bindValue(':Url', $Interfaz->__GET('Url'),PDO::PARAM_STR);
+        $stmt->bindValue(':Nivel', $Interfaz->__GET('Nivel'),PDO::PARAM_STR);
+        $stmt->bindValue(':Modulo_Principal', $Interfaz->__GET('Modulo_Principal'),PDO::PARAM_STR);
+        $stmt->bindValue(':IdInterfaz_Superior', $Interfaz->__GET('IdInterfaz_Superior'),PDO::PARAM_STR);
+        $stmt->bindValue(':Orden', $Interfaz->__GET('Orden'),PDO::PARAM_INT);
+        $stmt->bindValue(':Icono', $Interfaz->__GET('Icono'),PDO::PARAM_STR);
         $stmt->bindValue(':Estado', $Interfaz->__GET('Estado'),PDO::PARAM_STR);
-        $stmt->bindValue(':Ingresado_por', $Interfaz->__GET('Ingresado_por'),PDO::PARAM_INT);     
+        $stmt->bindValue(':Ingresado_por', $Interfaz->__GET('Ingresado_por'),PDO::PARAM_INT);   
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();

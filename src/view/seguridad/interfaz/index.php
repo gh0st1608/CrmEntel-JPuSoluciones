@@ -14,7 +14,7 @@
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			<h3 class='box-title'><i class="fa fa-users"></i> Lista de Interfaces</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Interfaz&a=v_Registrar"> Registrar Perfil</a>
+	      			<h3 class='box-title'><i class="fa fa-users"></i> Lista de Interfaces</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Interfaz&a=v_Registrar"> Registrar Interfaz</a>
 	    		</div>
 	    		<div class="box-body box-body_table">
 	    		 <?php  $modulos = $this->ConsultaModulo();  ?>
