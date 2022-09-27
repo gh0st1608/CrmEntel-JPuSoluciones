@@ -10,7 +10,9 @@ class UsuarioModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM usuario where eliminado=0 order by idUsuario asc;" );
+        $stmt = $this->bd->prepare("SELECT idUsuario,login,Perfil_id,usuario.activo,perfil.nombre as Perfil FROM usuario 
+INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+where usuario.eliminado=0 order by idUsuario desc" );
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -25,6 +27,8 @@ class UsuarioModel
     public function Consultar_informacion_usuario($idUsuario)
     {
          
+
+
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT idUsuario,idPersona,primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,fecha_nacimiento,sexo,correo,perfil.nombre as perfil from usuario
         inner join perfil on perfil.idPerfil=usuario.Perfil_id
@@ -38,8 +42,9 @@ class UsuarioModel
         }else{            
             return $stmt->fetch(PDO::FETCH_ASSOC);       
         }
-    }
+        
 
+    }
     public function Consultar(Usuario $usuario)
     {
         $this->bd = new Conexion();

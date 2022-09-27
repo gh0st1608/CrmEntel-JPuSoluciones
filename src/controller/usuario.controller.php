@@ -44,10 +44,10 @@ class UsuarioController{
 
 
     public function Index(){
-        //$permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
-       // print_r($permiso);
-        //if($permiso['acceder']==1){         
-        if(1){
+        $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
+        print_r($permiso);
+        if($permiso['acceder']==1){         
+      
             require_once 'view/header.php';
             require_once 'view/seguridad/usuario/index.php';
             require_once 'view/footer.php';       

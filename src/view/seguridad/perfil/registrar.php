@@ -20,7 +20,7 @@
 	    			<form id="frmRegistrarPerfil" action="?c=Perfil&a=Registrar" method="post" enctype="multipart/form-data" role="form">
 					    <div class="form-group col-md-12">
 					        <label>Perfil</label>
-					        <input type="text" name="Nombre" value="" class="form-control" placeholder=""  required />
+					        <input type="text" name="Nombre" id="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
 						<div class="form-group col-md-3">
 					        <label>Estado</label>
@@ -77,4 +77,14 @@
 
 		
 	});
+
+
+
+	$(document).ready(function () {
+		$('#btnSubmit').attr("disabled", true);
+			$('#Nombre').keyup(function () {
+				var buttonDisabled = $('#Nombre').val().length == 0;
+				$('#btnSubmit').attr("disabled", buttonDisabled);
+			});
+		});
 </script>

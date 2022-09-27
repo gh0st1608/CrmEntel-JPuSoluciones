@@ -14,7 +14,7 @@
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de Categorias</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=Categoria&a=v_Registrar">Nueva Categoria</a><?php endif; ?>
+	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de Categorias</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=Categoria&a=v_Registrar">Registrar Categoria</a><?php endif; ?>
 	    		</div>
 	    		<div class="box-body box-body_table">
 	    		 <?php  $categorias = $this->Listar();  ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 24-09-2022 a las 20:12:14
+-- Tiempo de generación: 26-09-2022 a las 23:37:43
 -- Versión del servidor: 5.7.39
 -- Versión de PHP: 8.0.19
 
@@ -27,7 +27,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-DROP PROCEDURE IF EXISTS `ProcInsertLogSesion`$$
 CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
   
   IF (P_Password = '' OR  P_Login = '' )
@@ -109,7 +108,6 @@ and IdEstadoKanBanDetalle = 2;
  
 END$$
 
-DROP PROCEDURE IF EXISTS `ProcUpdateLogSesion`$$
 CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
  
     UPDATE  log_sesion   
@@ -131,7 +129,6 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `categoria`
 --
 
-DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `idCategoria` int(11) NOT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
@@ -145,14 +142,8 @@ CREATE TABLE `categoria` (
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(29, 'demo4', 0, 1, '2022-09-24 19:37:25', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(30, '123456', 0, 1, '2022-09-24 19:38:52', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(31, 'demo4', 0, 1, '2022-09-24 19:51:40', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(32, 'registrar', 0, 1, '2022-09-24 19:52:05', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(33, 'asdas', 0, 1, '2022-09-24 19:54:07', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(34, 'asdasd', 0, 1, '2022-09-24 19:56:14', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(35, 'adadsads', 0, 1, '2022-09-24 19:56:47', 0);
-INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(36, 'adadsads', 0, 1, '2022-09-24 19:58:14', 0);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(52, 'categoria 1', 0, 1, '2022-09-24 23:45:40', 1);
+INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Eliminado`) VALUES(53, 'demo4', 0, 1, '2022-09-24 23:51:03', 0);
 
 -- --------------------------------------------------------
 
@@ -160,7 +151,6 @@ INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fe
 -- Estructura de tabla para la tabla `EstadoKanBan`
 --
 
-DROP TABLE IF EXISTS `EstadoKanBan`;
 CREATE TABLE `EstadoKanBan` (
   `IdEstadoKanBan` int(11) NOT NULL,
   `NomEstadoKanBan` varchar(100) NOT NULL,
@@ -179,7 +169,6 @@ INSERT INTO `EstadoKanBan` (`IdEstadoKanBan`, `NomEstadoKanBan`, `Estado`) VALUE
 -- Estructura de tabla para la tabla `EstadoKanBanDetalle`
 --
 
-DROP TABLE IF EXISTS `EstadoKanBanDetalle`;
 CREATE TABLE `EstadoKanBanDetalle` (
   `IdEstadoKanBanDetalle` int(11) NOT NULL,
   `IdEstadoKanBan` int(11) NOT NULL,
@@ -201,7 +190,6 @@ INSERT INTO `EstadoKanBanDetalle` (`IdEstadoKanBanDetalle`, `IdEstadoKanBan`, `N
 -- Estructura de tabla para la tabla `interfaz`
 --
 
-DROP TABLE IF EXISTS `interfaz`;
 CREATE TABLE `interfaz` (
   `idInterfaz` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
@@ -233,7 +221,6 @@ INSERT INTO `interfaz` (`idInterfaz`, `Nombre`, `Url`, `Nivel`, `Modulo_Principa
 -- Estructura de tabla para la tabla `log_sesion`
 --
 
-DROP TABLE IF EXISTS `log_sesion`;
 CREATE TABLE `log_sesion` (
   `idLog_Sesion` int(11) NOT NULL,
   `Login` varchar(20) DEFAULT NULL,
@@ -259,7 +246,6 @@ INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`,
 -- Estructura de tabla para la tabla `perfil`
 --
 
-DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE `perfil` (
   `idPerfil` int(11) NOT NULL,
   `Nombre` varchar(45) DEFAULT NULL,
@@ -286,7 +272,6 @@ INSERT INTO `perfil` (`idPerfil`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Re
 -- Estructura de tabla para la tabla `permiso`
 --
 
-DROP TABLE IF EXISTS `permiso`;
 CREATE TABLE `permiso` (
   `idPermiso` int(11) NOT NULL,
   `Perfil_id` int(11) NOT NULL DEFAULT '0',
@@ -314,7 +299,6 @@ INSERT INTO `permiso` (`idPermiso`, `Perfil_id`, `Interfaz_id`, `Acceder`, `Esta
 -- Estructura de tabla para la tabla `persona`
 --
 
-DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
   `idPersona` int(11) NOT NULL,
   `Tipo_Documento` char(10) DEFAULT NULL,
@@ -333,6 +317,7 @@ CREATE TABLE `persona` (
   `Fecha_Registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Modificado_por` int(11) DEFAULT NULL,
   `Fecha_Modificacion` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `Fecha_Ingreso` varchar(20) DEFAULT NULL,
   `Eliminado` tinyint(1) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -340,10 +325,15 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(1, NULL, '71886624', 'Jose', 'Luis', 'Ayala', 'Benito', '1996-06-07', 'M', '945191447', 'jayalab@jpusoluciones.com', 0, 1, 1, '2019-02-06 13:47:45', NULL, '2019-02-06 13:49:05', 0);
-INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(2, NULL, '11111111', 'Supervisor', '', '1', '', '2019-02-06', 'F', '', 'supervisor1@correo.com', 1, 1, 1, '2019-02-06 14:21:03', 2, '2019-02-06 16:16:02', 0);
-INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(3, NULL, '22222222', 'Teleoperador', '', 'Ventas', '1', '2019-02-06', 'F', '', 'teleoperadorventas1@correo.com', 1, 1, 1, '2019-02-06 14:23:48', NULL, NULL, 0);
-INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES(4, NULL, '33333333', 'Teleoperador', '', 'Ventas', '2', '2019-02-06', 'F', '', 'teleoperadorventas2@correo.com', 1, 1, 1, '2019-02-06 14:25:57', NULL, NULL, 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(1, NULL, '71886624', 'Jose', 'Luis', 'Ayala', 'Benito', '1996-06-07', 'M', '945191447', 'jayalab@jpusoluciones.com', 0, 1, 1, '2019-02-06 13:47:45', NULL, '2019-02-06 13:49:05', NULL, 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(2, NULL, '11111111', 'Supervisor', '', '1', '', '2019-02-06', 'F', '', 'supervisor1@correo.com', 1, 1, 1, '2019-02-06 14:21:03', 1, '2022-09-25 00:05:55', NULL, 1);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(3, NULL, '22222222', 'Teleoperador', '', 'Ventas', '1', '2019-02-06', 'F', '', 'teleoperadorventas1@correo.com', 1, 1, 1, '2019-02-06 14:23:48', 1, '2022-09-25 00:03:59', NULL, 1);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(4, NULL, '33333333', 'Teleoperador', '', 'Ventas', '2', '2019-02-06', 'F', '', 'teleoperadorventas2@correo.com', 1, 1, 1, '2019-02-06 14:25:57', 1, '2022-09-24 23:57:37', NULL, 1);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(5, NULL, '', 'asdasd', '', '', '', NULL, '', NULL, NULL, NULL, 1, 0, '2022-09-25 00:12:47', NULL, NULL, NULL, 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(6, NULL, '45454545', 'omar', 'omar', 'omar', 'omar', NULL, '', NULL, NULL, NULL, 1, 0, '2022-09-25 00:41:20', NULL, NULL, NULL, 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(7, NULL, '70347435', 'omar', 'omar', 'omar', 'omar', NULL, '', NULL, NULL, NULL, 1, 0, '2022-09-25 00:41:47', NULL, NULL, NULL, 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(9, NULL, '71886629', 'omar', 'omar', 'omar', 'omar', NULL, '', '9999966', 'ascdfacdfas@uni.pe', NULL, 1, 0, '2022-09-25 00:53:33', NULL, NULL, '02/10/2022', 0);
+INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Fecha_Ingreso`, `Eliminado`) VALUES(10, NULL, '70347422', 'omar', 'omar', 'omar', 'omar', NULL, '', '972290520', 'cpaucarv@uni.pe', NULL, 1, 0, '2022-09-25 00:54:17', NULL, NULL, '2022-08-11', 0);
 
 -- --------------------------------------------------------
 
@@ -351,7 +341,6 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 -- Estructura de tabla para la tabla `subcategoria`
 --
 
-DROP TABLE IF EXISTS `subcategoria`;
 CREATE TABLE `subcategoria` (
   `idSubCategoria` int(11) NOT NULL,
   `Categoria_id` int(11) DEFAULT NULL,
@@ -368,7 +357,6 @@ CREATE TABLE `subcategoria` (
 -- Estructura de tabla para la tabla `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `Persona_id` int(11) NOT NULL DEFAULT '0',
@@ -466,7 +454,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `interfaz`
@@ -496,7 +484,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `subcategoria`

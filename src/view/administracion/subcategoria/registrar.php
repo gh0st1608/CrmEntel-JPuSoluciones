@@ -27,11 +27,12 @@ $categorias = $categoria->Listar();
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmRegistrarSubCategoria" action="?c=SubCategoria&a=Registrar" method="post" enctype="multipart/form-data" role="form">	   				
-					    <div class="form-group col-md-3">
+					    <div class="form-group col-md-12">
 					        <label>SubCategoria</label>
-					        <input type="text" name="Nombre" value="" class="form-control" placeholder=""  required />
+					        <input type="text" name="Nombre" id="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-6">
+							<label>Categoria</label>
 							<select name="Categoria_id" id="Categoria_id" class="form-control">
 							<option value="0">-- Seleccionar Categoría--</option>      
 							<?php foreach ($categorias as $categoria): ?>                
@@ -39,7 +40,7 @@ $categorias = $categoria->Listar();
 							<?php endforeach; ?>           
 				        	</select>
 				    	</div>
-					    <div class="form-group col-md-3">
+					    <div class="form-group col-md-6">
 					        <label>Estado</label>
 					        <select name="Estado" id="Estado" class="form-control">
 					            <option value="0">Activo</option> 
@@ -91,4 +92,13 @@ $categorias = $categoria->Listar();
 
 		
 	});
+
+
+	$(document).ready(function () {
+		$('#btnSubmit').attr("disabled", true);
+			$('#Nombre').keyup(function () {
+				var buttonDisabled = $('#Nombre').val().length == 0;
+				$('#btnSubmit').attr("disabled", buttonDisabled);
+			});
+		});
 </script>

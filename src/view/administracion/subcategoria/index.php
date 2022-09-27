@@ -19,7 +19,7 @@ $categoria = new CategoriaController;
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de SubCategorias</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar">Nueva Subcategoria</a><?php endif; ?>
+	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de SubCategorias</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar">Registrar Subcategoria</a><?php endif; ?>
 	    		</div>
 	    		<div class="box-body box-body_table">
 	    		 <?php  $subcategorias = $this->Listar();  ?>

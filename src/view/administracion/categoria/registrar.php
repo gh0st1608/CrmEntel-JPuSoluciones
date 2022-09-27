@@ -20,11 +20,11 @@
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmRegistrarCategoria" action="?c=Categoria&a=Registrar" method="post" enctype="multipart/form-data" role="form">	   				
-					    <div class="form-group col-md-3">
+					    <div class="form-group col-md-12">
 					        <label>Categoria</label>
-					        <input type="text" name="Nombre" value="" class="form-control" placeholder=""  required />
+					        <input type="text" name="Nombre" id="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
-					    <div class="form-group col-md-3">
+					    <div class="form-group col-md-2">
 					        <label>Estado</label>
 					        <select name="Estado" id="Estado" class="form-control">
 					            <option value="0">Activo</option> 
@@ -48,32 +48,38 @@
 <script>
 	
 	$(document).ready(function() {
-		$("#btnSubmit").click(function(event) {
+			$("#btnSubmit").click(function(event) {
+					bootbox.dialog({
+						message: "¿Estas seguro de Registrar?",
+						title: "Registrar Categoria",
+						buttons: {
+							main: {
+								label: "Registrar",
+								className: "btn-primary",
+								callback: function() {
+									//console.log('Eliminado al usuario');
+									
+										$( "#frmRegistrarCategoria" ).submit();
+								}
+							},
+							danger: {
+								label: "Cancelar",
+								className: "btn-danger",
+								callback: function() {
+									bootbox.hideAll();
+								}
+							}
+						}
+					});
+				})
+			});
 
-			bootbox.dialog({
-	            message: "¿Estas seguro de Registrar?",
-	            title: "Registrar Categoria",
-	            buttons: {
-	                main: {
-	                    label: "Registrar",
-	                    className: "btn-primary",
-	                    callback: function() {
-	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmRegistrarCategoria" ).submit();
-	                    }
-	                },
-	                danger: {
-	                    label: "Cancelar",
-	                    className: "btn-danger",
-	                    callback: function() {
-	                        bootbox.hideAll();
-	                    }
-	                }
-	            }
-        	}); 
+	$(document).ready(function () {
+		$('#btnSubmit').attr("disabled", true);
+			$('#Nombre').keyup(function () {
+				var buttonDisabled = $('#Nombre').val().length == 0;
+				$('#btnSubmit').attr("disabled", buttonDisabled);
+			});
 		});
 
-		
-	});
 </script>

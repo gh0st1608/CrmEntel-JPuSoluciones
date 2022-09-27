@@ -14,7 +14,7 @@
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			<h3 class='box-title'><i class="fa fa-users"></i> Lista de Perfiles</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Perfil&a=v_Registrar"> Nuevo Perfil</a>
+	      			<h3 class='box-title'><i class="fa fa-users"></i> Lista de Perfiles</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Perfil&a=v_Registrar"> Registrar Perfil</a>
 	    		</div>
 	    		<div class="box-body box-body_table">
 	    		 <?php  $perfiles = $this->Listar();  ?>
@@ -88,5 +88,7 @@
         });
 		});
 	});
+
+
 </script>
 
