@@ -44,8 +44,8 @@ $categorias = $categoria->Listar();
 					        <label>Aplicar Lógica</label>
 					        <select name="Logica" id="Logica" class="form-control">
 							    <option value="">¿Aplicar Logica?</option>
-								<option value="0">No</option>
-					            <option value="1">Si</option> 
+								<option value="1">Si</option>
+					            <option value="0">No</option> 
 					        </select>
 					    </div>
 						<div class="form-group col-md-12 Data" style="display:none;">

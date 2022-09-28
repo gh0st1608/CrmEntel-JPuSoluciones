@@ -1,0 +1,21 @@
+{
+"TipoDocumento":
+[
+    {
+        "Nombre": "DNI",
+        "Estado": 1
+    },
+        {
+        "Nombre": "CE",
+        "Estado": 1
+    },
+    {
+        "Nombre": "RUC",
+        "Estado": 1
+    },
+    {
+        "Nombre": "Pasaporte",
+        "Estado": 1
+    }    
+]
+}

@@ -17,7 +17,7 @@ if (!isset($_REQUEST['idCategoria'])==''){
 
 $categoria= $this->Consultar($_REQUEST['idCategoria']);
 
-  ?>
+?>
 <section class="content">
 	<div class="row">
 		<div class="col-sm-12 col-md-8 col-md-offset-2">
@@ -46,14 +46,14 @@ $categoria= $this->Consultar($_REQUEST['idCategoria']);
 							</label>	
 						</div>	
 						
-					  <div class="col-md-12" style="margin-top:2em;">
-					    <div class="col-md-6 col-sm-12"> 
-					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
-					    </div>
-					     <div class="col-md-6 col-sm-12">
-					        <a href="index.php?c=Categoria" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
-					    </div>  
-					  </div>
+					  	<div class="col-md-12" style="margin-top:2em;">
+							<div class="col-md-6 col-sm-12"> 
+								<button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<a href="index.php?c=Categoria" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
+							</div>  
+					  	</div>
 					</form>                   
                 </div>
             </div><!-- /.box -->

@@ -26,7 +26,7 @@ class SubCategoriaModel
     public function Listar_por_categoria(SubCategoria $subcategoria)
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT subcategoria.idSubCategoria as idSubCategoria, subcategoria.Nombre as Nombre, subcategoria.Aplicar_Logica as Aplicar_Logica, subcategoria.Estado as Estado FROM subcategoria
+        $stmt = $this->bd->prepare("SELECT subcategoria.idSubCategoria as idSubCategoria, subcategoria.Categoria_id as Categoria_id, subcategoria.Nombre as Nombre, subcategoria.Aplicar_Logica as Aplicar_Logica, subcategoria.Estado as Estado FROM subcategoria
         INNER JOIN categoria ON categoria.idCategoria = subcategoria.Categoria_id
         WHERE subcategoria.eliminado=0 AND Categoria_id=:Categoria_id order by idCategoria desc ");
         $stmt->bindParam(':Categoria_id', $subcategoria->__GET('Categoria_id'));
@@ -48,35 +48,18 @@ class SubCategoriaModel
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
+
         $objSubCategoria = new SubCategoria();     
-        $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);
         $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objSubCategoria->__SET('Nombre',$row->Nombre);
         $objSubCategoria->__SET('Aplicar_Logica',$row->Aplicar_Logica);
         $objSubCategoria->__SET('Logica_Json',$row->Logica_Json);
         $objSubCategoria->__SET('Estado',$row->Estado);
-        //print_r($objSubCategoria);
         return $objSubCategoria;
+
     }
 
-    public function ConsultarCategoria(SubCategoria $subcategoria)
-    {
-        $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM subcategoria WHERE Categoria_id = :Categoria_id;");
-        $stmt->bindParam(':Categoria_id', $subcategoria->__GET('Categoria_id'));
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
-
-        $objSubCategoria = new SubCategoria();     
-        $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);
-        $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
-        $objSubCategoria->__SET('Nombre',$row->Nombre);
-        $objSubCategoria->__SET('Aplicar_Logica',$row->Aplicar_Logica);
-        $objSubCategoria->__SET('Logica_Json',$row->Logica_Json);
-        $objSubCategoria->__SET('Estado',$row->Estado);
-        //print_r($objSubCategoria);
-        return $objSubCategoria;
-    }
+    
 
     public function Actualizar(SubCategoria $subcategoria)
     {
@@ -85,7 +68,8 @@ class SubCategoriaModel
         $stmt = $this->bd->prepare("UPDATE subcategoria SET  Categoria_id=:Categoria_id,Nombre=:Nombre,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
         $stmt->bindParam(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));
         $stmt->bindParam(':Categoria_id',$subcategoria->__GET('Categoria_id'));
-        $stmt->bindParam(':Nombre',$subcategoria->__GET('Nombre'));         
+        $stmt->bindParam(':Nombre',$subcategoria->__GET('Nombre')); 
+        $stmt->bindParam('Aplicar_Logica',$subcategoria->__GET('Aplicar_Logica'));
         $stmt->bindParam(':Estado',$subcategoria->__GET('Estado')); 
         if (!$stmt->execute()) {
           return 'error';
@@ -101,9 +85,11 @@ class SubCategoriaModel
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO subcategoria(Categoria_id,Nombre,Estado,Ingresado_por) VALUES(:Categoria_id,:Nombre,:Estado,:Ingresado_por)");
+        $stmt = $this->bd->prepare("INSERT INTO subcategoria(Categoria_id,Nombre,Aplicar_Logica,Logica_Json,Estado,Ingresado_por) VALUES(:Categoria_id,:Nombre,:Aplicar_Logica,:Logica_Json,:Estado,:Ingresado_por)");
         $stmt->bindValue(':Categoria_id', $subcategoria->__GET('Categoria_id'),PDO::PARAM_INT); 
         $stmt->bindValue(':Nombre', $subcategoria->__GET('Nombre'),PDO::PARAM_STR);
+        $stmt->bindValue(':Aplicar_Logica', $subcategoria->__GET('Aplicar_Logica'),PDO::PARAM_STR);
+        $stmt->bindValue(':Logica_Json', $subcategoria->__GET('Logica_Json'),PDO::PARAM_STR);
         $stmt->bindValue(':Estado', $subcategoria->__GET('Estado'),PDO::PARAM_STR);
         $stmt->bindValue(':Ingresado_por', $subcategoria->__GET('Ingresado_por'),PDO::PARAM_INT);     
 

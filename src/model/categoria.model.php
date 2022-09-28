@@ -34,7 +34,7 @@ class CategoriaModel
         $objCategoria->__SET('idCategoria',$row->idCategoria);
         $objCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objCategoria->__SET('Nombre',$row->Nombre);
-        $objCategoria->__SET('Estado',$row->Estado); 
+        $objCategoria->__SET('Estado',$row->Estado);
         return $objCategoria;
     }
 

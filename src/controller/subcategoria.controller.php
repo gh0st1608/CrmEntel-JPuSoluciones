@@ -12,8 +12,7 @@ class SubCategoriaController{
         $this->model = new SubCategoriaModel();
     }
     /**==========================Vistas=======================================*/
-    public function Index(){
-        
+    public function Index(){ 
         require_once 'view/header.php';
         require_once 'view/administracion/subcategoria/index.php';
         require_once 'view/footer.php';       
@@ -59,13 +58,15 @@ class SubCategoriaController{
 
     public function Consultar($idSubCategoria)
     {
+
         $subcategoria = new SubCategoria();
-        $subcategoria->__SET('idSubCategoria',$idSubcategoria);
+        $subcategoria->__SET('idSubCategoria',$idSubCategoria);
 
         $consulta = $this->model->Consultar($subcategoria);
         return $consulta;
     }
 
+    /*
     public function ConsultarCategoria($idCategoria)
     {
         $subcategoria = new SubCategoria();
@@ -73,7 +74,7 @@ class SubCategoriaController{
         $consulta = $this->model->Consultar($subcategoria);
         return $consulta;
     }
-
+    */
 
     public function Actualizar(){
         $subcategoria = new SubCategoria();
@@ -102,6 +103,8 @@ class SubCategoriaController{
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']); 
 
         $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);
+        $subcategoria->__SET('Logica_Json',$_REQUEST['Data']);
+        print_r($_REQUEST['Data']);
         if ($subcategoria -> Aplicar_Logica == 1)
         {
             $subcategorias = json_decode($_REQUEST['Data'],TRUE);
@@ -112,7 +115,6 @@ class SubCategoriaController{
                 {
                     $subcategoria->__SET('Nombre',$valor['Nombre']);
                     $subcategoria->__SET('Estado',$valor['Estado']);
-                    print_r($subcategoria);
                     $registrar_subcategoria = $this->model->Registrar($subcategoria);
                 }
             }
