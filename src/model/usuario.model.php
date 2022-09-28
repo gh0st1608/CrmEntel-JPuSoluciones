@@ -86,21 +86,43 @@ class UsuarioModel
         }
     }    
 
-    public function registrar(Usuario $usuario)
+    public function Registrar(Usuario $usuario,Persona $persona)
     {
        
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO usuario(login,password,Perfil_id,Persona_id,ingresado_por) VALUES(:login,:password,:Perfil_id,:Persona_id,:ingresado_por)");
-        $stmt->bindValue(':login', $usuario->__GET('login'),PDO::PARAM_STR);
-        $stmt->bindValue(':password', $usuario->__GET('password'),PDO::PARAM_STR);
+
+        $stmt = $this->bd->prepare("INSERT INTO usuario(Login,Password,Perfil_id,Persona_id) VALUES(:Login,:Password,:Perfil_id,:Persona_id)");
+        $stmt->bindValue(':Login', $usuario->__GET('Login'),PDO::PARAM_STR);
+        $stmt->bindValue(':Password', $usuario->__GET('Password'),PDO::PARAM_STR);
         $stmt->bindValue(':Perfil_id', $usuario->__GET('Perfil_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':ingresado_por', $usuario->__GET('ingresado_por'),PDO::PARAM_STR);
-      
+        //$stmt->bindValue(':ingresado_por', $usuario->__GET('ingresado_por'),PDO::PARAM_STR);
+        $stmt->execute();
+        $errors = $stmt->errorInfo();
 
-        if (!$stmt->execute()) {
-            $errors = $stmt->errorInfo();
+        $stmt = $this->bd->prepare("INSERT INTO persona(Tipo_Documento,Documento,Primer_Nombre,Segundo_Nombre,Apellido_Paterno,Apellido_Materno
+                                             ) VALUES
+                                                (:Tipo_Documento,:Documento,:Primer_Nombre,:Segundo_Nombre,:Apellido_Paterno,:Apellido_Materno
+                                             )");
+
+        $stmt->bindParam(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
+        $stmt->bindParam(':Documento',$persona->__GET('Documento'));
+        $stmt->bindParam(':Primer_Nombre',$persona->__GET('Primer_Nombre'));
+        $stmt->bindParam(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
+        $stmt->bindParam(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
+        $stmt->bindParam(':Apellido_Materno',$persona->__GET('Apellido_Materno'));
+        $stmt->execute();
+        $errors = $stmt->errorInfo();    
+        //$stmt->bindParam(':Fecha_Nacimiento',$persona->__GET('Fecha_Nacimiento'));
+        //$stmt->bindParam(':Sexo',$persona->__GET('Sexo'));
+        //$stmt->bindParam(':Celular',$persona->__GET('Celular'));
+        //$stmt->bindParam(':Correo',$persona->__GET('Correo'));
+        //$stmt->bindParam(':Cargo_id_SubCategoria',$persona->__GET('Cargo_id_SubCategoria'));
+        //$stmt->bindParam(':Estado',$persona->__GET('Estado'));
+
+
+        if (isset($errors)) {
             // echo($errors[2]);
            return $errors[2];          
             //print_r($stmt->errorInfo());

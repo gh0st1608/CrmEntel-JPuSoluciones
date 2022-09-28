@@ -2,7 +2,6 @@
 require_once 'model/usuario.model.php';
 require_once 'entity/usuario.entity.php';
 require_once 'entity/logsesion.entity.php';
-require_once 'model/persona.model.php';
 require_once 'entity/persona.entity.php';
 require_once "vendor/autoload.php";
  
@@ -120,15 +119,8 @@ class UsuarioController{
 
     public function Registrar(){
 
-        $usuario = new Usuario();
-        $persona = new Persona();         
-        $usuario->__SET('Login',$_REQUEST['Login']);
-        $usuario->__SET('Password',$_REQUEST['Password']);
-        $usuario->__SET('Perfil_id',$_REQUEST['Perfil_id']);
-        $usuario->__SET('Persona_id',$_REQUEST['Persona_id']);       
-        $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
 
-        
+        $persona = new Persona();           
         $persona->__SET('Tipo_Documento',$_REQUEST['Tipo_Documento']);
         $persona->__SET('Documento',$_REQUEST['Documento']);
         $persona->__SET('Primer_Nombre',$_REQUEST['Primer_Nombre']);
@@ -136,9 +128,16 @@ class UsuarioController{
         $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
         $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
 
-        $registrar_usuario = $usuario->model->registrar($usuario);
-        $registrar_persona = $persona->model->registrar($persona); 
-         
+        $usuario = new Usuario();
+        $usuario->__SET('Login',$_REQUEST['Login']);
+        $usuario->__SET('Password',$_REQUEST['Clave']);
+        $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);
+        $usuario->__SET('Persona_id',$_REQUEST['idUsuario']);       
+        $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
+
+        $registrar_usuario = $this->model->Registrar($usuario,$persona);
+
+
         if($registrar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Registrar');
             echo 'No se Ha Podido Registrar al Usuario';

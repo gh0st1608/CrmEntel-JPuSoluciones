@@ -143,7 +143,7 @@ where persona.eliminado=0 and idUsuario is NULL" );
             return 'exito';
         }
     }    
-
+/*
     public function Registrar(Persona $persona)
     {
        
@@ -151,7 +151,7 @@ where persona.eliminado=0 and idUsuario is NULL" );
         $this->bd = new Conexion();
 
 
-          $stmt = $this->bd->prepare("INSERT INTO persona(primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,documento,
+        $stmt = $this->bd->prepare("INSERT INTO persona(primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,documento,
                                                 celular,fecha_ingreso,correo
                                              ) VALUES
                                                 (:primer_nombre,:segundo_nombre,:apellido_paterno,:apellido_materno,:dni,
@@ -179,7 +179,7 @@ where persona.eliminado=0 and idUsuario is NULL" );
             return 'exito';
         }
     }
-
+*/
     public function Eliminar(Persona $persona)
     {
        
