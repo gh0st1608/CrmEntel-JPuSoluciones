@@ -3,7 +3,7 @@ require_once 'model/subcategoria.model.php';
 require_once 'entity/subcategoria.entity.php';
 
 
-class SubcategoriaController{    
+class SubCategoriaController{    
   
     private $model;
     
@@ -12,11 +12,24 @@ class SubcategoriaController{
         $this->model = new SubCategoriaModel();
     }
     /**==========================Vistas=======================================*/
-    public function Index(){        
+    public function Index(){
+        
         require_once 'view/header.php';
         require_once 'view/administracion/subcategoria/index.php';
         require_once 'view/footer.php';       
     }
+
+    public function ListarxCategoria(){
+        if (isset($_REQUEST['idCategoria'])) 
+        {                  
+            require_once 'view/header.php';
+            require_once 'view/administracion/subcategoria/listar_por_categoria.php';
+            require_once 'view/footer.php';  
+        }else{
+            header('Location: index.php?c=SubCategoria');
+        }    
+    }
+
 
     public function v_Actualizar(){        
         require_once 'view/header.php';
@@ -36,6 +49,14 @@ class SubcategoriaController{
         return $subcategorias;
     }
 
+    public function Listar_por_categoria($idCategoria)
+    {   
+        $subcategoria = new SubCategoria();
+        $subcategoria->__SET('Categoria_id',$idCategoria);
+        $subcategorias = $this->model->Listar_por_categoria($subcategoria);
+        return $subcategorias;
+    }
+
     public function Consultar($idSubCategoria)
     {
         $subcategoria = new SubCategoria();
@@ -44,6 +65,15 @@ class SubcategoriaController{
         $consulta = $this->model->Consultar($subcategoria);
         return $consulta;
     }
+
+    public function ConsultarCategoria($idCategoria)
+    {
+        $subcategoria = new SubCategoria();
+        $subcategoria->__SET('Categoria_id',$idCategoria);
+        $consulta = $this->model->Consultar($subcategoria);
+        return $consulta;
+    }
+
 
     public function Actualizar(){
         $subcategoria = new SubCategoria();

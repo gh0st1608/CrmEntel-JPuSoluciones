@@ -9,6 +9,8 @@
 	</ol>
 </section>
 
+
+
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
@@ -46,6 +48,9 @@
                                		<a class="btn btn-danger btn-xs EliminarCategoria" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>
+									<a href="?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-info btn-xs VerSubCategorias" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</a>
                                		<?php endif; ?>
                                	</td>
 	                    	</tr>

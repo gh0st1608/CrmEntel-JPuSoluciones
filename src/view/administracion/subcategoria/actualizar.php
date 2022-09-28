@@ -1,4 +1,4 @@
- 
+
  <!-- Content Header (Page header) -->
  <section class="content-header">  
 	<h1>
@@ -10,16 +10,17 @@
             <li class="active">Actualizar</li>
           </ol>
 </section>
+
 <?php 
-
-require_once 'controller/categoria.controller.php'; 
-$categoria = new CategoriaController;
-
-
-if (!isset($_REQUEST['idCategoria'])==''){
-
+if (!isset($_REQUEST['idSubCategoria'])==''){
+print_r($_REQUEST['idSubCategoria']);
 $subcategoria= $this->Consultar($_REQUEST['idSubCategoria']);
 
+/*require_once 'controller/categoria.controller.php';
+$categoria = new CategoriaController();
+$categoria = $categoria -> Consultar($subcategoria -> Categoria_id);
+print_r($categoria);
+*/
 ?>
 <section class="content">
 	<div class="row">
@@ -29,26 +30,29 @@ $subcategoria= $this->Consultar($_REQUEST['idSubCategoria']);
 	      			<h3 class='box-title'><i class="fa fa-briefcase"></i> Actualizar SubCategoria</h3>
 	    		</div>
 	    		<div class="box-body">
-	    			<form id="frmActualizarSubCategoria" action="?c=SubCategoria&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
-	    				<input type="hidden" name="idSubCategoria" value="<?php echo $subcategoria->__GET('idSubCategoria'); ?>" /> 
+				<form id="frmActualizarSubCategoria" action="?c=SubCategoria&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
+	    				<input type="hidden" name="idSubCategoria" value="<?php echo $subcategoria->__GET('idSubCategoria'); ?>" />    					    
 					    <div class="form-group col-md-12">
+							<label>Categoria</label>
+							<input value="<?php echo $subcategoria->__GET('Categoria_id'); ?>" class="form-control" readonly="true" ></input>  
+				    	</div>
+						<div class="form-group col-md-12">
 					        <label>Nombre SubCategoria</label>
 					        <input type="text" name="Nombre" value="<?php echo $subcategoria->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
-					    </div>    					    
-					    <div class="form-group col-md-4">
-					      <label>Estado</label>
-						</div>
-						<div class="form-group col-md-4">
-							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($subcategoria->__GET('Estado')==0) { echo 'checked';  } ?>> SI
-							</label>
-						</div>
-						<div class="form-group col-md-4">
-							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($subcategoria->__GET('Estado')==1) { echo 'checked'; }  ?>> NO
-							</label>	
-						</div>	
-						
+					    </div> 
+					    <div class="form-group col-md-12">
+					        <label>Aplicar Lógica</label>
+					        <select name="Logica" id="Logica" class="form-control">
+							<option value="<?php echo $subcategoria['Aplicar_Logica'];?>"></option>
+								<option value="0">No</option>
+					            <option value="1">Si</option> 
+					        </select>
+					    </div>
+						<div class="form-group col-md-12 Data" style="display:none;">
+					        <label>Logica Json</label>
+					        <textarea name="Data" id="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
+							</textarea>
+					    </div>
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12"> 
 					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
@@ -77,12 +81,7 @@ $subcategoria= $this->Consultar($_REQUEST['idSubCategoria']);
 	                    label: "Actualizar",
 	                    className: "btn-primary",
 	                    callback: function() {
-	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmActualizarSubCategoria" ).submit();
-	                         
-
-	                       
+	                              $( "#frmActualizarSubCategoria" ).submit();	                     
 	                    }
 	                },
 	                danger: {

@@ -22,6 +22,24 @@ class SubCategoriaModel
         
 
     }
+
+    public function Listar_por_categoria(SubCategoria $subcategoria)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT subcategoria.idSubCategoria as idSubCategoria, subcategoria.Nombre as Nombre, subcategoria.Aplicar_Logica as Aplicar_Logica, subcategoria.Estado as Estado FROM subcategoria
+        INNER JOIN categoria ON categoria.idCategoria = subcategoria.Categoria_id
+        WHERE subcategoria.eliminado=0 AND Categoria_id=:Categoria_id order by idCategoria desc ");
+        $stmt->bindParam(':Categoria_id', $subcategoria->__GET('Categoria_id'));
+        $stmt->execute();
+        
+        if (!$stmt->execute()) {
+            return 'error';
+            print_r($stmt->errorInfo());
+        }else{            
+             return $stmt->fetchAll(PDO::FETCH_ASSOC);;
+        }
+    }
+
     public function Consultar(SubCategoria $subcategoria)
     {
         $this->bd = new Conexion();
@@ -34,7 +52,29 @@ class SubCategoriaModel
         $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);
         $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objSubCategoria->__SET('Nombre',$row->Nombre);
-        $objSubCategoria->__SET('Estado',$row->Estado); 
+        $objSubCategoria->__SET('Aplicar_Logica',$row->Aplicar_Logica);
+        $objSubCategoria->__SET('Logica_Json',$row->Logica_Json);
+        $objSubCategoria->__SET('Estado',$row->Estado);
+        //print_r($objSubCategoria);
+        return $objSubCategoria;
+    }
+
+    public function ConsultarCategoria(SubCategoria $subcategoria)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM subcategoria WHERE Categoria_id = :Categoria_id;");
+        $stmt->bindParam(':Categoria_id', $subcategoria->__GET('Categoria_id'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+
+        $objSubCategoria = new SubCategoria();     
+        $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);
+        $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
+        $objSubCategoria->__SET('Nombre',$row->Nombre);
+        $objSubCategoria->__SET('Aplicar_Logica',$row->Aplicar_Logica);
+        $objSubCategoria->__SET('Logica_Json',$row->Logica_Json);
+        $objSubCategoria->__SET('Estado',$row->Estado);
+        //print_r($objSubCategoria);
         return $objSubCategoria;
     }
 

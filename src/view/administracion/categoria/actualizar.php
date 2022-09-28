@@ -13,7 +13,7 @@
 
 
 
- if (!isset($_REQUEST['idCategoria'])==''){
+if (!isset($_REQUEST['idCategoria'])==''){
 
 $categoria= $this->Consultar($_REQUEST['idCategoria']);
 

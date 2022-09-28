@@ -1,31 +1,37 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">  
-	<h1>
-		Modulo Administracion
-	</h1>
-	<ol class="breadcrumb">
-		<li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>           
-	    <li class="active">SubCategoria</li>
-	</ol>
-</section>
-
 <?php 
+
 require_once 'controller/subcategoria.controller.php';
 require_once 'controller/categoria.controller.php';  
 $subcategoria = new SubCategoriaController;
 $categoria = new CategoriaController;
+$infocategoria = $categoria->Consultar($_REQUEST['idCategoria']);
+
 
 
 ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">  
+<h1>
+    Administracion <small>Categoria</small>
+</h1>
+<ol class="breadcrumb">
+    <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
+     <li><a href="index.php?c=SubCategoria">SubCategoria</a></li>     
+    <li class="active">SubCategoria</li>
+</ol>
+</section>
+
 <section class="content">
 	<div class="row">
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de SubCategorias</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar">Registrar Subcategoria</a><?php endif; ?>
+                    <h3 class='box-title' ><b> Lista de SubCategorias de <?php echo $infocategoria->__GET('Nombre');  ?></b></h3> 
+	      			<a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar"> Registrar Categoria</a>
 	    		</div>
 	    		<div class="box-body box-body_table">
-	    		 <?php  $subcategorias = $subcategoria -> Listar();  ?>
+                <?php  $subcategorias = $subcategoria->Listar_por_categoria($_REQUEST['idCategoria']);?>
                   	<table id="TablaEntidad" class="table table-bordered table-hover dataTable no-footer" width="100%">
 	                    <thead>
 	                      	<tr>                      
@@ -98,4 +104,32 @@ $categoria = new CategoriaController;
 	});
 </script>
 
+<script>
 
+$(document).ready(function() {
+    $(".EliminarCampana").click(function(event) {
+        idCampana=$(this).attr('data-id');
+        bootbox.dialog({
+        message: "¿Estas seguro de eliminar la campaña <b>"+$(this).attr('data-campana')+"</b>?",
+        title: "Eliminar Campaña",
+        buttons: {
+            main: {
+                label: "Eliminar",
+                className: "btn-primary",
+                callback: function() {
+                    //console.log('Eliminado al usuario');
+                    window.location.href = "?c=Campana&a=Eliminar&idCampana="+idCampana;
+                }
+            },
+            danger: {
+                label: "Cancelar",
+                className: "btn-danger",
+                callback: function() {
+                    bootbox.hideAll();
+                }
+            }
+        }
+    });
+    });
+});
+</script>
