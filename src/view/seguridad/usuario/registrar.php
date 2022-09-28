@@ -11,9 +11,18 @@
 </section>
 <?php 
 require_once 'controller/persona.controller.php'; 
-require_once 'controller/perfil.controller.php'; 
+require_once 'controller/perfil.controller.php';
+require_once 'controller/categoria.controller.php'; 
+require_once 'controller/subcategoria.controller.php'; 
+
 $persona = new PersonaController;
 $perfil = new PerfilController;
+$categoria = new CategoriaController;
+$subcategoria = new SubCategoriaController;
+
+$listatipodocumento = $subcategoria -> Listar_por_categoria(58);
+
+$perfiles = $perfil->Listar();
 
  ?>
 <section class="content">
@@ -26,39 +35,50 @@ $perfil = new PerfilController;
 	    		<div class="box-body">
 	    			<form id="frmRegistrarUsuario" action="?c=Usuario&a=Registrar" method="post" enctype="multipart/form-data" role="form">	    				
 					    <div class="form-group col-md-12">
-					        <label>Perfil</label>
-					        <select name="Perfil_id" id="Perfil" class="form-control">
-							<option value="">-- Seleccionar Perfil --</option>       
-					          <?php $perfiles = $perfil->Listar(); ?>
-					          <?php foreach ($perfiles as $perfil): ?>                      
-					            <option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['Nombre']; ?></option>                      
-					          <?php endforeach; ?>           
-					        </select>
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Persona</label>
-					        <select name="Persona_id" id="Persona_id" class="form-control">
-					        	<option value="">-- Seleccionar Persona --</option>       
-					          	<?php $personas = $persona->Listar_Sin_Usuario(); ?>
-					          	<?php foreach ($personas as $persona): ?>                     
-					            <option value="<?php echo $persona['idPersona']; ?>" data-codigo="<?php echo $persona['codigo']; ?>"><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></option>                      
-					          <?php endforeach; ?>           
-					        </select>
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Usuario</label>
-					        <input type="text" id="Login" name="Login" value="" class="form-control" placeholder=""  readonly="true" required />
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Contraseña</label>
-					        <input type="password" id="password" name="password" value="" class="form-control" placeholder="" />
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Repita Contraseña</label>
-					        <input type="password" id="password2" name="password2" value="" class="form-control" placeholder=""  />
-					    </div> 					    
+							<div class="form-group col-md-6">
+								<label>Tipo Documento</label>
+								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control">
+								<option value="0">-- Seleccionar Tipo Documento--</option>      
+								<?php foreach ($listatipodocumento as $lista): ?>                
+									<option value="<?php echo $lista['idSubcategoria']; ?>"><?php echo $lista['Nombre']; ?></option>                      
+								<?php endforeach; ?> 
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label>Documento</label>
+								<input type="text" name="Documento" id="Documento" value="" class="form-control" placeholder=""  required />
+							</div>    
+							<div class="form-group col-md-6">
+								<label>Primer Nombre</label>
+								<input type="text" name="Primer_Nombre" id="Primer_Nombre" value="" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-6">
+								<label>Segundo Nombre</label>
+								<input type="text" name="Segundo_Nombre" id="Segundo_Nombre" value="" class="form-control" placeholder=""  required />
+							</div>					   
+							<div class="form-group col-md-6">
+								<label>Apellido Paterno</label>
+								<input type="text" name="Apellido_Paterno" id="Apellido_Paterno" value="" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-6">
+								<label>Apellido Materno</label>
+								<input type="text" name="Apellido_Materno" id="Apellido_Materno" value="" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-6">
+								<label>Perfil</label>
+								<select name="Perfil" id="Perfil" class="form-control">
+								<option value="0">-- Seleccionar Perfil--</option>      
+								<?php foreach ($perfiles as $perfil): ?>                
+									<option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['Nombre']; ?></option>                      
+								<?php endforeach; ?> 
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label>Clave</label>
+								<input type="text" name="Clave" id="Clave" value="" class="form-control" placeholder=""  required />
+							</div>
+					    </div> 
 					  
-
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">
 					        

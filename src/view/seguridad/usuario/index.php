@@ -1,7 +1,8 @@
 <?php
 require_once 'controller/perfil.controller.php'; 
-
+require_once 'controller/persona.controller.php'; 
 $perfil = new PerfilController;
+$persona = new PersonaController;
 
 ?>
 <!-- Content Header (Page header) -->
@@ -20,7 +21,7 @@ $perfil = new PerfilController;
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			<h3 class='box-title'><i class="fa fa-user"></i> Lista de Usuario</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Usuario&a=v_Registrar"> Nuevo Usuario</a>
+	      			<h3 class='box-title'><i class="fa fa-user"></i> Lista de Usuario</h3> <a class="btn btn-sm btn-primary pull-right" href="?c=Usuario&a=v_Registrar"> Registrar Usuario</a>
 	    		</div>
 	    		<div class="box-body box-body_table">
 	    		 <?php  $usuarios = $this->Listar();  ?>
@@ -28,9 +29,11 @@ $perfil = new PerfilController;
                   	<table id="TablaEntidad" class="table table-bordered table-hover dataTable no-footer" width="100%">
 	                    <thead>
 	                      	<tr>                      
-		                    	<th>ID</th>   
-								<th style="vertical-align: middle;">Usuario</th>                 
-			                    <th style="vertical-align: middle;">Perfil</th>
+		                    	<th>ID</th>
+								<th style="vertical-align: middle;">Perfil</th>   
+								<th style="vertical-align: middle;">Usuario</th>
+								<th style="vertical-align: middle;">Documento</th>
+								<th style="vertical-align: middle;">Nombres y Apellidos</th>                 
 								<th style="vertical-align: middle;">Estado</th>
 			                    <th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>
@@ -39,16 +42,19 @@ $perfil = new PerfilController;
 							<?php foreach ($usuarios as $usuario): ?>
 	                    	<tr>
 								<td><?php echo $usuario['idUsuario']; ?></td>
-								<td><?php echo $usuario['Login']; ?></td>
 								<?php  $nombre = $perfil -> Consultar($usuario['Perfil_id']);?>
-								<td><?php  echo $nombre -> Nombre;?></td> 
-								<?php if ($usuario['Estado']==0): ?>
+								<td><?php  echo $nombre -> Nombre;?></td>
+								<td><?php echo $usuario['Login']; ?></td>
+								<?php  $nombre = $persona -> Consultar($usuario['Persona_id']);?>
+								<td><?php  echo $nombre->Documento; ?> 
+								<td><?php  echo $nombre->Apellido_Paterno.' '.$nombre->Apellido_Materno.' '.$nombre->Primer_Nombre.' '.$nombre->Segundo_Nombre;?></td>
+								<?php if ($usuario['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
                                 <?php endif ?>
                             	<td class="a_center">
-                            		<a href="?c=Usuario&a=v_Actualizar&idUsuario=<?php echo $usuario['idUsuario']; ?>" class="btn btn-primary btn-xs ">
+                            		<a href="?c=Usuario&a=v_Actualizar&idUsuario=<?php echo $usuario['idUsuario']; ?>&Persona_id=<?php echo $usuario['Persona_id'];?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
                                		<a class="btn btn-danger btn-xs EliminarUsuario" data-id="<?php echo $usuario['idUsuario']; ?>" data-usuario="<?php echo $usuario['Login']; ?>">

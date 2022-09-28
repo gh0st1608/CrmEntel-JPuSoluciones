@@ -6,32 +6,24 @@ class Persona
 
 
     private $idPersona;
-    private $codigo;
-    private $dni;
-    private $primer_nombre;
-    private $segundo_nombre;
-    private $apellido_paterno;
-    private $apellido_materno;
-    private $fecha_nacimiento;
-    private $sexo;
-    private $celular;
-    private $fecha_ingreso;
-    private $tipo_horario;
-    private $horario_entrada;
-    private $horario_salida;
-    private $sueldo;
-    private $correo;
-    private $anexo;
-    private $Area_id;
-    private $Cargo_id;
-    private $Sede_id;
-    private $fecha_salida;
-    private $fecha_registro;
-    private $ingresado_por;
-    private $fecha_modificacion;
-    private $modificado_por;
-    private $activo;
-    private $eliminado;
+    //private $codigo;
+    private $Tipo_Documento;
+    private $Documento;
+    private $Primer_Nombre;
+    private $Segundo_Nombre;
+    private $Apellido_Paterno;
+    private $Apellido_Materno;
+    private $Fecha_Nacimiento;
+    private $Sexo;
+    private $Celular;
+    private $Cargo_id_SubCategoria;
+    private $Estado;
+    private $Ingresado_por;
+    private $Fecha_Registro;
+    private $Modificado_por;
+    private $Fecha_Modificacion;
+    private $Fecha_Ingreso;
+    private $Eliminado;
     
     public function __GET($atributo){ 
 

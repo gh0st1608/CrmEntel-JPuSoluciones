@@ -13,15 +13,25 @@
 
 
 
- if (!isset($_REQUEST['idUsuario'])==''){
+ if (!isset($_REQUEST['idUsuario'])=='' && !isset($_REQUEST['Persona_id'])==''){
 
 require_once 'controller/persona.controller.php'; 
-require_once 'controller/perfil.controller.php'; 
-$persona = new PersonaController;
-$perfil = new PerfilController;
-$Usuario= $this->Consultar($_REQUEST['idUsuario']);
+require_once 'controller/perfil.controller.php';
+require_once 'controller/subcategoria.controller.php';
 
-  ?>
+$persona = new PersonaController;
+$perfil  = new PerfilController;
+$subcategoria = new SubCategoriaController;
+$usuario = $this->Consultar($_REQUEST['idUsuario']);
+$persona = $persona->Consultar($_REQUEST['Persona_id']);
+
+$perfiles = $perfil->Listar();
+$listatipodocumento = $subcategoria -> Listar_por_categoria(58);
+
+
+
+
+?>
 <section class="content">
 	<div class="row">
 		<div class="col-sm-12 col-md-6 col-md-offset-3">
@@ -31,47 +41,37 @@ $Usuario= $this->Consultar($_REQUEST['idUsuario']);
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmActualizarUsuario" action="?c=Usuario&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
-	    				<input type="hidden" name="idUsuario" value="<?php echo $Usuario->__GET('idUsuario'); ?>" />
+	    				<input type="hidden" name="idUsuario" value="<?php echo $usuario->__GET('idUsuario'); ?>" />
 					    <div class="form-group col-md-12">
-					        <label>Persona</label>
-					        <select name="Persona_id" id="Persona_id" class="form-control" disabled="true">
-					        	<option value="">-- Seleccionar Persona --</option>       
-					          	<?php $personas = $persona->Listar(); ?>
-					          	<?php foreach ($personas as $persona): ?>                     
-					            <option value="<?php echo $persona['idPersona']; ?>" data-codigo="<?php echo $persona['codigo']; ?>"><?php echo $persona['apellido_paterno'].' '.$persona['apellido_materno'].' '.$persona['primer_nombre'].' '.$persona['segundo_nombre']; ?></option>                      
-					          <?php endforeach; ?>           
-					        </select>
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Perfil</label>
-					        <select name="Perfil_id" id="Perfil" class="form-control">       
-					          <?php $perfiles = $perfil->Listar(); ?>
-					          <?php foreach ($perfiles as $perfil): ?>                     
-					            <option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['nombre']; ?></option>                      
-					          <?php endforeach; ?>           
-					        </select>
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Usuario</label>
-					        <input type="text" name="login" value="<?php echo $Usuario->__GET('login'); ?>" class="form-control" placeholder=""  required readonly="true"/>
-					    </div>				    
-
-					    <div class="form-group col-md-12">
-					        <label>Contraseña</label>
-					        <input type="password" name="password" value="<?php echo $Usuario->__GET('password'); ?>" class="form-control" placeholder="" />
-					    </div>
-					    <div class="form-group col-md-12">
-					        <label>Repita Contraseña</label>
-					        <input type="password" name="password2" value="<?php echo $Usuario->__GET('password'); ?>" class="form-control" placeholder=""  />
-					    </div> 
-					    <div class="form-group col-md-12">
-					      <label>Activo</label>
-					      <label class="radio-inline">
-					          <input type="radio" name="activo" id="estado_activo" value="1" <?php if ($Usuario->__GET('activo')==1) { echo 'checked';  } ?>> SI
-					      </label>
-					      <label class="radio-inline">
-					          <input type="radio" name="activo" id="estado_inactivo" value="0" <?php if ($Usuario->__GET('activo')==0) { echo 'checked'; }  ?>> NO
-					      </label>					    
+							<div class="form-group col-md-12">
+								<label>Nombres y Apellidos</label>
+								<input type="text" name="NombresApellidos" id="NombresApellidos" value="<?php echo $persona->Apellido_Paterno.' '.$persona->Apellido_Materno.' '.$persona->Primer_Nombre.' '.$persona->Segundo_Nombre; ?>" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-6">
+								<label>Tipo Documento</label>
+								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control">
+									<?php foreach ($listatipodocumento as $lista): ?>                
+										<option value="<?php echo $lista['Nombre']; ?>"><?php echo $lista['Nombre']; ?></option>                      
+									<?php endforeach; ?>                                    
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label>Perfil</label>
+								<select name="Perfil" id="Perfil" class="form-control">
+								<option value="0">-- Seleccionar Perfil--</option>      
+								<?php foreach ($perfiles as $perfil): ?>                
+									<option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['Nombre']; ?></option>                      
+								<?php endforeach; ?> 
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label>Login</label>
+								<input type="text" name="Documento" id="Documento" value="<?php echo $usuario->Login; ?>" class="form-control" placeholder=""  required />
+							</div>    
+							<div class="form-group col-md-6">
+								<label>Clave</label>
+								<input type="text" name="Clave" id="Clave" value="<?php echo $usuario->__GET('Password');?>" class="form-control" placeholder=""  required />
+							</div>
 					    </div> 
 					  
 
@@ -97,8 +97,9 @@ $Usuario= $this->Consultar($_REQUEST['idUsuario']);
 <script>
 	
 	$(document).ready(function() {
-		$('#Perfil').val("<?php echo $Usuario->__GET('Perfil_id'); ?>");
-		$('#Persona_id').val("<?php echo $Usuario->__GET('Persona_id'); ?>");
+		$('#Perfil').val("<?php echo $usuario->__GET('Perfil_id'); ?>");
+		$('#Tipo_Documento').val("<?php echo $persona->__GET('Tipo_Documento'); ?>");
+		$('#Persona_id').val("<?php echo $usuario->__GET('Persona_id'); ?>");
 		$("#btnSubmit").click(function(event) {
 
 			bootbox.dialog({

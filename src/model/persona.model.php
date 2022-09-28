@@ -66,27 +66,24 @@ where persona.eliminado=0 and idUsuario is NULL" );
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
         $objPersona = new Persona(); 
         $objPersona->__SET('idPersona',$row->idPersona);
-        $objPersona->__SET('codigo',$row->codigo);
-        $objPersona->__SET('dni',$row->dni);
-        $objPersona->__SET('primer_nombre',$row->primer_nombre);
-        $objPersona->__SET('segundo_nombre',$row->segundo_nombre);
-        $objPersona->__SET('apellido_paterno',$row->apellido_paterno);
-        $objPersona->__SET('apellido_materno',$row->apellido_materno);
-        $objPersona->__SET('fecha_nacimiento',$row->fecha_nacimiento);
-        $objPersona->__SET('sexo',$row->sexo);
-        $objPersona->__SET('celular',$row->celular);
-        $objPersona->__SET('fecha_ingreso',$row->fecha_ingreso);
-        $objPersona->__SET('tipo_horario',$row->tipo_horario);
-        $objPersona->__SET('horario_entrada',$row->horario_entrada);
-        $objPersona->__SET('horario_salida',$row->horario_salida);
-        $objPersona->__SET('sueldo',$row->sueldo);
-        $objPersona->__SET('correo',$row->correo);
-        $objPersona->__SET('anexo',$row->anexo);
-        $objPersona->__SET('Area_id',$row->Area_id);
-        $objPersona->__SET('Cargo_id',$row->Cargo_id);
-        $objPersona->__SET('Sede_id',$row->Sede_id);
-        $objPersona->__SET('fecha_salida',$row->fecha_salida);
-        $objPersona->__SET('activo',$row->activo);
+        //$objPersona->__SET('codigo',$row->codigo);
+        $objPersona->__SET('Tipo_Documento',$row->Tipo_Documento);
+        $objPersona->__SET('Documento',$row->Documento);
+        $objPersona->__SET('Primer_Nombre',$row->Primer_Nombre);
+        $objPersona->__SET('Segundo_Nombre',$row->Segundo_Nombre);
+        $objPersona->__SET('Apellido_Paterno',$row->Apellido_Paterno);
+        $objPersona->__SET('Apellido_Materno',$row->Apellido_Materno);
+        $objPersona->__SET('Fecha_nacimiento',$row->Fecha_nacimiento);
+        $objPersona->__SET('Sexo',$row->Sexo);
+        $objPersona->__SET('Celular',$row->Celular);
+        $objPersona->__SET('Cargo_id_SubCategoria',$row->Cargo_id_SubCategoria);
+        $objPersona->__SET('Estado',$row->Estado);
+        $objPersona->__SET('Ingresado_por',$row->Ingresado_por);
+        $objPersona->__SET('Fecha_Registro',$row->Fecha_Registro);
+        $objPersona->__SET('Modificado_por',$row->Modificado_por);
+        $objPersona->__SET('Fecha_Modificacion',$row->Fecha_Modificacion);
+        $objPersona->__SET('Fecha_Ingreso',$row->Fecha_Ingreso);
+        $objPersona->__SET('Eliminado',$row->Eliminado);
 
         
         return $objPersona;
@@ -159,33 +156,22 @@ where persona.eliminado=0 and idUsuario is NULL" );
                                              ) VALUES
                                                 (:primer_nombre,:segundo_nombre,:apellido_paterno,:apellido_materno,:dni,
                                                 :celular,:fecha_ingreso,:correo
-                                                )");
- 
-        $stmt->bindParam(':primer_nombre',$persona->__GET('primer_nombre'));
-        $stmt->bindParam(':segundo_nombre',$persona->__GET('segundo_nombre'));
-        $stmt->bindParam(':apellido_paterno',$persona->__GET('apellido_paterno'));
-        $stmt->bindParam(':apellido_materno',$persona->__GET('apellido_materno'));
-       $stmt->bindParam(':dni',$persona->__GET('dni'));
-     //   $stmt->bindParam(':codigo',$persona->__GET('codigo'));
-       $stmt->bindParam(':celular',$persona->__GET('celular'));
-        $stmt->bindParam(':fecha_ingreso',$persona->__GET('fecha_ingreso'));
-       // $stmt->bindParam(':fecha_nacimiento',$persona->__GET('fecha_nacimiento'));
-      //  $stmt->bindParam(':sexo',$persona->__GET('sexo'));
-      //  $stmt->bindParam(':tipo_horario',$persona->__GET('tipo_horario'));
-      //  $stmt->bindParam(':horario_entrada',$persona->__GET('horario_entrada'));
-     //   $stmt->bindParam(':horario_salida',$persona->__GET('horario_salida'));
-      //  $stmt->bindParam(':sueldo',$persona->__GET('sueldo'));
-        $stmt->bindParam(':correo',$persona->__GET('correo'));
-     //   $stmt->bindParam(':anexo',$persona->__GET('anexo'));
-      //  $stmt->bindParam(':Area_id',$persona->__GET('Area_id'));
-     //   $stmt->bindParam(':Cargo_id',$persona->__GET('Cargo_id'));
-      //  $stmt->bindParam(':Sede_id',$persona->__GET('Sede_id'));
-     //   $stmt->bindParam(':ingresado_por',$persona->__GET('ingresado_por'));  
+                                             )");
+
+        $stmt->bindParam(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
+        $stmt->bindParam(':Documento',$persona->__GET('Documento'));
+        $stmt->bindParam(':Primer_Nombre',$persona->__GET('Primer_Nombre'));
+        $stmt->bindParam(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
+        $stmt->bindParam(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
+        $stmt->bindParam(':Apellido_Materno',$persona->__GET('Apellido_Materno'));        
+        $stmt->bindParam(':Fecha_Nacimiento',$persona->__GET('Fecha_Nacimiento'));
+        $stmt->bindParam(':Sexo',$persona->__GET('Sexo'));
+        $stmt->bindParam(':Celular',$persona->__GET('Celular'));
+        $stmt->bindParam(':Correo',$persona->__GET('Correo'));
+        $stmt->bindParam(':Cargo_id_SubCategoria',$persona->__GET('Cargo_id_SubCategoria'));
+        $stmt->bindParam(':Estado',$persona->__GET('Estado'));
  
         if (!$stmt->execute()) {
-            //$errors = $stmt->errorInfo();
-             //echo($errors[2]);
-           //return $errors[2];
            return 'error';          
             //print_r($stmt->errorInfo());
         }else{

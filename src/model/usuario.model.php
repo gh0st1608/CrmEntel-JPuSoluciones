@@ -10,9 +10,9 @@ class UsuarioModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT idUsuario,login,Perfil_id,usuario.activo,perfil.nombre as Perfil FROM usuario 
-INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
-where usuario.eliminado=0 order by idUsuario desc" );
+        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,usuario.idUsuario as idUsuario, usuario.Persona_id as Persona_id,usuario.Login as Login, usuario.Estado as Estado FROM usuario 
+        INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+        where usuario.eliminado=0 order by idUsuario desc" );
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -56,10 +56,10 @@ where usuario.eliminado=0 order by idUsuario desc" );
         $objUsuario = new Usuario();     
         $objUsuario->__SET('idUsuario',$row->idUsuario);
         $objUsuario->__SET('Persona_id',$row->Persona_id);
-        $objUsuario->__SET('login',$row->login);
-        $objUsuario->__SET('password',$row->password);
+        $objUsuario->__SET('Login',$row->Login);
+        $objUsuario->__SET('Password',$row->Password);
         $objUsuario->__SET('Perfil_id',$row->Perfil_id);
-        $objUsuario->__SET('activo',$row->activo);      
+        $objUsuario->__SET('Estado',$row->Estado);      
 
         
         return $objUsuario;

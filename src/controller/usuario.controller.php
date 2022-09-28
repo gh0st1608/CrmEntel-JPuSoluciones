@@ -2,6 +2,8 @@
 require_once 'model/usuario.model.php';
 require_once 'entity/usuario.entity.php';
 require_once 'entity/logsesion.entity.php';
+require_once 'model/persona.model.php';
+require_once 'entity/persona.entity.php';
 require_once "vendor/autoload.php";
  
 use UAParser\Parser;
@@ -19,16 +21,14 @@ class UsuarioController{
     /**==========================Vistas=======================================*/
 
     public function validarPermiso ($idPerfil,$idVista){
-        print_r($idPerfil);
-        print_r($idVista);
       try
         {
              ini_set('memory_limit', -1); 
             $this->pdo = new Conexion();
             $result = array();
 
-            $stm = $this->pdo->prepare("SELECT acceder FROM Permiso
-                WHERE Interfaz_id = $idVista
+            $stm = $this->pdo->prepare("SELECT acceder FROM permiso
+                WHERE Interfaz_id =$idVista
                 AND Perfil_id=$idPerfil");
             $stm->execute();
                    
@@ -45,14 +45,12 @@ class UsuarioController{
 
     public function Index(){
         $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
-        print_r($permiso);
         if($permiso['acceder']==1){         
       
             require_once 'view/header.php';
             require_once 'view/seguridad/usuario/index.php';
             require_once 'view/footer.php';       
         }else{
-          print_r($permiso);
           header('Location: index.php?c=index&a=denegado');
         }
 
@@ -121,13 +119,25 @@ class UsuarioController{
     }
 
     public function Registrar(){
-        $usuario = new Usuario();       
-        $usuario->__SET('login',$_REQUEST['login']);
-        $usuario->__SET('password',$_REQUEST['password']);
+
+        $usuario = new Usuario();
+        $persona = new Persona();         
+        $usuario->__SET('Login',$_REQUEST['Login']);
+        $usuario->__SET('Password',$_REQUEST['Password']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil_id']);
         $usuario->__SET('Persona_id',$_REQUEST['Persona_id']);       
-        $usuario->__SET('ingresado_por',$_SESSION['Usuario_Actual']);
-        $registrar_usuario = $this->model->registrar($usuario);  
+        $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
+
+        
+        $persona->__SET('Tipo_Documento',$_REQUEST['Tipo_Documento']);
+        $persona->__SET('Documento',$_REQUEST['Documento']);
+        $persona->__SET('Primer_Nombre',$_REQUEST['Primer_Nombre']);
+        $persona->__SET('Segundo_Nombre',$_REQUEST['Segundo_Nombre']);
+        $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
+        $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
+
+        $registrar_usuario = $usuario->model->registrar($usuario);
+        $registrar_persona = $persona->model->registrar($persona); 
          
         if($registrar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Registrar');
