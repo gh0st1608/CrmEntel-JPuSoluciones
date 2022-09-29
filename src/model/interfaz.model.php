@@ -62,6 +62,52 @@ class InterfazModel
 
     }
  
+    public function ComboModuloSecundario(  $idInterfaz)
+    {
+        
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT idInterfaz, Nombre FROM interfaz
+                                     WHERE IdInterfaz_superior = :IdInterfaz_superior; " );
+        $stmt->bindParam(':IdInterfaz_superior', $idInterfaz );
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+
+    }
+
+    public function ComboOrden( $IdInterfaz_superior)
+    {
+        
+        
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT Orden FROM interfaz
+        WHERE IdInterfaz_superior = :IdInterfaz_superior
+        GROUP BY Orden
+        UNION
+        SELECT MAX(Orden)+1 AS Orden FROM interfaz
+        WHERE IdInterfaz_superior = :IdInterfaz_superior
+        GROUP BY Orden  ; " );
+        $stmt->bindParam(':IdInterfaz_superior', $IdInterfaz_superior);
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+
+    }
+
+    
+ 
 
     public function Consultar(Interfaz $Interfaz)
     {
@@ -103,16 +149,16 @@ class InterfazModel
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO Interfaz(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
-        $stmt->bindValue(':Nombre', $Interfaz->__GET('Nombre'),PDO::PARAM_STR);
-        $stmt->bindValue(':Url', $Interfaz->__GET('Url'),PDO::PARAM_STR);
-        $stmt->bindValue(':Nivel', $Interfaz->__GET('Nivel'),PDO::PARAM_STR);
-        $stmt->bindValue(':Modulo_Principal', $Interfaz->__GET('Modulo_Principal'),PDO::PARAM_STR);
-        $stmt->bindValue(':IdInterfaz_Superior', $Interfaz->__GET('IdInterfaz_Superior'),PDO::PARAM_STR);
-        $stmt->bindValue(':Orden', $Interfaz->__GET('Orden'),PDO::PARAM_INT);
-        $stmt->bindValue(':Icono', $Interfaz->__GET('Icono'),PDO::PARAM_STR);
-        $stmt->bindValue(':Estado', $Interfaz->__GET('Estado'),PDO::PARAM_STR);
-        $stmt->bindValue(':Ingresado_por', $Interfaz->__GET('Ingresado_por'),PDO::PARAM_INT);   
+        $stmt = $this->bd->prepare("INSERT INTO interfaz(Nombre,Url,Nivel,Modulo_Principal,IdInterfaz_Superior,Orden,Icono,Estado,Ingresado_por) VALUES(:Nombre,:Url,:Nivel,:Modulo_Principal,:IdInterfaz_Superior,:Orden,:Icono,:Estado,:Ingresado_por)");
+        $stmt->bindValue(':Nombre', $Interfaz->__GET('Nombre'));
+        $stmt->bindValue(':Url', $Interfaz->__GET('Url'));
+        $stmt->bindValue(':Nivel', $Interfaz->__GET('Nivel'));
+        $stmt->bindValue(':Modulo_Principal', $Interfaz->__GET('Modulo_Principal'));
+        $stmt->bindValue(':IdInterfaz_Superior', $Interfaz->__GET('IdInterfaz_Superior'));
+        $stmt->bindValue(':Orden', $Interfaz->__GET('Orden') );
+        $stmt->bindValue(':Icono', $Interfaz->__GET('Icono'));
+        $stmt->bindValue(':Estado', $Interfaz->__GET('Estado'));
+        $stmt->bindValue(':Ingresado_por', $Interfaz->__GET('Ingresado_por') );   
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
