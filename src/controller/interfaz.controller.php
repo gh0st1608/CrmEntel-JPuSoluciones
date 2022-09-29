@@ -85,7 +85,7 @@ class InterfazController{
         $interfaz->__SET('Nombre',$_REQUEST['nombre']);
         $interfaz->__SET('Url',$_REQUEST['Url']);
         $interfaz->__SET('Nivel',$_REQUEST['nivel']);
-      $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
+       $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
         $interfaz->__SET('IdInterfaz_Superior',$_REQUEST['modulosecundario']);
         $interfaz->__SET('Orden',$_REQUEST['orden']);
         $interfaz->__SET('Icono',$_REQUEST['Icono']);
