@@ -69,14 +69,15 @@ class UsuarioModel
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE usuario SET  login = :login,password=:password,Perfil_id=:Perfil_id,modificado_por=:modificado_por,activo=:activo WHERE idUsuario = :idUsuario");
+        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
 
         $stmt->bindParam(':idUsuario',$usuario->__GET('idUsuario'));
-        $stmt->bindParam(':login',$usuario->__GET('login'));
-        $stmt->bindParam(':password',$usuario->__GET('password'));
-        $stmt->bindParam(':Perfil_id',$usuario->__GET('Perfil_id'));       
-        $stmt->bindParam(':modificado_por',$usuario->__GET('modificado_por'));
-        $stmt->bindParam(':activo',$usuario->__GET('activo'));    
+        $stmt->bindParam(':Login',$usuario->__GET('Login'));
+        $stmt->bindParam(':Password',$usuario->__GET('Password'));
+        $stmt->bindParam(':Perfil_id',$usuario->__GET('Perfil_id'));
+        $stmt->bindParam(':Estado',$usuario->__GET('Estado'));      
+        $stmt->bindParam(':Modificado_por',$usuario->__GET('Modificado_por'));
+    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
@@ -86,43 +87,18 @@ class UsuarioModel
         }
     }    
 
-    public function Registrar(Usuario $usuario,Persona $persona)
+    public function Registrar(Usuario $usuario)
     {
-       
-       
         $this->bd = new Conexion();
-
-        $stmt = $this->bd->prepare("INSERT INTO usuario(Login,Password,Perfil_id,Persona_id) VALUES(:Login,:Password,:Perfil_id,:Persona_id)");
+ 
+        $stmt = $this->bd->prepare("INSERT INTO usuario(Persona_id,Login,Password,Perfil_id) VALUES(:Persona_id,:Login,:Password,:Perfil_id)");
+        $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Login', $usuario->__GET('Login'),PDO::PARAM_STR);
         $stmt->bindValue(':Password', $usuario->__GET('Password'),PDO::PARAM_STR);
         $stmt->bindValue(':Perfil_id', $usuario->__GET('Perfil_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'),PDO::PARAM_INT);
-        //$stmt->bindValue(':ingresado_por', $usuario->__GET('ingresado_por'),PDO::PARAM_STR);
-        $stmt->execute();
-        $errors = $stmt->errorInfo();
-
-        $stmt = $this->bd->prepare("INSERT INTO persona(Tipo_Documento,Documento,Primer_Nombre,Segundo_Nombre,Apellido_Paterno,Apellido_Materno
-                                             ) VALUES
-                                                (:Tipo_Documento,:Documento,:Primer_Nombre,:Segundo_Nombre,:Apellido_Paterno,:Apellido_Materno
-                                             )");
-
-        $stmt->bindParam(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
-        $stmt->bindParam(':Documento',$persona->__GET('Documento'));
-        $stmt->bindParam(':Primer_Nombre',$persona->__GET('Primer_Nombre'));
-        $stmt->bindParam(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
-        $stmt->bindParam(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
-        $stmt->bindParam(':Apellido_Materno',$persona->__GET('Apellido_Materno'));
-        $stmt->execute();
-        $errors = $stmt->errorInfo();    
-        //$stmt->bindParam(':Fecha_Nacimiento',$persona->__GET('Fecha_Nacimiento'));
-        //$stmt->bindParam(':Sexo',$persona->__GET('Sexo'));
-        //$stmt->bindParam(':Celular',$persona->__GET('Celular'));
-        //$stmt->bindParam(':Correo',$persona->__GET('Correo'));
-        //$stmt->bindParam(':Cargo_id_SubCategoria',$persona->__GET('Cargo_id_SubCategoria'));
-        //$stmt->bindParam(':Estado',$persona->__GET('Estado'));
-
-
-        if (isset($errors)) {
+        
+  
+        if (!$stmt->execute()) {
             // echo($errors[2]);
            return $errors[2];          
             //print_r($stmt->errorInfo());

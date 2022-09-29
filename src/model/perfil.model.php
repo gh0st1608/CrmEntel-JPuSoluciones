@@ -10,7 +10,7 @@ class PerfilModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM perfil where eliminado=0" );
+        $stmt = $this->bd->prepare("SELECT * FROM perfil where Estado = 1 AND Eliminado=0" );
         $stmt->execute();
 
         if (!$stmt->execute()) {

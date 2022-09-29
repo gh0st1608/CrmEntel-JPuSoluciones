@@ -22,6 +22,20 @@ class PersonaModel
 
     }
 
+    public function ObtenerIndice()
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT idPersona FROM persona order by idPersona DESC LIMIT 1;");
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }       
+    }
+
     public function Listar_Sin_Usuario()
     {
         $this->bd = new Conexion();
@@ -143,7 +157,7 @@ where persona.eliminado=0 and idUsuario is NULL" );
             return 'exito';
         }
     }    
-/*
+
     public function Registrar(Persona $persona)
     {
        
@@ -151,12 +165,8 @@ where persona.eliminado=0 and idUsuario is NULL" );
         $this->bd = new Conexion();
 
 
-        $stmt = $this->bd->prepare("INSERT INTO persona(primer_nombre,segundo_nombre,apellido_paterno,apellido_materno,documento,
-                                                celular,fecha_ingreso,correo
-                                             ) VALUES
-                                                (:primer_nombre,:segundo_nombre,:apellido_paterno,:apellido_materno,:dni,
-                                                :celular,:fecha_ingreso,:correo
-                                             )");
+        $stmt = $this->bd->prepare("INSERT INTO persona(Tipo_Documento,Documento,Primer_Nombre,Segundo_Nombre,Apellido_Paterno,Apellido_Materno) VALUES
+                                                (:Tipo_Documento,:Documento,:Primer_Nombre,:Segundo_Nombre,:Apellido_Paterno,:Apellido_Materno)");
 
         $stmt->bindParam(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
         $stmt->bindParam(':Documento',$persona->__GET('Documento'));
@@ -164,22 +174,16 @@ where persona.eliminado=0 and idUsuario is NULL" );
         $stmt->bindParam(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
         $stmt->bindParam(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
         $stmt->bindParam(':Apellido_Materno',$persona->__GET('Apellido_Materno'));        
-        $stmt->bindParam(':Fecha_Nacimiento',$persona->__GET('Fecha_Nacimiento'));
-        $stmt->bindParam(':Sexo',$persona->__GET('Sexo'));
-        $stmt->bindParam(':Celular',$persona->__GET('Celular'));
-        $stmt->bindParam(':Correo',$persona->__GET('Correo'));
-        $stmt->bindParam(':Cargo_id_SubCategoria',$persona->__GET('Cargo_id_SubCategoria'));
-        $stmt->bindParam(':Estado',$persona->__GET('Estado'));
- 
+
         if (!$stmt->execute()) {
            return 'error';          
-            //print_r($stmt->errorInfo());
+
         }else{
             
             return 'exito';
         }
     }
-*/
+
     public function Eliminar(Persona $persona)
     {
        

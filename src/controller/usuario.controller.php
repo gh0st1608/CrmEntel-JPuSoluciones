@@ -2,6 +2,7 @@
 require_once 'model/usuario.model.php';
 require_once 'entity/usuario.entity.php';
 require_once 'entity/logsesion.entity.php';
+require_once 'controller/persona.controller.php';
 require_once 'entity/persona.entity.php';
 require_once "vendor/autoload.php";
  
@@ -101,11 +102,11 @@ class UsuarioController{
     public function Actualizar(){
         $usuario = new Usuario();
         $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);
-        $usuario->__SET('login',$_REQUEST['login']);
-        $usuario->__SET('password',$_REQUEST['password']);
-        $usuario->__SET('Perfil_id',$_REQUEST['Perfil_id']);         
-        $usuario->__SET('modificado_por',$_SESSION['Usuario_Actual']);
-        $usuario->__SET('activo',$_REQUEST['activo']);       
+        $usuario->__SET('Login',$_REQUEST['Documento']);
+        $usuario->__SET('Password',$_REQUEST['Clave']);
+        $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);         
+        $usuario->__SET('Estado',$_REQUEST['Estado']);
+        $usuario->__SET('Modificado_por',$_SESSION['Usuario_Actual']);       
         $actualizar_usuario = $this->model->actualizar($usuario);  
          
         if($actualizar_usuario=='error'){
@@ -119,39 +120,37 @@ class UsuarioController{
 
     public function Registrar(){
 
+        $persona = new PersonaController;
+        $persona->Registrar();
 
-        $persona = new Persona();           
-        $persona->__SET('Tipo_Documento',$_REQUEST['Tipo_Documento']);
-        $persona->__SET('Documento',$_REQUEST['Documento']);
-        $persona->__SET('Primer_Nombre',$_REQUEST['Primer_Nombre']);
-        $persona->__SET('Segundo_Nombre',$_REQUEST['Segundo_Nombre']);
-        $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
-        $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
+        $persona_id = $persona->ObtenerIndice();
+        $indice = $persona_id[0]['idPersona'];
 
         $usuario = new Usuario();
-        $usuario->__SET('Login',$_REQUEST['Login']);
+        $usuario->__SET('Persona_id',$indice);
+        $usuario->__SET('Login',$_REQUEST['Documento']);
         $usuario->__SET('Password',$_REQUEST['Clave']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);
-        $usuario->__SET('Persona_id',$_REQUEST['idUsuario']);       
-        $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
 
-        $registrar_usuario = $this->model->Registrar($usuario,$persona);
-
+        $registrar_usuario = $this->model->Registrar($usuario);
 
         if($registrar_usuario=='error'){
-            header('Location: index.php?c=Usuario&a=v_Registrar');
             echo 'No se Ha Podido Registrar al Usuario';
+            header('Location: index.php?c=Usuario&a=v_Registrar');
          }else{
             echo 'Usuario Registrado Correctamente';
             header('Location: index.php?c=Usuario');
          }
+
+
+         
     }
 
     public function Eliminar(){
         $usuario = new Usuario();
         $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);      
-        $usuario->__SET('modificado_por',$_SESSION['Usuario_Actual']);
-        $usuario->__SET('eliminado',1); 
+        $usuario->__SET('Modificado_por',$_SESSION['Usuario_Actual']);
+        $usuario->__SET('Eliminado',1); 
         $eliminar_usuario = $this->model->eliminar($usuario);  
          
         if($eliminar_usuario=='error'){

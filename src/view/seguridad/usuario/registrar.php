@@ -37,20 +37,20 @@ $perfiles = $perfil->Listar();
 					    <div class="form-group col-md-12">
 							<div class="form-group col-md-6">
 								<label>Tipo Documento</label>
-								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control">
+								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control" onchange="ValidarInputs()">
 								<option value="0">-- Seleccionar Tipo Documento--</option>      
 								<?php foreach ($listatipodocumento as $lista): ?>                
-									<option value="<?php echo $lista['idSubcategoria']; ?>"><?php echo $lista['Nombre']; ?></option>                      
+									<option value="<?php echo $lista['Nombre']; ?>"><?php echo $lista['Nombre']; ?></option>                      
 								<?php endforeach; ?> 
 								</select>
 							</div>
 							<div class="form-group col-md-6">
 								<label>Documento</label>
-								<input type="text" name="Documento" id="Documento" value="" class="form-control" placeholder=""  required />
+								<input type="text" name="Documento" id="Documento" value="" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 							</div>    
 							<div class="form-group col-md-6">
 								<label>Primer Nombre</label>
-								<input type="text" name="Primer_Nombre" id="Primer_Nombre" value="" class="form-control" placeholder=""  required />
+								<input type="text" name="Primer_Nombre" id="Primer_Nombre" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 							<div class="form-group col-md-6">
 								<label>Segundo Nombre</label>
@@ -58,15 +58,15 @@ $perfiles = $perfil->Listar();
 							</div>					   
 							<div class="form-group col-md-6">
 								<label>Apellido Paterno</label>
-								<input type="text" name="Apellido_Paterno" id="Apellido_Paterno" value="" class="form-control" placeholder=""  required />
+								<input type="text" name="Apellido_Paterno" id="Apellido_Paterno" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 							<div class="form-group col-md-6">
 								<label>Apellido Materno</label>
-								<input type="text" name="Apellido_Materno" id="Apellido_Materno" value="" class="form-control" placeholder=""  required />
+								<input type="text" name="Apellido_Materno" id="Apellido_Materno" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 							<div class="form-group col-md-6">
 								<label>Perfil</label>
-								<select name="Perfil" id="Perfil" class="form-control">
+								<select name="Perfil" id="Perfil" class="form-control" onchange="ValidarInputs()">
 								<option value="0">-- Seleccionar Perfil--</option>      
 								<?php foreach ($perfiles as $perfil): ?>                
 									<option value="<?php echo $perfil['idPerfil']; ?>"><?php echo $perfil['Nombre']; ?></option>                      
@@ -75,14 +75,14 @@ $perfiles = $perfil->Listar();
 							</div>
 							<div class="form-group col-md-6">
 								<label>Clave</label>
-								<input type="text" name="Clave" id="Clave" value="" class="form-control" placeholder=""  required />
+								<input type="text" name="Clave" id="Clave" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 					    </div> 
 					  
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">
 					        
-					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
+					        <button type="button" id="btnSubmit" disabled class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
 					      
 					    </div>
 					     <div class="col-md-6 col-sm-12">
@@ -135,8 +135,49 @@ $perfiles = $perfil->Listar();
 	                }
 	            }
         	}); 
-		});
-
-		
+		});	
 	});
+
+	function ValidarInputs() 
+	{
+		var Documento = $('#Documento').val();
+		var Tipo_Documento = $('#Tipo_Documento').val();
+		var Perfil = $('#Perfil').val();
+		var Clave = $('#Clave').val();
+		var Primer_Nombre = $('#Primer_Nombre').val();
+		var Apellido_Paterno = $('#Apellido_Paterno').val();
+		var Apellido_Materno = $('#Apellido_Materno').val();
+
+		if (Documento && Tipo_Documento && Perfil && Clave && Primer_Nombre && Apellido_Paterno && Apellido_Materno)
+		{
+			$('#btnSubmit').attr("disabled", false);
+		}
+	}
+
+	/* Validar DNI y TipoDoc
+	$(document).ready(function() {
+		$('#btnSubmit').on('click',function(e){
+			e.preventDefault();
+
+			var Documento = $('#Documento').val();
+			var Tipo_Documento = $('#Tipo_Documento').val();
+
+			$.ajax({
+				type: "POST",
+				url: "ajax/validaridentidad.php",
+				data: (
+					'Documento='+Documento+'&Tipo_Documento='Tipo_Documento
+					)
+				success: function(respuesta){
+					alert(respuesta);
+				}
+
+			})
+
+		})
+	}
+	*/
+
+
+
 </script>

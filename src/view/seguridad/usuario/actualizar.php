@@ -45,11 +45,11 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(58);
 					    <div class="form-group col-md-12">
 							<div class="form-group col-md-12">
 								<label>Nombres y Apellidos</label>
-								<input type="text" name="NombresApellidos" id="NombresApellidos" value="<?php echo $persona->Apellido_Paterno.' '.$persona->Apellido_Materno.' '.$persona->Primer_Nombre.' '.$persona->Segundo_Nombre; ?>" class="form-control" placeholder=""  required />
+								<input type="text" name="NombresApellidos" id="NombresApellidos" value="<?php echo $persona->Apellido_Paterno.' '.$persona->Apellido_Materno.' '.$persona->Primer_Nombre.' '.$persona->Segundo_Nombre; ?>" class="form-control"  placeholder=""  readonly />
 							</div>
 							<div class="form-group col-md-6">
 								<label>Tipo Documento</label>
-								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control">
+								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control" disabled="true" readonly>
 									<?php foreach ($listatipodocumento as $lista): ?>                
 										<option value="<?php echo $lista['Nombre']; ?>"><?php echo $lista['Nombre']; ?></option>                      
 									<?php endforeach; ?>                                    
@@ -66,11 +66,24 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(58);
 							</div>
 							<div class="form-group col-md-6">
 								<label>Login</label>
-								<input type="text" name="Documento" id="Documento" value="<?php echo $usuario->Login; ?>" class="form-control" placeholder=""  required />
+								<input type="text" name="Documento" id="Documento" value="<?php echo $usuario->Login; ?>" class="form-control" placeholder=""  readonly />
 							</div>    
 							<div class="form-group col-md-6">
 								<label>Clave</label>
 								<input type="text" name="Clave" id="Clave" value="<?php echo $usuario->__GET('Password');?>" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-4">
+					      		<label>Activo</label>
+							</div>
+							<div class="form-group col-md-4">
+								<label class="radio-inline">
+									<input type="radio" name="Estado" id="Estado" value="1" <?php if ($usuario->__GET('Estado')==1) { echo 'checked';  } ?>> SI
+								</label>
+							</div>
+							<div class="form-group col-md-4">
+								<label class="radio-inline">
+									<input type="radio" name="Estado" id="Estado" value="0" <?php if ($usuario->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
+								</label>	
 							</div>
 					    </div> 
 					  
