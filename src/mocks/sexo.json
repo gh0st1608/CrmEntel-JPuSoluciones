@@ -1,0 +1,13 @@
+{
+    "Sexo":
+        [
+            {
+                "Nombre": "M",
+                "Estado": 1
+            },
+            {
+                "Nombre": "S",
+                "Estado": 1
+            }
+        ]
+}

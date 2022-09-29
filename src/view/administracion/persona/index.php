@@ -14,10 +14,10 @@
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de Personas</h3> <?php if ($_SESSION['Perfil_Actual']==1): ?><a class="btn btn-sm btn-primary pull-right" href="?c=Persona&a=v_Registrar">Nueva Persona</a><?php endif; ?>
+	      			 <h3 class='box-title'><i class="fa fa-briefcase"></i> Lista de Personas</h3>
 	    		</div>
 	    		<div class="box-body box-body_table">
-	    		 <?php  $personas = $this->Listar();  ?>
+	    		 <?php  $personas = $this->Listar();?>
  
                   	<table id="TablaEntidad" class="table table-bordered table-hover dataTable no-footer" width="100%">
 	                    <thead>

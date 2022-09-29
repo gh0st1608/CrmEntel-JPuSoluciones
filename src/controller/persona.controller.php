@@ -67,31 +67,21 @@ class PersonaController{
     public function Actualizar(){
         $persona = new Persona();
         $persona->__SET('idPersona',$_REQUEST['idPersona']);
-        $persona->__SET('codigo',$_REQUEST['codigo']);
-        $persona->__SET('dni',$_REQUEST['dni']);
-        $persona->__SET('primer_nombre',$_REQUEST['primer_nombre']);
+        $persona->__SET('Tipo_Documento',$_REQUEST['Tipo_Documento']);
+        $persona->__SET('Documento',$_REQUEST['Documento']);
         $persona->__SET('segundo_nombre',$_REQUEST['segundo_nombre']);
-        $persona->__SET('apellido_paterno',$_REQUEST['apellido_paterno']);
-        $persona->__SET('apellido_materno',$_REQUEST['apellido_materno']);
-        $persona->__SET('fecha_nacimiento',$_REQUEST['fecha_nacimiento']);
-        $persona->__SET('sexo',$_REQUEST['sexo']);
-        $persona->__SET('celular',$_REQUEST['celular']);
-        $persona->__SET('fecha_ingreso',$_REQUEST['fecha_ingreso']);
-        $persona->__SET('tipo_horario',$_REQUEST['tipo_horario']);
-        $persona->__SET('horario_entrada',$_REQUEST['horario_entrada']);
-        $persona->__SET('horario_salida',$_REQUEST['horario_salida']);
-        $persona->__SET('sueldo',$_REQUEST['sueldo']);
-        $persona->__SET('correo',$_REQUEST['correo']);
-        $persona->__SET('anexo',$_REQUEST['anexo']);
-        $persona->__SET('Area_id',$_REQUEST['Area_id']);
-        $persona->__SET('Cargo_id',$_REQUEST['Cargo_id']);
-        $persona->__SET('Sede_id',$_REQUEST['Sede_id']);
-        $persona->__SET('fecha_salida',$_REQUEST['fecha_salida']);
-        $persona->__SET('activo',$_REQUEST['activo']);                  
-        $persona->__SET('modificado_por',$_SESSION['Usuario_Actual']);      
+        $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
+        $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
+        $persona->__SET('Fecha_Nacimiento',$_REQUEST['Fecha_Nacimiento']);
+        $persona->__SET('Sexo',$_REQUEST['Sexo']);
+        $persona->__SET('Celular',$_REQUEST['Celular']);
+        $persona->__SET('Correo',$_REQUEST['Correo']);
+        $persona->__SET('Cargo_id_SubCategoria',$_REQUEST['Cargo_id_SubCategoria']);
+        $persona->__SET('Estado',$_REQUEST['Estado']);                  
+        $persona->__SET('Modificado_por',$_SESSION['Usuario_Actual']);      
         $actualizar_persona = $this->model->Actualizar($persona);         
         if($actualizar_persona=='error'){
-           header('Location: index.php?c=Persona&a=v_Actualizar&idPersona='. $persona->__GET('idPersona'));
+            header('Location: index.php?c=Persona&a=v_Actualizar&idPersona='. $persona->__GET('idPersona'));
             echo 'No se Ha Podido Actualizar';
         }else{
             echo 'Actualizado Correctamente';
