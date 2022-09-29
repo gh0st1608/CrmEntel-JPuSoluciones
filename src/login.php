@@ -104,15 +104,18 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 </div>
                 <div class="modal-body">
                 <div class="form-group has-feedback">
-                  <input type="input" class="form-control" name="Correo" placeholder="Ingresar Correo">
+                  <label>Ingresa Correo</label>
+                  <input type="email" class="form-control" name="Correo" id="Correo"  placeholder="Ingresar Correo" required>
+                  <span id="error" style="display:none;color:red;">Correo no válido</span>
+                  <span id="success" style="display:none;color:green;">Correo válido</span>
                   <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                  <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
+                  <button type="submit" name="EnviarMail" id="EnviarMail" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
                 </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+                  <button type="button" name="Regresar" id="Regresar" class="btn btn-default" data-dismiss="modal">Regresar</button>
                 </div>
             </div>
             </div>
@@ -141,6 +144,25 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 $('#myModal').modal({show:true});
             });
         });
+
+
+
+
+      
+      $('#Correo').on('keyup', function() {
+          var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
+          var buttonDisabled = $('#Correo').val().length == 0 ;
+          if(!re) {
+              $('#error').show();
+              $('#success').hide();
+          } else {
+              $('#error').hide();
+              $('#success').show();
+              $('#EnviarMail').attr("disabled", buttonDisabled);
+          }
+      })
+
+
     </script>
   </body>
 </html>
