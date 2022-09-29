@@ -22,7 +22,9 @@
 	$cargos = $subcategoria -> Listar_por_categoria(56);
 
 	$persona= $this->Consultar($_REQUEST['idPersona']);
+
 	$cargo = $subcategoria->Consultar($persona->Cargo_id_SubCategoria);
+;
 
   ?>
 <section class="content">
@@ -67,9 +69,10 @@
 					    <div class="form-group col-md-6">
 					        <label>Sexo</label>
 					        <select name="Sexo" id="Sexo" class="form-control" required >
-									<?php foreach ($generos as $genero): ?>                
-										<option value="<?php echo $generos['Nombre']; ?>"><?php echo $genero['Nombre']; ?></option>                      
-									<?php endforeach; ?>                                    
+							<option value="0">-- Seleccionar Genero--</option>
+								<?php foreach ($generos as $genero): ?>                
+									<option value="<?php echo $genero['Nombre']; ?>"><?php echo $genero['Nombre']; ?></option>                      
+								<?php endforeach; ?>                                    
 							</select>
 					    </div>
 					    <div class="form-group col-md-6">
@@ -125,11 +128,9 @@
 <script>
 	
 	$(document).ready(function() {
-		
+		$('#Cargo').val("<?php echo $cargo['Nombre']; ?>");
+		$('#Sexo').val("<?php echo $persona->__GET('Sexo');?>");
 		$("#btnSubmit").click(function(event) {
-			$('#Cargo').val("<?php echo $cargo->__GET('Nombre')?>");
-			$('#Sexo').val("<?php echo $genero->__GET('Nombre'); ?>");
-			$("#btnSubmit").click(function(event) {
 			bootbox.dialog({
 	            message: "¿Estas seguro de actualizar?",
 	            title: "Actualizar Persona",
@@ -158,6 +159,5 @@
 		});
 
 	});	
-	});
 </script>
 <?php }/*--- END REQUESt*/ ?>

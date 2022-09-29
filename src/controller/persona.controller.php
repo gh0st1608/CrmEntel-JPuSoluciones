@@ -69,7 +69,8 @@ class PersonaController{
         $persona->__SET('idPersona',$_REQUEST['idPersona']);
         $persona->__SET('Tipo_Documento',$_REQUEST['Tipo_Documento']);
         $persona->__SET('Documento',$_REQUEST['Documento']);
-        $persona->__SET('segundo_nombre',$_REQUEST['segundo_nombre']);
+        $persona->__SET('Primer_Nombre',$_REQUEST['Primer_Nombre']);
+        $persona->__SET('Segundo_Nombre',$_REQUEST['Segundo_Nombre']);
         $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
         $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
         $persona->__SET('Fecha_Nacimiento',$_REQUEST['Fecha_Nacimiento']);

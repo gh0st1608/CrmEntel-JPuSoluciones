@@ -120,12 +120,12 @@ where persona.eliminado=0 and idUsuario is NULL" );
     {
       
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE persona SET  Tipo_Documento=:Tipo_Documento,Documento=:Documento,Priner_Nombre=:Priner_Nombre,Segundo_Nombre=:Segundo_Nombre,Apellido_Paterno=:Apellido_Paterno,apellido_materno=:apellido_materno,Fecha_Nacimiento=:Fecha_Nacimiento,Sexo=:Sexo,Celular=:Celular,Correo=:Correo,Cargo_id_SubCategoria=:Cargo_id_SubCategoria,Estado=:Estado,Modificado_por=:Modificado_por WHERE idPersona=:idPersona;");
+        $stmt = $this->bd->prepare("UPDATE persona SET  Tipo_Documento=:Tipo_Documento,Documento=:Documento,Primer_Nombre=:Primer_Nombre,Segundo_Nombre=:Segundo_Nombre,Apellido_Paterno=:Apellido_Paterno,Apellido_Materno=:Apellido_Materno,Fecha_Nacimiento=:Fecha_Nacimiento,Sexo=:Sexo,Celular=:Celular,Correo=:Correo,Cargo_id_SubCategoria=:Cargo_id_SubCategoria,Estado=:Estado,Modificado_por=:Modificado_por WHERE idPersona=:idPersona;");
 
         $stmt->bindParam(':idPersona',$persona->__GET('idPersona'));
         $stmt->bindParam(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
         $stmt->bindParam(':Documento',$persona->__GET('Documento'));
-        $stmt->bindParam(':Priner_Nombre',$persona->__GET('Priner_Nombre'));
+        $stmt->bindParam(':Primer_Nombre',$persona->__GET('Primer_Nombre'));
         $stmt->bindParam(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
         $stmt->bindParam(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
         $stmt->bindParam(':Apellido_Materno',$persona->__GET('Apellido_Materno'));
