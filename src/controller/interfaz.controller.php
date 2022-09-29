@@ -82,12 +82,12 @@ class InterfazController{
     public function Registrar(){
         
         $interfaz = new Interfaz();
-        $interfaz->__SET('Nombre',$_REQUEST['Nombre']);
+        $interfaz->__SET('Nombre',$_REQUEST['nombre']);
         $interfaz->__SET('Url',$_REQUEST['Url']);
-        $interfaz->__SET('Nivel',$_REQUEST['Nivel']);
-        $interfaz->__SET('Modulo_Principal',$_REQUEST['ModPrincipal']);
-        $interfaz->__SET('IdInterfaz_Superior',$_REQUEST['ModSuperior']);
-        $interfaz->__SET('Orden',$_REQUEST['Orden']);
+        $interfaz->__SET('Nivel',$_REQUEST['nivel']);
+      $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
+        $interfaz->__SET('IdInterfaz_Superior',$_REQUEST['modulosecundario']);
+        $interfaz->__SET('Orden',$_REQUEST['orden']);
         $interfaz->__SET('Icono',$_REQUEST['Icono']);
         $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $interfaz->__SET('Estado',$_REQUEST['Estado']);    
@@ -100,7 +100,7 @@ class InterfazController{
            // echo 'No se Ha Podido Registrar';
          }else{
            // echo 'Registrado Correctamente';
-            header('Location: index.php?c=Interfaz=Index');
+               header('Location: index.php?c=Interfaz');
          }
  
     }
@@ -129,6 +129,56 @@ class InterfazController{
         echo  json_encode($registros);
     }
 
+    /* combos */
+    public function ComboNivel()
+    {
+ 
+        $consulta = $this->model->ComboNivel();
+        return $consulta;
+    }
+    
+    public function ComboModuloSecundario()
+    {
+ 
+       $interfaz =  $_POST['idInterfaz'];
+ 
+        $consulta = $this->model->ComboModuloSecundario($interfaz);
+
+ 
+       $cadena = '<option value='.'>-- Seleccionar Modulo--</option>';
+ 
+
+        foreach($consulta as $moduloSecundario){
+            $cadena.='<option value='.$moduloSecundario['idInterfaz'].'>'.$moduloSecundario['Nombre'].'</option>';
+
+        }    
+       
+         echo $cadena;
+
+ 
+        //return $consulta;
+    }
+    public function ComboOrden()
+    {
+        $IdInterfaz_superior =  $_POST['idInterfaz_superior'];
+ 
+  
+        $consulta = $this->model->ComboOrden($IdInterfaz_superior);
+        
+        $cadena = '<option value='.'>-- Seleccionar Ordeb--</option>';
+ 
+
+        foreach($consulta as $orden){
+            $cadena.='<option value='.$orden['Orden'].'>'.$orden['Orden'].'</option>';
+
+        }    
+       
+         echo $cadena; 
+
+
+
+
+    }
 
 
 }
