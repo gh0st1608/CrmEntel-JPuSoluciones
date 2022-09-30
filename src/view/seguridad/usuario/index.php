@@ -88,8 +88,6 @@ $persona = new PersonaController;
                         
                               window.location.href = "?c=Usuario&a=Eliminar&idUsuario="+idUsuario;
                          
-
-                       
                     }
                 },
                 danger: {

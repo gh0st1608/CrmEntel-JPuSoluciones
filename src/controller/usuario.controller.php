@@ -253,9 +253,7 @@ class UsuarioController{
          
         if($eliminar_usuario=='error'){
             header('Location: index.php?c=Usuario');
-            echo 'No se Ha Podido Eliminar el Usuario';
          }else{
-            echo 'Usuario Eliminar Correctamente';
             header('Location: index.php?c=Usuario');
          }
     }

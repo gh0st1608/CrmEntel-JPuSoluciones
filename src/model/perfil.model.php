@@ -60,8 +60,6 @@ class PerfilModel
 
     public function Registrar(Perfil $perfil)
     {
-       
-       print_r($perfil);
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO perfil(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
         $stmt->bindValue(':Nombre', $perfil->__GET('Nombre'),PDO::PARAM_STR);
