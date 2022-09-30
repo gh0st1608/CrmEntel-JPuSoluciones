@@ -158,25 +158,18 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           }
       })
 
-      //Enviar Correo de Recuepracion
-      $(document).ready(function() {
-        $('#EnviarMail').on('click',function(e){
-          e.preventDefault();
-
-          var Correo = $('#Correo').val();
-
+      $('#EnviarMail').on('click',function(){
+          var parametro= "Correo="+$("#Correo").val();
           $.ajax({
-            type: "POST",
-            url: "ajax/recuperarcorreo.php",
-            data: ('Correo='+Correo)
-            success: function(respuesta){
-              alert(respuesta);
-            }
-
-          })
-
-        })
-      });
+              data: parametro,
+              type: "POST",
+              url: 'index.php?c=Usuario&a=v_RecuperarClave',
+              //sync:false,        
+              success: function(data) {
+                alert(data);
+              },
+          });
+      }
 	
 
     </script>

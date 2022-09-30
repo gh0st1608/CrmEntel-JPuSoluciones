@@ -24,6 +24,22 @@ class UsuarioModel
 
     }
 
+    public function RecuperarClave($correo){
+
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT usuario.Password as Clave FROM usuario 
+        INNER JOIN persona ON persona.idPersona = usuario.Persona_id WHERE persona.Correo = $correo" );
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);       
+        }
+
+    }
+
     public function Consultar_informacion_usuario($idUsuario)
     {
          
