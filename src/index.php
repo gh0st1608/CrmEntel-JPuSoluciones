@@ -1,16 +1,18 @@
 <?php
-
 //llamar al archivo usuario.controller.php
 require_once 'controller/usuario.controller.php';
 //Instanciamos el controlador del Usuario
 $User = new UsuarioController();
 
 //verificamos si el usuario no esta logueado
+
 if(!$User->Verificar_InicioSesion()){
     //si no esta logueado redireccionamo al formulario login.php
     $User->redirect('login.php');
+     
     
-}else{
+}else{ 
+
     ini_set('memory_limit', '-1');
     ini_set('max_execution_time', -1);
     require_once 'controller/index.controller.php';
@@ -19,8 +21,8 @@ if(!$User->Verificar_InicioSesion()){
     define( 'RUTA_HTTP', 'http://' . $_SERVER['HTTP_HOST']);
     // Todo esta lógica hara el papel de un FrontController
     if(isset($_REQUEST['c'])=='' || isset($_REQUEST['c'])==''){
-
-         //Instanciamos el controlador del Index
+         
+      //Instanciamos el controlador del Index
         $controller = new IndexController();
        //Llamamos a la funcion index
         $controller->Index();   
@@ -73,5 +75,7 @@ if(!$User->Verificar_InicioSesion()){
             //echo 'No existe el controlador';
             header('Location: index.php?c=index&a=error');
         }
-    }   
+
+    }
+
 }

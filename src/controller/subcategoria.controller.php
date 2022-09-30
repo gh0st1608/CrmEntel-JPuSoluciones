@@ -79,17 +79,17 @@ class SubCategoriaController{
     public function Actualizar(){
         $subcategoria = new SubCategoria();
         $subcategoria->__SET('idSubCategoria',$_REQUEST['idSubCategoria']);
-        $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
-        $subcategoria->__SET('Nombre',$_REQUEST['Nombre']);  
+        //$subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
+        $subcategoria->__SET('Nombre',$_REQUEST['Nombre']); 
+        $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);  
         $subcategoria->__SET('Estado',$_REQUEST['Estado']);              
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
+
         $actualizar_subcategoria = $this->model->Actualizar($subcategoria);  
-         
+        
         if($actualizar_subcategoria=='error'){
             header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='. $subcategoria->__GET('idSubCategoria'));
-            echo 'No se Ha Podido Actualizar';
         }else{
-            echo 'Actualizado Correctamente';
             header('Location: index.php?c=SubCategoria');
          }
     }
@@ -104,7 +104,6 @@ class SubCategoriaController{
 
         $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);
         $subcategoria->__SET('Logica_Json',$_REQUEST['Data']);
-        print_r($_REQUEST['Data']);
         if ($subcategoria -> Aplicar_Logica == 1)
         {
             $subcategorias = json_decode($_REQUEST['Data'],TRUE);
@@ -129,12 +128,10 @@ class SubCategoriaController{
  
         if($registrar_subcategoria=='error'){
             header('Location: index.php?c=SubCategoria&a=v_Registrar');
-            echo 'No se Ha Podido Registrar';
          }else{
-            echo 'Registrado Correctamente';
-            header('Location: index.php?c=subcategoria');
+            header('Location: index.php?c=SubCategoria');
          }
-    }
+}
 
     public function Eliminar(){
         $subcategoria = new SubCategoria();
@@ -144,10 +141,8 @@ class SubCategoriaController{
         $eliminar_subcategoria = $this->model->Eliminar($subcategoria);  
          
         if($eliminar_subcategoria=='error'){
-            echo 'No se Ha Podido Eliminar';
             header('Location: index.php?c=SubCategoria');            
          }else{
-            echo 'Eliminado Correctamente';
             header('Location: index.php?c=SubCategoria');
          }
     }

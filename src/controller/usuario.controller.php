@@ -111,9 +111,7 @@ class UsuarioController{
          
         if($actualizar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Actualizar&idUsuario='. $usuario->__GET('idUsuario'));
-            echo 'No se Ha Podido Actualizar el Usuario';
          }else{
-            echo 'Usuario Actualizado Correctamente';
             header('Location: index.php?c=Usuario');
          }
     }
@@ -135,10 +133,8 @@ class UsuarioController{
         $registrar_usuario = $this->model->Registrar($usuario);
 
         if($registrar_usuario=='error'){
-            echo 'No se Ha Podido Registrar al Usuario';
             header('Location: index.php?c=Usuario&a=v_Registrar');
          }else{
-            echo 'Usuario Registrado Correctamente';
             header('Location: index.php?c=Usuario');
          }
 

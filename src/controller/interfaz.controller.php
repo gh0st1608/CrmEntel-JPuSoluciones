@@ -32,8 +32,8 @@ class InterfazController{
     /**=======================================================================*/   
     public function Listar()
     {
-        $interfazs = $this->model->Listar();
-        return $interfazs;
+        $interfaz = $this->model->Listar();
+        return $interfaz;
     }
     public function ConsultaModulo()
     {

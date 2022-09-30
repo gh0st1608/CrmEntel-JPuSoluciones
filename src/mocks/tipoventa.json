@@ -1,0 +1,13 @@
+{
+    "Categoria":
+        [
+            {
+                "Nombre": "Contado",
+                "Estado": 0
+            },
+            {
+                "Nombre": "Transferencia",
+                "Estado": 0
+            }
+        ]
+}

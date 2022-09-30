@@ -76,12 +76,7 @@ public function Consultas($sql)
             die($e->getMessage());
         }
 
-  }
-
-
-
-
-//*************ORDENAR ARRAY****************/
+}
 function orderMultiDimensionalArray ($toOrderArray, $field, $inverse = false) {
     $position = array();
     $newRow = array();
@@ -192,11 +187,11 @@ function super_unique($array,$key)
 
    $temp_array = array();
 
- //  foreach ( $array as &$v ) {
+  //foreach ( $array as &$v ) {
   foreach ( $array as $v ) {
        if (!isset($temp_array[$v[$key]]))
 
-       //$temp_array[$v[$key]] =& $v;
+  //$temp_array[$v[$key]] =& $v;
        $temp_array[$v[$key]] = $v;
    }
 
@@ -221,20 +216,8 @@ $porcentaje=$this->noPercent($porcentaje);
    }
 }
 
-
-
-
-
-
-
-
-
 public function estado_activo($estado){
 
-  /*
-    0 -> inactivo
-    1 -> activo                
-  */
   if ($estado==0) {
     echo  'INACTIVO';
   }elseif ($estado==1) {
@@ -272,20 +255,16 @@ public function sumar_array_key_value($array_query, $clave, $valor) {
   return $nuevo;
 }
 
- }   
-
-
- ?>
-
-
- <?php 
+}   
+?>
+<?php 
 class FiltrarArreglos {
         private $num;
 
         function __construct($num) {
                 $this->num = $num;
         }
-/* FILTROS POR GESTION*/
+        //FILTROS POR GESTION
         function filtrar_por_Usuario($i) {
                return $i['IDUSUARIO'] == $this->num;
         }
@@ -318,9 +297,9 @@ class FiltrarArreglos {
         function filtrar_por_Hora_Inicio($i) {
                return $i['HORA_GESTION'] == $this->num;
         }
-        /*
-          TABLA DESPLEGABLE
-        */
+        
+        //TABLA DESPLEGABLE
+        
         function filter_by_FirstRow($i) {
                return $i['FIRST_CODE'] == $this->num;
         }
@@ -335,22 +314,21 @@ class FiltrarArreglos {
 
 
 }
- ?>
+?>
+<?php 
+  class FilterArray{
+          private $num;
+          private $index;
 
- <?php 
-class FilterArray{
-        private $num;
-        private $index;
-
-        function __construct($num,$index) {
-                $this->num = $num;
-                $this->index = $index;
-        }
-/* FILTROS POR GESTION*/
-        function filter_by_index($i) {
-               return $i[$this->index] == $this->num;
-        }
+          function __construct($num,$index) {
+                  $this->num = $num;
+                  $this->index = $index;
+          }
+  /* FILTROS POR GESTION*/
+          function filter_by_index($i) {
+                return $i[$this->index] == $this->num;
+          }
 
 
-}
- ?>
+  }
+?>

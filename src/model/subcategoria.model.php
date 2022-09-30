@@ -49,7 +49,8 @@ class SubCategoriaModel
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
 
-        $objSubCategoria = new SubCategoria();     
+        $objSubCategoria = new SubCategoria();
+        $objSubCategoria->__SET('idSubCategoria',$row->idSubCategoria);    
         $objSubCategoria->__SET('Categoria_id',$row->Categoria_id);
         $objSubCategoria->__SET('Nombre',$row->Nombre);
         $objSubCategoria->__SET('Aplicar_Logica',$row->Aplicar_Logica);
@@ -65,12 +66,13 @@ class SubCategoriaModel
     {
       
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE subcategoria SET  Categoria_id=:Categoria_id,Nombre=:Nombre,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
+        $stmt = $this->bd->prepare("UPDATE subcategoria SET Nombre=:Nombre,Aplicar_Logica=:Aplicar_Logica,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
         $stmt->bindParam(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));
-        $stmt->bindParam(':Categoria_id',$subcategoria->__GET('Categoria_id'));
+        //$stmt->bindParam(':Categoria_id',$subcategoria->__GET('Categoria_id'));
         $stmt->bindParam(':Nombre',$subcategoria->__GET('Nombre')); 
-        $stmt->bindParam('Aplicar_Logica',$subcategoria->__GET('Aplicar_Logica'));
+        $stmt->bindParam(':Aplicar_Logica',$subcategoria->__GET('Aplicar_Logica'));
         $stmt->bindParam(':Estado',$subcategoria->__GET('Estado')); 
+        $stmt->bindParam(':Ingresado_por',$subcategoria->__GET('Ingresado_por'));
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());

@@ -42,7 +42,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
 }
    
  
- 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -167,10 +167,8 @@ if($usuario->Verificar_InicioSesion()==TRUE)
 
           $.ajax({
             type: "POST",
-            url: "ajax/validaridentidad.php",
-            data: (
-              'Correo='+Correo+'&Tipo_Documento='Tipo_Documento
-              )
+            url: "ajax/recuperarcorreo.php",
+            data: ('Correo='+Correo)
             success: function(respuesta){
               alert(respuesta);
             }
@@ -178,8 +176,8 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           })
 
         })
-      }
-	*/
+      });
+	
 
     </script>
   </body>

@@ -55,9 +55,7 @@ class CategoriaController{
          
         if($actualizar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Actualizar&idCategoria='. $categoria->__GET('idCategoria'));
-            echo 'No se Ha Podido Actualizar';
         }else{
-            echo 'Actualizado Correctamente';
             header('Location: index.php?c=Categoria');
          }
     }
@@ -73,11 +71,8 @@ class CategoriaController{
        
         if($registrar_categoria=='error'){
             header('Location: index.php?c=Categoria&a=v_Registrar');
-            echo 'No se Ha Podido Registrar';
-            
          }else{
-            echo 'Registrado Correctamente';
-            header('Location: index.php?c=Categoria=Index');
+            header('Location: index.php?c=Categoria');
          }
  
     }
@@ -90,10 +85,8 @@ class CategoriaController{
         $eliminar_categoria = $this->model->Eliminar($categoria);  
          
         if($eliminar_categoria=='error'){
-            echo 'No se Ha Podido Eliminar';
             header('Location: index.php?c=Categoria');            
          }else{
-            echo 'Eliminado Correctamente';
             header('Location: index.php?c=Categoria');
          }
     }
