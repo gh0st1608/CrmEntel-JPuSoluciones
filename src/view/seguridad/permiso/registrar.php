@@ -1,12 +1,10 @@
 <?php
 require_once 'controller/interfaz.controller.php';
 $interfaz = new InterfazController;
-$interfazes = $interfaz -> Listar();
+$modulosprincipales = $interfaz -> ConsultaModuloPrincipal();
 
 
 if (!isset($_REQUEST['idPerfil'])==''){
-
-
 
 ?>
 <!-- Content Header (Page header) -->
@@ -31,23 +29,25 @@ if (!isset($_REQUEST['idPerfil'])==''){
 	    			<form id="frmRegistrarPermiso" action="?c=Permiso&a=Registrar" method="post" enctype="multipart/form-data" role="form">
 					    <div class="form-group col-md-12">
 					        <label>idPerfil</label>
-					        <input type="text" name="idPerfil" id="idPerfil" value="<?php echo $perfil->__GET('idPerfil'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="idPerfil" id="idPerfil"  value="<?php echo $_REQUEST['idPerfil']; ?>" class="form-control" placeholder="" disabled  required />
 					    </div>
 						<div class="form-group col-md-12">
 							<label>Modulo Principal</label>
-							<select name="modulo" id="modulo" class="form-control">
-								<option value="0">-- Seleccionar Modulo--</option>      
-							<?php foreach ($interfazes as $interfaz): ?>                
-								<option value="<?php echo $interfaz['idInterfaz']; ?>"><?php echo $interfaz['Nombre']; ?></option>                      
+							<select name="ModuloPrincipal" id="ModuloPrincipal" class="form-control">
+								<option value="0">-- Seleccionar Modulo Principal--</option>      
+							<?php foreach ($modulosprincipales as $modulo): ?>                
+								<option value="<?php echo $modulo['idInterfaz']; ?>"><?php echo $modulo['Nombre']; ?></option>                      
 							<?php endforeach; ?>    
 				        	</select> 
 				    	</div>
-						<!--<div class="form-group col-md-12">
+						<div class="form-group col-md-12">
 							<label>Modulo Secundario</label>
-							<select name="modulosecundario" id="modulosecundario" class="form-control">
-								<div class="form-group col-md-12" id="modulosecundario"></div>
-				        	</select> 
-				    	</div>-->
+							<select name="ModuloSecundario" id="ModuloSecundario" disabled class="form-control"></select> 
+				    	</div>
+						<div class="form-group col-md-12">
+							<label>Acciones</label>
+							<select name="Acciones" id="Acciones" disabled class="form-control"></select> 				
+				    	</div>
 						
 					  	<div class="col-md-12" style="margin-top:2em;">
 							<div class="col-md-6 col-sm-12">
@@ -55,51 +55,44 @@ if (!isset($_REQUEST['idPerfil'])==''){
 							</div>
 					  	</div>
 
-						  <div class="box-body box-body_table">
-	    		 		<?php  $permisos = $this->Listar();  ?>
- 
-                  	<table id="TablaPermiso" class="table table-bordered table-hover dataTable no-footer" width="100%">
-	                    <thead>
-	                      	<tr>                      
-		                    	<th>ID</th>                    
-			                    <th style="vertical-align: middle;">Modulo</th>			                   
-			                    <th style="vertical-align: middle;">Interface</th>
-			                    <th style="vertical-align: middle;">Acceder</th>
-                                <th style="vertical-align: middle;">Acciones</th>
-	                     	</tr>
-	                    </thead>
-	                    <tbody>
-	                    	<tr>
-	                    		<td><?php echo $perfil['idPerfil']; ?></td>
-	                    		<td><?php echo $perfil['Nombre']; ?></td>
-	                    		<?php if ($perfil['Estado']==1): ?>
-                                <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
-                                <?php else: ?>
-                                <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
-                                <?php endif ?>
-                            	<td class="a_center">
-                            		<a href="?c=Perfil&a=v_Actualizar&idPerfil=<?php echo $perfil['idPerfil']; ?>" class="btn btn-primary btn-xs ">
-                                   		<i class="fa fa-pencil"></i>   
-                               		</a>
-                               		<a class="btn btn-danger btn-xs EliminarPerfil" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['Nombre']; ?>">
-                                   		<i class="fa fa-trash"></i>   
-                               		</a>
-									<a href="?c=Permiso&a=v_Actualizar&idPermiso" class="btn btn-info btn-xs VerPermisos" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['Nombre']; ?>">
-                                   		<i class="fa fa-trash"></i>   
-                               		</a>                             		
-                               	</td>
-	                    	</tr>
-	                    	<?php endforeach; ?>
-	                    </tbody>
-                	</table>                    
-                </div>
+						<div class="box-body box-body_table">
+								<?php  $permisos = $this->Listar();  ?>
+		
+							<table id="TablaPermiso" class="table table-bordered table-hover dataTable no-footer" width="100%">
+								<thead>
+									<tr>                      
+										<th>ID</th>                    
+										<th style="vertical-align: middle;">Modulo</th>			                   
+										<th style="vertical-align: middle;">Interface</th>
+										<th style="vertical-align: middle;">Acceder</th>
+										<th style="vertical-align: middle;">Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><?php echo $perfil['idPerfil']; ?></td>
+										<td><?php echo $perfil['Nombre']; ?></td>
+										<?php if ($perfil['Estado']==1): ?>
+										<td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
+										<?php else: ?>
+										<td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
+										<?php endif ?>
+										<td class="a_center">
+											<a class="btn btn-danger btn-xs EliminarPermiso" data-id="<?php echo $permiso['idPermiso']; ?>" data-nombre="<?php echo $permiso['Nombre']; ?>">
+												<i class="fa fa-trash"></i>   
+											</a>                       		
+										</td>
+									</tr>
+								</tbody>
+							</table>                    
+						</div>
 
-				</form>
+					</form>
                     
                     
 
 
-                </div>
+                	</div>
             </div><!-- /.box -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -139,6 +132,40 @@ if (!isset($_REQUEST['idPerfil'])==''){
 		
 	});
 
+	$("#ModuloPrincipal").change(function(){
+	 		var parametros= "id_moduloprincipal="+$("#ModuloPrincipal").val();
+			console.log(parametros);
+	 		$.ajax({
+                data:  parametros,
+                url:   'utils/auxiliares.php',
+                type:  'post',
+                beforeSend: function () { },
+                success:  function (response) {             	
+                    $("#ModuloSecundario").html(response);
+                },
+                error:function(){
+                	alert("error")
+                }
+            });
+	})
+
+	$("#ModuloSecundario").change(function(){
+	 		var parametros= "id_moduloprincipal="+$("#ModuloPrincipal").val()+"&"+"id_modulosecundario="+$("#ModuloSecundario").val();
+			 console.log(parametros);
+	 		$.ajax({
+                data:  parametros,
+                url:   'utils/auxiliares.php',
+                type:  'post',
+                beforeSend: function () { },
+                success:  function (response) {        	
+                    $("#Acciones").html(response);
+                },
+                error:function(){
+                	alert("error")
+                }
+            });
+	})
+
 
 
 	$(document).ready(function () {
@@ -149,139 +176,32 @@ if (!isset($_REQUEST['idPerfil'])==''){
 			});
 		});
  
-	$(document).ready(function () { 
-		$("#modulo").change(function(){
-	 		var modulo= $("#modulo").val();
-			console.log(modulo);
-			$.ajax({ 
-				type:"POST",
-				data:"idInterfaz="+ modulo,
-                url:"?c=Interfaz&a=ComboModuloSecundario",
-   
-                success:  function (response) {                	
-                    $("#modulosecundario").html(response);
-					 
-                },
-                error:function(){
-                	alert("error")
-                }
-            });
-			nivel_modulo = localStorage.getItem("modulo_nivel");
-			if(nivel_modulo== 2){
-				var idInterfaz_superior= $("#modulo").val();
-				console.log(idInterfaz_superior);
-				$.ajax({ 
-						type:"POST",
-						data:"idInterfaz_superior="+idInterfaz_superior,
-						url:"?c=Interfaz&a=ComboOrden",
-		
-						success:  function (response) {                	
-							$("#orden").html(response);
-							console.log(nivel);
-						},
-							error:function(){
-								alert("error")
-							}
-						}); 
-			}
-			
-
-
-
-
-	 	})
-
-		
-	});	
-
 
 	
+	
 	$(document).ready(function () { 
-		$("#nivel").change(function(){
-	 		var nivel= $("#nivel").val();
-			console.log(nivel);
-			$("#modulo").prop("disabled",true);
-			if( nivel ==1)
+		$("#ModuloPrincipal").change(function(){
+	 		var ModuloPrincipal= $("#ModuloPrincipal").val() == 0;
+			console.log(ModuloPrincipal);
+			if(!ModuloPrincipal)
 			{
-				$("#modulo").prop("disabled",true);
-				$("#modulosecundario").prop("disabled",true);
- 
-			 
-				var idInterfaz_superior= 0;
-				console.log(idInterfaz_superior);
-				$.ajax({ 
-						type:"POST",
-						data:"idInterfaz_superior="+idInterfaz_superior,
-						url:"?c=Interfaz&a=ComboOrden",
-		
-						success:  function (response) {                	
-							$("#orden").html(response);
-							console.log(nivel);
-						},
-							error:function(){
-								alert("error")
-							}
-						});
-						
- 
+				console.log(ModuloPrincipal);
+				$("#ModuloSecundario").prop("disabled",false);
 			}
-			else if( nivel ==2)
-			{   $("#modulo").prop("disabled",false);
-				$("#modulosecundario").prop("disabled",true);
-			    
-				
-				var idInterfaz_superior= 99;
-				console.log(idInterfaz_superior);
-				$.ajax({ 
-						type:"POST",
-						data:"idInterfaz_superior="+idInterfaz_superior,
-						url:"?c=Interfaz&a=ComboOrden",
-		
-						success:  function (response) {                	
-							$("#orden").html(response);
-							console.log(nivel);
-						},
-							error:function(){
-								alert("error")
-							}
-						}); 
-
-
-
-
-			}
-			else if( nivel ==3)
-			{   $("#modulo").prop("disabled",false);
-				$("#modulosecundario").prop("disabled",false);
-				
-
-				var idInterfaz_superior= 99;
-				console.log(idInterfaz_superior);
-				$.ajax({ 
-						type:"POST",
-						data:"idInterfaz_superior="+idInterfaz_superior,
-						url:"?c=Interfaz&a=ComboOrden",
-		
-						success:  function (response) {                	
-							$("#orden").html(response);
-							console.log(nivel);
-						},
-							error:function(){
-								alert("error")
-							}
-						}); 
-
-			}
-			localStorage.setItem("modulo_nivel",nivel);
-
-			
-
-
 		});
+	});
 
-	});	
- 
-	
- 
+	$(document).ready(function () { 
+		$("#ModuloSecundario").change(function(){
+	 		var ModuloSecundario= $("#ModuloSecundario").val() == 0;
+			if(!ModuloSecundario)
+			{
+				$("#Acciones").prop("disabled",false);
+			}
+		});
+	});
+			 
+				
 
 </script>
+<?php }/*--- END REQUESt*/ ?>
