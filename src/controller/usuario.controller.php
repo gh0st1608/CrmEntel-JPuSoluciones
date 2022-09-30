@@ -7,6 +7,10 @@ require_once 'entity/persona.entity.php';
 require_once "vendor/autoload.php";
 
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
 
  
 use UAParser\Parser;
@@ -74,7 +78,7 @@ class UsuarioController{
     }
 
     public function v_Recuperar(){        
-        $correo = $_POST['Correo']
+        $correo = $_POST['Correo'];
         $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
         if($permiso['acceder']==1){      
             $consulta = $this->model->RecuperarClave($correo);
@@ -117,12 +121,11 @@ class UsuarioController{
     public function RecuperarClave($correo)
     {
         
-        use PHPMailer\PHPMailer\PHPMailer;
-        use PHPMailer\PHPMailer\Exception;
+
         
         // If necessary, modify the path in the require statement below to refer to the
         // location of your Composer autoload.php file.
-        require 'vendor/autoload.php';
+
         
         // Replace sender@example.com with your "From" address.
         // This address must be verified with Amazon SES.
