@@ -47,7 +47,7 @@
                             		<a href="?c=Interfaz&a=v_Actualizar&idInterfaz=<?php echo $modulo['idInterfaz']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<a class="btn btn-danger btn-xs EliminarInterfaz" data-id="<?php echo $modulo['idInterfaz']; ?>" data-nombre="<?php echo $modulo['Nombre']; ?>">
+                               		<a class="btn btn-danger btn-xs EliminarInterfaz" data-id="<?php echo $modulo['idInterfaz']; ?>" data-nombre="<?php echo $modulo['Nombre']."gaaaaaaa"; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>                             		
                                	</td>
@@ -73,6 +73,32 @@
 									</a>                             		
 								</td>
 							</tr>
+
+
+							<?php  $niveles3 = $this->ListarNivel($nivel['idInterfaz']);  ?>
+							<?php foreach ($niveles3 as $nivel3): ?>
+							<tr><td><?php $id = $id +1 ; echo $id ?></td>
+								<td><?php echo $nivel3['Nombre']; ?></td>
+								<td><?php echo $nivel3['NombreModulo'];?></td>
+								<td><?php echo $nivel3['Nivel']; ?></td>
+								<td><?php echo $nivel3['Orden']; ?></td>
+								<?php if ($nivel3['Estado']==1): ?>
+								<td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
+								<?php else: ?>
+								<td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
+								<?php endif ?>
+								<td class="a_center">
+									<a href="?c=Interfaz&a=v_Actualizar&idInterfaz=<?php echo $nivel3['idInterfaz']; ?>" class="btn btn-primary btn-xs ">
+										<i class="fa fa-pencil"></i>   
+									</a>
+									<a class="btn btn-danger btn-xs EliminarInterfaz" data-id="<?php echo $nivel3['idInterfaz']; ?>" data-nombre="<?php echo $nivel3['Nombre']; ?>">
+										<i class="fa fa-trash"></i>   
+									</a>                             		
+								</td>
+							</tr>
+							<?php endforeach; ?>		
+ 
+
 							<?php endforeach; ?>			
  
 	                    	<?php endforeach; ?>
@@ -89,6 +115,7 @@
 	$(document).ready(function() {
 		$(".EliminarInterfaz").click(function(event) {
 			idInterfaz=$(this).attr('data-id');
+			console.log(idInterfaz);
 			bootbox.dialog({
             message: "¿Estas seguro de eliminar el interfaz  "+$(this).attr('data-nombre')+"?",
             title: "Eliminar Interfaz",
@@ -99,7 +126,7 @@
                     callback: function() {
                         //console.log('Eliminado al usuario');
                         
-                              window.location.href = "?c=Inrterfaz&a=Eliminar&idInterfaz="+idInterfaz;
+                              window.location.href = "?c=Interfaz&a=Eliminar&idInterfaz="+idInterfaz;
                          
 
                        

@@ -147,7 +147,7 @@ class InterfazController{
         $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $interfaz->__SET('Eliminado',1); 
         $eliminar_interfaz = $this->model->Eliminar($interfaz);  
-         
+ 
         if($eliminar_interfaz=='error'){
             header('Location: index.php?c=Interfaz');            
          }else{
