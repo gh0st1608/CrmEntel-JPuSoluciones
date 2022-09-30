@@ -43,13 +43,28 @@ $interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
         </a>
         <ul class="treeview-menu">                
           <li>
-           <? $interfaces_nivel = new InterfazController();
-             $idInterfaz_superior = $modulo['idInterfaz'] ;
-             $interfaces_nivel =  $interfaces_nivel->ListarNivel($idInterfaz_superior );
+           <? $interfaces_nivel2 = new InterfazController();
+             $idInterfaz_modulo = $modulo['idInterfaz'] ;
+             $interfaces_nivel2 =  $interfaces_nivel2->ListarNivel($idInterfaz_modulo );
            ?>
-            <?php foreach ($interfaces_nivel as $nivel): ?>
-              <li><a href=<?php echo  $nivel['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel['Nombre'] ; ?> </a></li>
+            <?php foreach ($interfaces_nivel2 as $nivel2): ?>
+              <li><a href=<?php echo  $nivel2['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel2['Nombre'] ; ?> </a>
+            
+              <? $interfaces_nivel3 = new InterfazController();
+                $idInterfaz_nivel2 = $nivel2['idInterfaz'] ;
+                $interfaces_nivel3 =  $interfaces_nivel3->ListarNivel($idInterfaz_nivel2 );
+              ?>
+              <?php foreach ($interfaces_nivel3 as $nivel3): ?>
+                <ul class="treeview-menu">                
+                  <li>
+                    <li><a href=<?php echo  $nivel3['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel3['Nombre'] ; ?> </a>
+                 </li>
+                </ul>
+ 
+              <?php endforeach; ?>
+            </li>
               
+ 
             <?php endforeach; ?>
           </li>
         </ul>

@@ -5,7 +5,7 @@
 	</h1>
 	<ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li><a href="index.php?c=Cartera">Cartera</a></li>
+            <li><a href="index.php?c=Categoria">Categoria</a></li>
             <li class="active">Actualizar</li>
           </ol>
 </section>
