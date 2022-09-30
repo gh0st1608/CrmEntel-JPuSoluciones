@@ -1,7 +1,7 @@
  <!-- Content Header (Page header) -->
  <section class="content-header">  
 	<h1>
-		Modulo Administracion
+		Modulo Seguridad
 	</h1>
 	<ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -27,7 +27,7 @@ $interfaz= $this->Consultar($_REQUEST['idInterfaz']);
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmActualizarInterfaz" action="?c=Interfaz&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
-	    				<input type="hidden" name="idInterfaz" id="idInterfaz" value="1" /> 
+	    				<input type="hidden" name="idInterfaz" id="IdInterfaz" value="<?php echo $_REQUEST['idInterfaz']; ?>" /> 
 					    <div class="form-group col-md-12">
 					        <label>Interfaz</label>
 					        <input type="text" name="Nombre" id="Nombre" value="<?php echo $interfaz->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
@@ -70,19 +70,21 @@ $interfaz= $this->Consultar($_REQUEST['idInterfaz']);
 							<?php endforeach; ?>    
 				        	</select> 
 				    	 </div>
-  
-						<div class="form-group col-md-12">
-					        <label>Orden</label>
-					        <input type="text" name="Orden" id="Orden" value="<?php echo $interfaz->__GET('Orden'); ?>" class="form-control" placeholder=""  required />
-					    </div>	
+   
+						<?php  $orden  = $this->ComboOrden();  ?>
+						<div class="form-group col-md-3">
+							<label>Orden </label>
+							<select name="Orden" id="Orden" class="form-control">
+								<option value="<?php echo $interfaz->__GET('Orden'); ?>"><?php echo $interfaz->__GET('Orden'); ?></option> 
+									<div class="form-group col-md-12" id="Orden"></div>
+				        	</select> 
+				    	</div>
+ 
 						<div class="form-group col-md-12">
 					        <label>Icono</label>
 					        <input type="text" name="Icono" id="Icono" value="<?php echo $interfaz->__GET('Icono'); ?>" class="form-control" placeholder=""  required />
 					    </div>			    
-					    
-						 
-						 
-						
+ 
 					  	<div class="col-md-12" style="margin-top:2em;">
 							<div class="col-md-6 col-sm-12"> 
 								<button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
@@ -126,6 +128,92 @@ $interfaz= $this->Consultar($_REQUEST['idInterfaz']);
         	}); 
 		});	
 	});
+
+
+	$(document).ready(function () { 
+		$("#Nivel").change(function(){
+	 		var nivel= $("#Nivel").val();
+			console.log(nivel);
+			$("#IdInterfaz_nivel1").prop("disabled",true);
+			if( nivel ==1)
+			{
+				$("#IdInterfaz_nivel1").prop("disabled",true);
+				$("#IdInterfaz_nivel2").prop("disabled",true);
+ 
+				var idInterfaz_superior= 0;
+				console.log(idInterfaz_superior);
+				$.ajax({ 
+						type:"POST",
+						data:"idInterfaz_superior="+idInterfaz_superior,
+						url:"?c=Interfaz&a=ComboOrden",
+		
+						success:  function (response) {                	
+							$("#Orden").html(response);
+							console.log(nivel);
+						},
+							error:function(){
+								alert("error")
+							}
+						});
+						
+ 
+			}
+			else if( nivel ==2)
+			{   $("#IdInterfaz_nivel1").prop("disabled",false);
+				$("#IdInterfaz_nivel2").prop("disabled",true);
+			    
+				
+				var idInterfaz_superior= 99;
+				console.log(idInterfaz_superior);
+				$.ajax({ 
+						type:"POST",
+						data:"idInterfaz_superior="+idInterfaz_superior,
+						url:"?c=Interfaz&a=ComboOrden",
+		
+						success:  function (response) {                	
+							$("#Orden").html(response);
+							console.log(nivel);
+						},
+							error:function(){
+								alert("error")
+							}
+						}); 
+ 
+			}
+			else if( nivel ==3)
+			{   $("#IdInterfaz_nivel1").prop("disabled",false);
+				$("#IdInterfaz_nivel2").prop("disabled",false);
+				
+
+				var idInterfaz_superior= 99;
+				console.log(idInterfaz_superior);
+				$.ajax({ 
+						type:"POST",
+						data:"idInterfaz_superior="+idInterfaz_superior,
+						url:"?c=Interfaz&a=ComboOrden",
+		
+						success:  function (response) {                	
+							$("#Orden").html(response);
+							console.log(nivel);
+						},
+							error:function(){
+								alert("error")
+							}
+						}); 
+
+			}
+			localStorage.setItem("modulo_nivel",nivel);
+
+			
+
+
+		});
+
+	});	
+
+
+
+
 
 
 	

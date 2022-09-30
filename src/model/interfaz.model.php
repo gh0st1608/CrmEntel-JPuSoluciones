@@ -64,7 +64,8 @@ class InterfazModel
         $stmt = $this->bd->prepare("SELECT I2.*, I1.Nombre NombreModulo
         FROM interfaz I1 INNER JOIN  interfaz I2
         ON I1.idInterfaz = I2.IdInterfaz_superior
-        WHERE I2.IdInterfaz_superior = :idInterfaz_superior and  I2.Eliminado =0; " );
+        WHERE I2.IdInterfaz_superior = :idInterfaz_superior and  I2.Eliminado =0  AND I1.eliminado= 0
+        ORDER BY I2.Orden ASC; " );
         $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
         $stmt->execute();
 
@@ -83,7 +84,7 @@ class InterfazModel
         
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT idInterfaz, Nombre FROM interfaz
-                                     WHERE IdInterfaz_superior = :IdInterfaz_superior; " );
+                                     WHERE IdInterfaz_superior = :IdInterfaz_superior AND eliminado= 0; " );
         $stmt->bindParam(':IdInterfaz_superior', $idInterfaz );
         $stmt->execute();
 
@@ -103,12 +104,12 @@ class InterfazModel
         
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare(" SELECT Orden FROM interfaz
-        WHERE IdInterfaz_superior = :IdInterfaz_superior
-        GROUP BY Orden
+        WHERE IdInterfaz_superior = :IdInterfaz_superior AND eliminado= 0
+        GROUP BY Orden ASC
         UNION
         SELECT MAX(Orden)+1 AS Orden FROM interfaz
         WHERE IdInterfaz_superior = :IdInterfaz_superior
-        GROUP BY Orden  ; " );
+        GROUP BY Orden   ; " );
         $stmt->bindParam(':IdInterfaz_superior', $IdInterfaz_superior);
         $stmt->execute();
 
@@ -157,10 +158,10 @@ class InterfazModel
              WHEN I1.Nivel = 2 THEN ''
              WHEN I1.Nivel = 3 THEN ''
              END AS Nombre_nivel3  
-                FROM interfaz I1 LEFT JOIN  interfaz I2
-                ON I1.IdInterfaz_superior = I2.IdInterfaz LEFT JOIN  interfaz I3
-                ON I2.IdInterfaz_superior = I3.IdInterfaz 
-                WHERE I1.idInterfaz = :idInterfaz;"); 
+             FROM interfaz I1 LEFT JOIN  interfaz I2
+             ON I1.IdInterfaz_superior = I2.IdInterfaz AND I2.eliminado= 0 LEFT JOIN  interfaz I3
+             ON I2.IdInterfaz_superior = I3.IdInterfaz AND I3.eliminado= 0
+                WHERE I1.idInterfaz = :idInterfaz AND I1.eliminado= 0;"); 
         $stmt->bindParam(':idInterfaz', $Interfaz->__GET('idInterfaz'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ); 
@@ -169,7 +170,7 @@ class InterfazModel
 
 
         $objInterfaz = new Interfaz();     
-        $objInterfaz->__SET('IdInterfaz',$row->IdInterfaz_nivel1); 
+        $objInterfaz->__SET('IdInterfaz',$row->IdInterfaz); 
         $objInterfaz->__SET('IdInterfaz_nivel1',$row->IdInterfaz_nivel1); 
         $objInterfaz->__SET('Nombre_nivel1',$row->Nombre_nivel1); 
         $objInterfaz->__SET('IdInterfaz_nivel2',$row->IdInterfaz_nivel2); 
@@ -240,7 +241,7 @@ class InterfazModel
        
         $this->bd = new Conexion();
  
-        $stmt = $this->bd->prepare("UPDATE Interfaz SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idInterfaz = :idInterfaz");
+        $stmt = $this->bd->prepare("UPDATE interfaz SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idInterfaz = :idInterfaz");
  
 
         $stmt->bindParam(':idInterfaz',$Interfaz->__GET('idInterfaz'));         
