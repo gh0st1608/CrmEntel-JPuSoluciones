@@ -1,30 +1,52 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Servidor: db
--- Tiempo de generación: 30-09-2022 a las 08:05:25
--- Versión del servidor: 5.7.39
--- Versión de PHP: 8.0.19
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `myDb`
---
-
 DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertInterfaz` (IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
+  
+  IF (P_Nivel = 1 )
+  THEN 
+ 
+ UPDATE interfaz
+ SET Orden = Orden + 1
+ WHERE Orden >= P_Orden AND
+ Nivel = P_Nivel ;
+    
+    INSERT INTO interfaz(Nombre,Url,Nivel,Modulo_Principal,IdInterfaz_Superior,Orden,Icono,Estado,Ingresado_por,Fecha_registro) 
+     VALUES(P_Nombre,P_Url,P_Nivel,P_Modulo_Principal,0,P_Orden,P_Icono,1,P_Ingresado_por,sysdate());
+ 
+ 
+ ELSEIF ( P_Nivel = 2 	
+) THEN
+ 
+ UPDATE interfaz
+ SET Orden = Orden + 1
+ WHERE Orden >= P_Orden AND
+ Nivel = 2 and IdInterfaz_superior = P_IdInterfaz_superior;
+ 
+INSERT INTO interfaz(Nombre,Url,Nivel,Modulo_Principal,IdInterfaz_Superior,Orden,Icono,Estado,Ingresado_por,Fecha_registro) VALUES(P_Nombre,P_Url,P_Nivel,P_Modulo_Principal,P_IdInterfaz_Superior,P_Orden,P_Icono,1,P_Ingresado_por, sysdate());
+ 
+ 
+ 
+ 
+  ELSEIF ( P_Nivel = 3
+) THEN
+
+ UPDATE interfaz
+ SET Orden = Orden + 1
+ WHERE Orden >= P_Orden AND
+ Nivel = 3 and IdInterfaz_superior = P_IdInterfaz_superior;
+ 
+INSERT INTO interfaz(Nombre,Url,Nivel,Modulo_Principal,IdInterfaz_Superior,Orden,Icono,Estado,Ingresado_por,Fecha_registro) VALUES(P_Nombre,P_Url,P_Nivel,P_Modulo_Principal,P_IdInterfaz_Superior,P_Orden,P_Icono,1,P_Ingresado_por,sysdate());
+ 
+ 
+
+ 
+END IF;
+ 
+ 
+END$$
+
 CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
   
   IF (P_Password = '' OR  P_Login = '' )
@@ -103,6 +125,25 @@ and IdEstadoKanBanDetalle = 2;
    where Login = P_Login;
  
   END IF;
+ 
+END$$
+
+CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateInterfaz` (IN `P_IdInterfaz` INT, IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
+ 
+     UPDATE interfaz
+     SET Orden = Orden + 1
+     WHERE Orden >= P_Orden AND
+     Nivel = P_Nivel ;
+    
+    UPDATE   interfaz
+    SET Nombre = P_Nombre,
+    Url = P_Url,
+    Orden = P_Orden, 
+    IdInterfaz_superior = P_IdInterfaz_Superior,
+    Modificado_por = P_Ingresado_por,
+    Fecha_Modificacion = sysdate() 
+    WHERE idInterfaz = P_idInterfaz;
+      
  
 END$$
 
@@ -189,36 +230,6 @@ INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fe
 (62, 'PRUEBA GAA 2', 1, 1, '2022-09-29 20:30:51', 0),
 (63, 'test1000', 1, 1, '2022-09-29 21:00:04', 0),
 (64, 'GAAA', 1, 1, '2022-09-29 21:38:21', 0),
-(65, 'raaaaa', 1, 1, '2022-09-29 21:48:31', 0),
-(66, 'hahaha', 1, 1, '2022-09-29 21:52:08', 0),
-(67, 'hahahagaga', 1, 1, '2022-09-29 21:52:59', 0),
-(68, 'hahahagagaafsafas', 1, 1, '2022-09-29 21:53:43', 0),
-(69, 'baaa', 1, 1, '2022-09-29 21:55:28', 0),
-(70, 'baaavvava', 1, 1, '2022-09-29 21:56:40', 0),
-(71, 'baaavvavaasd', 1, 1, '2022-09-29 21:58:13', 0),
-(72, 'gatata', 1, 1, '2022-09-29 21:59:05', 0),
-(73, 'gatataii', 1, 1, '2022-09-29 21:59:41', 0),
-(74, 'gatataiidas', 0, 1, '2022-09-29 22:00:07', 0),
-(75, 'ctm', 1, 1, '2022-09-29 22:01:08', 0),
-(76, 'ctm2', 1, 1, '2022-09-29 22:02:04', 0),
-(77, 'ctm3', 1, 1, '2022-09-29 22:02:32', 0),
-(78, 'ctm4', 1, 1, '2022-09-29 22:02:51', 0),
-(79, 'ctm5', 1, 1, '2022-09-29 22:03:06', 0),
-(80, 'ctm6', 1, 1, '2022-09-29 22:03:20', 0),
-(81, 'ctm7', 1, 1, '2022-09-29 22:03:35', 0),
-(82, 'ctm8', 1, 1, '2022-09-29 22:05:44', 0),
-(83, 'ctm8', 1, 1, '2022-09-29 22:07:02', 0),
-(84, 'ctm8', 1, 1, '2022-09-29 22:07:15', 0),
-(85, 'ctm8', 1, 1, '2022-09-29 22:07:29', 0),
-(86, 'ctm8', 1, 1, '2022-09-29 22:07:44', 0),
-(87, 'ctm8', 1, 1, '2022-09-29 22:07:56', 0),
-(88, 'ctm8', 1, 1, '2022-09-29 22:08:19', 0),
-(89, 'baaaa', 1, 1, '2022-09-29 22:08:49', 0),
-(90, 'vava', 1, 1, '2022-09-29 22:10:01', 0),
-(91, 'faaa', 1, 1, '2022-09-29 22:11:27', 0),
-(92, 'haababa', 1, 1, '2022-09-29 22:15:35', 0),
-(93, 'ctm17', 1, 1, '2022-09-29 22:16:08', 0),
-(94, 'BAAAAAAAAAAAAAAA', 1, 1, '2022-09-29 22:33:26', 0);
 
 -- --------------------------------------------------------
 
@@ -651,6 +662,3 @@ ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

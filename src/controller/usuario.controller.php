@@ -77,8 +77,9 @@ class UsuarioController{
         
     }
 
-    public function v_Recuperar(){        
+    public function v_RecuperarClave(){        
         $correo = $_POST['Correo'];
+        print_r($correo = $_POST['Correo']);
         $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],1);
         if($permiso['acceder']==1){      
             $consulta = $this->model->RecuperarClave($correo);
@@ -156,7 +157,7 @@ class UsuarioController{
         
         // The subject line of the email
         $subject = 'Amazon SES test (SMTP interface accessed using PHP)';
-        
+        print_r("entro al recuperar clave");
         // The plain-text body of the email
         $bodyText =  "Email Test\r\nTu password es."+$Clave['Clave'];
         

@@ -88,7 +88,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
         <?php if ($_SESSION['intentoSesion'] == 3  ) { 
-                $_SESSION['intentoSesion'] = 0           ?>
+                $_SESSION['intentoSesion'] = 0 ?>
           <div class="row" >
             <div class="col-md-12">
             <p class="openBtn2" style="text-align: right;"><a href="#">Recuperar Contraseña</a></p>
@@ -157,7 +157,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
               $('#EnviarMail').attr("disabled", buttonDisabled);
           }
       })
-
+      
       $('#EnviarMail').on('click',function(){
           var parametro= "Correo="+$("#Correo").val();
           $.ajax({
@@ -169,7 +169,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 alert(data);
               },
           });
-      }
+      });
 	
 
     </script>
