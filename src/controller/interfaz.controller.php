@@ -82,7 +82,7 @@ class InterfazController{
     public function Registrar(){
         
         $interfaz = new Interfaz();
-        $interfaz->__SET('Nombre',$_REQUEST['nombre']);
+        $interfaz->__SET('Nombre',$_REQUEST['Nombre']);
         $interfaz->__SET('Url',$_REQUEST['Url']);
         $interfaz->__SET('Nivel',$_REQUEST['nivel']);
        $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
