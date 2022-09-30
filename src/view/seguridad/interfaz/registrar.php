@@ -1,6 +1,7 @@
 <?php  $modulos = $this->ConsultaModulo();  ?>
-<?php  $orden  = $this->ComboOrden();  ?>
- 
+
+
+
  <!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
@@ -48,7 +49,7 @@
 							<?php endforeach; ?>    
 				        	</select> 
 				    	</div>
-
+						
 
 						<div class="form-group col-md-12">
 							<label>Modulo Secundario</label>
@@ -57,8 +58,8 @@
 				        	</select> 
 				    	</div>
 						
-						
-						<div class="form-group col-md-12">
+						<?php  $orden  = $this->ComboOrden();  ?>
+						<div class="form-group col-md-3">
 							<label>Orden </label>
 							<select name="orden" id="orden" class="form-control">
 								<div class="form-group col-md-12" id="orden"></div>

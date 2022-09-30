@@ -62,12 +62,29 @@ class InterfazController{
         return $consulta;
     }
 
+ 
     public function Actualizar(){
+
+       if ( $_REQUEST['Nivel'] == 1){
+            $IdInterfaz_Superior = 0 ;
+         } 
+       elseif ( $_REQUEST['Nivel'] == 2){
+          $IdInterfaz_Superior = $_REQUEST['IdInterfaz_nivel1'] ;
+       }
+       elseif ( $_REQUEST['Nivel'] == 3){
+          $IdInterfaz_Superior = $_REQUEST['IdInterfaz_nivel2'] ; 
+        
+       }
+
         $interfaz = new Interfaz();
         $interfaz->__SET('idInterfaz',$_REQUEST['idInterfaz']);
         $interfaz->__SET('Nombre',$_REQUEST['Nombre']);              
-        $interfaz->__SET('Estado',$_REQUEST['Estado']);
-        $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);    
+        $interfaz->__SET('Url',$_REQUEST['Url']);
+        $interfaz->__SET('Nivel',$_REQUEST['Nivel']);
+        $interfaz->__SET('Orden',$_REQUEST['Orden']);
+        $interfaz->__SET('Icono',$_REQUEST['Icono']);
+        $interfaz->__SET('IdInterfaz_superior',$IdInterfaz_Superior);
+        $interfaz->__SET('Modificado_por',$_SESSION['Usuario_Actual']);    
         $actualizar_interfaz = $this->model->Actualizar($interfaz);  
          
         if($actualizar_interfaz=='error'){
@@ -77,27 +94,43 @@ class InterfazController{
             echo 'Actualizado Correctamente';
             header('Location: index.php?c=Interfaz');
          }
+
+    
     }
 
     public function Registrar(){
         
+      
+        if ( $_REQUEST['nivel'] == 1){
+            $IdInterfaz_Superior = 0 ;
+         } 
+       elseif ( $_REQUEST['nivel'] == 2){
+          $IdInterfaz_Superior = $_REQUEST['modulo'] ;
+       }
+       elseif ( $_REQUEST['nivel'] == 3){
+          $IdInterfaz_Superior = $_REQUEST['modulosecundario'] ; 
+        
+       }
+
         $interfaz = new Interfaz();
         $interfaz->__SET('Nombre',$_REQUEST['Nombre']);
         $interfaz->__SET('Url',$_REQUEST['Url']);
         $interfaz->__SET('Nivel',$_REQUEST['nivel']);
-       $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
-        $interfaz->__SET('IdInterfaz_Superior',$_REQUEST['modulosecundario']);
+        $interfaz->__SET('Modulo_Principal',$_REQUEST['modulo']);
+        $interfaz->__SET('IdInterfaz_Superior',$IdInterfaz_Superior);
         $interfaz->__SET('Orden',$_REQUEST['orden']);
         $interfaz->__SET('Icono',$_REQUEST['Icono']);
         $interfaz->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $interfaz->__SET('Estado',$_REQUEST['Estado']);    
        
+
+
         $registrar_interfaz = $this->model->Registrar($interfaz);  
        
         if($registrar_interfaz=='error'){
             header('Location: index.php?c=Interfaz&a=v_Registrar');
  
-           // echo 'No se Ha Podido Registrar';
+            echo 'No se Ha Podido Registrar';
          }else{
            // echo 'Registrado Correctamente';
                header('Location: index.php?c=Interfaz');
@@ -145,7 +178,7 @@ class InterfazController{
         $consulta = $this->model->ComboModuloSecundario($interfaz);
 
  
-       $cadena = '<option value='.'>-- Seleccionar Modulo--</option>';
+       $cadena = '<option value='.'0'.'>-- Seleccionar Modulo--</option>';
  
 
         foreach($consulta as $moduloSecundario){
@@ -165,14 +198,17 @@ class InterfazController{
   
         $consulta = $this->model->ComboOrden($IdInterfaz_superior);
         
-        $cadena = '<option value='.'>-- Seleccionar Ordeb--</option>';
- 
-
+        
+       
+        $i= 0;
         foreach($consulta as $orden){
             $cadena.='<option value='.$orden['Orden'].'>'.$orden['Orden'].'</option>';
-
-        }    
-       
+            $i = $i+1;    
+        }  
+        if( $i == 0)  {
+            $cadena ='<option value='.'"1"'.'>'.'1'.'</option>';
+        }
+        
          echo $cadena; 
 
 

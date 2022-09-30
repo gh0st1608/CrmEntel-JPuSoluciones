@@ -27,7 +27,23 @@ class InterfazModel
     public function ConsultaModulo()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior = 0 " );
+        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior = 0 ORDER BY Orden " );
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+
+    }
+    public function ConsultaModuloSecundario(Interfaz $Interfaz)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior = :idInterfaz_superior ORDER BY Orden DESC " );
+        $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -86,7 +102,7 @@ class InterfazModel
         
         
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT Orden FROM interfaz
+        $stmt = $this->bd->prepare(" SELECT Orden FROM interfaz
         WHERE IdInterfaz_superior = :IdInterfaz_superior
         GROUP BY Orden
         UNION
@@ -99,7 +115,9 @@ class InterfazModel
         if (!$stmt->execute()) {
             return 'error';
             //print_r($stmt->errorInfo());
-        }else{            
+        }else{     
+          //  print_r(count($stmt))   ; 
+         //  var_dump($stmt ) ;  
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         
@@ -112,16 +130,57 @@ class InterfazModel
     public function Consultar(Interfaz $Interfaz)
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM Interfaz WHERE idInterfaz = :idInterfaz;");
+        $stmt = $this->bd->prepare("SELECT I1.* ,   
+        CASE WHEN I1.Nivel = 1 THEN 0  
+             WHEN I1.Nivel = 2 THEN I2.IdInterfaz
+             WHEN I1.Nivel = 3 THEN I3.IdInterfaz  
+             END AS IdInterfaz_nivel1,
+             
+        CASE WHEN I1.Nivel = 1 THEN ''    
+             WHEN I1.Nivel = 2 THEN I2.Nombre
+             WHEN I1.Nivel = 3 THEN I3.Nombre  
+             END AS Nombre_nivel1,
+             
+        CASE WHEN I1.Nivel = 1 THEN 0   
+             WHEN I1.Nivel = 2 THEN 0
+             WHEN I1.Nivel = 3 THEN I2.IdInterfaz  
+             END AS IdInterfaz_nivel2,
+        CASE WHEN I1.Nivel = 1 THEN ''    
+             WHEN I1.Nivel = 2 THEN ''
+             WHEN I1.Nivel = 3 THEN I2.Nombre  
+             END AS Nombre_nivel2, 
+        CASE WHEN I1.Nivel = 1 THEN 0    
+             WHEN I1.Nivel = 2 THEN 0
+             WHEN I1.Nivel = 3 THEN 0 
+             END AS IdInterfaz_nivel3, 
+        CASE WHEN I1.Nivel = 1 THEN ''   
+             WHEN I1.Nivel = 2 THEN ''
+             WHEN I1.Nivel = 3 THEN ''
+             END AS Nombre_nivel3  
+                FROM interfaz I1 LEFT JOIN  interfaz I2
+                ON I1.IdInterfaz_superior = I2.IdInterfaz LEFT JOIN  interfaz I3
+                ON I2.IdInterfaz_superior = I3.IdInterfaz 
+                WHERE I1.idInterfaz = :idInterfaz;"); 
         $stmt->bindParam(':idInterfaz', $Interfaz->__GET('idInterfaz'));
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+        $row = $stmt->fetch(PDO::FETCH_OBJ); 
+        
+        
+
 
         $objInterfaz = new Interfaz();     
-        $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
-        $objInterfaz->__SET('Interfaz_id',$row->Interfaz_id);
+  
+        $objInterfaz->__SET('IdInterfaz_nivel1',$row->IdInterfaz_nivel1); 
+        $objInterfaz->__SET('Nombre_nivel1',$row->Nombre_nivel1); 
+        $objInterfaz->__SET('IdInterfaz_nivel2',$row->IdInterfaz_nivel2); 
+        $objInterfaz->__SET('Nombre_nivel2',$row->Nombre_nivel2); 
+        $objInterfaz->__SET('IdInterfaz_nivel3',$row->IdInterfaz_nivel3); 
+        $objInterfaz->__SET('Nombre_nivel3',$row->Nombre_nivel3); 
         $objInterfaz->__SET('Nombre',$row->Nombre);
-        $objInterfaz->__SET('Estado',$row->Estado); 
+        $objInterfaz->__SET('Url',$row->Url);
+        $objInterfaz->__SET('Nivel',$row->Nivel);
+        $objInterfaz->__SET('Orden',$row->Orden);
+        $objInterfaz->__SET('Icono',$row->Icono);
         return $objInterfaz;
     }
 
@@ -129,12 +188,17 @@ class InterfazModel
     {
       
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE Interfaz SET  Nombre=:Nombre,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idInterfaz = :idInterfaz;");
+        $stmt = $this->bd->prepare("CALL ProcUpdateInterfaz(:idInterfaz,:Nombre,:Url,:Nivel,0,:IdInterfaz_superior,:Orden,:Icono, 0,0,NULL,:Modificado_por,NULL)");
 
+ 
         $stmt->bindParam(':idInterfaz',$Interfaz->__GET('idInterfaz'));
         $stmt->bindParam(':Nombre',$Interfaz->__GET('Nombre'));
-        $stmt->bindParam(':Estado',$Interfaz->__GET('Estado'));          
-        $stmt->bindParam(':Ingresado_por',$Interfaz->__GET('Ingresado_por')); 
+        $stmt->bindParam(':Url',$Interfaz->__GET('Url'));          
+        $stmt->bindParam(':Nivel',$Interfaz->__GET('Nivel')); 
+        $stmt->bindParam(':Orden',$Interfaz->__GET('Orden')); 
+        $stmt->bindParam(':Icono',$Interfaz->__GET('Icono')); 
+        $stmt->bindParam(':IdInterfaz_superior',$Interfaz->__GET('IdInterfaz_superior')); 
+        $stmt->bindParam(':Modificado_por',$Interfaz->__GET('Ingresado_por')); 
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());
@@ -149,7 +213,7 @@ class InterfazModel
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO interfaz(Nombre,Url,Nivel,Modulo_Principal,IdInterfaz_Superior,Orden,Icono,Estado,Ingresado_por) VALUES(:Nombre,:Url,:Nivel,:Modulo_Principal,:IdInterfaz_Superior,:Orden,:Icono,:Estado,:Ingresado_por)");
+        $stmt = $this->bd->prepare( "CALL ProcInsertInterfaz(:Nombre,:Url,:Nivel,:Modulo_Principal,:IdInterfaz_Superior,:Orden,:Icono,:Estado,:Ingresado_por,NULL,0,NULL)");
         $stmt->bindValue(':Nombre', $Interfaz->__GET('Nombre'));
         $stmt->bindValue(':Url', $Interfaz->__GET('Url'));
         $stmt->bindValue(':Nivel', $Interfaz->__GET('Nivel'));
