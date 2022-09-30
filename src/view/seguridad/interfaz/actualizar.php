@@ -27,7 +27,7 @@ $interfaz= $this->Consultar($_REQUEST['idInterfaz']);
 	    		</div>
 	    		<div class="box-body">
 	    			<form id="frmActualizarInterfaz" action="?c=Interfaz&a=Actualizar" method="post" enctype="multipart/form-data" role="form">
-	    				<input type="hidden" name="idInterfaz" id="idInterfaz" value="<?php echo $interfaz->__GET('idInterfaz'); ?>" /> 
+	    				<input type="hidden" name="idInterfaz" id="idInterfaz" value="1" /> 
 					    <div class="form-group col-md-12">
 					        <label>Interfaz</label>
 					        <input type="text" name="Nombre" id="Nombre" value="<?php echo $interfaz->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />

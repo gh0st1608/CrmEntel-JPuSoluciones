@@ -169,7 +169,7 @@ class InterfazModel
 
 
         $objInterfaz = new Interfaz();     
-  
+        $objInterfaz->__SET('IdInterfaz',$row->IdInterfaz_nivel1); 
         $objInterfaz->__SET('IdInterfaz_nivel1',$row->IdInterfaz_nivel1); 
         $objInterfaz->__SET('Nombre_nivel1',$row->Nombre_nivel1); 
         $objInterfaz->__SET('IdInterfaz_nivel2',$row->IdInterfaz_nivel2); 
