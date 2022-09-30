@@ -42,6 +42,14 @@ class InterfazController{
         return $consulta;
     }
 
+    
+    public function ConsultaModuloPrincipal()
+    {
+        
+        $consulta = $this->model->ConsultaModuloPrincipal();
+        return $consulta;
+    }
+
 
     public function ListarNivel($idInterfaz_superior)
     {
@@ -72,9 +80,7 @@ class InterfazController{
          
         if($actualizar_interfaz=='error'){
             header('Location: index.php?c=Interfaz&a=v_Actualizar&idInterfaz='. $interfaz->__GET('idInterfaz'));
-            echo 'No se Ha Podido Actualizar';
         }else{
-            echo 'Actualizado Correctamente';
             header('Location: index.php?c=Interfaz');
          }
     }
@@ -96,10 +102,7 @@ class InterfazController{
        
         if($registrar_interfaz=='error'){
             header('Location: index.php?c=Interfaz&a=v_Registrar');
- 
-           // echo 'No se Ha Podido Registrar';
          }else{
-           // echo 'Registrado Correctamente';
                header('Location: index.php?c=Interfaz');
          }
  
@@ -113,10 +116,8 @@ class InterfazController{
         $eliminar_interfaz = $this->model->Eliminar($interfaz);  
          
         if($eliminar_interfaz=='error'){
-            echo 'No se Ha Podido Eliminar';
             header('Location: index.php?c=Interfaz');            
          }else{
-            echo 'Eliminado Correctamente';
             header('Location: index.php?c=Interfaz');
          }
     }

@@ -27,7 +27,23 @@ class InterfazModel
     public function ConsultaModulo()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior = 0 " );
+        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior=0 " );
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+
+    }
+
+    public function ConsultaModuloPrincipal()
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT *  FROM interfaz where Nivel=1 and Eliminado= 0 and  IdInterfaz_superior = 0 " );
         $stmt->execute();
 
         if (!$stmt->execute()) {

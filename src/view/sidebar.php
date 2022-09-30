@@ -2,9 +2,7 @@
 $interfaces_modulo = new InterfazController();
 
  
-$interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
- 
- 
+$interfaces_modulo =  $interfaces_modulo->ConsultaModulo(); 
 
 ?>
 <!-- Left side column. contains the logo and sidebar -->
