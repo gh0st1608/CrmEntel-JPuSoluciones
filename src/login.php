@@ -42,7 +42,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
 }
    
  
- 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -144,11 +144,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 $('#myModal').modal({show:true});
             });
         });
-
-
-
-
-      
+    
       $('#Correo').on('keyup', function() {
           var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
           var buttonDisabled = $('#Correo').val().length == 0 ;
@@ -162,6 +158,26 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           }
       })
 
+      //Enviar Correo de Recuepracion
+      $(document).ready(function() {
+        $('#EnviarMail').on('click',function(e){
+          e.preventDefault();
+
+          var Correo = $('#Correo').val();
+
+          $.ajax({
+            type: "POST",
+            url: "ajax/recuperarcorreo.php",
+            data: ('Correo='+Correo)
+            success: function(respuesta){
+              alert(respuesta);
+            }
+
+          })
+
+        })
+      });
+	
 
     </script>
   </body>

@@ -55,9 +55,7 @@ class PerfilController{
          
         if($actualizar_perfil=='error'){
             header('Location: index.php?c=Perfil&a=v_Actualizar&idPerfil='. $perfil->__GET('idPerfil'));
-            echo 'No se Ha Podido Actualizar el Perfil';
          }else{
-            echo 'Perfil Actualizado Correctamente';
             header('Location: index.php?c=Perfil');
          }
     }
@@ -71,9 +69,7 @@ class PerfilController{
          
         if($registrar_perfil=='error'){
             header('Location: index.php?c=Perfil&a=v_Registrar');
-            echo 'No se Ha Podido Registrar el perfil';
          }else{
-            echo 'Perfil Registrado Correctamente';
             header('Location: index.php?c=Perfil');
          }
     }
@@ -87,9 +83,7 @@ class PerfilController{
          
         if($eliminar_perfil=='error'){
             header('Location: index.php?c=Perfil');
-            echo 'No se Ha Podido Eliminar el Perfil';
          }else{
-            echo 'Perfil Eliminado Correctamente';
             header('Location: index.php?c=Perfil');
          }
     }

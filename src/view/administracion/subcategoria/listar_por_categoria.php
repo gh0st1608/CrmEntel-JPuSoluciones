@@ -47,7 +47,7 @@ $infocategoria = $categoria->Consultar($_REQUEST['idCategoria']);
 	                    	<tr>
 	                    		<td><?php echo $subcategoria['idSubCategoria']; ?></td>
 	                    		<td><?php echo $subcategoria['Nombre']; ?></td>
-                                <td><?php if ($subcategoria['Aplicar_Logica'] == '0' ){ echo 'SI'; } else { echo 'NO'; }; ?></td>
+                                <td><?php if ($subcategoria['Aplicar_Logica'] == '1' ){ echo 'SI'; } else { echo 'NO'; }; ?></td>
 								<?php $nombre = $categoria -> Consultar($subcategoria['Categoria_id']);?>
 	                    	 	<?php if ($subcategoria['Estado']=1):?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>

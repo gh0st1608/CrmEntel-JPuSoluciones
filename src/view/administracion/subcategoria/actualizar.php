@@ -35,33 +35,28 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 	    				<input type="hidden" name="idSubCategoria" value="<?php echo $subcategoria->__GET('idSubCategoria'); ?>" />    					    
 					    <div class="form-group col-md-12">
 							<label>Categoria</label>
-							<input type="text" value="<?php echo $categoria-> Nombre ?>" class="form-control" readonly="true" ></input>  
+							<input type="text" name="Categoria_id" id="Categoria_id" value="<?php echo $categoria-> Nombre ?>" class="form-control" readonly="true" ></input>  
 				    	</div>
 						<div class="form-group col-md-12">
 					        <label>Nombre SubCategoria</label>
-					        <input type="text" name="Nombre" value="<?php echo $subcategoria->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Nombre" id="Nombre" value="<?php echo $subcategoria->__GET('Nombre'); ?>" class="form-control" placeholder=""  required />
 					    </div> 
 					    <div class="form-group col-md-12">
 					        <label>Aplicar Lógica</label>
 					        <select name="Logica" id="Logica" class="form-control">
-							<?php if ($subcategoria->__GET('Aplicar_Logica') == 1){?>
-							    <option value="1" >Si</option>
-								<option value="0" >No</option> 
+							<?php if ($subcategoria->__GET('Aplicar_Logica') == 0){?>
+								<option value="0" >No</option>
+								<option value="1" >Si</option>  
 								<?php }else{?>
 								<option value="0" >No</option>
-								<option value="1" >No</option>
+								<option value="1" >Si</option> 
 								<?php
 								} 
 								?>
 					        </select>
 					    </div>
-						<div class="form-group col-md-12 Data">
-					        <label>Logica Json</label>
-					        <textarea name="Data" id="Data" rows="10" cols="40" value="<?php echo $subcategoria->__GET('Logica_Json'); ?>" class="form-control" placeholder="raaa"  required>
-							</textarea>
-					    </div>
 						<div class="form-group col-md-4">
-					      <label>Estado</label>
+					      <label>Activo</label>
 						</div>
 						<div class="form-group col-md-4">
 							<label class="radio-inline">
@@ -89,8 +84,8 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 </section><!-- /.content -->
 <script>
 	$(document).ready(function() {
+		$('#Logica').val("<?php echo $subcategoria->__GET('Aplicar_Logica'); ?>");
 		$("#btnSubmit").click(function(event) {
-
 			bootbox.dialog({
 	            message: "¿Estas seguro de actualizar?",
 	            title: "Actualizar SubCategoria",
@@ -122,26 +117,6 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 			});
 		});
 
-	$(document).ready(function () {
-		$('#btnSubmit').attr("disabled", true);
-			$('#Data').keyup(function () {
-				var buttonDisabled = $('#Data').val().length == 0;
-				$('#btnSubmit').attr("disabled", buttonDisabled);
-			});
-		});
-
-	$(document).ready(function () {
-		$('#Logica').on('change',function(){
-			var selectValor = $(this).val();
-			if (selectValor == '1') {
-				$('.Data').show();
-				$('#Nombre').prop("disabled",true)
-			}else {
-			$('.Data').hide();
-				//alert('esta es la opcion 2')
-			}
-		});
-	});
 
 
 </script>

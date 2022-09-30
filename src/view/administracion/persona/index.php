@@ -27,7 +27,7 @@
 								<th style="vertical-align: middle;">Documento</th>
 			                    <th style="vertical-align: middle;">Nombres y Apellidos</th>
 			                    <th style="vertical-align: middle;">Celular</th>
-			                    <th style="vertical-align: middle;">Fecha de Nacimiento</th>
+			                    <th style="vertical-align: middle;">Correo</th>
 			                    <th style="vertical-align: middle;">Estado</th>
 			                    <th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>

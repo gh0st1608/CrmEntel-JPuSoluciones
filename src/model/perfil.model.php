@@ -10,7 +10,8 @@ class PerfilModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM perfil where Estado = 1 AND Eliminado=0" );
+        //$stmt = $this->bd->prepare("SELECT * FROM perfil where Estado = 1 AND Eliminado=0" );
+        $stmt = $this->bd->prepare("SELECT * FROM perfil where Eliminado=0" );
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -60,7 +61,7 @@ class PerfilModel
     public function Registrar(Perfil $perfil)
     {
        
-       
+       print_r($perfil);
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO perfil(Nombre,Estado,Ingresado_por) VALUES(:Nombre,:Estado,:Ingresado_por)");
         $stmt->bindValue(':Nombre', $perfil->__GET('Nombre'),PDO::PARAM_STR);

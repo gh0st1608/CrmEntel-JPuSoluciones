@@ -75,11 +75,7 @@ $categoria= $this->Consultar($_REQUEST['idCategoria']);
 	                    className: "btn-primary",
 	                    callback: function() {
 	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmActualizarCategoria" ).submit();
-	                         
-
-	                       
+	                              $( "#frmActualizarCategoria" ).submit();                  
 	                    }
 	                },
 	                danger: {

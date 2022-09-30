@@ -102,10 +102,8 @@ class PersonaController{
         $registrar_persona = $this->model->Registrar($persona);  
          
         if($registrar_persona=='error'){
-            echo 'No se Ha Podido Registrar Persona';
             header('Location: index.php?c=Persona&a=v_Registrar');
          }else{
-            echo 'Persona Registrado Correctamente';
             header('Location: index.php?c=Persona');
          }
 
