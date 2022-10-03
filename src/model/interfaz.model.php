@@ -142,6 +142,42 @@ class InterfazModel
 
     }
 
+    public function ConsultarInterfaz(Interfaz $Interfaz)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
+        $stmt->bindParam(':idInterfaz', $Interfaz->__GET('idInterfaz'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+
+        $objInterfaz= new Interfaz();     
+        $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
+        $objInterfaz->__SET('Nombre',$row->Nombre);
+        $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
+        $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
+        $objInterfaz->__SET('Estado',$row->Estado);
+        return $objInterfaz;
+    }
+
+    public function BuscarInterfaz(Interfaz $Interfaz)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
+        $stmt->bindParam(':Modulo_Principal', $Interfaz->__GET('Modulo_Principal'));
+        $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
+        $stmt->bindParam(':Nivel', $Interfaz->__GET('Nivel'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+
+        $objInterfaz= new Interfaz();     
+        $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
+        $objInterfaz->__SET('Nombre',$row->Nombre);
+        $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
+        $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
+        $objInterfaz->__SET('Estado',$row->Estado);
+        return $objInterfaz;
+    }
+
     
  
 

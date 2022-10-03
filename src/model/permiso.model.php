@@ -22,6 +22,22 @@ class PermisoModel
         
 
     }
+
+    public function Listar_por_perfil(Permiso $permiso)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM permiso where Perfil_id = :Perfil_id AND Eliminado=0;" );
+        $stmt->bindParam(':Perfil_id', $permiso->__GET('Perfil_id'));
+        $stmt->execute();
+        
+        if (!$stmt->execute()) {
+            return 'error';
+            print_r($stmt->errorInfo());
+        }else{            
+             return $stmt->fetchAll(PDO::FETCH_ASSOC);;
+        }
+    }
+
     public function Consultar(Permiso $permiso)
     {
         $this->bd = new Conexion();
@@ -64,10 +80,13 @@ class PermisoModel
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO permiso(Perfil_id,Interfaz_id,Acceder,Ingresado_por) VALUES(:Perfil_id,:Interfaz_id,:Acceder,:Ingresado_por)");
+
+        
+        $stmt = $this->bd->prepare("INSERT INTO permiso(Perfil_id,Interfaz_id,Acceder,Estado,Ingresado_por) VALUES(:Perfil_id,:Interfaz_id,:Acceder,:Estado,:Ingresado_por)");
         $stmt->bindValue(':Perfil_id', $permiso->__GET('Perfil_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Interfaz_id', $permiso->__GET('Interfaz_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Acceder', $permiso->__GET('Acceder'),PDO::PARAM_INT);
+        $stmt->bindValue(':Estado', $permiso->__GET('Estado'),PDO::PARAM_INT);
         $stmt->bindValue(':Ingresado_por', $permiso->__GET('Ingresado_por'),PDO::PARAM_INT);     
 
         if (!$stmt->execute()) {

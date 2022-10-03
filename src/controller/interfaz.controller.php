@@ -70,6 +70,26 @@ class InterfazController{
         return $consulta;
     }
 
+    public function ConsultarInterfaz($idInterfaz)
+    {
+        $interfaz = new Interfaz();
+        $interfaz->__SET('idInterfaz',$idInterfaz);
+
+        $consulta = $this->model->ConsultarInterfaz($interfaz);
+        return $consulta;
+    }
+
+    public function BuscarInterfaz($ModuloPrincipal,$ModuloSecundario,$Nivel)
+    {
+        $interfaz = new Interfaz();
+        $interfaz->__SET('Modulo_Principal',$ModuloPrincipal);
+        $interfaz->__SET('idInterfaz_superior',$ModuloSecundario);
+        $interfaz->__SET('Nivel',$Nivel);
+
+        $consulta = $this->model->BuscarInterfaz($interfaz);
+        return $consulta;
+    }
+
  
     public function Actualizar(){
 

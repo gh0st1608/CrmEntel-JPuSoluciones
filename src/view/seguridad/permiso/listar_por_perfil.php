@@ -1,10 +1,15 @@
 <?php
 require_once 'controller/interfaz.controller.php';
+require_once 'controller/permiso.controller.php';
 $interfaz = new InterfazController;
+$permiso = new PermisoController;
 $modulosprincipales = $interfaz -> ConsultaModuloPrincipal();
 
 
+
 if (!isset($_REQUEST['idPerfil'])==''){
+
+
 
 ?>
 <!-- Content Header (Page header) -->
@@ -44,47 +49,62 @@ if (!isset($_REQUEST['idPerfil'])==''){
 							<label>Modulo Secundario</label>
 							<select name="ModuloSecundario" id="ModuloSecundario" disabled class="form-control"></select> 
 				    	</div>
-						<div class="form-group col-md-12">
+						
+                        <div class="form-group col-md-12" style="display:none;">
 							<label>Acciones</label>
 							<select name="Acciones" id="Acciones" disabled class="form-control"></select> 				
 				    	</div>
 						
 					  	<div class="col-md-12" style="margin-top:2em;">
 							<div class="col-md-6 col-sm-12">
-								<button type="button" name="AgregarPermiso" id="AgregarPermiso" class="btn btn-success col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
+								<button type="btnSubmit" name="AgregarPermiso" id="AgregarPermiso" class="btn btn-success col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
 							</div>
 					  	</div>
 
 						<div class="box-body box-body_table">
-								<?php  $permisos = $this->Listar();  ?>
-		
+								<?php  $permisos = $this->Listar_por_perfil($_REQUEST['idPerfil']);  ?>
+
 							<table id="TablaPermiso" class="table table-bordered table-hover dataTable no-footer" width="100%">
 								<thead>
 									<tr>                      
 										<th>ID</th>                    
-										<th style="vertical-align: middle;">Modulo</th>			                   
-										<th style="vertical-align: middle;">Interface</th>
+										<th style="vertical-align: middle;">Modulo Principal</th>
+										<th style="vertical-align: middle;">Modulo Secundario</th>
+										<th style="vertical-align: middle;">Tipo Permiso</th>			                   
 										<th style="vertical-align: middle;">Acceder</th>
-										<th style="vertical-align: middle;">Acciones</th>
+										<th style="vertical-align: middle;">Accion</th>
+
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td><?php echo $perfil['idPerfil']; ?></td>
-										<td><?php echo $perfil['Nombre']; ?></td>
-										<?php if ($perfil['Estado']==1): ?>
-										<td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
-										<?php else: ?>
-										<td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
-										<?php endif ?>
-										<td class="a_center">
-											<a class="btn btn-danger btn-xs EliminarPermiso" data-id="<?php echo $permiso['idPermiso']; ?>" data-nombre="<?php echo $permiso['Nombre']; ?>">
-												<i class="fa fa-trash"></i>   
-											</a>                       		
-										</td>
+                                        <?php foreach ($permisos as $permiso): ?>
+										<td><?php echo $permiso['idPermiso']; ?></td>
+                                        <?php $interfaz_obj = $interfaz->ConsultarInterfaz($permiso['Interfaz_id']);?>
+                                        <td><?php echo $interfaz_obj -> Nombre ?></td>
+                                        <?php $modprincipal = $interfaz->ConsultarInterfaz($interfaz_obj->Modulo_Principal);?>
+										<td><?php echo $modprincipal -> Nombre ?></td>
+                                        <td><?php echo "Por Definir"?></td>
+                                        <?php if ($permiso['Acceder']==1): ?>
+                                        <td> Si</td>
+                                        <?php else: ?>
+                                        <td> No</td>
+                                        <?php endif ?>
+                                        <td class="a_center">
+                                            <a class="btn btn-danger btn-xs EliminarPerfil" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['Nombre']; ?>">
+                                            <i class="fa fa-trash"></i>   
+                                            </a>
+                                        </td>   
 									</tr>
+                                    <?php endforeach; ?>
 								</tbody>
-							</table>                    
+							</table>
+                            <div class="col-md-12" style="margin-top:2em;">
+							<div class="col-md-6 col-sm-12">
+								<button type="btnSubmit" name="Cancelar" id="Cancelar" class="btn btn-danger col-md-12 col-xs-12"><i class="fa fa-save"></i> Cancelar</button>    
+							</div>
+					  	</div>
+                            
 						</div>
 
 					</form>
@@ -100,37 +120,60 @@ if (!isset($_REQUEST['idPerfil'])==''){
 <script>
 	
 	$(document).ready(function() {
-		$("#btnSubmit").click(function(event) {
-
+		$(".EliminarPermiso").click(function(event) {
+			idPermiso=$(this).attr('data-id');
 			bootbox.dialog({
-	            message: "¿Estas seguro de registrar esta interfaz?",
-	            title: "Registrar Interfaz",
-	            buttons: {
-	                main: {
-	                    label: "Registrar",
-	                    className: "btn-primary",
-	                    callback: function() {
-	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmRegistrarInterfaz" ).submit();
-	                         
-
-	                       
-	                    }
-	                },
-	                danger: {
-	                    label: "Cancelar",
-	                    className: "btn-danger",
-	                    callback: function() {
-	                        bootbox.hideAll();
-	                    }
-	                }
-	            }
-        	}); 
+            message: "¿Estas seguro de eliminar el permiso  "+$(this).attr('data-nombre')+"?",
+            title: "Eliminar Permiso",
+            buttons: {
+                main: {
+                    label: "Eliminar",
+                    className: "btn-primary",
+                    callback: function() {
+                              window.location.href = "?c=Permiso&a=Eliminar&idPermiso="+idPermiso;             
+                    }
+                },
+                danger: {
+                    label: "Cancelar",
+                    className: "btn-danger",
+                    callback: function() {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
 		});
-
-		
 	});
+
+    $(document).ready(function() {
+			$("#AgregarPermiso").click(function(event) {
+					bootbox.dialog({
+						message: "¿Estas seguro de Registrar?",
+						title: "Registrar Permiso",
+						buttons: {
+							main: {
+								label: "Registrar",
+								className: "btn-primary",
+								callback: function() {
+									//console.log('Eliminado al usuario');
+									
+										$( "#frmRegistrarPermiso" ).submit();
+								}
+							},
+							danger: {
+								label: "Cancelar",
+								className: "btn-danger",
+								callback: function() {
+									bootbox.hideAll();
+								}
+							}
+						}
+					});
+				})
+			});
+			 
+
+
 
 	$("#ModuloPrincipal").change(function(){
 	 		var parametros= "id_moduloprincipal="+$("#ModuloPrincipal").val();
@@ -200,7 +243,9 @@ if (!isset($_REQUEST['idPerfil'])==''){
 			}
 		});
 	});
-			 
+
+
+    
 				
 
 </script>

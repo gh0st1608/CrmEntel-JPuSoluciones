@@ -45,7 +45,7 @@
                                		<a class="btn btn-danger btn-xs EliminarPerfil" data-id="<?php echo $perfil['idPerfil']; ?>" data-nombre="<?php echo $perfil['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>
-									<a href="?c=Permiso&a=v_Registrar&idPerfil=<?php echo $perfil['idPerfil'];?>" class="btn btn-info btn-xs VerPermisos">
+									<a href="?c=Permiso&a=v_ListarxPerfil&idPerfil=<?php echo $perfil['idPerfil'];?>" class="btn btn-info btn-xs VerPermisos">
                                    		<i class="fa fa-eye"></i>   
                                		</a>                             		
                                	</td>

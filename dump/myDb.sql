@@ -1,8 +1,31 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: db
+-- Tiempo de generación: 30-09-2022 a las 19:59:41
+-- Versión del servidor: 5.7.39
+-- Versión de PHP: 8.0.19
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `myDb`
+--
+
 DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertInterfaz` (IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcInsertInterfaz` (IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
   
   IF (P_Nivel = 1 )
   THEN 
@@ -47,7 +70,7 @@ END IF;
  
 END$$
 
-CREATE DEFINER=`user`@`%` PROCEDURE `ProcInsertLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcInsertLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
   
   IF (P_Password = '' OR  P_Login = '' )
   THEN 
@@ -128,7 +151,7 @@ and IdEstadoKanBanDetalle = 2;
  
 END$$
 
-CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateInterfaz` (IN `P_IdInterfaz` INT, IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcUpdateInterfaz` (IN `P_IdInterfaz` INT, IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)   BEGIN
  
      UPDATE interfaz
      SET Orden = Orden + 1
@@ -147,7 +170,7 @@ CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateInterfaz` (IN `P_IdInterfaz` INT,
  
 END$$
 
-CREATE DEFINER=`user`@`%` PROCEDURE `ProcUpdateLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcUpdateLogSesion` (IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))   BEGIN
  
     UPDATE  log_sesion   
     SET   LoggedIn = 'No',	
@@ -228,8 +251,7 @@ INSERT INTO `categoria` (`idCategoria`, `Nombre`, `Estado`, `Ingresado_por`, `Fe
 (60, 'TIPO VENTA', 1, 1, '2022-09-29 19:47:37', 0),
 (61, 'TESTYAA', 1, 1, '2022-09-29 20:24:23', 0),
 (62, 'PRUEBA GAA 2', 1, 1, '2022-09-29 20:30:51', 0),
-(63, 'test1000', 1, 1, '2022-09-29 21:00:04', 0),
-(64, 'GAAA', 1, 1, '2022-09-29 21:38:21', 0),
+(63, 'test1000', 1, 1, '2022-09-29 21:00:04', 0);
 
 -- --------------------------------------------------------
 
@@ -300,12 +322,12 @@ CREATE TABLE `interfaz` (
 --
 
 INSERT INTO `interfaz` (`idInterfaz`, `Nombre`, `Url`, `Nivel`, `Modulo_Principal`, `idInterfaz_superior`, `Orden`, `Icono`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
-(1, 'Seguridad', '#', 1, 1, 0, 1, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:23:14', 0),
-(2, 'Administracion', '#', 1, 2, 0, 2, NULL, 1, 1, '2016-04-30 02:18:13', 1, '2022-09-27 01:21:48', 0),
-(3, 'Procesos', '#', 1, 3, 0, 3, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-27 01:34:52', 0),
-(4, 'Ventas', '#', 1, 4, 0, 4, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-27 01:52:35', 0),
-(5, 'Reportes', '#', 1, 5, 0, 5, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-27 01:52:42', 0),
-(6, 'Dashboard', '#', 1, 6, 0, 6, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-27 01:52:46', 0),
+(1, 'Seguridad', '#', 1, 1, 0, 2, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-30 19:46:06', 0),
+(2, 'Administracion', '#', 1, 2, 0, 3, NULL, 1, 1, '2016-04-30 02:18:13', 1, '2022-09-30 19:46:06', 0),
+(3, 'Procesos', '#', 1, 3, 0, 4, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-30 19:46:06', 0),
+(4, 'Ventas', '#', 1, 4, 0, 5, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-30 19:46:06', 0),
+(5, 'Reportes', '#', 1, 5, 0, 6, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-30 19:46:06', 0),
+(6, 'Dashboard', '#', 1, 6, 0, 7, NULL, 1, 1, '2016-10-21 18:19:53', 1, '2022-09-30 19:46:06', 0),
 (7, 'Interfaz', 'index.php?c=Interfaz', 2, 1, 1, 1, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 05:51:00', 0),
 (8, 'Perfil', 'index.php?c=Perfil', 2, 1, 1, 2, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:20:12', 0),
 (9, 'Usuario', 'index.php?c=Usuario', 2, 1, 1, 3, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-28 16:24:45', 0),
@@ -318,7 +340,10 @@ INSERT INTO `interfaz` (`idInterfaz`, `Nombre`, `Url`, `Nivel`, `Modulo_Principa
 (16, 'Listar Fichas', 'index.php?c=#', 2, 4, 4, 3, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:22:35', 0),
 (17, 'Ventas', 'index.php?c=#', 2, 5, 5, 1, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:21:46', 0),
 (18, 'Metricas Vendedor', 'index.php?c=#', 2, 6, 6, 1, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:22:45', 0),
-(19, 'Metricas Back Office', 'index.php?c=#', 2, 6, 6, 2, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:22:57', 0);
+(19, 'Metricas Back Office', 'index.php?c=#', 2, 6, 6, 2, 'fa fa-user', 1, 1, '2016-04-30 02:17:36', 1, '2022-09-27 04:22:57', 0),
+(23, 'ConsultasExternas', 'index.php?c=Consultas', 1, NULL, 0, 8, '<i class=\"fa fa-eye\"></i> ', 1, 1, '2022-09-30 19:46:06', 0, '2022-09-30 19:56:05', 1),
+(24, 'Reniec', 'index.php?c=Interfaz&a=v_Registrar', 2, 23, 23, 1, '<i class=\"fa fa-trash\"></i> ', 1, 1, '2022-09-30 19:50:07', NULL, '2022-09-30 19:55:58', 1),
+(25, 'Registrar', 'index?c=ConsultasExternas&a=v_Registrar', 3, 23, 24, 1, '<i class=\"fa fa-trash\"></i> ', 1, 1, '2022-09-30 19:53:38', NULL, '2022-09-30 19:55:47', 1);
 
 -- --------------------------------------------------------
 
@@ -344,8 +369,7 @@ CREATE TABLE `log_sesion` (
 --
 
 INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES
-(334, '16110401', '16110401', 'Si', '172.25.0.1', 'Windows', 'Other', '2022-09-29 22:11:09', NULL, 1),
-(333, '16110401', '16110401', 'No', '172.25.0.1', 'Windows', 'Other', '2022-09-29 21:38:10', '2022-09-29 22:10:54', 1);
+(335, '16110401', '16110401', 'Si', '172.27.0.1', 'Windows', 'Other', '2022-09-30 19:40:45', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -376,7 +400,9 @@ INSERT INTO `perfil` (`idPerfil`, `Nombre`, `Estado`, `Ingresado_por`, `Fecha_Re
 (5, 'Perfil Test', 0, 1, '2022-09-29 19:54:23', 1, '2022-09-29 23:30:22', 1),
 (6, 'TESTING', 0, 1, '2022-09-29 23:21:20', 1, '2022-09-29 23:30:29', 1),
 (7, 'testing', 0, 1, '2022-09-29 23:24:21', NULL, NULL, 0),
-(8, 'ultimo', 0, 1, '2022-09-29 23:25:30', 1, '2022-09-29 23:26:23', 0);
+(8, 'ultimo', 0, 1, '2022-09-29 23:25:30', 1, '2022-09-29 23:26:23', 0),
+(9, 'HOLI', 1, 1, '2022-09-30 19:43:55', 1, '2022-09-30 19:44:41', 1),
+(10, 'HOLI2', 1, 1, '2022-09-30 19:44:33', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -536,9 +562,9 @@ INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Passwor
 (1, 1, 1, '16110401', '16110401', 1, 0, '2019-02-06 13:49:59', 1, '2022-09-29 19:38:07', 0),
 (2, 2, 4, '19020601', '19020601', 1, 1, '2019-02-06 14:21:26', 1, '2022-09-29 19:38:10', 0),
 (3, 3, 1, '19020602', '19020602', 1, 1, '2019-02-06 14:26:07', NULL, '2022-09-29 19:38:13', 0),
-(22, 30, 1, '51111111', '11441144', 1, 0, '2022-09-29 22:22:09', NULL, NULL, 0),
+(22, 30, 1, '51111111', '11441144', 1, 0, '2022-09-29 22:22:09', NULL, '2022-09-30 19:41:23', NULL),
 (21, 29, 1, '51515151', 'bbbbbbbb', 1, 0, '2022-09-29 22:20:44', NULL, NULL, 0),
-(20, 28, 1, '41516161', '98979787', 1, 0, '2022-09-29 22:13:15', NULL, NULL, 0),
+(20, 28, 1, '41516161', '98979787', 1, 0, '2022-09-29 22:13:15', NULL, '2022-09-30 19:42:39', NULL),
 (19, 27, 2, '44444444', 'tast', 1, 0, '2022-09-29 19:41:33', NULL, NULL, 0),
 (18, 26, 1, '11111111', 'test', 1, 0, '2022-09-29 19:39:52', NULL, NULL, 0),
 (17, 26, 3, '12345678', '12345678', 1, 0, '2022-09-29 04:34:04', 1, '2022-09-29 04:34:52', 0);
@@ -623,19 +649,19 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `interfaz`
 --
 ALTER TABLE `interfaz`
-  MODIFY `idInterfaz` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idInterfaz` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `log_sesion`
 --
 ALTER TABLE `log_sesion`
-  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
+  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=336;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -662,3 +688,6 @@ ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
