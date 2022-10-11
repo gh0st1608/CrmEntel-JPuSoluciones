@@ -266,14 +266,18 @@ class UsuarioModel
         	//instanciamos a la clase conexion 
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
+ 
             $stmt = $this->bd->prepare( "CALL procInsertLogSesion(:Login,:Password,:LoggedIn,:IP,:Dispositivo,:NombreDispositivo, :Equipo)"  );
+ 
             $stmt->bindValue(':Login', $loginiciosesion->__GET('login'));
             $stmt->bindValue(':Password', $loginiciosesion->__GET('password'));
             $stmt->bindValue(':LoggedIn', $loginiciosesion->__GET('loggedin'));
             $stmt->bindValue(':IP', $loginiciosesion->__GET('ip_usuario'));
             $stmt->bindValue(':Dispositivo', $loginiciosesion->__GET('dispositivo'));
             $stmt->bindValue(':NombreDispositivo', $loginiciosesion->__GET('nombredispositivo'));
+ 
             $stmt->bindValue(':Equipo', $_COOKIE['Equipo']);
+ 
             //ejecutamos la consulta sql        
             $stmt->execute();
             //almacenamos los registros obtenidos de la consulta

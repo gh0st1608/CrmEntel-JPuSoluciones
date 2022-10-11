@@ -3,14 +3,14 @@ require_once 'controller/usuario.controller.php';
 
 $usuario = new UsuarioController();
 $resultado="";
- 
+
 if( !isset($_COOKIE['Equipo'])) {
  
-   setcookie("Equipo", mt_rand(10000, 99999)); 
+  setcookie("Equipo", mt_rand(10000, 99999)); 
 
- }  
+}  
 
- 
+
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {
@@ -42,9 +42,9 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     }
   }  
 }
-
-
+   
  
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -146,7 +146,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 $('#myModal').modal({show:true});
             });
         });
-      
+    
       $('#Correo').on('keyup', function() {
           var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
           var buttonDisabled = $('#Correo').val().length == 0 ;
@@ -165,7 +165,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           $.ajax({
               data: parametro,
               type: "POST",
-              url: 'index.php?c=Usuario&a=v_RecuperarClave',
+              url: 'index.php?c=Usuario&a=RecuperarClave',
               //sync:false,        
               success: function(data) {
                 alert(data);
@@ -173,9 +173,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           });
       });
 	
-  
+
     </script>
-    
- 
   </body>
 </html>
