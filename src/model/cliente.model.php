@@ -11,17 +11,17 @@ class ClienteModel
             $this->bd = new Conexion();
             $stmt = $this->bd->prepare('INSERT INTO cliente(TipoDocumento,Documento,Nombre_Cliente,Apellido_Paterno,Apellido_Materno,Nacionalidad,Lugar_Nacimiento,Fecha_Nacimiento,Nombre_Padre,Nombre_Madre,Ingresado_por) VALUES(:TipoDocumento,:Documento,:Nombre_Cliente,:Apellido_Paterno,:Apellido_Materno,:Nacionalidad,:Lugar_Nacimiento,:Fecha_Nacimiento,:Nombre_Padre,:Nombre_Madre,:Ingresado_por)');
 
-            $stmt->bindParam(':TipoDocumento',$cliente->__GET('TipoDocumento'));
-            $stmt->bindParam(':Documento',$cliente->__GET('Documento'));
-            $stmt->bindParam(':Nombre_Cliente',$cliente->__GET('Nombre_Cliente'));
-            $stmt->bindParam(':Apellido_Paterno',$cliente->__GET('Apellido_Paterno'));
-            $stmt->bindParam(':Apellido_Materno',$cliente->__GET('Apellido_Materno'));
-            $stmt->bindParam(':Nacionalidad',$cliente->__GET('Nacionalidad'));
-            $stmt->bindParam(':Lugar_Nacimiento',$cliente->__GET('Lugar_Nacimiento'));
-            $stmt->bindParam(':Fecha_Nacimiento',$cliente->__GET('Fecha_Nacimiento'));
-            $stmt->bindParam(':Nombre_Padre',$cliente->__GET('Nombre_Padre'));
-            $stmt->bindParam(':Nombre_Madre',$cliente->__GET('Nombre_Madre'));
-            $stmt->bindParam(':Ingresado_por',$cliente->__GET('Ingresado_por'));
+            $stmt->bindValue(':TipoDocumento',$cliente->__GET('TipoDocumento'));
+            $stmt->bindValue(':Documento',$cliente->__GET('Documento'));
+            $stmt->bindValue(':Nombre_Cliente',$cliente->__GET('Nombre_Cliente'));
+            $stmt->bindValue(':Apellido_Paterno',$cliente->__GET('Apellido_Paterno'));
+            $stmt->bindValue(':Apellido_Materno',$cliente->__GET('Apellido_Materno'));
+            $stmt->bindValue(':Nacionalidad',$cliente->__GET('Nacionalidad'));
+            $stmt->bindValue(':Lugar_Nacimiento',$cliente->__GET('Lugar_Nacimiento'));
+            $stmt->bindValue(':Fecha_Nacimiento',$cliente->__GET('Fecha_Nacimiento'));
+            $stmt->bindValue(':Nombre_Padre',$cliente->__GET('Nombre_Padre'));
+            $stmt->bindValue(':Nombre_Madre',$cliente->__GET('Nombre_Madre'));
+            $stmt->bindValue(':Ingresado_por',$cliente->__GET('Ingresado_por'));
             $stmt->execute();
             return $this->bd->lastInsertId();
         } catch (PDOException $e) {
@@ -35,17 +35,17 @@ class ClienteModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE cliente SET  TipoDocumento=:TipoDocumento,Documento=:Documento,Nombre_Cliente=:Nombre_Cliente,Apellido_Paterno=:Apellido_Paterno,Apellido_Materno=:Apellido_Materno,Nacionalidad=:Nacionalidad,Lugar_Nacimiento=:Lugar_Nacimiento,Fecha_Nacimiento=:Fecha_Nacimiento,Nombre_Padre=:Nombre_Padre,Nombre_Madre=:Nombre_Madre WHERE idCliente=:idCliente");
 
-        $stmt->bindParam(':idCliente',$cliente->__GET('idCliente'));
-        $stmt->bindParam(':TipoDocumento',$cliente->__GET('TipoDocumento'));
-        $stmt->bindParam(':Documento',$cliente->__GET('Documento'));
-        $stmt->bindParam(':Nombre_Cliente',$cliente->__GET('Nombre_Cliente'));
-        $stmt->bindParam(':Apellido_Paterno',$cliente->__GET('Apellido_Paterno'));
-        $stmt->bindParam(':Apellido_Materno',$cliente->__GET('Apellido_Materno'));
-        $stmt->bindParam(':Nacionalidad',$cliente->__GET('Nacionalidad'));
-        $stmt->bindParam(':Lugar_Nacimiento',$cliente->__GET('Lugar_Nacimiento'));
-        $stmt->bindParam(':Fecha_Nacimiento',$cliente->__GET('Fecha_Nacimiento'));
-        $stmt->bindParam(':Nombre_Padre',$cliente->__GET('Nombre_Padre'));
-        $stmt->bindParam(':Nombre_Madre',$cliente->__GET('Nombre_Madre'));
+        $stmt->bindValue(':idCliente',$cliente->__GET('idCliente'));
+        $stmt->bindValue(':TipoDocumento',$cliente->__GET('TipoDocumento'));
+        $stmt->bindValue(':Documento',$cliente->__GET('Documento'));
+        $stmt->bindValue(':Nombre_Cliente',$cliente->__GET('Nombre_Cliente'));
+        $stmt->bindValue(':Apellido_Paterno',$cliente->__GET('Apellido_Paterno'));
+        $stmt->bindValue(':Apellido_Materno',$cliente->__GET('Apellido_Materno'));
+        $stmt->bindValue(':Nacionalidad',$cliente->__GET('Nacionalidad'));
+        $stmt->bindValue(':Lugar_Nacimiento',$cliente->__GET('Lugar_Nacimiento'));
+        $stmt->bindValue(':Fecha_Nacimiento',$cliente->__GET('Fecha_Nacimiento'));
+        $stmt->bindValue(':Nombre_Padre',$cliente->__GET('Nombre_Padre'));
+        $stmt->bindValue(':Nombre_Madre',$cliente->__GET('Nombre_Madre'));
 
         if (!$stmt->execute()) {
             return 'error';
@@ -61,8 +61,8 @@ class ClienteModel
       
             $this->bd = new Conexion();
             $stmt = $this->bd->prepare("SELECT * FROM cliente WHERE TipoDocumento=:TipoDocumento and Documento = :Documento;");
-            $stmt->bindParam(':TipoDocumento', $cliente->__GET('TipoDocumento'));
-            $stmt->bindParam(':Documento', $cliente->__GET('Documento'));
+            $stmt->bindValue(':TipoDocumento', $cliente->__GET('TipoDocumento'));
+            $stmt->bindValue(':Documento', $cliente->__GET('Documento'));
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_OBJ);
             if ($stmt->rowCount() > 0) {

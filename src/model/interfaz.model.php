@@ -22,6 +22,55 @@ class InterfazModel
         
 
     }
+
+    public function ConsultarInterfaz2(Interfaz $Interfaz)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
+        $stmt->bindValue(':idInterfaz', $Interfaz->__GET('idInterfaz'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+
+        $objInterfaz= new Interfaz();
+       if (!isset($row))
+        {
+
+            return $objInterfaz;
+        }
+        else
+        {
+            $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
+            $objInterfaz->__SET('Nombre',$row->Nombre);
+            $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
+            $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
+            $objInterfaz->__SET('Estado',$row->Estado);
+            return $objInterfaz;
+        }     
+        
+    }
+
+    public function ConsultarInterfaz(Interfaz $Interfaz)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
+        $stmt->bindValue(':idInterfaz', $Interfaz->__GET('idInterfaz'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        $objInterfaz= new Interfaz();   
+         if ($stmt->rowCount() > 0) {
+            $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
+            $objInterfaz->__SET('Nombre',$row->Nombre);
+            $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
+            $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
+            $objInterfaz->__SET('Estado',$row->Estado);
+            return $objInterfaz;
+         } else {
+            return $objInterfaz;
+        }     
+        
+    }
+
+
  
 
     public function ConsultaModulo()
@@ -60,7 +109,7 @@ class InterfazModel
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT *  FROM interfaz where eliminado= 0 and  IdInterfaz_superior = :idInterfaz_superior ORDER BY Orden DESC " );
-        $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
+        $stmt->bindValue(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -81,9 +130,10 @@ class InterfazModel
         $stmt = $this->bd->prepare("SELECT I2.*, I1.Nombre NombreModulo
         FROM interfaz I1 INNER JOIN  interfaz I2
         ON I1.idInterfaz = I2.IdInterfaz_superior
-        WHERE I2.IdInterfaz_superior = :idInterfaz_superior and  I2.Eliminado =0  AND I1.eliminado= 0
+        WHERE I2.IdInterfaz_superior=:idInterfaz_superior and  I2.Eliminado =0  AND I1.eliminado= 0
         ORDER BY I2.Orden ASC; " );
-        $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
+        //$var = $Interfaz->__GET('idInterfaz_superior');
+        $stmt->bindValue(':idInterfaz_superior',$Interfaz->__GET('idInterfaz_superior'));
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -96,13 +146,13 @@ class InterfazModel
 
     }
  
-    public function ComboModuloSecundario(  $idInterfaz)
+    public function ComboModuloSecundario($idInterfaz)
     {
         
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT idInterfaz, Nombre FROM interfaz
                                      WHERE IdInterfaz_superior = :IdInterfaz_superior AND eliminado= 0; " );
-        $stmt->bindParam(':IdInterfaz_superior', $idInterfaz );
+        $stmt->bindValue(':IdInterfaz_superior', $idInterfaz );
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -127,7 +177,7 @@ class InterfazModel
         SELECT MAX(Orden)+1 AS Orden FROM interfaz
         WHERE IdInterfaz_superior = :IdInterfaz_superior
         GROUP BY Orden   ; " );
-        $stmt->bindParam(':IdInterfaz_superior', $IdInterfaz_superior);
+        $stmt->bindValue(':IdInterfaz_superior', $IdInterfaz_superior);
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -142,46 +192,10 @@ class InterfazModel
 
     }
 
-    public function ConsultarInterfaz(Interfaz $Interfaz)
-    {
-        $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
-        $stmt->bindParam(':idInterfaz', $Interfaz->__GET('idInterfaz'));
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
-
-        $objInterfaz= new Interfaz();     
-        $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
-        $objInterfaz->__SET('Nombre',$row->Nombre);
-        $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
-        $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
-        $objInterfaz->__SET('Estado',$row->Estado);
-        return $objInterfaz;
-    }
-
-    public function BuscarInterfaz(Interfaz $Interfaz)
-    {
-        $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM interfaz WHERE idInterfaz = :idInterfaz;");
-        $stmt->bindParam(':Modulo_Principal', $Interfaz->__GET('Modulo_Principal'));
-        $stmt->bindParam(':idInterfaz_superior', $Interfaz->__GET('idInterfaz_superior'));
-        $stmt->bindParam(':Nivel', $Interfaz->__GET('Nivel'));
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
-
-        $objInterfaz= new Interfaz();     
-        $objInterfaz->__SET('idInterfaz',$row->idInterfaz);
-        $objInterfaz->__SET('Nombre',$row->Nombre);
-        $objInterfaz->__SET('Modulo_Principal',$row->Modulo_Principal);
-        $objInterfaz->__SET('idInterfaz_superior',$row->idInterfaz_superior);
-        $objInterfaz->__SET('Estado',$row->Estado);
-        return $objInterfaz;
-    }
-
     
  
 
-    public function Consultar(Interfaz $Interfaz)
+    public function Consultar(Interfaz $interfaz)
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT I1.* ,   
@@ -215,15 +229,16 @@ class InterfazModel
              ON I1.IdInterfaz_superior = I2.IdInterfaz AND I2.eliminado= 0 LEFT JOIN  interfaz I3
              ON I2.IdInterfaz_superior = I3.IdInterfaz AND I3.eliminado= 0
                 WHERE I1.idInterfaz = :idInterfaz AND I1.eliminado= 0;"); 
-        $stmt->bindParam(':idInterfaz', $Interfaz->__GET('idInterfaz'));
+        $stmt->bindValue(':idInterfaz', $interfaz->__GET('idInterfaz'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ); 
+        print_r($interfaz->__GET('idInterfaz'));
         
         
 
 
-        $objInterfaz = new Interfaz();     
-        $objInterfaz->__SET('IdInterfaz',$row->IdInterfaz); 
+        $objInterfaz = new Interfaz();
+        $objInterfaz->__SET('idInterfaz',$row->idInterfaz); 
         $objInterfaz->__SET('IdInterfaz_nivel1',$row->IdInterfaz_nivel1); 
         $objInterfaz->__SET('Nombre_nivel1',$row->Nombre_nivel1); 
         $objInterfaz->__SET('IdInterfaz_nivel2',$row->IdInterfaz_nivel2); 
@@ -235,6 +250,7 @@ class InterfazModel
         $objInterfaz->__SET('Nivel',$row->Nivel);
         $objInterfaz->__SET('Orden',$row->Orden);
         $objInterfaz->__SET('Icono',$row->Icono);
+        
         return $objInterfaz;
     }
 
@@ -245,14 +261,14 @@ class InterfazModel
         $stmt = $this->bd->prepare("CALL ProcUpdateInterfaz(:idInterfaz,:Nombre,:Url,:Nivel,0,:IdInterfaz_superior,:Orden,:Icono, 0,0,NULL,:Modificado_por,NULL)");
 
  
-        $stmt->bindParam(':idInterfaz',$Interfaz->__GET('idInterfaz'));
-        $stmt->bindParam(':Nombre',$Interfaz->__GET('Nombre'));
-        $stmt->bindParam(':Url',$Interfaz->__GET('Url'));          
-        $stmt->bindParam(':Nivel',$Interfaz->__GET('Nivel')); 
-        $stmt->bindParam(':Orden',$Interfaz->__GET('Orden')); 
-        $stmt->bindParam(':Icono',$Interfaz->__GET('Icono')); 
-        $stmt->bindParam(':IdInterfaz_superior',$Interfaz->__GET('IdInterfaz_superior')); 
-        $stmt->bindParam(':Modificado_por',$Interfaz->__GET('Ingresado_por')); 
+        $stmt->bindValue(':idInterfaz',$Interfaz->__GET('idInterfaz'));
+        $stmt->bindValue(':Nombre',$Interfaz->__GET('Nombre'));
+        $stmt->bindValue(':Url',$Interfaz->__GET('Url'));          
+        $stmt->bindValue(':Nivel',$Interfaz->__GET('Nivel')); 
+        $stmt->bindValue(':Orden',$Interfaz->__GET('Orden')); 
+        $stmt->bindValue(':Icono',$Interfaz->__GET('Icono')); 
+        $stmt->bindValue(':IdInterfaz_superior',$Interfaz->__GET('IdInterfaz_superior')); 
+        $stmt->bindValue(':Modificado_por',$Interfaz->__GET('Ingresado_por')); 
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());
@@ -297,9 +313,9 @@ class InterfazModel
         $stmt = $this->bd->prepare("UPDATE interfaz SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idInterfaz = :idInterfaz");
  
 
-        $stmt->bindParam(':idInterfaz',$Interfaz->__GET('idInterfaz'));         
-        $stmt->bindParam(':Ingresado_por',$Interfaz->__GET('Ingresado_por'));
-        $stmt->bindParam(':Eliminado',$Interfaz->__GET('Eliminado'));    
+        $stmt->bindValue(':idInterfaz',$Interfaz->__GET('idInterfaz'));         
+        $stmt->bindValue(':Ingresado_por',$Interfaz->__GET('Ingresado_por'));
+        $stmt->bindValue(':Eliminado',$Interfaz->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

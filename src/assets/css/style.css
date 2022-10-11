@@ -140,3 +140,11 @@ font-weight: bold;
     color: #5bc0de;
 }
 
+
+
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 5px 4px;
+}
+
+

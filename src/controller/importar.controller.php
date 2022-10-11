@@ -97,14 +97,14 @@ class ImportarController extends IncludesController{
 		        	if($Telefono['idTelefono']==NULL){
 		        		// registrar el telefono
 			            $stmt = $this->bd->prepare("INSERT INTO telefono(Deudor_id,tipo,numero,contacto,Origen_id,anio_origen,observacion,ingresado_por) VALUES(:Deudor_id,:tipo,:numero,:contacto,:Origen_id,:anio_origen,:observacion,:ingresado_por)");
-			            $stmt->bindParam(':Deudor_id', $Deudor_id);
-			            $stmt->bindParam(':tipo', $tipo);
-				        $stmt->bindParam(':numero', $numero);
-				        $stmt->bindParam(':contacto', $contacto);
-				        $stmt->bindParam(':Origen_id',$Origen_id);
-				        $stmt->bindParam(':anio_origen',$anio_origen);
-				        $stmt->bindParam(':observacion', $observacion);
-				        $stmt->bindParam(':ingresado_por', $ingresado_por);
+			            $stmt->bindValue(':Deudor_id', $Deudor_id);
+			            $stmt->bindValue(':tipo', $tipo);
+				        $stmt->bindValue(':numero', $numero);
+				        $stmt->bindValue(':contacto', $contacto);
+				        $stmt->bindValue(':Origen_id',$Origen_id);
+				        $stmt->bindValue(':anio_origen',$anio_origen);
+				        $stmt->bindValue(':observacion', $observacion);
+				        $stmt->bindValue(':ingresado_por', $ingresado_por);
 				        $stmt->execute();			            
 			            $nuevo="Telefono Nuevo";
 			            $registrado=$stmt->rowCount();
@@ -192,11 +192,11 @@ class ImportarController extends IncludesController{
 		        	if($Correo['idCorreo']==NULL){
 		        		// registrar el telefono
 			            $stmt = $this->bd->prepare("INSERT INTO correo(Deudor_id,direccion_correo,tipo,origen,ingresado_por) VALUES(:Deudor_id,:direccion_correo,:tipo,:origen,:ingresado_por)");
-			            $stmt->bindParam(':Deudor_id', $Deudor_id);
-				        $stmt->bindParam(':direccion_correo', $direccion_correo);
-				        $stmt->bindParam(':tipo',$tipo);
-				        $stmt->bindParam(':origen', $origen);
-				        $stmt->bindParam(':ingresado_por', $ingresado_por);
+			            $stmt->bindValue(':Deudor_id', $Deudor_id);
+				        $stmt->bindValue(':direccion_correo', $direccion_correo);
+				        $stmt->bindValue(':tipo',$tipo);
+				        $stmt->bindValue(':origen', $origen);
+				        $stmt->bindValue(':ingresado_por', $ingresado_por);
 				        $stmt->execute();			            
 			            $nuevo="Correo Nuevo";
 			            $registrado=$stmt->rowCount();
@@ -310,31 +310,31 @@ class ImportarController extends IncludesController{
 									//actualizar ubigeo
 									if ($Deudor['Ubigeo_id']==0) {
 										$stmt = $this->bd->prepare("UPDATE deudor SET Ubigeo_id=:Ubigeo_id where idDeudor=:idDeudor;");
-							        	$stmt->bindParam(':idDeudor',$Deudor_id);
-					 					$stmt->bindParam(':Ubigeo_id',$ubigeo_id);
+							        	$stmt->bindValue(':idDeudor',$Deudor_id);
+					 					$stmt->bindValue(':Ubigeo_id',$ubigeo_id);
 						        		$stmt->execute();  	
 									}
 									$err_doc="";
 									$err_dir="ya existe la direccion en el sistema";
 									//IDENTIFICANOD EL ID_UBIGEO								   		 
 							        $stmt = $this->bd->prepare("SELECT * FROM direccion where Deudor_id=:Deudor_id and direccion=:direccion;");
-							        $stmt->bindParam(':Deudor_id',$Deudor_id);
-					 				$stmt->bindParam(':direccion',$direccion);
+							        $stmt->bindValue(':Deudor_id',$Deudor_id);
+					 				$stmt->bindValue(':direccion',$direccion);
 						        	$stmt->execute();                   
 						        	$Direccion=$stmt->fetch(PDO::FETCH_ASSOC);
 
 						 			if($Direccion['idDireccion']==NULL){
 						 				$err_dir="direccion nueva";
 					 					$stmt = $this->bd->prepare("INSERT INTO direccion(Deudor_id,direccion,distrito,provincia,departamento,ubigeo_id,tipo,origen,ingresado_por) VALUES(:Deudor_id,:direccion,:distrito,:provincia,:departamento,:ubigeo_id,:tipo,:origen,:ingresado_por)");
-					 					$stmt->bindParam(':Deudor_id',$Deudor_id);
-					 					$stmt->bindParam(':direccion',$direccion);
-					 					$stmt->bindParam(':distrito',$distrito);
-					 					$stmt->bindParam(':provincia',$provincia);
-					 					$stmt->bindParam(':departamento',$departamento);
-					 					$stmt->bindParam(':ubigeo_id',$ubigeo_id);
-					 					$stmt->bindParam(':tipo',$tipo_direccion);
-					 					$stmt->bindParam(':origen',$origen);
-					 					$stmt->bindParam(':ingresado_por',$ingresado_por);
+					 					$stmt->bindValue(':Deudor_id',$Deudor_id);
+					 					$stmt->bindValue(':direccion',$direccion);
+					 					$stmt->bindValue(':distrito',$distrito);
+					 					$stmt->bindValue(':provincia',$provincia);
+					 					$stmt->bindValue(':departamento',$departamento);
+					 					$stmt->bindValue(':ubigeo_id',$ubigeo_id);
+					 					$stmt->bindValue(':tipo',$tipo_direccion);
+					 					$stmt->bindValue(':origen',$origen);
+					 					$stmt->bindValue(':ingresado_por',$ingresado_por);
 							        	$stmt->execute();
 							        	$registrado=$stmt->rowCount();		 					
 									}
@@ -444,19 +444,19 @@ class ImportarController extends IncludesController{
 					}
 
 			        $stmt = $this->bd->prepare("select * from deudor where documento=:documento or ruc=:ruc; ");
-			        $stmt->bindParam(':documento',$documento);
-			        $stmt->bindParam(':ruc',$ruc);
+			        $stmt->bindValue(':documento',$documento);
+			        $stmt->bindValue(':ruc',$ruc);
 			       if (!$stmt->execute()) {print_r($stmt->errorInfo());}                  
 			        $Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
 			        $Deudor_id=0;
 			        if($Deudor['idDeudor']==NULL){  
 			        	$error_doc="cliente nuevo";          
 			            $stmt = $this->bd->prepare("INSERT INTO deudor(documento,ruc,tipo_doc,razon_social,ingresado_por) VALUES(:documento,:ruc,:tipo_doc,:razon_social,:ingresado_por)");
-			            $stmt->bindParam(':documento',$documento);
-			            $stmt->bindParam(':ruc',$ruc);
-			             $stmt->bindParam(':tipo_doc',$tipo_doc);
-			            $stmt->bindParam(':razon_social',$cliente);
-			            $stmt->bindParam(':ingresado_por',$ingresado_por);
+			            $stmt->bindValue(':documento',$documento);
+			            $stmt->bindValue(':ruc',$ruc);
+			             $stmt->bindValue(':tipo_doc',$tipo_doc);
+			            $stmt->bindValue(':razon_social',$cliente);
+			            $stmt->bindValue(':ingresado_por',$ingresado_por);
 						if (!$stmt->execute()) {print_r($stmt->errorInfo());}						
 			            $Deudor_id=$this->bd->lastInsertId();
 			            $Deudor_registrado=$stmt->rowCount();
@@ -486,28 +486,28 @@ class ImportarController extends IncludesController{
   
 					        $stmt = $this->bd->prepare("INSERT INTO Obligacion(Campana_id,Deudor_id,nrooperacion,operacion,producto,moneda,capital,deuda_total,deuda_vencida,monto_campania,desc_campania,dias_mora,fecha_vencimiento,nro_cuota,plazo,segmento,fecha_asignacion,ultimo_ges_call_bd,mejor_ges_call_bd,mejor_ges_campo_bd,ultimo_ges_campo_bd,ingresado_por) VALUES(:Campana_id,:Deudor_id,:nrooperacion,:operacion,:producto,:moneda,:capital,:deuda_total,:deuda_vencida,:monto_campania,:desc_campania,:dias_mora,:fecha_vencimiento,:nro_cuota,:plazo,:segmento,:fecha_asignacion,:ultimo_ges_call_bd,:mejor_ges_call_bd,:mejor_ges_campo_bd,:ultimo_ges_campo_bd,:ingresado_por)");
 
-					       	$stmt->bindParam(':Campana_id',$Campana_id);
-					       	$stmt->bindParam(':Deudor_id',$Deudor_id);
-					       	$stmt->bindParam(':nrooperacion',$nrooperacion);
-					       	$stmt->bindParam(':operacion',$operacion);
-					       	$stmt->bindParam(':producto',$producto);
-					       	$stmt->bindParam(':moneda',$moneda);
-					       	$stmt->bindParam(':capital',$capital);
-					       	$stmt->bindParam(':deuda_total',$deuda_total);
-					       	$stmt->bindParam(':deuda_vencida',$deuda_vencida);
-					       	$stmt->bindParam(':monto_campania',$monto_campania);
-					       	$stmt->bindParam(':desc_campania',$desc_campania);
-					       	$stmt->bindParam(':dias_mora',$dias_mora);
-					       	$stmt->bindParam(':fecha_vencimiento',$fecha_vencimiento);
-					       	$stmt->bindParam(':nro_cuota',$nro_cuota);
-					       	$stmt->bindParam(':plazo',$plazo);
-					       	$stmt->bindParam(':segmento',$segmento);
-					       	$stmt->bindParam(':fecha_asignacion',$fecha_asignacion);
-					       	$stmt->bindParam(':ultimo_ges_call_bd',$ultimo_ges_call_bd);
-							$stmt->bindParam(':mejor_ges_call_bd',$mejor_ges_call_bd);
-							$stmt->bindParam(':mejor_ges_campo_bd',$mejor_ges_campo_bd);
-							$stmt->bindParam(':ultimo_ges_campo_bd',$ultimo_ges_campo_bd);
-					       	$stmt->bindParam(':ingresado_por',$ingresado_por);		       	
+					       	$stmt->bindValue(':Campana_id',$Campana_id);
+					       	$stmt->bindValue(':Deudor_id',$Deudor_id);
+					       	$stmt->bindValue(':nrooperacion',$nrooperacion);
+					       	$stmt->bindValue(':operacion',$operacion);
+					       	$stmt->bindValue(':producto',$producto);
+					       	$stmt->bindValue(':moneda',$moneda);
+					       	$stmt->bindValue(':capital',$capital);
+					       	$stmt->bindValue(':deuda_total',$deuda_total);
+					       	$stmt->bindValue(':deuda_vencida',$deuda_vencida);
+					       	$stmt->bindValue(':monto_campania',$monto_campania);
+					       	$stmt->bindValue(':desc_campania',$desc_campania);
+					       	$stmt->bindValue(':dias_mora',$dias_mora);
+					       	$stmt->bindValue(':fecha_vencimiento',$fecha_vencimiento);
+					       	$stmt->bindValue(':nro_cuota',$nro_cuota);
+					       	$stmt->bindValue(':plazo',$plazo);
+					       	$stmt->bindValue(':segmento',$segmento);
+					       	$stmt->bindValue(':fecha_asignacion',$fecha_asignacion);
+					       	$stmt->bindValue(':ultimo_ges_call_bd',$ultimo_ges_call_bd);
+							$stmt->bindValue(':mejor_ges_call_bd',$mejor_ges_call_bd);
+							$stmt->bindValue(':mejor_ges_campo_bd',$mejor_ges_campo_bd);
+							$stmt->bindValue(':ultimo_ges_campo_bd',$ultimo_ges_campo_bd);
+					       	$stmt->bindValue(':ingresado_por',$ingresado_por);		       	
 					        
 					        if (!$stmt->execute()) {print_r($stmt->errorInfo());}
 					        $obligacion_registrada=$stmt->rowCount();
@@ -778,32 +778,32 @@ class ImportarController extends IncludesController{
 	            		if($fecha_pago<>$fecha_pago_bd){
 	            				
 	            			$stmt = $this->bd->prepare("INSERT INTO pago(Campana_id,Deudor_id,Obligacion_id,Gestor_id,Operador_id,nrooperacion,tipo_pago,fecha_pago,moneda,monto,ingresado_por) VALUES(:Campana_id,:Deudor_id,:Obligacion_id,:Gestor_id,:Operador_id,:nrooperacion,:tipo_pago,:fecha_pago,:moneda,:monto,:ingresado_por)");
-				            $stmt->bindParam(':Campana_id', $Campana_id);
-				            $stmt->bindParam(':Deudor_id', $array_obligaciones[$nrooperacion]['Deudor_id']);
-					        $stmt->bindParam(':Obligacion_id', $array_obligaciones[$nrooperacion]['idObligacion']);
-					        $stmt->bindParam(':Gestor_id', $array_obligaciones[$nrooperacion]['Gestor_id']);
-					        $stmt->bindParam(':Operador_id', $array_obligaciones[$nrooperacion]['Operador_id']);
-					        $stmt->bindParam(':nrooperacion',$nrooperacion);
-					        $stmt->bindParam(':tipo_pago', $tipo_pago);
-					        $stmt->bindParam(':fecha_pago', $fecha_pago);
-					        $stmt->bindParam(':moneda', $moneda);
-					        $stmt->bindParam(':monto', $monto);
-					        $stmt->bindParam(':ingresado_por', $ingresado_por);
+				            $stmt->bindValue(':Campana_id', $Campana_id);
+				            $stmt->bindValue(':Deudor_id', $array_obligaciones[$nrooperacion]['Deudor_id']);
+					        $stmt->bindValue(':Obligacion_id', $array_obligaciones[$nrooperacion]['idObligacion']);
+					        $stmt->bindValue(':Gestor_id', $array_obligaciones[$nrooperacion]['Gestor_id']);
+					        $stmt->bindValue(':Operador_id', $array_obligaciones[$nrooperacion]['Operador_id']);
+					        $stmt->bindValue(':nrooperacion',$nrooperacion);
+					        $stmt->bindValue(':tipo_pago', $tipo_pago);
+					        $stmt->bindValue(':fecha_pago', $fecha_pago);
+					        $stmt->bindValue(':moneda', $moneda);
+					        $stmt->bindValue(':monto', $monto);
+					        $stmt->bindValue(':ingresado_por', $ingresado_por);
 					        $stmt->execute();
 					        $Pago_id=$this->bd->lastInsertId();
 				            $registrado=$stmt->rowCount();
 				            
 				            $upd_stmt = $this->bd->prepare("UPDATE obligacion SET  tiene_pago=1,fecha_pago=:fecha_pago,monto_pago=:monto_pago WHERE idObligacion=:idObligacion");
-					        $upd_stmt->bindParam(':idObligacion',$array_obligaciones[$nrooperacion]['idObligacion']);
-					        $upd_stmt->bindParam(':fecha_pago',$fecha_pago);
-					        $upd_stmt->bindParam(':monto_pago',$monto);
+					        $upd_stmt->bindValue(':idObligacion',$array_obligaciones[$nrooperacion]['idObligacion']);
+					        $upd_stmt->bindValue(':fecha_pago',$fecha_pago);
+					        $upd_stmt->bindValue(':monto_pago',$monto);
 					        $upd_stmt->execute();
 
 					        $upd_stmt = $this->bd->prepare("UPDATE compromiso SET  estado_compromiso=2,Pago_id=:Pago_id WHERE  Campana_id=:Campana_id and Obligacion_id=:Obligacion_id  and estado_compromiso in (1,3)");
 
-					        $upd_stmt->bindParam(':Campana_id',$Campana_id);
-					        $upd_stmt->bindParam(':Obligacion_id',$array_obligaciones[$nrooperacion]['idObligacion']);
-					        $upd_stmt->bindParam(':Pago_id', $Pago_id);
+					        $upd_stmt->bindValue(':Campana_id',$Campana_id);
+					        $upd_stmt->bindValue(':Obligacion_id',$array_obligaciones[$nrooperacion]['idObligacion']);
+					        $upd_stmt->bindValue(':Pago_id', $Pago_id);
 					        $upd_stmt->execute();
 				            //print_r($stmt->errorInfo());
 		                	 //$registrado.'-'.$nrooperacion.'-'.$array_obligaciones[$nrooperacion]['idObligacion'].' -> no hay pagos <br>';
@@ -816,33 +816,33 @@ class ImportarController extends IncludesController{
 	                }else{
 	                	$error_pago="Pago nuevo";
 	                	$stmt = $this->bd->prepare("INSERT INTO pago(Campana_id,Deudor_id,Obligacion_id,Gestor_id,Operador_id,nrooperacion,tipo_pago,fecha_pago,moneda,monto,ingresado_por) VALUES(:Campana_id,:Deudor_id,:Obligacion_id,:Gestor_id,:Operador_id,:nrooperacion,:tipo_pago,:fecha_pago,:moneda,:monto,:ingresado_por)");
-				            $stmt->bindParam(':Campana_id', $Campana_id);
-				            $stmt->bindParam(':Deudor_id', $array_obligaciones[$nrooperacion]['Deudor_id']);
-					        $stmt->bindParam(':Obligacion_id', $array_obligaciones[$nrooperacion]['idObligacion']);
-					        $stmt->bindParam(':Gestor_id', $array_obligaciones[$nrooperacion]['Gestor_id']);
-					        $stmt->bindParam(':Operador_id', $array_obligaciones[$nrooperacion]['Operador_id']);
-					        $stmt->bindParam(':nrooperacion',$nrooperacion);
-					        $stmt->bindParam(':tipo_pago', $tipo_pago);
-					        $stmt->bindParam(':fecha_pago', $fecha_pago);
-					        $stmt->bindParam(':moneda', $moneda);
-					        $stmt->bindParam(':monto', $monto);
-					        $stmt->bindParam(':ingresado_por', $ingresado_por);
+				            $stmt->bindValue(':Campana_id', $Campana_id);
+				            $stmt->bindValue(':Deudor_id', $array_obligaciones[$nrooperacion]['Deudor_id']);
+					        $stmt->bindValue(':Obligacion_id', $array_obligaciones[$nrooperacion]['idObligacion']);
+					        $stmt->bindValue(':Gestor_id', $array_obligaciones[$nrooperacion]['Gestor_id']);
+					        $stmt->bindValue(':Operador_id', $array_obligaciones[$nrooperacion]['Operador_id']);
+					        $stmt->bindValue(':nrooperacion',$nrooperacion);
+					        $stmt->bindValue(':tipo_pago', $tipo_pago);
+					        $stmt->bindValue(':fecha_pago', $fecha_pago);
+					        $stmt->bindValue(':moneda', $moneda);
+					        $stmt->bindValue(':monto', $monto);
+					        $stmt->bindValue(':ingresado_por', $ingresado_por);
 					        $stmt->execute();
 					        $Pago_id=$this->bd->lastInsertId();
 				            $registrado=$stmt->rowCount();
 				            //print_r($stmt->errorInfo());
 				            $upd_stmt = $this->bd->prepare("UPDATE obligacion SET  tiene_pago=1,fecha_pago=:fecha_pago,monto_pago=:monto_pago WHERE idObligacion=:idObligacion");
-					        $upd_stmt->bindParam(':idObligacion',$array_obligaciones[$nrooperacion]['idObligacion']);
-					        $upd_stmt->bindParam(':fecha_pago',$fecha_pago);
-					        $upd_stmt->bindParam(':monto_pago',$monto);
+					        $upd_stmt->bindValue(':idObligacion',$array_obligaciones[$nrooperacion]['idObligacion']);
+					        $upd_stmt->bindValue(':fecha_pago',$fecha_pago);
+					        $upd_stmt->bindValue(':monto_pago',$monto);
 					        $upd_stmt->execute();
 					   		//echo $registrado.'-'.$nrooperacion.'-'.$array_obligaciones[$nrooperacion]['idObligacion'].' -> no hay pagos <br>';
 
 					   		$upd_stmt = $this->bd->prepare("UPDATE compromiso SET  estado_compromiso=2,Pago_id=:Pago_id WHERE  Campana_id=:Campana_id and Obligacion_id=:Obligacion_id  and estado_compromiso in (1,3)");
 
-					        $upd_stmt->bindParam(':Campana_id',$Campana_id);
-					        $upd_stmt->bindParam(':Obligacion_id',$array_obligaciones[$nrooperacion]['idObligacion']);
-					        $upd_stmt->bindParam(':Pago_id', $Pago_id);
+					        $upd_stmt->bindValue(':Campana_id',$Campana_id);
+					        $upd_stmt->bindValue(':Obligacion_id',$array_obligaciones[$nrooperacion]['idObligacion']);
+					        $upd_stmt->bindValue(':Pago_id', $Pago_id);
 					        $upd_stmt->execute();
 	                }	            
             	}
@@ -929,7 +929,7 @@ class ImportarController extends IncludesController{
 		   		//preparamos la consulta sql para verificar si el deudor esta registrado en la Tabla Deudor de la BD
 	        	$stmt = $this->bd->prepare("SELECT * FROM deudor WHERE documento=:documento");
 	        	//relacionamos los parametros que tiene la consulta sql
-	        	$stmt->bindParam(':documento',$documento);
+	        	$stmt->bindValue(':documento',$documento);
 	        	//ejecutamos la consulta sql
         		$stmt->execute();
         		//asignamos los registros obtenidos de la consulta en la variable $Deudor                   
@@ -1074,7 +1074,7 @@ class ImportarController extends IncludesController{
 				
 				/*Consultar idCampana*/
 				$stmt = $this->bd->prepare("select * from campana where idCampana=:idCampana;");
-				$stmt->bindParam(':idCampana', $campana);
+				$stmt->bindValue(':idCampana', $campana);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                 
 	        	$Campana=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1085,7 +1085,7 @@ class ImportarController extends IncludesController{
 
 	        		/*Consultar USUARIO*/
 	        		$stmt = $this->bd->prepare("select * from persona where codigo=:codigo;");
-					$stmt->bindParam(':codigo', $persona);
+					$stmt->bindValue(':codigo', $persona);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Persona=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1094,7 +1094,7 @@ class ImportarController extends IncludesController{
 			        	$Persona_id=$Persona['idPersona'];
 
 						$stmt = $this->bd->prepare("select * from operador where nombre=:nombre;");
-						$stmt->bindParam(':nombre', $operador);
+						$stmt->bindValue(':nombre', $operador);
 			        	$stmt->execute();
 			        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 			        	$Operador=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1104,7 +1104,7 @@ class ImportarController extends IncludesController{
 			        		$stmt = $this->bd->prepare("SELECT idDeudor,tipo_doc,documento,deudor.activo,hora_contacto,deudor.eliminado,deudor.call_mejor_ges_id,resultado.ranking FROM deudor 
 left JOIN gestion on gestion.idGestion=deudor.call_mejor_ges_id
 left JOIN resultado ON resultado.idResultado=gestion.resultado_id   WHERE documento=:documento;");
-							$stmt->bindParam(':documento', $documento);
+							$stmt->bindValue(':documento', $documento);
 				        	$stmt->execute();
 				        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 				        	$Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1114,7 +1114,7 @@ left JOIN resultado ON resultado.idResultado=gestion.resultado_id   WHERE docume
 inner join resultado ON resultado.idResultado=gestion.resultado_id
 inner join contactabilidad ON contactabilidad.idContactabilidad=resultado.contactabilidad_id
 where gestion.tipogestion_id=1 and gestion.Deudor_id=:Deudor_id  and idContactabilidad=2 and  gestion.fecha_gestion > (curdate()-interval 12 month) group by  HOUR(hora_inicio) order by nro_gestiones desc LIMIT 1;");
-								$stmt->bindParam(':Deudor_id', $Deudor_id);
+								$stmt->bindValue(':Deudor_id', $Deudor_id);
 				        		$stmt->execute();
 				        		$q_hora_cto=$stmt->fetch(PDO::FETCH_ASSOC);
 				        		if($q_hora_cto['hora']==NULL){
@@ -1125,7 +1125,7 @@ where gestion.tipogestion_id=1 and gestion.Deudor_id=:Deudor_id  and idContactab
 
 
 				        		$stmt = $this->bd->prepare("select * from tipogestion where descripcion=:descripcion;");
-								$stmt->bindParam(':descripcion', $tipo_gestion);
+								$stmt->bindValue(':descripcion', $tipo_gestion);
 					        	$stmt->execute();
 					        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 					        	$TipoGestion=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1136,8 +1136,8 @@ where gestion.tipogestion_id=1 and gestion.Deudor_id=:Deudor_id  and idContactab
 left join gestion on gestion.idGestion=telefono.mejor_ges_id
 left join resultado on resultado.idResultado=gestion.Resultado_id where telefono.Deudor_id=:Deudor_id and numero=:numero ;");
 
-									$stmt->bindParam(':Deudor_id', $Deudor_id);
-									$stmt->bindParam(':numero', $telefono);
+									$stmt->bindValue(':Deudor_id', $Deudor_id);
+									$stmt->bindValue(':numero', $telefono);
 						        	$stmt->execute();
 						        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 						        	$Telefono=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1145,7 +1145,7 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 										$Telefono_id=$Telefono['idTelefono'];
 
 										$stmt = $this->bd->prepare("select * from resultado where codigo=:codigo ;");
-										$stmt->bindParam(':codigo', $codigo_resultado);
+										$stmt->bindValue(':codigo', $codigo_resultado);
 							        	$stmt->execute();
 							        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 							        	$Resultado=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1196,10 +1196,10 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 													$mejor_ges_id_deudor=$Deudor['call_mejor_ges_id'];
 												}
 												$stmt = $this->bd->prepare("UPDATE deudor SET  call_mejor_ges_id=:call_mejor_ges_id,call_ultimo_ges_id=:call_ultimo_ges_id,hora_contacto=:hora_contacto WHERE idDeudor=:idDeudor");
-										        $stmt->bindParam(':idDeudor',$Deudor_id);
-										        $stmt->bindParam(':call_mejor_ges_id',$mejor_ges_id_deudor);
-										        $stmt->bindParam(':call_ultimo_ges_id',$Gestion_id);
-										        $stmt->bindParam(':hora_contacto',$hora_contacto);
+										        $stmt->bindValue(':idDeudor',$Deudor_id);
+										        $stmt->bindValue(':call_mejor_ges_id',$mejor_ges_id_deudor);
+										        $stmt->bindValue(':call_ultimo_ges_id',$Gestion_id);
+										        $stmt->bindValue(':hora_contacto',$hora_contacto);
 										        $stmt->execute();
 										        if($Telefono['ranking']==NULL){
 									        		$mejor_ges_id_tel=$Gestion_id;
@@ -1209,17 +1209,17 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 													$mejor_ges_id_tel=$Telefono['mejor_ges_id'];
 												}
 												$stmt = $this->bd->prepare("UPDATE telefono SET  mejor_ges_id=:mejor_ges_id,ultimo_ges_id=:ultimo_ges_id WHERE idTelefono=:idTelefono");
-										        $stmt->bindParam(':idTelefono',$Telefono_id);
-										        $stmt->bindParam(':mejor_ges_id',$mejor_ges_id_tel);
-										        $stmt->bindParam(':ultimo_ges_id',$Gestion_id);
+										        $stmt->bindValue(':idTelefono',$Telefono_id);
+										        $stmt->bindValue(':mejor_ges_id',$mejor_ges_id_tel);
+										        $stmt->bindValue(':ultimo_ges_id',$Gestion_id);
 										        $stmt->execute();
 
 										        $stmt = $this->bd->prepare("SELECT mejor_ges_call_cmp,resultado.ranking FROM obligacion
 												LEFT JOIN gestion on gestion.idGestion=obligacion.mejor_ges_call_cmp
 												LEFT JOIN resultado on resultado.idResultado=gestion.Resultado_id
 												 WHERE obligacion.Campana_id=:Campana_id AND obligacion.Deudor_id=:Deudor_id ORDER BY ranking LIMIT 1;");
-												$stmt->bindParam(':Campana_id', $Campana_id);
-												$stmt->bindParam(':Deudor_id', $Deudor_id);
+												$stmt->bindValue(':Campana_id', $Campana_id);
+												$stmt->bindValue(':Deudor_id', $Deudor_id);
 									        	$stmt->execute();
 									        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}								        	                   
 									        	$Obligacion=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1236,12 +1236,12 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 												}
 
 												$stmt = $this->bd->prepare("UPDATE obligacion SET  mejor_ges_call_cmp=:mejor_ges_call_cmp,ultimo_ges_call_cmp=:ultimo_ges_call_cmp,mejor_ges_call_bd=:mejor_ges_call_bd,ultimo_ges_call_bd=:ultimo_ges_call_bd,t_gest_call=t_gest_call+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-										        $stmt->bindParam(':Campana_id',$Campana_id);
-										        $stmt->bindParam(':Deudor_id',$Deudor_id);
-										        $stmt->bindParam(':mejor_ges_call_cmp',$mejor_ges_id_obligacion);
-										        $stmt->bindParam(':ultimo_ges_call_cmp',$Gestion_id);
-										        $stmt->bindParam(':mejor_ges_call_bd',$mejor_ges_id_deudor);
-										        $stmt->bindParam(':ultimo_ges_call_bd',$Gestion_id);
+										        $stmt->bindValue(':Campana_id',$Campana_id);
+										        $stmt->bindValue(':Deudor_id',$Deudor_id);
+										        $stmt->bindValue(':mejor_ges_call_cmp',$mejor_ges_id_obligacion);
+										        $stmt->bindValue(':ultimo_ges_call_cmp',$Gestion_id);
+										        $stmt->bindValue(':mejor_ges_call_bd',$mejor_ges_id_deudor);
+										        $stmt->bindValue(':ultimo_ges_call_bd',$Gestion_id);
 										        $stmt->execute();
 
 											}
@@ -1253,8 +1253,8 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 												$moneda_comp=$moneda_comp;
 
 												$stmt = $this->bd->prepare("SELECT idObligacion,nrooperacion FROM obligacion where Campana_id=:Campana_id and nrooperacion=:nrooperacion;");
-												$stmt->bindParam(':Campana_id', $Campana_id);
-												$stmt->bindParam(':nrooperacion', $nrooperacion);
+												$stmt->bindValue(':Campana_id', $Campana_id);
+												$stmt->bindValue(':nrooperacion', $nrooperacion);
 									        	$stmt->execute();
 									        	$Obligacion=$stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -1277,7 +1277,7 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 											}
 											if ($Resultado['desactivar_informacion']==1) {
 												$stmt = $this->bd->prepare("UPDATE telefono SET  activo=0 WHERE idTelefono=:idTelefono");
-										        $stmt->bindParam(':idTelefono',$Telefono_id);
+										        $stmt->bindValue(':idTelefono',$Telefono_id);
 										        $stmt->execute();
 											}
 
@@ -1363,7 +1363,7 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 				$FileSolicitudVisitas[$fila]['fecha_limite']=$fecha_limite;
 				/*Consultar USUARIO*/
 	        		$stmt = $this->bd->prepare("select * from persona where codigo=:codigo;");
-					$stmt->bindParam(':codigo', $codigo_gestor);
+					$stmt->bindValue(':codigo', $codigo_gestor);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Persona=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1373,7 +1373,7 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 			        		$Persona_id=$Persona['idPersona'];
 
 			        		$stmt = $this->bd->prepare("SELECT idDeudor,tipo_doc,documento,deudor.activo,hora_contacto,deudor.eliminado FROM deudor WHERE documento=:documento;");
-							$stmt->bindParam(':documento', $documento);
+							$stmt->bindValue(':documento', $documento);
 				        	$stmt->execute();
 				        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 				        	$Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1381,8 +1381,8 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 				        	{
 				        		$Deudor_id=$Deudor['idDeudor'];
 				        		$stmt = $this->bd->prepare("SELECT * FROM direccion where idDireccion=:idDireccion and Deudor_id=:Deudor_id;");
-				        		$stmt->bindParam(':idDireccion',$direccion_id);
-							    $stmt->bindParam(':Deudor_id',$Deudor_id);
+				        		$stmt->bindValue(':idDireccion',$direccion_id);
+							    $stmt->bindValue(':Deudor_id',$Deudor_id);
 					 			
 
 						        $stmt->execute();
@@ -1393,14 +1393,14 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where telefono
 								{
 									$Direccion_id=$Direccion['idDireccion'];
 									$stmt = $this->bd->prepare("INSERT INTO visita (Campana_id,Deudor_id,Direccion_id,idHojaRuta,Entregado_a,fecha_entrega,fecha_limite,solicitado_por) VALUES(:Campana_id,:Deudor_id,:Direccion_id,:idHojaRuta,:Entregado_a,:fecha_entrega,:fecha_limite,:solicitado_por)");
-									$stmt->bindParam(':Campana_id',$Campana_id);
-									$stmt->bindParam(':Deudor_id',$Deudor_id);
-									$stmt->bindParam(':Direccion_id',$Direccion_id);
-									$stmt->bindParam(':idHojaRuta',$idhojaruta);
-									$stmt->bindParam(':Entregado_a',$Persona_id);
-									$stmt->bindParam(':fecha_entrega',$fecha_entrega);
-									$stmt->bindParam(':fecha_limite',$fecha_limite);
-									$stmt->bindParam(':solicitado_por',$solicitado_por);
+									$stmt->bindValue(':Campana_id',$Campana_id);
+									$stmt->bindValue(':Deudor_id',$Deudor_id);
+									$stmt->bindValue(':Direccion_id',$Direccion_id);
+									$stmt->bindValue(':idHojaRuta',$idhojaruta);
+									$stmt->bindValue(':Entregado_a',$Persona_id);
+									$stmt->bindValue(':fecha_entrega',$fecha_entrega);
+									$stmt->bindValue(':fecha_limite',$fecha_limite);
+									$stmt->bindValue(':solicitado_por',$solicitado_por);
 						           	if (!$stmt->execute()) {print_r($stmt->errorInfo());}else{
 						           		$idVisita=$this->bd->lastInsertId();
 						           	}
@@ -1524,7 +1524,7 @@ left JOIN resultado as res_deudor ON res_deudor.idResultado=gest_deudor.Resultad
 left join gestion as gest_dir on gest_dir.idGestion=direccion.mejor_ges_id_campo
 left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
   where idVisita=:idVisita;");
-				$stmt->bindParam(':idVisita', $cod_visita);
+				$stmt->bindValue(':idVisita', $cod_visita);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 	        	$Visita=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1536,7 +1536,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 		        	$Deudor_id=$Visita['Deudor_id'];
 		        	$Direccion_id=$Visita['Direccion_id'];
 		        	$stmt = $this->bd->prepare("select * from persona where codigo=:codigo;");
-					$stmt->bindParam(':codigo', $codigo_gestor);
+					$stmt->bindValue(':codigo', $codigo_gestor);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Persona=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1548,14 +1548,14 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 				            $TipoGestion_id=$arrayTipoGestion[$tipo_gestion];
 
 				            $stmt = $this->bd->prepare("select * from resultado where codigo=:codigo ;");
-							$stmt->bindParam(':codigo', $codigo_resultado);
+							$stmt->bindValue(':codigo', $codigo_resultado);
 				        	$stmt->execute();
 				        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 				        	$Resultado=$stmt->fetch(PDO::FETCH_ASSOC);
 							if ($Resultado['idResultado']!=NULL) {
 								$Resultado_id=$Resultado['idResultado'];
 								$stmt = $this->bd->prepare("select * from contacto where descripcion=:descripcion;");
-								$stmt->bindParam(':descripcion', $contacto);
+								$stmt->bindValue(':descripcion', $contacto);
 					        	$stmt->execute();
 					        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 					        	$Contacto=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1589,14 +1589,14 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 
 
 								            	$stmt = $this->bd->prepare("UPDATE visita SET Gestion_id=:Gestion_id,fecha_visita=:fecha_visita,hora_visita=:hora_visita,visitado_por=:visitado_por,descripcion_predio=:descripcion_predio,observacion=:observacion,estado=1,modificado_por=:modificado_por WHERE idVisita=:idVisita");
-								            	$stmt->bindParam(':idVisita',$cod_visita);
-								            	$stmt->bindParam(':Gestion_id',$Gestion_id);
-								            	$stmt->bindParam(':fecha_visita',$fecha_gestion);
-								            	$stmt->bindParam(':hora_visita',$hora_gestion);
-								            	$stmt->bindParam(':visitado_por',$Persona_id);
-								            	$stmt->bindParam(':descripcion_predio',$descripcion);
-								            	$stmt->bindParam(':observacion',$observacion);
-								            	$stmt->bindParam(':modificado_por',$ingresado_por);										      
+								            	$stmt->bindValue(':idVisita',$cod_visita);
+								            	$stmt->bindValue(':Gestion_id',$Gestion_id);
+								            	$stmt->bindValue(':fecha_visita',$fecha_gestion);
+								            	$stmt->bindValue(':hora_visita',$hora_gestion);
+								            	$stmt->bindValue(':visitado_por',$Persona_id);
+								            	$stmt->bindValue(':descripcion_predio',$descripcion);
+								            	$stmt->bindValue(':observacion',$observacion);
+								            	$stmt->bindValue(':modificado_por',$ingresado_por);										      
 										        $stmt->execute();
 
 
@@ -1632,8 +1632,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 												left join gestion on gestion.idGestion=obligacion.mejor_ges_campo_cmp
 												left join resultado on resultado.idResultado=gestion.Resultado_id 
 												WHERE obligacion.Campana_id=:Campana_id AND obligacion.Deudor_id=:Deudor_id ORDER BY ranking LIMIT 1;");
-												$stmt->bindParam(':Campana_id', $Campana_id);
-												$stmt->bindParam(':Deudor_id', $Deudor_id);
+												$stmt->bindValue(':Campana_id', $Campana_id);
+												$stmt->bindValue(':Deudor_id', $Deudor_id);
 									        	$stmt->execute();
 
 									        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}	
@@ -1650,26 +1650,26 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 													}
 											
 													$stmt = $this->bd->prepare("UPDATE obligacion SET  mejor_ges_campo_cmp=:mejor_ges_campo_cmp,ultimo_ges_campo_cmp=:ultimo_ges_campo_cmp,mejor_ges_campo_bd=:mejor_ges_campo_bd,ultimo_ges_campo_bd=:ultimo_ges_campo_bd, t_gest_campo=t_gest_campo+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-											        $stmt->bindParam(':Campana_id',$Campana_id);
-											        $stmt->bindParam(':Deudor_id',$Deudor_id);
-											        $stmt->bindParam(':mejor_ges_campo_cmp',$campo_mejor_ges_id_obligacion);
-											        $stmt->bindParam(':ultimo_ges_campo_cmp',$Gestion_id);
-											        $stmt->bindParam(':mejor_ges_campo_bd',$campo_mejor_ges_id_Deudor);
-											        $stmt->bindParam(':ultimo_ges_campo_bd',$Gestion_id);
+											        $stmt->bindValue(':Campana_id',$Campana_id);
+											        $stmt->bindValue(':Deudor_id',$Deudor_id);
+											        $stmt->bindValue(':mejor_ges_campo_cmp',$campo_mejor_ges_id_obligacion);
+											        $stmt->bindValue(':ultimo_ges_campo_cmp',$Gestion_id);
+											        $stmt->bindValue(':mejor_ges_campo_bd',$campo_mejor_ges_id_Deudor);
+											        $stmt->bindValue(':ultimo_ges_campo_bd',$Gestion_id);
 											        $stmt->execute();
 
 													
 													$stmt = $this->bd->prepare("UPDATE direccion SET  mejor_ges_id_campo=:mejor_ges_id_campo,ultimo_ges_id_campo=:ultimo_ges_id_campo,activo=:activo WHERE idDireccion=:idDireccion");
-											        $stmt->bindParam(':idDireccion',$Direccion_id);
-											        $stmt->bindParam(':mejor_ges_id_campo',$campo_mejor_ges_id_dir);
-											        $stmt->bindParam(':ultimo_ges_id_campo',$Gestion_id);
-											        $stmt->bindParam(':activo',$desactivar_direc);
+											        $stmt->bindValue(':idDireccion',$Direccion_id);
+											        $stmt->bindValue(':mejor_ges_id_campo',$campo_mejor_ges_id_dir);
+											        $stmt->bindValue(':ultimo_ges_id_campo',$Gestion_id);
+											        $stmt->bindValue(':activo',$desactivar_direc);
 											        $stmt->execute();
 
 											        $stmt = $this->bd->prepare("UPDATE deudor SET  campo_mejor_ges_id=:campo_mejor_ges_id,campo_ultimo_ges_id=:campo_ultimo_ges_id WHERE idDeudor=:idDeudor");
-											        $stmt->bindParam(':idDeudor',$Deudor_id);
-											        $stmt->bindParam(':campo_mejor_ges_id',$campo_mejor_ges_id_Deudor);
-											        $stmt->bindParam(':campo_ultimo_ges_id',$Gestion_id);;
+											        $stmt->bindValue(':idDeudor',$Deudor_id);
+											        $stmt->bindValue(':campo_mejor_ges_id',$campo_mejor_ges_id_Deudor);
+											        $stmt->bindValue(':campo_ultimo_ges_id',$Gestion_id);;
 											        $stmt->execute();
 
 											        if ($Resultado['mostrar_formulario']==2) {
@@ -1680,8 +1680,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 														$moneda_comp=$moneda_comp;
 
 														$stmt = $this->bd->prepare("SELECT idObligacion,nrooperacion,Operador_id FROM obligacion where Campana_id=:Campana_id and nrooperacion=:nrooperacion;");
-														$stmt->bindParam(':Campana_id', $Campana_id);
-														$stmt->bindParam(':nrooperacion', $nrooperacion);
+														$stmt->bindValue(':Campana_id', $Campana_id);
+														$stmt->bindValue(':nrooperacion', $nrooperacion);
 											        	$stmt->execute();
 											        	$Obligacion=$stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -1705,7 +1705,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id
 
 												if ($Resultado['desactivar_informacion']==1) {
 													$stmt = $this->bd->prepare("UPDATE direccion SET  activo=0 WHERE idDireccion=:idDireccion");
-											        $stmt->bindParam(':idDireccion',$Direccion_id);
+											        $stmt->bindValue(':idDireccion',$Direccion_id);
 											        $stmt->execute();
 												}
 								            	
@@ -1835,7 +1835,7 @@ left JOIN gestion as gest_deudor on gest_deudor.idGestion=deudor.courier_mejor_g
 left JOIN resultado as res_deudor ON res_deudor.idResultado=gest_deudor.Resultado_id
 left join gestion as gest_dir on gest_dir.idGestion=direccion.mejor_ges_id_courier
 left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  where idVisita=:idVisita;");
-				$stmt->bindParam(':idVisita', $cod_visita);
+				$stmt->bindValue(':idVisita', $cod_visita);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 	        	$Visita=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1847,7 +1847,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 		        	$Deudor_id=$Visita['Deudor_id'];
 		        	$Direccion_id=$Visita['Direccion_id'];
 		        	$stmt = $this->bd->prepare("select * from persona where codigo=:codigo;");
-					$stmt->bindParam(':codigo', $codigo_gestor);
+					$stmt->bindValue(':codigo', $codigo_gestor);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Persona=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1859,14 +1859,14 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 				            $TipoGestion_id=$arrayTipoGestion[$tipo_gestion];
 
 				            $stmt = $this->bd->prepare("select * from resultado where codigo=:codigo ;");
-							$stmt->bindParam(':codigo', $codigo_resultado);
+							$stmt->bindValue(':codigo', $codigo_resultado);
 				        	$stmt->execute();
 				        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 				        	$Resultado=$stmt->fetch(PDO::FETCH_ASSOC);
 							if ($Resultado['idResultado']!=NULL) {
 								$Resultado_id=$Resultado['idResultado'];
 								$stmt = $this->bd->prepare("select * from contacto where descripcion=:descripcion;");
-								$stmt->bindParam(':descripcion', $contacto);
+								$stmt->bindValue(':descripcion', $contacto);
 					        	$stmt->execute();
 					        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 					        	$Contacto=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -1897,14 +1897,14 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 												$rkng_Direccion=$Visita['ranking_direccion'];
 												$rkng_Deudor=$Visita['ranking_deudor'];
 								            	$stmt = $this->bd->prepare("UPDATE visita SET Gestion_id=:Gestion_id,fecha_visita=:fecha_visita,hora_visita=:hora_visita,visitado_por=:visitado_por,descripcion_predio=:descripcion_predio,observacion=:observacion,estado=1,modificado_por=:modificado_por WHERE idVisita=:idVisita");
-								            	$stmt->bindParam(':idVisita',$cod_visita);
-								            	$stmt->bindParam(':Gestion_id',$Gestion_id);
-								            	$stmt->bindParam(':fecha_visita',$fecha_gestion);
-								            	$stmt->bindParam(':hora_visita',$hora_gestion);
-								            	$stmt->bindParam(':visitado_por',$Persona_id);
-								            	$stmt->bindParam(':descripcion_predio',$descripcion);
-								            	$stmt->bindParam(':observacion',$observacion);
-								            	$stmt->bindParam(':modificado_por',$ingresado_por);										      
+								            	$stmt->bindValue(':idVisita',$cod_visita);
+								            	$stmt->bindValue(':Gestion_id',$Gestion_id);
+								            	$stmt->bindValue(':fecha_visita',$fecha_gestion);
+								            	$stmt->bindValue(':hora_visita',$hora_gestion);
+								            	$stmt->bindValue(':visitado_por',$Persona_id);
+								            	$stmt->bindValue(':descripcion_predio',$descripcion);
+								            	$stmt->bindValue(':observacion',$observacion);
+								            	$stmt->bindValue(':modificado_por',$ingresado_por);										      
 										        $stmt->execute();
 
 										        $courier_mejor_ges_id_Deudor=$Gestion_id;
@@ -1939,8 +1939,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 												left JOIN gestion on gestion.idGestion=obligacion.mejor_ges_courier_cmp
 												left JOIN resultado ON resultado.idResultado=gestion.Resultado_id 
 												WHERE obligacion.Campana_id=:Campana_id AND obligacion.Deudor_id=:Deudor_id ORDER BY ranking LIMIT 1;");
-												$stmt->bindParam(':Campana_id', $Campana_id);
-												$stmt->bindParam(':Deudor_id', $Deudor_id);
+												$stmt->bindValue(':Campana_id', $Campana_id);
+												$stmt->bindValue(':Deudor_id', $Deudor_id);
 									        	$stmt->execute();
 
 									        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}	
@@ -1959,29 +1959,29 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 
 
 													$stmt = $this->bd->prepare("UPDATE obligacion SET  mejor_ges_courier_cmp=:mejor_ges_courier_cmp, t_gest_courier=t_gest_courier+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-											        $stmt->bindParam(':Campana_id',$Campana_id);
-											        $stmt->bindParam(':Deudor_id',$Deudor_id);
-											        $stmt->bindParam(':mejor_ges_courier_cmp',$courier_mejor_ges_id_obligacion);
+											        $stmt->bindValue(':Campana_id',$Campana_id);
+											        $stmt->bindValue(':Deudor_id',$Deudor_id);
+											        $stmt->bindValue(':mejor_ges_courier_cmp',$courier_mejor_ges_id_obligacion);
 											        $stmt->execute();
 
 													
 													$stmt = $this->bd->prepare("UPDATE direccion SET  mejor_ges_id_courier=:mejor_ges_id_courier,ultimo_ges_id_courier=:ultimo_ges_id_courier,activo=:activo WHERE idDireccion=:idDireccion");
-											        $stmt->bindParam(':idDireccion',$Direccion_id);
-											        $stmt->bindParam(':mejor_ges_id_courier',$courier_mejor_ges_id_obligacion);
-											        $stmt->bindParam(':ultimo_ges_id_courier',$Gestion_id);
-											        $stmt->bindParam(':activo',$desactivar_direc);
+											        $stmt->bindValue(':idDireccion',$Direccion_id);
+											        $stmt->bindValue(':mejor_ges_id_courier',$courier_mejor_ges_id_obligacion);
+											        $stmt->bindValue(':ultimo_ges_id_courier',$Gestion_id);
+											        $stmt->bindValue(':activo',$desactivar_direc);
 											        $stmt->execute();
 
 											        $stmt = $this->bd->prepare("UPDATE deudor SET  courier_mejor_ges_id=:courier_mejor_ges_id,courier_ultimo_ges_id=:courier_ultimo_ges_id WHERE idDeudor=:idDeudor");
-											        $stmt->bindParam(':idDeudor',$Deudor_id);
-											        $stmt->bindParam(':courier_mejor_ges_id',$courier_mejor_ges_id_Deudor);
-											        $stmt->bindParam(':courier_ultimo_ges_id',$Gestion_id);
+											        $stmt->bindValue(':idDeudor',$Deudor_id);
+											        $stmt->bindValue(':courier_mejor_ges_id',$courier_mejor_ges_id_Deudor);
+											        $stmt->bindValue(':courier_ultimo_ges_id',$Gestion_id);
 											        $stmt->execute();
 
 
 												if ($Resultado['desactivar_informacion']==1) {
 													$stmt = $this->bd->prepare("UPDATE direccion SET  activo=0 WHERE idDireccion=:idDireccion");
-											        $stmt->bindParam(':idDireccion',$Direccion_id);
+											        $stmt->bindValue(':idDireccion',$Direccion_id);
 											        $stmt->execute();
 												}
 								            	
@@ -2074,7 +2074,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 				$FileGestiones_sms[$fila]['observaciones']=$observaciones;
 
 				$stmt = $this->bd->prepare("SELECT idDeudor,tipo_doc,documento,deudor.activo,hora_contacto,deudor.eliminado FROM deudor WHERE documento=:documento;");
-				$stmt->bindParam(':documento', $documento);
+				$stmt->bindValue(':documento', $documento);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 	        	$Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -2082,8 +2082,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 	        	{
 	        		$Deudor_id=$Deudor['idDeudor'];
 	        		$stmt = $this->bd->prepare("SELECT idTelefono,Deudor_id,numero FROM telefono where Deudor_id=:Deudor_id and numero=:numero ;");
-					$stmt->bindParam(':Deudor_id', $Deudor_id);
-					$stmt->bindParam(':numero', $numero);
+					$stmt->bindValue(':Deudor_id', $Deudor_id);
+					$stmt->bindValue(':numero', $numero);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Telefono=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -2118,19 +2118,19 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 					        	
 
 					        	$stmt = $this->bd->prepare("UPDATE obligacion SET  t_gest_sms=t_gest_sms+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-						        $stmt->bindParam(':Campana_id',$Campana_id);
-						        $stmt->bindParam(':Deudor_id',$Deudor_id);
+						        $stmt->bindValue(':Campana_id',$Campana_id);
+						        $stmt->bindValue(':Deudor_id',$Deudor_id);
 						        $stmt->execute();
 
 						        $stmt = $this->bd->prepare("UPDATE telefono SET  NroGestSms=NroGestSms+1 WHERE idTelefono=:idTelefono AND Deudor_id=:Deudor_id");
-						        $stmt->bindParam(':idTelefono',$Telefono_id);
-						        $stmt->bindParam(':Deudor_id',$Deudor_id);
+						        $stmt->bindValue(':idTelefono',$Telefono_id);
+						        $stmt->bindValue(':Deudor_id',$Deudor_id);
 						        $stmt->execute();
 
 
 						        if ($arrayResultado_sms[$resultado]['desactivar_informacion']==1) {
 						            $stmt = $this->bd->prepare("UPDATE telefono SET  activo=0 WHERE idTelefono=:idTelefono");
-							        $stmt->bindParam(':idTelefono',$Telefono_id);
+							        $stmt->bindValue(':idTelefono',$Telefono_id);
 							        $stmt->execute();							        
 						        }
 
@@ -2219,7 +2219,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 				$FileGestiones_IVR[$fila]['observaciones']=$observaciones;
 				
 				$stmt = $this->bd->prepare("SELECT idDeudor,tipo_doc,documento,deudor.activo,hora_contacto,deudor.eliminado FROM deudor WHERE documento=:documento;");
-				$stmt->bindParam(':documento', $documento);
+				$stmt->bindValue(':documento', $documento);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 	        	$Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -2227,8 +2227,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 	        	{
 	        		$Deudor_id=$Deudor['idDeudor'];
 	        		$stmt = $this->bd->prepare("SELECT idTelefono,Deudor_id,numero FROM telefono where Deudor_id=:Deudor_id and numero=:numero ;");
-					$stmt->bindParam(':Deudor_id', $Deudor_id);
-					$stmt->bindParam(':numero', $numero);
+					$stmt->bindValue(':Deudor_id', $Deudor_id);
+					$stmt->bindValue(':numero', $numero);
 		        	$stmt->execute();
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Telefono=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -2263,13 +2263,13 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 					        if ($registrado==1) {
 
 					        	$stmt = $this->bd->prepare("UPDATE obligacion SET  t_gest_ivr=t_gest_ivr+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-						        $stmt->bindParam(':Campana_id',$Campana_id);
-						        $stmt->bindParam(':Deudor_id',$Deudor_id);
+						        $stmt->bindValue(':Campana_id',$Campana_id);
+						        $stmt->bindValue(':Deudor_id',$Deudor_id);
 						        $stmt->execute();
 
 						        if (isset($arrayResultado_ivr[$resultado]['InfoValida'])==1) {
 						            $stmt = $this->bd->prepare("UPDATE telefono SET  Timbra=1, NroGestIVR=NroGestIVR+1 WHERE idTelefono=:idTelefono");
-							        $stmt->bindParam(':idTelefono',$Telefono_id);
+							        $stmt->bindValue(':idTelefono',$Telefono_id);
 							        $stmt->execute();
 						        }	
 
@@ -2354,7 +2354,7 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 				$FileGestiones_Correo[$fila]['observaciones']=$observaciones;
 				
 				$stmt = $this->bd->prepare("SELECT idDeudor,tipo_doc,documento,deudor.activo,hora_contacto,deudor.eliminado FROM deudor WHERE documento=:documento;");
-				$stmt->bindParam(':documento', $documento);
+				$stmt->bindValue(':documento', $documento);
 	        	$stmt->execute();
 	        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 	        	$Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -2364,8 +2364,8 @@ left join resultado as res_dir on res_dir.idResultado=gest_dir.Resultado_id  whe
 	        		$stmt = $this->bd->prepare("SELECT idCorreo,correo.Deudor_id,direccion_correo,mejor_ges_id,resultado.ranking FROM correo 
 left join gestion on gestion.idGestion=correo.mejor_ges_id
 left join resultado on resultado.idResultado=gestion.Resultado_id where correo.Deudor_id=:Deudor_id and correo.direccion_correo=:direccion_correo ;");
-					$stmt->bindParam(':Deudor_id', $Deudor_id);
-					$stmt->bindParam(':direccion_correo', $correo);
+					$stmt->bindValue(':Deudor_id', $Deudor_id);
+					$stmt->bindValue(':direccion_correo', $correo);
 		        	if (!$stmt->execute()) {print_r($stmt->errorInfo());}                     
 		        	$Correo=$stmt->fetch(PDO::FETCH_ASSOC);
 					if ($Correo['idCorreo']!=NULL) {
@@ -2414,19 +2414,19 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where correo.D
 								}
 
 								$stmt = $this->bd->prepare("UPDATE correo SET  mejor_ges_id=:mejor_ges_id,ultimo_ges_id=:ultimo_ges_id WHERE idCorreo=:idCorreo");
-								$stmt->bindParam(':idCorreo',$Correo_id);
-								$stmt->bindParam(':mejor_ges_id',$mejor_ges_id_correo);
-								$stmt->bindParam(':ultimo_ges_id',$Gestion_id);
+								$stmt->bindValue(':idCorreo',$Correo_id);
+								$stmt->bindValue(':mejor_ges_id',$mejor_ges_id_correo);
+								$stmt->bindValue(':ultimo_ges_id',$Gestion_id);
 								 if (!$stmt->execute()) {print_r($stmt->errorInfo());}  
 
 					        	$stmt = $this->bd->prepare("UPDATE obligacion SET  t_gest_email=t_gest_email+1 WHERE Campana_id=:Campana_id AND Deudor_id=:Deudor_id");
-						        $stmt->bindParam(':Campana_id',$Campana_id);
-						        $stmt->bindParam(':Deudor_id',$Deudor_id);
+						        $stmt->bindValue(':Campana_id',$Campana_id);
+						        $stmt->bindValue(':Deudor_id',$Deudor_id);
 						        $stmt->execute();
 
 						        if ($arrayResultado_correo[$resultado]['desactivar_informacion']==1) {
 						            $stmt = $this->bd->prepare("UPDATE correo SET  activo=0 WHERE idCorreo=:idCorreo");
-							        $stmt->bindParam(':idCorreo',$Correo_id);
+							        $stmt->bindValue(':idCorreo',$Correo_id);
 							        $stmt->execute();
 							        
 						        }					       
@@ -2539,19 +2539,19 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where correo.D
 					}
 
 			        $stmt = $this->bd->prepare("select * from deudor where documento=:documento or ruc=:ruc; ");
-			        $stmt->bindParam(':documento',$documento);
-			        $stmt->bindParam(':ruc',$ruc);
+			        $stmt->bindValue(':documento',$documento);
+			        $stmt->bindValue(':ruc',$ruc);
 			        if (!$stmt->execute()) {$errors = $stmt->errorInfo(); $error_doc=$errors[2]; } else{ $error_doc=''; }                 
 			        $Deudor=$stmt->fetch(PDO::FETCH_ASSOC);
 			        $Deudor_id=0;
 			        if($Deudor['idDeudor']==NULL){  
 			        	$error_doc="Deudor Nuevo";          
 			            $stmt = $this->bd->prepare("INSERT INTO deudor(documento,ruc,tipo_doc,razon_social,ingresado_por) VALUES(:documento,:ruc,:tipo_doc,:razon_social,:ingresado_por)");
-			            $stmt->bindParam(':documento',$documento);
-			            $stmt->bindParam(':ruc',$ruc);
-			             $stmt->bindParam(':tipo_doc',$tipo_doc);
-			            $stmt->bindParam(':razon_social',$cliente);
-			            $stmt->bindParam(':ingresado_por',$ingresado_por);
+			            $stmt->bindValue(':documento',$documento);
+			            $stmt->bindValue(':ruc',$ruc);
+			             $stmt->bindValue(':tipo_doc',$tipo_doc);
+			            $stmt->bindValue(':razon_social',$cliente);
+			            $stmt->bindValue(':ingresado_por',$ingresado_por);
 			             if (!$stmt->execute()) {$errors = $stmt->errorInfo(); $error_doc=$errors[2]; } else{ $error_doc='Deudor Nuevo'; }						
 			            $Deudor_id=$this->bd->lastInsertId();
 			            $Deudor_registrado=$stmt->rowCount();
@@ -2571,15 +2571,15 @@ left join resultado on resultado.idResultado=gestion.Resultado_id where correo.D
   
 					        $stmt = $this->bd->prepare("INSERT INTO ObligacionCartera(Cartera_id,Deudor_id,NroOperacion,NroCuenta,Moneda,Capital_Inicial,DeudaTotal_Inicial,FechAsig,Ingresado_Por) VALUES(:Cartera_id,:Deudor_id,:NroOperacion,:NroCuenta,:Moneda,:Capital_Inicial,:DeudaTotal_Inicial,:FechAsig,:Ingresado_Por)");
 
-					       	$stmt->bindParam(':Cartera_id',$Cartera_id);
-					       	$stmt->bindParam(':Deudor_id',$Deudor_id);
-					       	$stmt->bindParam(':NroOperacion',$nrooperacion);
-					       	$stmt->bindParam(':NroCuenta',$nrocuenta);
-					       	$stmt->bindParam(':Moneda',$moneda);
-					       	$stmt->bindParam(':Capital_Inicial',$capital_inicial);
-					       	$stmt->bindParam(':DeudaTotal_Inicial',$deuda_total_inicial);
-					       	$stmt->bindParam(':FechAsig',$fecha_asignacion);
-					       	$stmt->bindParam(':Ingresado_Por',$ingresado_por);					        
+					       	$stmt->bindValue(':Cartera_id',$Cartera_id);
+					       	$stmt->bindValue(':Deudor_id',$Deudor_id);
+					       	$stmt->bindValue(':NroOperacion',$nrooperacion);
+					       	$stmt->bindValue(':NroCuenta',$nrocuenta);
+					       	$stmt->bindValue(':Moneda',$moneda);
+					       	$stmt->bindValue(':Capital_Inicial',$capital_inicial);
+					       	$stmt->bindValue(':DeudaTotal_Inicial',$deuda_total_inicial);
+					       	$stmt->bindValue(':FechAsig',$fecha_asignacion);
+					       	$stmt->bindValue(':Ingresado_Por',$ingresado_por);					        
 					        if (!$stmt->execute()) {$errors = $stmt->errorInfo(); $error_nroope=$errors[2]; } else{ $error_nroope=''; }	
 					        $obligacion_registrada=$stmt->rowCount();
 					        if($obligacion_registrada==0){

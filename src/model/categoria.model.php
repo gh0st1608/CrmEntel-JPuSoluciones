@@ -3,7 +3,7 @@ include_once 'conexion.php';
 class CategoriaModel 
 {
 	
- private $bd;
+    private $bd;
 
    
 
@@ -26,16 +26,25 @@ class CategoriaModel
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM categoria WHERE idCategoria = :idCategoria;");
-        $stmt->bindParam(':idCategoria', $categoria->__GET('idCategoria'));
+        $stmt->bindValue(':idCategoria', $categoria->__GET('idCategoria'));
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+         $objCategoria = new Categoria();  
+        if ($stmt->rowCount() > 0) {
+           
+            $objCategoria->__SET('idCategoria',$row->idCategoria);
+            $objCategoria->__SET('Nombre',$row->Nombre);
+            $objCategoria->__SET('Estado',$row->Estado);
+            return $objCategoria;    
+        }else{
+             
+            $objCategoria->__SET('idCategoria',0);
+            $objCategoria->__SET('Nombre',0);
+            $objCategoria->__SET('Estado',0);
+            return $objCategoria;
+        }
 
-        $objCategoria = new Categoria();     
-        $objCategoria->__SET('idCategoria',$row->idCategoria);
-        $objCategoria->__SET('Categoria_id',$row->Categoria_id);
-        $objCategoria->__SET('Nombre',$row->Nombre);
-        $objCategoria->__SET('Estado',$row->Estado);
-        return $objCategoria;
+        
     }
 
     public function Actualizar(Categoria $categoria)
@@ -44,10 +53,10 @@ class CategoriaModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE categoria SET  Nombre=:Nombre,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idCategoria = :idCategoria;");
 
-        $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));
-        $stmt->bindParam(':Nombre',$categoria->__GET('Nombre'));
-        $stmt->bindParam(':Estado',$categoria->__GET('Estado'));          
-        $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por')); 
+        $stmt->bindValue(':idCategoria',$categoria->__GET('idCategoria'));
+        $stmt->bindValue(':Nombre',$categoria->__GET('Nombre'));
+        $stmt->bindValue(':Estado',$categoria->__GET('Estado'));          
+        $stmt->bindValue(':Ingresado_por',$categoria->__GET('Ingresado_por')); 
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());
@@ -86,9 +95,9 @@ class CategoriaModel
         $stmt = $this->bd->prepare("UPDATE categoria SET  Eliminado=:Eliminado, Ingresado_por=:Ingresado_por WHERE idCategoria = :idCategoria");
  
 
-        $stmt->bindParam(':idCategoria',$categoria->__GET('idCategoria'));         
-        $stmt->bindParam(':Ingresado_por',$categoria->__GET('Ingresado_por'));
-        $stmt->bindParam(':Eliminado',$categoria->__GET('Eliminado'));    
+        $stmt->bindValue(':idCategoria',$categoria->__GET('idCategoria'));         
+        $stmt->bindValue(':Ingresado_por',$categoria->__GET('Ingresado_por'));
+        $stmt->bindValue(':Eliminado',$categoria->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

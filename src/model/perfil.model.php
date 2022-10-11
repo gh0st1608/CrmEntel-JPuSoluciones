@@ -22,11 +22,11 @@ class PerfilModel
         }
     }
 
-    public function Consultar(Perfil $pefil)
+    public function Consultar(Perfil $perfil)
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM perfil WHERE idPerfil = :idPerfil");
-        $stmt->bindParam(':idPerfil', $pefil->__GET('idPerfil'));
+        $stmt->bindValue(':idPerfil', $perfil->__GET('idPerfil'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
@@ -45,10 +45,10 @@ class PerfilModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE perfil SET  Nombre = :Nombre,Modificado_por=:Modificado_por,Estado=:Estado WHERE idPerfil = :idPerfil");
 
-        $stmt->bindParam(':idPerfil',$perfil->__GET('idPerfil'));
-        $stmt->bindParam(':Nombre',$perfil->__GET('Nombre'));
-        $stmt->bindParam(':Estado',$perfil->__GET('Estado'));          
-        $stmt->bindParam(':Modificado_por',$perfil->__GET('Modificado_por'));    
+        $stmt->bindValue(':idPerfil',$perfil->__GET('idPerfil'));
+        $stmt->bindValue(':Nombre',$perfil->__GET('Nombre'));
+        $stmt->bindValue(':Estado',$perfil->__GET('Estado'));          
+        $stmt->bindValue(':Modificado_por',$perfil->__GET('Modificado_por'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
@@ -83,9 +83,9 @@ class PerfilModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE perfil SET  Modificado_por=:Modificado_por,Eliminado=:Eliminado WHERE idPerfil = :idPerfil");
 
-        $stmt->bindParam(':idPerfil',$perfil->__GET('idPerfil'));         
-        $stmt->bindParam(':Modificado_por',$perfil->__GET('Modificado_por'));
-        $stmt->bindParam(':Eliminado',$perfil->__GET('Eliminado'));    
+        $stmt->bindValue(':idPerfil',$perfil->__GET('idPerfil'));         
+        $stmt->bindValue(':Modificado_por',$perfil->__GET('Modificado_por'));
+        $stmt->bindValue(':Eliminado',$perfil->__GET('Eliminado'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

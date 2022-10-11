@@ -85,10 +85,8 @@ if (!isset($_REQUEST['idPerfil'])==''){
 									<tr>
                                         <?php foreach ($permisos as $permiso): ?>
 										<td><?php echo $permiso['idPermiso']; ?></td>
-                                        <?php $interfaz_obj = $interfaz->ConsultarInterfaz($permiso['Interfaz_id']);?>
-                                        <td><?php echo $interfaz_obj->Nombre; ?></td>
-                                        <?php $modprincipal = $interfaz->ConsultarInterfaz($interfaz_obj->Modulo_Principal);?>
-										<td><?php echo $modprincipal->Nombre ?></td>
+                                        <td><?php echo $permiso['Modulo_Principal'] ?></td>
+										<td><?php echo $permiso['Modulo_Secundario'] ?></td>
                                         <td><?php echo "Por Definir"?></td>
                                         <?php if ($permiso['Acceder']==1): ?>
                                         <td> Si</td>

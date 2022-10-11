@@ -1,3 +1,23 @@
+
+<?php 
+		if(isset($_REQUEST['Busc_Fecha_Inicio'])){$Busc_Fecha_Inicio=$_REQUEST['Busc_Fecha_Inicio'];}else{$Busc_Fecha_Inicio="";} 
+		if(isset($_REQUEST['Busc_Fecha_Fin'])){$Busc_Fecha_Fin=$_REQUEST['Busc_Fecha_Fin'];}else{$Busc_Fecha_Fin="";}
+		if(isset($_REQUEST['DP_Documento'])){$DP_Documento=$_REQUEST['DP_Documento'];}else{$DP_Documento="";}
+		if(isset($_REQUEST['RE_Tipo_Despacho'])){$RE_Tipo_Despacho=$_REQUEST['RE_Tipo_Despacho'];}else{$RE_Tipo_Despacho=0;}
+		if(isset($_REQUEST['RE_Rango_Entrega_Despacho'])){$RE_Rango_Entrega_Despacho=$_REQUEST['RE_Rango_Entrega_Despacho'];}else{$RE_Rango_Entrega_Despacho=0;}
+		if(isset($_REQUEST['RV_Tipo_Ofrecimiento'])){$RV_Tipo_Ofrecimiento=$_REQUEST['RV_Tipo_Ofrecimiento'];}else{$RV_Tipo_Ofrecimiento=0;}
+		if(isset($_REQUEST['RV_Tipo_Venta'])){$RV_Tipo_Venta=$_REQUEST['RV_Tipo_Venta'];}else{$RV_Tipo_Venta=0;}
+		if(isset($_REQUEST['RV_Linea_Portar'])){$RV_Linea_Portar=$_REQUEST['RV_Linea_Portar'];}else{$RV_Linea_Portar="";}
+		if(isset($_REQUEST['RV_Tipo_Producto'])){$RV_Tipo_Producto=$_REQUEST['RV_Tipo_Producto'];}else{$RV_Tipo_Producto=0;}
+		if(isset($_REQUEST['VBO_Estado_Venta_BO'])){$VBO_Estado_Venta_BO=$_REQUEST['VBO_Estado_Venta_BO'];}else{$VBO_Estado_Venta_BO=0;}
+		if(isset($_REQUEST['Supervisor_Vendedor'])){$Supervisor_Vendedor=$_REQUEST['Supervisor_Vendedor'];}else{$Supervisor_Vendedor=0;}
+		if(isset($_REQUEST['Documento_Vendedor'])){$Documento_Vendedor=$_REQUEST['Documento_Vendedor'];}else{$Documento_Vendedor="";}
+
+		$urlRetorno="index.php?c=Ficha_Venta&Busc_Fecha_Inicio=$Busc_Fecha_Inicio&Busc_Fecha_Fin=$Busc_Fecha_Fin&DP_Documento=$DP_Documento&RE_Tipo_Despacho=$RE_Tipo_Despacho&RE_Rango_Entrega_Despacho=$RE_Rango_Entrega_Despacho&RV_Tipo_Ofrecimiento=$RV_Tipo_Ofrecimiento&RV_Tipo_Venta=$RV_Tipo_Venta&RV_Linea_Portar=$RV_Linea_Portar&RV_Tipo_Producto=$RV_Tipo_Producto&VBO_Estado_Venta_BO=$VBO_Estado_Venta_BO&Supervisor_Vendedor=$Supervisor_Vendedor&Documento_Vendedor=$Documento_Vendedor";
+
+		
+
+?>
  <!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
@@ -8,9 +28,9 @@
         <li class="active">Registrar Ficha Venta</li>
 	</ol>
 </section>
-
 <section class="content">
-	<div class="row">			
+	<div class="row">
+
 		<div class="col-md-12">
 			<style>
 				  .loader-page {
@@ -66,8 +86,10 @@
 			<div class="loader-page"><span id="loader-text">Cargando Información</span></div>
 			<?php if (isset($_REQUEST['idFicha_Venta']) && $_REQUEST['idFicha_Venta']!=''){
 				$idFicha_Venta=$_REQUEST['idFicha_Venta'];
+				$urlRetornoAct="index.php?c=Ficha_Venta&a=v_Actualizar_Ficha&idFicha_Venta=$idFicha_Venta&Busc_Fecha_Inicio=$Busc_Fecha_Inicio&Busc_Fecha_Fin=$Busc_Fecha_Fin&DP_Documento=$DP_Documento&RE_Tipo_Despacho=$RE_Tipo_Despacho&RE_Rango_Entrega_Despacho=$RE_Rango_Entrega_Despacho&RV_Tipo_Ofrecimiento=$RV_Tipo_Ofrecimiento&RV_Tipo_Venta=$RV_Tipo_Venta&RV_Linea_Portar=$RV_Linea_Portar&RV_Tipo_Producto=$RV_Tipo_Producto&VBO_Estado_Venta_BO=$VBO_Estado_Venta_BO&Supervisor_Vendedor=$Supervisor_Vendedor&Documento_Vendedor=$Documento_Vendedor";
 			}else{
 				$idFicha_Venta=0;
+				$urlRetornoAct="index.php?c=Ficha_Venta";
 			}
 			?>
 	
@@ -87,7 +109,7 @@
                     </div>
                     <div class="form-group  col-md-4" id="div-Ingresado_por_Vendedor">
                     	<label class="" for="Ingresado_por_Vendedor">Registrado Por</label>
-                        <input type="text" class="form-control input-sm" id="Ingresado_por_Vendedor" name="Ingresado_por_Vendedor"  readonly="TRUE" value="">
+                        <input type="text" class="form-control input-sm " id="Ingresado_por_Vendedor" name="Ingresado_por_Vendedor" idVendedor="" readonly="TRUE" value="">
                     </div>
 				</div>
 			</div>
@@ -98,67 +120,67 @@
 				<div class="panel-body">	    			
 					<div class="form-group col-md-2" id="div-DE_Telf_Llamada_Venta">
 						<label class="" for="DE_Telf_Llamada_Venta">Telefono Llamada Venta : </label>
-						<input type="text" class="form-control input-sm validar_txt" id="DE_Telf_Llamada_Venta" name="DE_Telf_Llamada_Venta"  onkeyup="var pattern = /[^0-9]/g;this.value = this.value.replace(pattern, '');" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" obligatorio="SI" value="">
+						<input type="text" class="form-control input-sm validar_txt" id="DE_Telf_Llamada_Venta" name="DE_Telf_Llamada_Venta"  onkeyup="var pattern = /[^0-9]/g;this.value = this.value.replace(pattern, '');" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" obligatorio="SI" value="" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
 					<div class="form-group  col-md-2" id="div-DE_Base_Llamada">   
                         <label class="" for="DE_Base_Llamada">Base Llamada</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Base_Llamada" name="DE_Base_Llamada" idcategoria="1" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Base_Llamada" name="DE_Base_Llamada" idcategoria="1" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_Campana_Netcall">  
                         <label class="" for="DE_Campana_Netcall">Campaña NetCall</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Campana_Netcall" name="DE_Campana_Netcall" idcategoria="2" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Campana_Netcall" name="DE_Campana_Netcall" idcategoria="2" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_Sub_Campana">  
                         <label class="" for="DE_Sub_Campana">Sub Campaña</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Sub_Campana" name="DE_Sub_Campana" idcategoria="3" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Sub_Campana" name="DE_Sub_Campana" idcategoria="3" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
-                    <div class="form-group col-md-2" id="div-DE_Detalle_Sub_Campana">  
+                    <div class="form-group col-md-2 hide" id="div-DE_Detalle_Sub_Campana">  
                         <label class="" for="DE_Detalle_Sub_Campana">Detalle Sub Campaña</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Detalle_Sub_Campana" name="DE_Detalle_Sub_Campana" idcategoria="4" obligatorio="NO">
+                        <select class="form-control input-sm validar_cbo" id="DE_Detalle_Sub_Campana" name="DE_Detalle_Sub_Campana" idcategoria="4" obligatorio="NO" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_CF_Max_Linea_Movil">  
                         <label class="" for="DE_CF_Max_Linea_Movil">CF Max Linea(Móvil)</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_CF_Max_Linea_Movil" name="DE_CF_Max_Linea_Movil" idcategoria="5" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_CF_Max_Linea_Movil" name="DE_CF_Max_Linea_Movil" idcategoria="5" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_Tipo_Etiqueta">  
                         <label class="" for="DE_Tipo_Etiqueta">Tipo Etiqueta</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Tipo_Etiqueta" name="DE_Tipo_Etiqueta" idcategoria="6" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Tipo_Etiqueta" name="DE_Tipo_Etiqueta" idcategoria="6" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_CF_Max_Linea_Pack">
 						<label class="" for="DE_CF_Max_Linea_Pack">CF Max Linea/Pack</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DE_CF_Max_Linea_Pack" name="DE_CF_Max_Linea_Pack"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DE_CF_Max_Linea_Pack" name="DE_CF_Max_Linea_Pack"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-DE_Monto_Disp_Finan_Equipos">
 						<label class="" for="DE_Monto_Disp_Finan_Equipos">Monto Disponible para Financiar</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DE_Monto_Disp_Finan_Equipos" name="DE_Monto_Disp_Finan_Equipos"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DE_Monto_Disp_Finan_Equipos" name="DE_Monto_Disp_Finan_Equipos"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-3" id="div-DE_Cant_Meses_Finan_Equipos">  
                         <label class="" for="DE_Cant_Meses_Finan_Equipos">Cant. Meses para Financiar Equipos</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Cant_Meses_Finan_Equipos" name="DE_Cant_Meses_Finan_Equipos" idcategoria="7" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Cant_Meses_Finan_Equipos" name="DE_Cant_Meses_Finan_Equipos" idcategoria="7" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-1" id="div-DE_Cliente_Entel">  
                         <label class="" for="DE_Cliente_Entel">Cliente Entel</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Cliente_Entel" name="DE_Cliente_Entel" idcategoria="8" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Cliente_Entel" name="DE_Cliente_Entel" idcategoria="8" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DE_Cliente_Promo_Dscto">  
                         <label class="" for="DE_Cliente_Promo_Dscto">Cliente Promo/Dscto</label>
-                        <select class="form-control input-sm validar_cbo" id="DE_Cliente_Promo_Dscto" name="DE_Cliente_Promo_Dscto" idcategoria="9" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DE_Cliente_Promo_Dscto" name="DE_Cliente_Promo_Dscto" idcategoria="9" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -172,55 +194,55 @@
 					<div class="row">
 						<div class="form-group col-md-2" id="div-DP_TipoDocumento">  
 	                        <label class="" for="DP_TipoDocumento">Tipo Documento</label>
-	                        <select class="form-control input-sm validar_cbo" id="DP_TipoDocumento" name="DP_TipoDocumento" idcategoria="10" obligatorio="SI">
+	                        <select class="form-control input-sm validar_cbo" id="DP_TipoDocumento" name="DP_TipoDocumento" idcategoria="10" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 	                        	<option value="0">-- Seleccionar --</option>                     
 	                        </select>
 	                    </div>
 						<div class="form-group col-md-2" id="div-DP_Documento">
 							<label class="" for="DP_Documento">Nro. Documento <span id="span_cliente_nuevo" class="text-red hide">Cliente Nuevo</span></label>
 							<div class="input-group">
-							<input type="text" class="form-control validar_txt" id="DP_Documento" name="DP_Documento"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+							<input type="text" class="form-control validar_txt" id="DP_Documento" name="DP_Documento"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					      	<span class="input-group-btn">
-					        	<button class="btn btn-default" type="button" id="btnBuscarDocumento">Buscar <i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
+					        	<button class="btn btn-default" type="button" id="btnBuscarDocumento">Buscar <i class="fa fa-search fa-lg" aria-hidden="true" <?php echo  $FVenta_Interfaz; ?>></i></button>
 					      	</span>
 					      	 </div><!-- /input-group -->
 					  	</div>    			
 						<div class="form-group col-md-2" id="div-DP_Nombre_Cliente">
 							<label class="" for="DP_Nombre_Cliente">Nombre Cliente</label>
-							<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Cliente" name="DP_Nombre_Cliente"  value="" obligatorio="SI">
+							<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Cliente" name="DP_Nombre_Cliente"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 						</div>	    			
 						<div class="form-group col-md-2" id="div-DP_Apellido_Paterno">
 							<label class="" for="DP_Apellido_Paterno">Apellido Paterno</label>
-							<input type="text" class="form-control input-sm validar_txt" id="DP_Apellido_Paterno" name="DP_Apellido_Paterno"  value="" obligatorio="SI">
+							<input type="text" class="form-control input-sm validar_txt" id="DP_Apellido_Paterno" name="DP_Apellido_Paterno"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 						</div>	    			
 						<div class="form-group col-md-2" id="div-DP_Apellido_Materno">
 							<label class="" for="DP_Apellido_Materno ">Apellido Materno</label>
-							<input type="text" class="form-control input-sm validar_txt" id="DP_Apellido_Materno" name="DP_Apellido_Materno"  value="" obligatorio="SI">
+							<input type="text" class="form-control input-sm validar_txt" id="DP_Apellido_Materno" name="DP_Apellido_Materno"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 						</div>
 					</div>    			
 					<div class="form-group col-md-2" id="div-DP_Nacionalidad">
 						<label class="" for="DP_Nacionalidad">Nacionalidad</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DP_Nacionalidad" name="DP_Nacionalidad"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DP_Nacionalidad" name="DP_Nacionalidad"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-2" id="div-DP_Lugar_Nacimiento">
 						<label class="" for="DP_Lugar_Nacimiento">Lugar Nacimiento</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DP_Lugar_Nacimiento" name="DP_Lugar_Nacimiento"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DP_Lugar_Nacimiento" name="DP_Lugar_Nacimiento"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-2" id="div-DP_Fecha_Nacimiento">
 						<label class="" for="DP_Fecha_Nacimiento">Fecha Nacimiento</label>
-						<input type="date" class="form-control input-sm validar_txt" id="DP_Fecha_Nacimiento" name="DP_Fecha_Nacimiento"  value="" oninput="elog('input',this);return false;" onchange="elog('change',this);return false;"onblur="elog('blur',this);return false;"onfocus="elog('focus',this);return false;"onkeyup="elog('keyup-'+event.keyCode,this);return false;"onkeypress="elog('keypress-'+event.keyCode,this);if(event.keyCode==13){this.onchange();return false;}" obligatorio="SI">
+						<input type="date" class="form-control input-sm validar_txt" id="DP_Fecha_Nacimiento" name="DP_Fecha_Nacimiento"  value="" oninput="elog('input',this);return false;" onchange="elog('change',this);return false;"onblur="elog('blur',this);return false;"onfocus="elog('focus',this);return false;"onkeyup="elog('keyup-'+event.keyCode,this);return false;"onkeypress="elog('keypress-'+event.keyCode,this);if(event.keyCode==13){this.onchange();return false;}" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-2" id="div-DP_Edad_Actual">
 						<label class="" for="DP_Edad_Actual">Edad Actual</label>
-						<input type="text" class="form-control input-sm" id="DP_Edad_Actual" name="DP_Edad_Actual" readonly="True" value="">
+						<input type="text" class="form-control input-sm" id="DP_Edad_Actual" name="DP_Edad_Actual" readonly="True" value="" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-2" id="div-DP_Nombre_Padre">
 						<label class="" for="DP_Nombre_Padre">Nombre Padre</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Padre" name="DP_Nombre_Padre"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Padre" name="DP_Nombre_Padre"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-2" id="div-DP_Nombre_Madre">
 						<label class="" for="DP_Nombre_Madre">Nombre Madre</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Madre" name="DP_Nombre_Madre"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DP_Nombre_Madre" name="DP_Nombre_Madre"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
 				</div>
 			</div>
@@ -231,131 +253,131 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-RV_Tipo_Ofrecimiento">  
                         <label class="" for="RV_Tipo_Ofrecimiento">Tipo Ofrecimiento</label>
-                        <select class="form-control input-sm validar_cbo" id="RV_Tipo_Ofrecimiento" name="RV_Tipo_Ofrecimiento" idcategoria="20" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Ofrecimiento" name="RV_Tipo_Ofrecimiento" idcategoria="20" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_Tipo_Venta">  
                         <label class="" for="RV_Tipo_Venta">Tipo Venta</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Venta" name="RV_Tipo_Venta" idcategoria="21" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Venta" name="RV_Tipo_Venta" idcategoria="21" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_Operador_Cedente">  
                         <label class="" for="RV_Operador_Cedente">Operador Cedente</label>
-                        <select class="form-control input-sm validar_cbo" id="RV_Operador_Cedente" name="RV_Operador_Cedente" idcategoria="22" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RV_Operador_Cedente" name="RV_Operador_Cedente" idcategoria="22" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_Origen">  
                         <label class="" for="RV_Origen">Origen</label>
-                        <select class="form-control input-sm validar_cbo" id="RV_Origen" name="RV_Origen" idcategoria="23" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RV_Origen" name="RV_Origen" idcategoria="23" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_Linea_Portar">
 						<label class="" for="RV_Linea_Portar">Linea a portar</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Linea_Portar" name="RV_Linea_Portar"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Linea_Portar" name="RV_Linea_Portar"   onkeyup="var pattern = /[^0-9]/g;this.value = this.value.replace(pattern, '');" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Plan_Tarifario">  
                         <label class="" for="RV_Plan_Tarifario">Plan Tarifario</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Plan_Tarifario" name="RV_Plan_Tarifario" idcategoria="24" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Plan_Tarifario" name="RV_Plan_Tarifario" idcategoria="24" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>	
                     <div class="form-group col-md-2" id="div-RV_Cargo_Fijo_Plan">  
                         <label class="" for="RV_Cargo_Fijo_Plan">Cargo Fijo Plan</label>
-                        <select class="form-control input-sm validar_cbo" id="RV_Cargo_Fijo_Plan" name="RV_Cargo_Fijo_Plan" idcategoria="25" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RV_Cargo_Fijo_Plan" name="RV_Cargo_Fijo_Plan" idcategoria="25" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>		
                     <div class="form-group col-md-2" id="div-RV_Tipo_Producto">  
                         <label class="" for="RV_Tipo_Producto">Tipo de Producto</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Producto" name="RV_Tipo_Producto" idcategoria="26" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Producto" name="RV_Tipo_Producto" idcategoria="26" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>		
-                    <div class="form-group col-md-2" id="div-RV_Accesorio_Regalo">  
+                    <div class="form-group col-md-2 hidden" id="div-RV_Accesorio_Regalo">  
                         <label class="" for="RV_Accesorio_Regalo">Accesorio de Regalo</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Accesorio_Regalo" name="RV_Accesorio_Regalo" idcategoria="27" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Accesorio_Regalo" name="RV_Accesorio_Regalo" idcategoria="27" obligatorio="NO" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
-                    <div class="form-group col-md-2" id="div-RV_SKU_Accesorio_Regalo1">
+                    <div class="form-group col-md-2 hidden" id="div-RV_SKU_Accesorio_Regalo1">
 						<label class="" for="RV_SKU_Accesorio_Regalo1">SKU Accesorio de Regalo 1</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio_Regalo1" name="RV_SKU_Accesorio_Regalo1"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio_Regalo1" name="RV_SKU_Accesorio_Regalo1"  value="" obligatorio="NO" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
-                    <div class="form-group col-md-2" id="div-RV_SKU_Accesorio_Regalo2">
+                    <div class="form-group col-md-2 hidden" id="div-RV_SKU_Accesorio_Regalo2">
 						<label class="" for="RV_SKU_Accesorio_Regalo2">SKU Accesorio de Regalo 2</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio_Regalo2" name="RV_SKU_Accesorio_Regalo2"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio_Regalo2" name="RV_SKU_Accesorio_Regalo2"  value="" obligatorio="NO" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Pack">
 						<label class="" for="RV_SKU_Pack">SKU Pack</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Pack" name="RV_SKU_Pack"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Pack" name="RV_SKU_Pack"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Equipo_Inicial_Total">
 						<label class="" for="RV_Precio_Equipo_Inicial_Total">Precio Equipo Inicial/Total</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Equipo_Inicial_Total" name="RV_Precio_Equipo_Inicial_Total"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Equipo_Inicial_Total" name="RV_Precio_Equipo_Inicial_Total"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Cuota_Equipo_Mensual">
 						<label class="" for="RV_Cuota_Equipo_Mensual">Cuota Equipo Mensual</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Cuota_Equipo_Mensual" name="RV_Cuota_Equipo_Mensual" onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Cuota_Equipo_Mensual" name="RV_Cuota_Equipo_Mensual" onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Cant_Accesorios">  
                         <label class="" for="RV_Cant_Accesorios">Cant. Accesorios</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Cant_Accesorios" name="RV_Cant_Accesorios" idcategoria="28" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Cant_Accesorios" name="RV_Cant_Accesorios" idcategoria="28" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Accesorio1">
 						<label class="" for="RV_SKU_Accesorio1">SKU Accesorio 1</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio1" name="RV_SKU_Accesorio1"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio1" name="RV_SKU_Accesorio1"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Accesorio1">
 						<label class="" for="RV_Precio_Accesorio1">Precio Accesorio 1</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio1" name="RV_Precio_Accesorio1"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio1" name="RV_Precio_Accesorio1"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Accesorio2">
 						<label class="" for="RV_SKU_Accesorio2">SKU Accesorio 2</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio2" name="RV_SKU_Accesorio2"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio2" name="RV_SKU_Accesorio2"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Accesorio2">
 						<label class="" for="RV_Precio_Accesorio2">Precio Accesorio 2</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio2" name="RV_Precio_Accesorio2"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio2" name="RV_Precio_Accesorio2"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Accesorio3">
 						<label class="" for="RV_SKU_Accesorio3">SKU Accesorio 3</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio3" name="RV_SKU_Accesorio3"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio3" name="RV_SKU_Accesorio3"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Accesorio3">
 						<label class="" for="RV_Precio_Accesorio3">Precio Accesorio 3</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio3" name="RV_Precio_Accesorio3"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio3" name="RV_Precio_Accesorio3"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Accesorio4">
 						<label class="" for="RV_SKU_Accesorio4">SKU Accesorio 4</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio4" name="RV_SKU_Accesorio4"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio4" name="RV_SKU_Accesorio4"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Accesorio4">
 						<label class="" for="RV_Precio_Accesorio4">Precio Accesorio 4</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio4" name="RV_Precio_Accesorio4"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio4" name="RV_Precio_Accesorio4"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_SKU_Accesorio5">
 						<label class="" for="RV_SKU_Accesorio5">SKU Accesorio 5</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio5" name="RV_SKU_Accesorio5"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_SKU_Accesorio5" name="RV_SKU_Accesorio5"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Precio_Accesorio5">
 						<label class="" for="RV_Precio_Accesorio5">Precio Accesorio 5</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio5" name="RV_Precio_Accesorio5"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RV_Precio_Accesorio5" name="RV_Precio_Accesorio5"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RV_Tipo_Pago">  
                         <label class="" for="RV_Tipo_Pago">Tipo Pago</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Pago" name="RV_Tipo_Pago" idcategoria="29" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RV_Tipo_Pago" name="RV_Tipo_Pago" idcategoria="29" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RV_Promociones_Bancos">  
                         <label class="" for="RV_Promociones_Bancos">Promociones Bancos</label>
-                        <select class="form-control input-sm validar_cbo" id="RV_Promociones_Bancos" name="RV_Promociones_Bancos" idcategoria="30" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RV_Promociones_Bancos" name="RV_Promociones_Bancos" idcategoria="30" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -368,29 +390,29 @@
 				<div class="panel-body">    			
 					<div class="form-group col-md-2" id="div-DF_Email_Facturacion_Otros">
 						<label class="" for="DF_Email_Facturacion_Otros">Email Facturación/Otros</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DF_Email_Facturacion_Otros" name="DF_Email_Facturacion_Otros"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DF_Email_Facturacion_Otros" name="DF_Email_Facturacion_Otros"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-DF_Dpto_Facturacion">  
                         <label class="" for="DF_Dpto_Facturacion">Departamento Facturación</label>
-                        <select class="form-control input-sm validar_cbo" id="DF_Dpto_Facturacion" name="DF_Dpto_Facturacion" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DF_Dpto_Facturacion" name="DF_Dpto_Facturacion" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DF_Prov_Facturacion">  
                         <label class="" for="DF_Prov_Facturacion">Provincia Facturación</label>
-                        <select class="form-control input-sm validar_cbo" id="DF_Prov_Facturacion" name="DF_Prov_Facturacion" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DF_Prov_Facturacion" name="DF_Prov_Facturacion" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-DF_Dist_Facturacion">  
                         <label class="" for="DF_Dist_Facturacion">Distrito Facturación</label>
-                        <select class="form-control input-sm validar_cbo" id="DF_Dist_Facturacion" name="DF_Dist_Facturacion" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DF_Dist_Facturacion" name="DF_Dist_Facturacion" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>	    			
 					<div class="form-group col-md-4" id="div-DF_Domicilio_Facturacion">
 						<label class="" for="DF_Domicilio_Facturacion">Domicilio Facturación</label>
-						<input type="text" class="form-control input-sm validar_txt" id="DF_Domicilio_Facturacion" name="DF_Domicilio_Facturacion"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="DF_Domicilio_Facturacion" name="DF_Domicilio_Facturacion"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
 				</div>
 			</div>
@@ -402,105 +424,105 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-RE_Tipo_Despacho">  
                         <label class="" for="RE_Tipo_Despacho">Tipo Despacho</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Tipo_Despacho" name="RE_Tipo_Despacho" idcategoria="11" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Tipo_Despacho" name="RE_Tipo_Despacho" idcategoria="11" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Rango_Entrega_Despacho">  
                         <label class="" for="RE_Rango_Entrega_Despacho">Rango Entrega Despacho</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Rango_Entrega_Despacho" name="RE_Rango_Entrega_Despacho" idcategoria="12" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Rango_Entrega_Despacho" name="RE_Rango_Entrega_Despacho" idcategoria="12" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Rango_Horario_Despacho">  
                         <label class="" for="RE_Rango_Horario_Despacho">Rango Horario Despacho</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Rango_Horario_Despacho" name="RE_Rango_Horario_Despacho" idcategoria="13" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RE_Rango_Horario_Despacho" name="RE_Rango_Horario_Despacho" idcategoria="13" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Tienda_Retiro">  
                         <label class="" for="RE_Tienda_Retiro ">Tienda Retiro</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Tienda_Retiro" name="RE_Tienda_Retiro" idcategoria="14" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Tienda_Retiro" name="RE_Tienda_Retiro" idcategoria="14" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Retail_Retiro">  
                         <label class="" for="RE_Retail_Retiro">Retail Retiro</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Retail_Retiro" name="RE_Retail_Retiro" idcategoria="15" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Retail_Retiro" name="RE_Retail_Retiro" idcategoria="15" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>	    			
 					<div class="form-group col-md-2" id="div-RE_Fecha_Entrega">
 						<label class="" for="RE_Fecha_Entrega">Fecha de Entrega</label>
-						<input type="date" class="form-control input-sm validar_txt" id="RE_Fecha_Entrega" name="RE_Fecha_Entrega"  value="" oninput="difsla('input',this);return false;" onchange="difsla('change',this);return false;"onblur="difsla('blur',this);return false;"onfocus="difsla('focus',this);return false;"onkeyup="difsla('keyup-'+event.keyCode,this);return false;"onkeypress="difsla('keypress-'+event.keyCode,this);if(event.keyCode==13){this.onchange();return false;}" obligatorio="SI">
+						<input type="date" class="form-control input-sm validar_txt" id="RE_Fecha_Entrega" name="RE_Fecha_Entrega"  value="" oninput="difsla('input',this);return false;" onchange="difsla('change',this);return false;"onblur="difsla('blur',this);return false;"onfocus="difsla('focus',this);return false;"onkeyup="difsla('keyup-'+event.keyCode,this);return false;"onkeypress="difsla('keypress-'+event.keyCode,this);if(event.keyCode==13){this.onchange();return false;}" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>	    			
 					<div class="form-group col-md-1" id="div-RE_SLA_Entrega">
 						<label class="" for="RE_SLA_Entrega">SLA Entrega</label>
-						<input type="text" class="form-control input-sm" id="RE_SLA_Entrega" name="RE_SLA_Entrega" readonly="True" value="">
+						<input type="text" class="form-control input-sm" id="RE_SLA_Entrega" name="RE_SLA_Entrega" readonly="True" value="" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RE_Venta_Entrega_para">  
                         <label class="" for="RE_Venta_Entrega_para">Venta Entrega Para</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Venta_Entrega_para" name="RE_Venta_Entrega_para" idcategoria="16" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Venta_Entrega_para" name="RE_Venta_Entrega_para" idcategoria="16" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Venta_Destino_para">  
                         <label class="" for="RE_Venta_Destino_para">Venta Destino Para</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Venta_Destino_para" name="RE_Venta_Destino_para" idcategoria="17" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Venta_Destino_para" name="RE_Venta_Destino_para" idcategoria="17" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-3" id="div-RE_Dpto_Entrega_Producto">  
                         <label class="" for="RE_Dpto_Entrega_Producto">Departamento Entrega Producto</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Dpto_Entrega_Producto" name="RE_Dpto_Entrega_Producto" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Dpto_Entrega_Producto" name="RE_Dpto_Entrega_Producto" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Prov_Entrega_Producto">  
                         <label class="" for="RE_Prov_Entrega_Producto">Provincia Entrega Producto</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Prov_Entrega_Producto" name="RE_Prov_Entrega_Producto" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Prov_Entrega_Producto" name="RE_Prov_Entrega_Producto" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Dist_Entrega_Producto">  
                         <label class="" for="RE_Dist_Entrega_Producto">Distrito Entrega Producto</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Dist_Entrega_Producto" name="RE_Dist_Entrega_Producto" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Dist_Entrega_Producto" name="RE_Dist_Entrega_Producto" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RE_Tipo_Direccion_Entrega">  
                         <label class="" for="RE_Tipo_Direccion_Entrega">Tipo Dirección Entrega</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Tipo_Direccion_Entrega" name="RE_Tipo_Direccion_Entrega" idcategoria="18" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Tipo_Direccion_Entrega" name="RE_Tipo_Direccion_Entrega" idcategoria="18" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-4" id="div-RE_Direccion_Entrega">
 						<label class="" for="RE_Direccion_Entrega">Dirección Entrega</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Direccion_Entrega" name="RE_Direccion_Entrega"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Direccion_Entrega" name="RE_Direccion_Entrega"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-3" id="div-RE_Referencia_Principales">
 						<label class="" for="RE_Referencia_Principales">Referencias Principales</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Referencia_Principales" name="RE_Referencia_Principales"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Referencia_Principales" name="RE_Referencia_Principales"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-3" id="div-RE_Referencias_Adicionales">
 						<label class="" for="RE_Referencias_Adicionales">Referencias Adicionales</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Referencias_Adicionales" name="RE_Referencias_Adicionales"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Referencias_Adicionales" name="RE_Referencias_Adicionales"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RE_Coordenadas_Direccion_Entrega">
 						<label class="" for="RE_Coordenadas_Direccion_Entrega">Coordenadas Dirección Entrega</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Coordenadas_Direccion_Entrega" name="RE_Coordenadas_Direccion_Entrega"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Coordenadas_Direccion_Entrega" name="RE_Coordenadas_Direccion_Entrega"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RE_Telefono_Contacto1">
 						<label class="" for="RE_Telefono_Contacto1">Telf. Contacto 1</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Telefono_Contacto1" name="RE_Telefono_Contacto1"  onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Telefono_Contacto1" name="RE_Telefono_Contacto1"   onkeyup="var pattern = /[^0-9]/g;this.value = this.value.replace(pattern, '');" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RE_Telefono_Contacto2">
 						<label class="" for="RE_Telefono_Contacto2">Telf. Contacto 2</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RE_Telefono_Contacto2" onkeyup="var pattern = /[^0-9\.]/g;this.value = this.value.replace(pattern, '');" name="RE_Telefono_Contacto2"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RE_Telefono_Contacto2"  onkeyup="var pattern = /[^0-9]/g;this.value = this.value.replace(pattern, '');" maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  name="RE_Telefono_Contacto2"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RE_Tipo_Contacto_Ol">  
                         <label class="" for="RE_Tipo_Contacto_Ol">Tipo de Contacto OL</label>
-                        <select class="form-control input-sm validar_cbo" id="RE_Tipo_Contacto_Ol" name="RE_Tipo_Contacto_Ol" idcategoria="19" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="RE_Tipo_Contacto_Ol" name="RE_Tipo_Contacto_Ol" idcategoria="19" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -515,7 +537,7 @@
 				<div class="panel-body">
                     <div class="form-group  col-md-4" id="div-Supervisor_Vendedor">   
                         <label class="" for="Supervisor_Vendedor">Supervisor</label>
-                        <select class="form-control input-sm validar_cbo" id="Supervisor_Vendedor" name="Supervisor_Vendedor" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="Supervisor_Vendedor" name="Supervisor_Vendedor" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -528,7 +550,7 @@
 				<div class="panel-body">
                     <div class="form-group  col-md-12" id="div-Comentarios_Vendedor">
                     	<label class="" for="Comentarios_Vendedor">Comentarios</label>
-                        <textarea class="form-control input-sm validar_txt" id="Comentarios_Vendedor" name="Comentarios_Vendedor" cols="30" rows="6" obligatorio="SI"></textarea>
+                        <textarea class="form-control input-sm validar_txt" id="Comentarios_Vendedor" name="Comentarios_Vendedor" cols="30" rows="6" obligatorio="SI" <?php if ($idFicha_Venta<>0): ?>readonly="true"<?php endif ?> <?php echo  $FVenta_Interfaz; ?>></textarea>
                     </div>
 				</div>
 			</div>
@@ -538,11 +560,11 @@
 		    		<div class="panel-body">
 		    			<div class="col-md-6 col-sm-12">
 					        
-					        <button type="button" id="btnRegistrarFichaVenta" class="btn btn-primary col-md-12 col-xs-12" ><i class="fa fa-save"></i> Registrar Ficha de Venta</button>   
+					        <button type="button" id="btnRegistrarFichaVenta" class="btn btn-primary col-md-12 col-xs-12" <?php echo  $FVenta_Interfaz; ?>><i class="fa fa-save"></i> Registrar Ficha de Venta</button>   
 					      
 					    </div>
 					    <div class="col-md-6 col-sm-12">					    
-					        <a href="index.php?c=Ficha_Venta&a=v_Registrar_Ficha" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
+					        <a href="index.php?c=Ficha_Venta&a=v_Registrar_Ficha" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle" <?php echo  $FVenta_Interfaz; ?>></i> Cancelar</a>
 					    </div>
 		    		</div>
 				</div>
@@ -554,13 +576,13 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-VBO_Estado_Venta_BO">  
                         <label class="" for="VBO_Estado_Venta_BO">Estado Venta BO</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="VBO_Estado_Venta_BO" name="VBO_Estado_Venta_BO" idcategoria="31" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="VBO_Estado_Venta_BO" name="VBO_Estado_Venta_BO" idcategoria="31" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-VBO_Sub_Estado_Venta_BO">  
                         <label class="" for="VBO_Sub_Estado_Venta_BO">Sub Estado Venta BO</label>
-                        <select class="form-control input-sm validar_cbo" id="VBO_Sub_Estado_Venta_BO" name="VBO_Sub_Estado_Venta_BO" idcategoria="32" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="VBO_Sub_Estado_Venta_BO" name="VBO_Sub_Estado_Venta_BO" idcategoria="32" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -573,21 +595,21 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-RBO_Cantidad_Ordenes_Ficha">  
                         <label class="" for="RBO_Cantidad_Ordenes_Ficha">Cantidad Ordenes Ficha</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="RBO_Cantidad_Ordenes_Ficha" name="RBO_Cantidad_Ordenes_Ficha" idcategoria="33" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="RBO_Cantidad_Ordenes_Ficha" name="RBO_Cantidad_Ordenes_Ficha" idcategoria="33" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group col-md-2" id="div-RBO_Orden_One_Click1">
 						<label class="" for="RBO_Orden_One_Click1">Orden One Click 1</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click1" name="RBO_Orden_One_Click1"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click1" name="RBO_Orden_One_Click1"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RBO_Orden_One_Click2">
 						<label class="" for="RBO_Orden_One_Click2">Orden One Click 2</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click2" name="RBO_Orden_One_Click2"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click2" name="RBO_Orden_One_Click2"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
                     <div class="form-group col-md-2" id="div-RBO_Orden_One_Click3">
 						<label class="" for="RBO_Orden_One_Click3">Orden One Click 3</label>
-						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click3" name="RBO_Orden_One_Click3"  value="" obligatorio="SI">
+						<input type="text" class="form-control input-sm validar_txt" id="RBO_Orden_One_Click3" name="RBO_Orden_One_Click3"  value="" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
 					</div>
 				</div>
 			</div>			
@@ -598,13 +620,13 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-FBO_Ficha_Limpia">  
                         <label class="" for="FBO_Ficha_Limpia">Ficha Limpia</label>
-                        <select class="form-control input-sm filter_logica validar_cbo" id="FBO_Ficha_Limpia" name="FBO_Ficha_Limpia" idcategoria="34" obligatorio="SI">
+                        <select class="form-control input-sm filter_logica validar_cbo" id="FBO_Ficha_Limpia" name="FBO_Ficha_Limpia" idcategoria="34" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
                     <div class="form-group  col-md-4" id="div-FBO_Errores_Comunes_Ficha">   
                         <label class="" for="FBO_Errores_Comunes_Ficha">Errores Comunes en la Ficha</label>
-                        <select class="form-control input-sm validar_cbo" id="FBO_Errores_Comunes_Ficha" name="FBO_Errores_Comunes_Ficha" idcategoria="35" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="FBO_Errores_Comunes_Ficha" name="FBO_Errores_Comunes_Ficha" idcategoria="35" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -617,7 +639,7 @@
 				<div class="panel-body">
                     <div class="form-group col-md-2" id="div-DGBO_Tipo_Atencion_Final">  
                         <label class="" for="DGBO_Tipo_Atencion_Final">Tipo Atencion Final</label>
-                        <select class="form-control input-sm validar_cbo" id="DGBO_Tipo_Atencion_Final" name="DGBO_Tipo_Atencion_Final" idcategoria="36" obligatorio="SI">
+                        <select class="form-control input-sm validar_cbo" id="DGBO_Tipo_Atencion_Final" name="DGBO_Tipo_Atencion_Final" idcategoria="36" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>>
                         	<option value="0">-- Seleccionar --</option>                     
                         </select>
                     </div>
@@ -630,7 +652,7 @@
 				<div class="panel-body">
                     <div class="form-group  col-md-12" id="div-Comentarios_BackOffice">
                     	<label class="" for="Comentarios_BackOffice">Comentarios Finales</label>
-                        <textarea class="form-control input-sm validar_txt" id="Comentarios_BackOffice" name="Comentarios_BackOffice" cols="30" rows="6" obligatorio="SI"></textarea>
+                        <textarea class="form-control input-sm validar_txt" id="Comentarios_BackOffice" name="Comentarios_BackOffice" cols="30" rows="6" obligatorio="SI" <?php echo  $FVenta_Interfaz; ?>></textarea>
                     </div>
 				</div>
 			</div>
@@ -638,10 +660,10 @@
 				<div class="panel-body">
 		    		<div class="panel-body">
 		    			<div class="col-md-4 col-sm-12">
-					        <button type="button" id="btnActualizarFichaVenta_VBO" class="btn btn-success col-md-12 col-xs-12" style="height: auto;"><i class="fa fa-check-square-o fa-3x" aria-hidden="true" style="display: list-item;"></i> GUARDAR VALIDACIÓN BACK OFFICE</button>   
+					        <button type="button" id="btnActualizarFichaVenta_VBO" class="btn btn-success col-md-12 col-xs-12" style="height: auto;" <?php echo  $FVenta_Interfaz; ?>><i class="fa fa-check-square-o fa-3x" aria-hidden="true" style="display: list-item;"></i> GUARDAR VALIDACIÓN BACK OFFICE</button>   
 					    </div>
 					    <div class="col-md-4 col-sm-12">        
-					        <button type="button" id="btnActualizarFichaVenta_RRBO" class="btn btn-primary col-md-12 col-xs-12" style="height: auto;"><i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true" style="display: list-item;"></i> GUARDAR RECUPERO O REPROGRAMACIÓN BACK OFFICE</button>   
+					        <button type="button" id="btnActualizarFichaVenta_RRBO" class="btn btn-primary col-md-12 col-xs-12" style="height: auto;" <?php echo  $FVenta_Interfaz; ?>><i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true" style="display: list-item;"></i> GUARDAR RECUPERO O REPROGRAMACIÓN BACK OFFICE</button>   
 					    </div>
 
 					    <div class="col-md-4 col-sm-12">					        
@@ -972,6 +994,75 @@
 			});
 
 			return Resultado;
+	}
+
+	function BloquearMultiRegistro(){
+	
+
+
+		/*INICIO Cargar SubCategorias*/
+			const Campos = [					
+					{tipo_campo:'textbox',NombreCampo:'DE_Telf_Llamada_Venta',NombreInputGroup:'div-DE_Telf_Llamada_Venta'},
+					{tipo_campo:'select',NombreCampo:'DE_Base_Llamada',NombreInputGroup:'div-DE_Base_Llamada'},
+					{tipo_campo:'select',NombreCampo:'DE_Campana_Netcall',NombreInputGroup:'div-DE_Campana_Netcall'},
+					{tipo_campo:'select',NombreCampo:'DE_Sub_Campana',NombreInputGroup:'div-DE_Sub_Campana'},
+					{tipo_campo:'select',NombreCampo:'DE_Detalle_Sub_Campana',NombreInputGroup:'div-DE_Detalle_Sub_Campana'},
+					{tipo_campo:'select',NombreCampo:'DE_CF_Max_Linea_Movil',NombreInputGroup:'div-DE_CF_Max_Linea_Movil'},
+					{tipo_campo:'select',NombreCampo:'DE_Tipo_Etiqueta',NombreInputGroup:'div-DE_Tipo_Etiqueta'},
+					{tipo_campo:'textbox',NombreCampo:'DE_CF_Max_Linea_Pack',NombreInputGroup:'div-DE_CF_Max_Linea_Pack'},
+					{tipo_campo:'textbox',NombreCampo:'DE_Monto_Disp_Finan_Equipos',NombreInputGroup:'div-DE_Monto_Disp_Finan_Equipos'},
+					{tipo_campo:'select',NombreCampo:'DE_Cant_Meses_Finan_Equipos',NombreInputGroup:'div-DE_Cant_Meses_Finan_Equipos'},
+					{tipo_campo:'select',NombreCampo:'DE_Cliente_Entel',NombreInputGroup:'div-DE_Cliente_Entel'},
+					{tipo_campo:'select',NombreCampo:'DE_Cliente_Promo_Dscto',NombreInputGroup:'div-DE_Cliente_Promo_Dscto'},
+					{tipo_campo:'select',NombreCampo:'DP_TipoDocumento',NombreInputGroup:'div-DP_TipoDocumento'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Documento',NombreInputGroup:'div-DP_Documento'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Nombre_Cliente',NombreInputGroup:'div-DP_Nombre_Cliente'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Apellido_Paterno',NombreInputGroup:'div-DP_Apellido_Paterno'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Apellido_Materno',NombreInputGroup:'div-DP_Apellido_Materno'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Nacionalidad',NombreInputGroup:'div-DP_Nacionalidad'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Lugar_Nacimiento',NombreInputGroup:'div-DP_Lugar_Nacimiento'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Fecha_Nacimiento',NombreInputGroup:'div-DP_Fecha_Nacimiento'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Nombre_Padre',NombreInputGroup:'div-DP_Nombre_Padre'},
+					{tipo_campo:'textbox',NombreCampo:'DP_Nombre_Madre',NombreInputGroup:'div-DP_Nombre_Madre'},
+					{tipo_campo:'textbox',NombreCampo:'DF_Email_Facturacion_Otros',NombreInputGroup:'div-DF_Email_Facturacion_Otros'},
+					{tipo_campo:'select',NombreCampo:'DF_Dpto_Facturacion',NombreInputGroup:'div-DF_Dpto_Facturacion'},
+					{tipo_campo:'select',NombreCampo:'DF_Prov_Facturacion',NombreInputGroup:'div-DF_Prov_Facturacion'},
+					{tipo_campo:'select',NombreCampo:'DF_Dist_Facturacion',NombreInputGroup:'div-DF_Dist_Facturacion'},
+					{tipo_campo:'textbox',NombreCampo:'DF_Domicilio_Facturacion',NombreInputGroup:'div-DF_Domicilio_Facturacion'},
+					{tipo_campo:'select',NombreCampo:'RE_Tipo_Despacho',NombreInputGroup:'div-RE_Tipo_Despacho'},
+					{tipo_campo:'select',NombreCampo:'RE_Rango_Entrega_Despacho',NombreInputGroup:'div-RE_Rango_Entrega_Despacho'},
+					{tipo_campo:'select',NombreCampo:'RE_Rango_Horario_Despacho',NombreInputGroup:'div-RE_Rango_Horario_Despacho'},
+					{tipo_campo:'select',NombreCampo:'RE_Tienda_Retiro',NombreInputGroup:'div-RE_Tienda_Retiro'},
+					{tipo_campo:'select',NombreCampo:'RE_Retail_Retiro',NombreInputGroup:'div-RE_Retail_Retiro'},
+					{tipo_campo:'select',NombreCampo:'RE_Fecha_Entrega',NombreInputGroup:'div-RE_Fecha_Entrega'},
+					{tipo_campo:'select',NombreCampo:'RE_Venta_Entrega_para',NombreInputGroup:'div-RE_Venta_Entrega_para'},
+					{tipo_campo:'select',NombreCampo:'RE_Venta_Destino_para',NombreInputGroup:'div-RE_Venta_Destino_para'},
+					{tipo_campo:'select',NombreCampo:'RE_Dpto_Entrega_Producto',NombreInputGroup:'div-RE_Dpto_Entrega_Producto'},
+					{tipo_campo:'select',NombreCampo:'RE_Prov_Entrega_Producto',NombreInputGroup:'div-RE_Prov_Entrega_Producto'},
+					{tipo_campo:'select',NombreCampo:'RE_Dist_Entrega_Producto',NombreInputGroup:'div-RE_Dist_Entrega_Producto'},
+					{tipo_campo:'select',NombreCampo:'RE_Tipo_Direccion_Entrega',NombreInputGroup:'div-RE_Tipo_Direccion_Entrega'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Direccion_Entrega',NombreInputGroup:'div-RE_Direccion_Entrega'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Referencia_Principales',NombreInputGroup:'div-RE_Referencia_Principales'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Referencias_Adicionales',NombreInputGroup:'div-RE_Referencias_Adicionales'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Coordenadas_Direccion_Entrega',NombreInputGroup:'div-RE_Coordenadas_Direccion_Entrega'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Telefono_Contacto1',NombreInputGroup:'div-RE_Telefono_Contacto1'},
+					{tipo_campo:'textbox',NombreCampo:'RE_Telefono_Contacto2',NombreInputGroup:'div-RE_Telefono_Contacto2'},
+					{tipo_campo:'select',NombreCampo:'RE_Tipo_Contacto_Ol',NombreInputGroup:'div-RE_Tipo_Contacto_Ol'},
+					{tipo_campo:'select',NombreCampo:'RV_Tipo_Ofrecimiento',NombreInputGroup:'div-RV_Tipo_Ofrecimiento'},
+					{tipo_campo:'select',NombreCampo:'Supervisor_Vendedor',NombreInputGroup:'div-Supervisor_Vendedor'}
+				
+			
+			];
+			
+			var Resultado="Completo";
+			var campo_vacio=1;
+			Campos.forEach(function(index) {
+				
+				$("#"+index.NombreCampo).attr('disabled',true);
+			
+			});
+
+			return Resultado;
 	}	
 
 	function ListarSubCategorias(idFrmCategoria,Categoria_id)
@@ -994,7 +1085,97 @@
 	      	},
 	      	dataType: 'json'
 	    });
-  	}	
+  	}
+  		function RellenarSelect_SubCategorias(data,idFrmCategoria)
+	{
+
+	        	var html = "";
+	        	//$(".listaProveedores").find("option").remove();                 
+	        	$.each(data, function(index, value) { 
+	          		html += '<option value="'+value.idSubCategoria+'" aplicar_logica="'+value.Aplicar_Logica+'">'+value.Nombre+'</option>';
+	        	});                          
+	        	$("#"+idFrmCategoria+"").append(html);  
+  	}
+
+
+  	function ListarAllSubCategorias()
+	{
+		ListarDepartamentos("DF_Dpto_Facturacion");
+		ListarDepartamentos("RE_Dpto_Entrega_Producto");
+		ListarSupervisoresVenta("Supervisor_Vendedor");
+	    $.ajax({
+	      	type: "POST",
+	      	url: 'index.php?c=SubCategoria&a=ListarSubCategoriasAjax',
+	      	//sync:false,        
+	      	success: function(data) {
+	        	
+	        	
+	       	 
+							/*INICIO Cargar SubCategorias*/
+				const Categorias = [
+					{idCategoria:1,NombreSelect:'DE_Base_Llamada'},
+					{idCategoria:2,NombreSelect:'DE_Campana_Netcall'},
+					{idCategoria:3,NombreSelect:'DE_Sub_Campana'},
+					{idCategoria:4,NombreSelect:'DE_Detalle_Sub_Campana'},
+					{idCategoria:5,NombreSelect:'DE_CF_Max_Linea_Movil'},
+					{idCategoria:6,NombreSelect:'DE_Tipo_Etiqueta'},
+					{idCategoria:7,NombreSelect:'DE_Cant_Meses_Finan_Equipos'},
+					{idCategoria:8,NombreSelect:'DE_Cliente_Entel'},
+					{idCategoria:9,NombreSelect:'DE_Cliente_Promo_Dscto'},
+					{idCategoria:10,NombreSelect:'DP_TipoDocumento'},
+					{idCategoria:11,NombreSelect:'RE_Tipo_Despacho'},
+					{idCategoria:12,NombreSelect:'RE_Rango_Entrega_Despacho'},
+					{idCategoria:13,NombreSelect:'RE_Rango_Horario_Despacho'},
+					{idCategoria:14,NombreSelect:'RE_Tienda_Retiro'},
+					{idCategoria:15,NombreSelect:'RE_Retail_Retiro'},
+					{idCategoria:16,NombreSelect:'RE_Venta_Entrega_para'},
+					{idCategoria:17,NombreSelect:'RE_Venta_Destino_para'},
+					{idCategoria:18,NombreSelect:'RE_Tipo_Direccion_Entrega'},
+					{idCategoria:19,NombreSelect:'RE_Tipo_Contacto_Ol'},
+					{idCategoria:20,NombreSelect:'RV_Tipo_Ofrecimiento'},
+					{idCategoria:21,NombreSelect:'RV_Tipo_Venta'},
+					{idCategoria:22,NombreSelect:'RV_Operador_Cedente'},
+					{idCategoria:23,NombreSelect:'RV_Origen'},
+					{idCategoria:24,NombreSelect:'RV_Plan_Tarifario'},
+					{idCategoria:25,NombreSelect:'RV_Cargo_Fijo_Plan'},
+					{idCategoria:26,NombreSelect:'RV_Tipo_Producto'},
+					{idCategoria:27,NombreSelect:'RV_Accesorio_Regalo'},
+					{idCategoria:28,NombreSelect:'RV_Cant_Accesorios'},
+					{idCategoria:29,NombreSelect:'RV_Tipo_Pago'},
+					{idCategoria:30,NombreSelect:'RV_Promociones_Bancos'},
+					{idCategoria:31,NombreSelect:'VBO_Estado_Venta_BO'},
+					{idCategoria:32,NombreSelect:'VBO_Sub_Estado_Venta_BO'},
+					{idCategoria:33,NombreSelect:'RBO_Cantidad_Ordenes_Ficha'},
+					{idCategoria:34,NombreSelect:'FBO_Ficha_Limpia'},
+					{idCategoria:35,NombreSelect:'FBO_Errores_Comunes_Ficha'},
+					{idCategoria:36,NombreSelect:'DGBO_Tipo_Atencion_Final'},
+				];
+
+				
+				Categorias.forEach(function(index,idCategoria,NombreSelect) {
+					let FilterCat_id = data.filter(data => data.Categoria_id == index.idCategoria )
+					RellenarSelect_SubCategorias(FilterCat_id,index.NombreSelect)
+				});
+
+
+				var idFicha_Venta=$("#idFicha_Venta").val();
+
+				if(idFicha_Venta!=0){
+					ConsultarxIdFicha_Venta(idFicha_Venta);
+				}else{
+					$(".loader-page").css({visibility:"hidden",opacity:"0"});
+				}       
+			        	               
+	      	},
+	      	dataType: 'json'
+	    });
+
+	    //let SubCategoria_FiltaraxId = SubCategorias.filter(SubCategorias => SubCategorias.Categoria_id == 11)
+
+		
+  	}
+
+
 
   	function limpiar_campos(){
   			$("#DP_Nombre_Cliente").val('');
@@ -1006,12 +1187,12 @@
 			$("#DP_Nombre_Padre").val('');
 			$("#DP_Nombre_Madre").val('');
 			$("#DP_Edad_Actual").val('');
-			$("#div-DP_Nombre_Cliente,#div-DP_Apellido_Paterno,#div-DP_Apellido_Materno,#div-DP_Nacionalidad,#div-DP_Lugar_Nacimiento,#div-DP_Fecha_Nacimiento,#div-DP_Nombre_Padre,#div-DP_Nombre_Madre,#div-DP_Edad_Actual").removeClass('has-success').addClass('has-error');
+			$("#div-DP_Nombre_Cliente,#div-DP_Apellido_Paterno,#div-DP_Apellido_Materno,#div-DP_Nacionalidad,#div-DP_Lugar_Nacimiento,#div-DP_Fecha_Nacimiento,#div-DP_Nombre_Padre,#div-DP_Nombre_Madre").removeClass('has-success').addClass('has-error');
 		
   	}
 
   	function campo_success(){
-		$("#div-DP_Nombre_Cliente,#div-DP_Apellido_Paterno,#div-DP_Apellido_Materno,#div-DP_Nacionalidad,#div-DP_Lugar_Nacimiento,#div-DP_Fecha_Nacimiento,#div-DP_Nombre_Padre,#div-DP_Nombre_Madre,#div-DP_Edad_Actual").removeClass('has-error').addClass('has-success');
+		$("#div-DP_Nombre_Cliente,#div-DP_Apellido_Paterno,#div-DP_Apellido_Materno,#div-DP_Nacionalidad,#div-DP_Lugar_Nacimiento,#div-DP_Fecha_Nacimiento,#div-DP_Nombre_Padre,#div-DP_Nombre_Madre").removeClass('has-error').addClass('has-success');
 	}
 
 
@@ -1110,7 +1291,7 @@
 	    });
   	}
 
-  	function ListarSupervisoresVenta(idFrmCbo)
+	function ListarSupervisoresVenta(idFrmCbo)
 	{
 	    $.ajax({
 	      type: "POST",
@@ -1120,14 +1301,13 @@
 	        var html = "";
 	        //$(".listaProveedores").find("option").remove();                 
 	        $.each(data, function(index, value) { 
-	          html += '<option value="'+value.idPersona+'">'+value.NombreSupervisor+'</option>';
+	          html += '<option value="'+value.idPersona+'">'+value.Cargo+' - '+value.NombreSupervisor+'</option>';
 	        });                          
 	        $("#"+idFrmCbo+"").append(html);                 
 	      },
 	      dataType: 'json'
 	    });
-  	}
-
+	}
   	function ListarProvincias(dpto,idFrmProv){
 	    $.ajax({
 	      	type: "POST",
@@ -1230,14 +1410,31 @@
 				 $("#RE_Rango_Entrega_Despacho").val(data['RE_Rango_Entrega_Despacho']).trigger('change');
 				 setTimeout(function () {
 				 	$("#RE_Rango_Horario_Despacho").val(data['RE_Rango_Horario_Despacho']).trigger('change');
-				 		$("#RE_Tienda_Retiro").val(data['RE_Tienda_Retiro']);
-						$("#RE_Retail_Retiro").val(data['RE_Retail_Retiro']);
-						$("#RE_Venta_Entrega_para").val(data['RE_Venta_Entrega_para']);
-						$("#RE_Venta_Destino_para").val(data['RE_Venta_Destino_para']);
-					}, 1000);
+				 		setTimeout(function () {
+					 		$("#RE_Tienda_Retiro").val(data['RE_Tienda_Retiro']);
+							$("#RE_Retail_Retiro").val(data['RE_Retail_Retiro']);
+							$("#RE_Venta_Entrega_para").val(data['RE_Venta_Entrega_para']);
+							$("#RE_Venta_Destino_para").val(data['RE_Venta_Destino_para']);
+								setTimeout(function () {
+									$("#RE_Tipo_Direccion_Entrega").val(data['RE_Tipo_Direccion_Entrega']);
+									$("#RE_Direccion_Entrega").val(data['RE_Direccion_Entrega']);
+									$("#RE_Referencia_Principales").val(data['RE_Referencia_Principales']);
+									$("#RE_Referencias_Adicionales").val(data['RE_Referencias_Adicionales']);
+									$("#RE_Coordenadas_Direccion_Entrega").val(data['RE_Coordenadas_Direccion_Entrega']);
+									$("#RE_Telefono_Contacto1").val(data['RE_Telefono_Contacto1']);
+									$("#RE_Telefono_Contacto2").val(data['RE_Telefono_Contacto2']);
+									$("#RE_Tipo_Contacto_Ol").val(data['RE_Tipo_Contacto_Ol']);
+									$("#RE_Fecha_Entrega").val(data['RE_Fecha_Entrega']);
+									var DiaRegistroVenta = new Date($("#Fecha_Registro_Vendedor").val());
+					    			var RE_Fecha_Entrega = new Date(data['RE_Fecha_Entrega']);
+					    			var RE_SLA_Entrega=calcular_diferencia_fechas(DiaRegistroVenta,RE_Fecha_Entrega,'Days');
+					    			$("#RE_SLA_Entrega").val(RE_SLA_Entrega);					    			
+							}, 2000);
+						}, 2000);
+					}, 2000);
 
 				}, 1000);
-				$("#RE_Fecha_Entrega").val(data['RE_Fecha_Entrega']);
+
 
 				
 				let  Cod_Dist_Ent=data['RE_Ubigeo_Entrega'];
@@ -1248,14 +1445,8 @@
 				ListarProvincias(Cod_Dpto_Ent,"RE_Prov_Entrega_Producto");
 				ListarDistritos(Cod_Dpto_Ent,Cod_Prov_Ent,"RE_Dist_Entrega_Producto");
 
-				$("#RE_Tipo_Direccion_Entrega").val(data['RE_Tipo_Direccion_Entrega']).trigger('change');
-				$("#RE_Direccion_Entrega").val(data['RE_Direccion_Entrega']).trigger('change');
-				$("#RE_Referencia_Principales").val(data['RE_Referencia_Principales']).trigger('change');
-				$("#RE_Referencias_Adicionales").val(data['RE_Referencias_Adicionales']).trigger('change');
-				$("#RE_Coordenadas_Direccion_Entrega").val(data['RE_Coordenadas_Direccion_Entrega']);
-				$("#RE_Telefono_Contacto1").val(data['RE_Telefono_Contacto1']).trigger('change');
-				$("#RE_Telefono_Contacto2").val(data['RE_Telefono_Contacto2']).trigger('change');
-				$("#RE_Tipo_Contacto_Ol").val(data['RE_Tipo_Contacto_Ol']).trigger('change');
+
+
 
 				/*Fin 5.- Registro para Entrega*/
 
@@ -1263,31 +1454,37 @@
 				$("#RV_Tipo_Ofrecimiento").val(data['RV_Tipo_Ofrecimiento']);
 				$("#RV_Tipo_Venta").val(data['RV_Tipo_Venta']).trigger('change');
 				setTimeout(function () {
-				 	$("#RV_Operador_Cedente").val(data['RV_Operador_Cedente']).trigger('change');
-					$("#RV_Origen").val(data['RV_Origen']).trigger('change');
-					$("#RV_Linea_Portar").val(data['RV_Linea_Portar']).trigger('change');
+				 	
 					$("#RV_Plan_Tarifario").val(data['RV_Plan_Tarifario']).trigger('change');
-					$("#RV_Cargo_Fijo_Plan").val(data['RV_Cargo_Fijo_Plan']).trigger('change');
-					$("#RV_Tipo_Producto").val(data['RV_Tipo_Producto']).trigger('change');
-					$("#RV_Accesorio_Regalo").val(data['RV_Accesorio_Regalo']).trigger('change');
-					$("#RV_SKU_Accesorio_Regalo1").val(data['RV_SKU_Accesorio_Regalo1']).trigger('change');
-					$("#RV_SKU_Accesorio_Regalo2").val(data['RV_SKU_Accesorio_Regalo2']).trigger('change');
-					$("#RV_SKU_Pack").val(data['RV_SKU_Pack']).trigger('change');
-					$("#RV_Precio_Equipo_Inicial_Total").val(data['RV_Precio_Equipo_Inicial_Total']).trigger('change');
-					$("#RV_Cuota_Equipo_Mensual").val(data['RV_Cuota_Equipo_Mensual']).trigger('change');
-					$("#RV_Cant_Accesorios").val(data['RV_Cant_Accesorios']).trigger('change');
-					$("#RV_SKU_Accesorio1").val(data['RV_SKU_Accesorio1']);
-					$("#RV_Precio_Accesorio1").val(data['RV_Precio_Accesorio1']);
-					$("#RV_SKU_Accesorio2").val(data['RV_SKU_Accesorio2']);
-					$("#RV_Precio_Accesorio2").val(data['RV_Precio_Accesorio2']);
-					$("#RV_SKU_Accesorio3").val(data['RV_SKU_Accesorio3']);
-					$("#RV_Precio_Accesorio3").val(data['RV_Precio_Accesorio3']);
-					$("#RV_SKU_Accesorio4").val(data['RV_SKU_Accesorio4']);
-					$("#RV_Precio_Accesorio4").val(data['RV_Precio_Accesorio4']);
-					$("#RV_SKU_Accesorio5").val(data['RV_SKU_Accesorio5']);
-					$("#RV_Precio_Accesorio5").val(data['RV_Precio_Accesorio5']);
-					$("#RV_Tipo_Pago").val(data['RV_Tipo_Pago']).trigger('change');
-					$("#RV_Promociones_Bancos").val(data['RV_Promociones_Bancos']).trigger('change');
+					setTimeout(function () {
+						$("#RV_Operador_Cedente").val(data['RV_Operador_Cedente']);
+						$("#RV_Origen").val(data['RV_Origen']);
+						$("#RV_Linea_Portar").val(data['RV_Linea_Portar']).trigger('change');
+				 		$("#RV_Cargo_Fijo_Plan").val(data['RV_Cargo_Fijo_Plan']);
+				 		$("#RV_Tipo_Producto").val(data['RV_Tipo_Producto']).trigger('change');
+						$("#RV_Accesorio_Regalo").val(data['RV_Accesorio_Regalo']).trigger('change');
+						$("#RV_SKU_Accesorio_Regalo1").val(data['RV_SKU_Accesorio_Regalo1']);
+						$("#RV_SKU_Accesorio_Regalo2").val(data['RV_SKU_Accesorio_Regalo2']);
+						$("#RV_SKU_Pack").val(data['RV_SKU_Pack']);
+						$("#RV_Precio_Equipo_Inicial_Total").val(data['RV_Precio_Equipo_Inicial_Total']);
+						$("#RV_Cuota_Equipo_Mensual").val(data['RV_Cuota_Equipo_Mensual']);
+						$("#RV_Cant_Accesorios").val(data['RV_Cant_Accesorios']).trigger('change');
+						$("#RV_SKU_Accesorio1").val(data['RV_SKU_Accesorio1']);
+						$("#RV_Precio_Accesorio1").val(data['RV_Precio_Accesorio1']);
+						$("#RV_SKU_Accesorio2").val(data['RV_SKU_Accesorio2']);
+						$("#RV_Precio_Accesorio2").val(data['RV_Precio_Accesorio2']);
+						$("#RV_SKU_Accesorio3").val(data['RV_SKU_Accesorio3']);
+						$("#RV_Precio_Accesorio3").val(data['RV_Precio_Accesorio3']);
+						$("#RV_SKU_Accesorio4").val(data['RV_SKU_Accesorio4']);
+						$("#RV_Precio_Accesorio4").val(data['RV_Precio_Accesorio4']);
+						$("#RV_SKU_Accesorio5").val(data['RV_SKU_Accesorio5']);
+						$("#RV_Precio_Accesorio5").val(data['RV_Precio_Accesorio5']);
+						$("#RV_Tipo_Pago").val(data['RV_Tipo_Pago']).trigger('change');
+						$("#RV_Promociones_Bancos").val(data['RV_Promociones_Bancos']);
+
+					}, 2000);
+					
+
 				}, 1000);
 
 		
@@ -1296,7 +1493,8 @@
 
 				$("#Supervisor_Vendedor").val(data['Supervisor_Vendedor']).trigger('change');
 				$("#Comentarios_Vendedor").val(data['Comentarios_Vendedor']).trigger('change');
-				$("#Ingresado_por_Vendedor").val(data['Ingresado_por_Vendedor']).trigger('change');
+				$("#Ingresado_por_Vendedor").attr("idVendedor",data['Ingresado_por_Vendedor']);
+				$("#Ingresado_por_Vendedor").val(data['Documento_Vendedor']+" - "+data['Nombre_Vendedor']);
 				$("#Fecha_Registro_Vendedor").val(data['Fecha_Registro_Vendedor']).trigger('change');
 				$("#VBO_Estado_Venta_BO").val(data['VBO_Estado_Venta_BO']).trigger('change');
 
@@ -1314,8 +1512,10 @@
             	$(".loader-page").css({visibility:"hidden",opacity:"0"})
                	var DiaActual = new Date();
     			var DP_Fecha_Nacimiento = new Date(data['Fecha_Nacimiento']);
-    			var DP_Edad_Actual=calcular_diferencia_fechas(DP_Fecha_Nacimiento,DiaActual,'Year')
+    			var DP_Edad_Actual=calcular_diferencia_fechas(DP_Fecha_Nacimiento,DiaActual,'Year');
     			$("#DP_Edad_Actual").val(DP_Edad_Actual);
+
+    
 
     			setTimeout(function() {
 					$("#DF_Dpto_Facturacion").val(Cod_Dpto_Fact);
@@ -1325,7 +1525,7 @@
 					$("#RE_Dpto_Entrega_Producto").val(Cod_Dpto_Ent);
 					$("#RE_Prov_Entrega_Producto").val(Cod_Prov_Ent);
 					$("#RE_Dist_Entrega_Producto").val(data['RE_Ubigeo_Entrega']);
-				}, 2000);
+				}, 3000);
          	
     			
 
@@ -1340,61 +1540,8 @@
 	$(document).ready(function() {
 
 		/*INICIO Cargar SubCategorias*/
-		const Categorias = [
-			{idCategoria:1,NombreSelect:'DE_Base_Llamada'},
-			{idCategoria:2,NombreSelect:'DE_Campana_Netcall'},
-			{idCategoria:3,NombreSelect:'DE_Sub_Campana'},
-			{idCategoria:4,NombreSelect:'DE_Detalle_Sub_Campana'},
-			{idCategoria:5,NombreSelect:'DE_CF_Max_Linea_Movil'},
-			{idCategoria:6,NombreSelect:'DE_Tipo_Etiqueta'},
-			{idCategoria:7,NombreSelect:'DE_Cant_Meses_Finan_Equipos'},
-			{idCategoria:8,NombreSelect:'DE_Cliente_Entel'},
-			{idCategoria:9,NombreSelect:'DE_Cliente_Promo_Dscto'},
-			{idCategoria:10,NombreSelect:'DP_TipoDocumento'},
-			{idCategoria:11,NombreSelect:'RE_Tipo_Despacho'},
-			{idCategoria:12,NombreSelect:'RE_Rango_Entrega_Despacho'},
-			{idCategoria:13,NombreSelect:'RE_Rango_Horario_Despacho'},
-			{idCategoria:14,NombreSelect:'RE_Tienda_Retiro'},
-			{idCategoria:15,NombreSelect:'RE_Retail_Retiro'},
-			{idCategoria:16,NombreSelect:'RE_Venta_Entrega_para'},
-			{idCategoria:17,NombreSelect:'RE_Venta_Destino_para'},
-			{idCategoria:18,NombreSelect:'RE_Tipo_Direccion_Entrega'},
-			{idCategoria:19,NombreSelect:'RE_Tipo_Contacto_Ol'},
-			{idCategoria:20,NombreSelect:'RV_Tipo_Ofrecimiento'},
-			{idCategoria:21,NombreSelect:'RV_Tipo_Venta'},
-			{idCategoria:22,NombreSelect:'RV_Operador_Cedente'},
-			{idCategoria:23,NombreSelect:'RV_Origen'},
-			{idCategoria:24,NombreSelect:'RV_Plan_Tarifario'},
-			{idCategoria:25,NombreSelect:'RV_Cargo_Fijo_Plan'},
-			{idCategoria:26,NombreSelect:'RV_Tipo_Producto'},
-			{idCategoria:27,NombreSelect:'RV_Accesorio_Regalo'},
-			{idCategoria:28,NombreSelect:'RV_Cant_Accesorios'},
-			{idCategoria:29,NombreSelect:'RV_Tipo_Pago'},
-			{idCategoria:30,NombreSelect:'RV_Promociones_Bancos'},
-			{idCategoria:31,NombreSelect:'VBO_Estado_Venta_BO'},
-			{idCategoria:32,NombreSelect:'VBO_Sub_Estado_Venta_BO'},
-			{idCategoria:33,NombreSelect:'RBO_Cantidad_Ordenes_Ficha'},
-			{idCategoria:34,NombreSelect:'FBO_Ficha_Limpia'},
-			{idCategoria:35,NombreSelect:'FBO_Errores_Comunes_Ficha'},
-			{idCategoria:36,NombreSelect:'DGBO_Tipo_Atencion_Final'},
-		
-		];
-		
-		Categorias.forEach(function(index,idCategoria,NombreSelect) {
-			//console.log(index.idCategoria);
-			//console.log(index.NombreSelect);
-			ListarSubCategorias(index.NombreSelect,index.idCategoria)
-		});
-		ListarDepartamentos("DF_Dpto_Facturacion");
-		ListarDepartamentos("RE_Dpto_Entrega_Producto");
-		ListarSupervisoresVenta("Supervisor_Vendedor");
-		var idFicha_Venta=$("#idFicha_Venta").val();
+		ListarAllSubCategorias();
 
-		if(idFicha_Venta!=0){
-			ConsultarxIdFicha_Venta(idFicha_Venta);
-		}else{
-			$(".loader-page").css({visibility:"hidden",opacity:"0"})
-		}
 
 		/*FIN Cargar Sub Categorias*/
 
@@ -1631,7 +1778,7 @@
 						}
 					},
 					RE_Rango_Entrega_Despacho:{
-						46:{
+						47:{
 							Nombre:'RE_Rango_Horario_Despacho',
 							ItemsFilter:'62'
 						}
@@ -1691,6 +1838,44 @@
 						}
 						
 					}					
+				},
+				47:{
+					NroAcciones:1,
+					Acciones:{
+						1:{
+							Accion:'Filtro_Superior',
+							Nombre:'RE_Tipo_Despacho',
+							Nombre_Key:'RE_Rango_Entrega_Despacho'
+						}
+						
+					}					
+				},
+				79:{
+					NroAcciones:1,
+					Acciones:{
+						1:{
+							Accion:'MultiRegistro',
+							NroRegistrosPermitidos:1
+						}
+					}
+				},
+				80:{
+					NroAcciones:1,
+					Acciones:{
+						1:{
+							Accion:'MultiRegistro',
+							NroRegistrosPermitidos:2
+						}
+					}
+				},
+				81:{
+					NroAcciones:1,
+					Acciones:{
+						1:{
+							Accion:'MultiRegistro',
+							NroRegistrosPermitidos:3
+						}
+					}
 				},
 				82:{
 					NroAcciones:3,
@@ -2354,6 +2539,10 @@
 				var SubCat_LogicaRE=LogicaRE[idSubCategoria]['Acciones'];
 				for (var i = 1; i <= NroIteraciones; i++) {
 					
+					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='MultiRegistro'){
+						$("#"+id).attr('NroRegistrosPermitidos', LogicaRE[idSubCategoria]['Acciones'][i]['NroRegistrosPermitidos']);
+					}
+
 					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Filtrar_Items'){
 						ListarSubCategoriasxIds(LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'],LogicaRE[idSubCategoria]['Acciones'][i]['ItemsFilter'])
 					}
@@ -2448,353 +2637,408 @@
 	    /*FIN 4.- Registro para Entrega*/
 
 
-	   $('#confirmar-actualizar-ficha').on('show.bs.modal',function(){
+	    var count_actualizar=0;
+	   	$('#confirmar-actualizar-ficha').on('show.bs.modal',function(){
+	  		
 	    	$('.btn-ok-ActualizarFichaVenta').click(function(){
-	    		var idFicha_Venta=$("#idFicha_Venta").val();
-	    		var DE_Telf_Llamada_Venta=$("#DE_Telf_Llamada_Venta").val();
-				var DE_Telf_Llamada_Venta=$("#DE_Telf_Llamada_Venta").val();
-				var DE_Base_Llamada=$("#DE_Base_Llamada").val();
-				var DE_Campana_Netcall=$("#DE_Campana_Netcall").val();
-				var DE_Sub_Campana=$("#DE_Sub_Campana").val();
-				var DE_Detalle_Sub_Campana=$("#DE_Detalle_Sub_Campana").val();
-				var DE_CF_Max_Linea_Movil=$("#DE_CF_Max_Linea_Movil").val();
-				var DE_Tipo_Etiqueta=$("#DE_Tipo_Etiqueta").val();
-				var DE_CF_Max_Linea_Pack=$("#DE_CF_Max_Linea_Pack").val();
-				var DE_Monto_Disp_Finan_Equipos=$("#DE_Monto_Disp_Finan_Equipos").val();
-				var DE_Cant_Meses_Finan_Equipos=$("#DE_Cant_Meses_Finan_Equipos").val();
-				var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
-				var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
-				var DP_TipoDocumento=$("#DP_TipoDocumento").val();
-				var DP_Documento=$("#DP_Documento").val();
-				var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
-				var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
-				var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
-				var DP_Nacionalidad=$("#DP_Nacionalidad").val();
-				var DP_Lugar_Nacimiento=$("#DP_Lugar_Nacimiento").val();
-				var DP_Fecha_Nacimiento=$("#DP_Fecha_Nacimiento").val();
-				var DP_Nombre_Padre=$("#DP_Nombre_Padre").val();
-				var DP_Nombre_Madre=$("#DP_Nombre_Madre").val();
-				var DF_Email_Facturacion_Otros=$("#DF_Email_Facturacion_Otros").val();
-				var DF_Dist_Facturacion=$("#DF_Dist_Facturacion").val();
-				var DF_Domicilio_Facturacion=$("#DF_Domicilio_Facturacion").val();
-				var RE_Tipo_Despacho=$("#RE_Tipo_Despacho").val();
-				var RE_Rango_Entrega_Despacho=$("#RE_Rango_Entrega_Despacho").val();
-				var RE_Rango_Horario_Despacho=$("#RE_Rango_Horario_Despacho").val();
-				var RE_Tienda_Retiro=$("#RE_Tienda_Retiro").val();
-				var RE_Retail_Retiro=$("#RE_Retail_Retiro").val();
-				var RE_Fecha_Entrega=$("#RE_Fecha_Entrega").val();
-				var RE_Venta_Entrega_para=$("#RE_Venta_Entrega_para").val();
-				var RE_Venta_Destino_para=$("#RE_Venta_Destino_para").val();
-				var RE_Dist_Entrega_Producto=$("#RE_Dist_Entrega_Producto").val();
-				var RE_Tipo_Direccion_Entrega=$("#RE_Tipo_Direccion_Entrega").val();
-				var RE_Direccion_Entrega=$("#RE_Direccion_Entrega").val();
-				var RE_Referencia_Principales=$("#RE_Referencia_Principales").val();
-				var RE_Referencias_Adicionales=$("#RE_Referencias_Adicionales").val();
-				var RE_Coordenadas_Direccion_Entrega=$("#RE_Coordenadas_Direccion_Entrega").val();
-				var RE_Telefono_Contacto1=$("#RE_Telefono_Contacto1").val();
-				var RE_Telefono_Contacto2=$("#RE_Telefono_Contacto2").val();
-				var RE_Tipo_Contacto_Ol=$("#RE_Tipo_Contacto_Ol").val();
-				var RV_Tipo_Ofrecimiento=$("#RV_Tipo_Ofrecimiento").val();
-				var RV_Tipo_Venta=$("#RV_Tipo_Venta").val();
-				var RV_Operador_Cedente=$("#RV_Operador_Cedente").val();
-				var RV_Origen=$("#RV_Origen").val();
-				var RV_Linea_Portar=$("#RV_Linea_Portar").val();
-				var RV_Plan_Tarifario=$("#RV_Plan_Tarifario").val();
-				var RV_Cargo_Fijo_Plan=$("#RV_Cargo_Fijo_Plan").val();
-				var RV_Tipo_Producto=$("#RV_Tipo_Producto").val();
-				var RV_Accesorio_Regalo=$("#RV_Accesorio_Regalo").val();
-				var RV_SKU_Accesorio_Regalo1=$("#RV_SKU_Accesorio_Regalo1").val();
-				var RV_SKU_Accesorio_Regalo2=$("#RV_SKU_Accesorio_Regalo2").val();
-				var RV_SKU_Pack=$("#RV_SKU_Pack").val();
-				var RV_Precio_Equipo_Inicial_Total=$("#RV_Precio_Equipo_Inicial_Total").val();
-				var RV_Cuota_Equipo_Mensual=$("#RV_Cuota_Equipo_Mensual").val();
-				var RV_Cant_Accesorios=$("#RV_Cant_Accesorios").val();
-				var RV_SKU_Accesorio1=$("#RV_SKU_Accesorio1").val();
-				var RV_Precio_Accesorio1=$("#RV_Precio_Accesorio1").val();
-				var RV_SKU_Accesorio2=$("#RV_SKU_Accesorio2").val();
-				var RV_Precio_Accesorio2=$("#RV_Precio_Accesorio2").val();
-				var RV_SKU_Accesorio3=$("#RV_SKU_Accesorio3").val();
-				var RV_Precio_Accesorio3=$("#RV_Precio_Accesorio3").val();
-				var RV_SKU_Accesorio4=$("#RV_SKU_Accesorio4").val();
-				var RV_Precio_Accesorio4=$("#RV_Precio_Accesorio4").val();
-				var RV_SKU_Accesorio5=$("#RV_SKU_Accesorio5").val();
-				var RV_Precio_Accesorio5=$("#RV_Precio_Accesorio5").val();
-				var RV_Tipo_Pago=$("#RV_Tipo_Pago").val();
-				var RV_Promociones_Bancos=$("#RV_Promociones_Bancos").val();
-				var Supervisor_Vendedor=$("#Supervisor_Vendedor").val();
-				var Comentarios_Vendedor=$("#Comentarios_Vendedor").val();
-				var VBO_Estado_Venta_BO=$("#VBO_Estado_Venta_BO").val();
-				var VBO_Sub_Estado_Venta_BO=$("#VBO_Sub_Estado_Venta_BO").val();
-				var RBO_Cantidad_Ordenes_Ficha=$("#RBO_Cantidad_Ordenes_Ficha").val();
-				var RBO_Orden_One_Click1=$("#RBO_Orden_One_Click1").val();
-				var RBO_Orden_One_Click2=$("#RBO_Orden_One_Click2").val();
-				var RBO_Orden_One_Click3=$("#RBO_Orden_One_Click3").val();
-				var FBO_Ficha_Limpia=$("#FBO_Ficha_Limpia").val();
-				var FBO_Errores_Comunes_Ficha=$("#FBO_Errores_Comunes_Ficha").val();
-				var DGBO_Tipo_Atencion_Final=$("#DGBO_Tipo_Atencion_Final").val();
-				var DGBO_BO_Validador_Gestor=$("#idFicha_Venta").attr('DGBO_BO_Validador_Gestor');
-				var DGBO_BO_Recupero_Repro_Gestor=$("#idFicha_Venta").attr('DGBO_BO_Recupero_Repro_Gestor');
-				var Comentarios_BackOffice=$("#Comentarios_BackOffice").val();
-				var tipo_actualizacion=$("#idFicha_Venta").attr('tipo_actualizacion');
-				 $.ajax({
-			      	type: "POST",
-			      	url: 'index.php?c=Ficha_Venta&a=Actualizar',
-			      	data: {
-				        idFicha_Venta:idFicha_Venta,
-				        DE_Telf_Llamada_Venta:DE_Telf_Llamada_Venta,
-				        DE_Base_Llamada:DE_Base_Llamada,
-				        DE_Campana_Netcall:DE_Campana_Netcall,
-				        DE_Sub_Campana:DE_Sub_Campana,
-				        DE_Detalle_Sub_Campana:DE_Detalle_Sub_Campana,
-				        DE_CF_Max_Linea_Movil:DE_CF_Max_Linea_Movil,
-				        DE_Tipo_Etiqueta:DE_Tipo_Etiqueta,
-				        DE_CF_Max_Linea_Pack:DE_CF_Max_Linea_Pack,
-				        DE_Monto_Disp_Finan_Equipos:DE_Monto_Disp_Finan_Equipos,
-				        DE_Cant_Meses_Finan_Equipos:DE_Cant_Meses_Finan_Equipos,
-				        DE_Cliente_Entel:DE_Cliente_Entel,
-				        DE_Cliente_Promo_Dscto:DE_Cliente_Promo_Dscto,
-				        DP_TipoDocumento:DP_TipoDocumento,
-				        DP_Documento:DP_Documento,
-				        DP_Nombre_Cliente:DP_Nombre_Cliente,
-				        DP_Apellido_Paterno:DP_Apellido_Paterno,
-				        DP_Apellido_Materno:DP_Apellido_Materno,
-				        DP_Nacionalidad:DP_Nacionalidad,
-				        DP_Lugar_Nacimiento:DP_Lugar_Nacimiento,
-				        DP_Fecha_Nacimiento:DP_Fecha_Nacimiento,
-				        DP_Nombre_Padre:DP_Nombre_Padre,
-				        DP_Nombre_Madre:DP_Nombre_Madre,
-				        DF_Email_Facturacion_Otros,
-				        DF_Dist_Facturacion:DF_Dist_Facturacion,
-				        DF_Domicilio_Facturacion:DF_Domicilio_Facturacion,
-				       	RE_Tipo_Despacho:RE_Tipo_Despacho,
-				       	RE_Rango_Entrega_Despacho:RE_Rango_Entrega_Despacho,
-				       	RE_Rango_Horario_Despacho:RE_Rango_Horario_Despacho,
-				       	RE_Tienda_Retiro:RE_Tienda_Retiro,
-				       	RE_Retail_Retiro:RE_Retail_Retiro,
-				       	RE_Fecha_Entrega:RE_Fecha_Entrega,
-				       	RE_Venta_Entrega_para:RE_Venta_Entrega_para,
-				       	RE_Venta_Destino_para:RE_Venta_Destino_para,
-				       	RE_Dist_Entrega_Producto:RE_Dist_Entrega_Producto,
-				       	RE_Tipo_Direccion_Entrega:RE_Tipo_Direccion_Entrega,
-				       	RE_Direccion_Entrega:RE_Direccion_Entrega,
-				       	RE_Referencia_Principales:RE_Referencia_Principales,
-				       	RE_Referencias_Adicionales:RE_Referencias_Adicionales,
-				       	RE_Coordenadas_Direccion_Entrega:RE_Coordenadas_Direccion_Entrega,
-				       	RE_Telefono_Contacto1:RE_Telefono_Contacto1,
-				       	RE_Telefono_Contacto2:RE_Telefono_Contacto2,
-				       	RE_Tipo_Contacto_Ol:RE_Tipo_Contacto_Ol,
-				       	RV_Tipo_Ofrecimiento:RV_Tipo_Ofrecimiento,
-						RV_Tipo_Venta:RV_Tipo_Venta,
-						RV_Operador_Cedente:RV_Operador_Cedente,
-						RV_Origen:RV_Origen,
-						RV_Linea_Portar:RV_Linea_Portar,
-						RV_Plan_Tarifario:RV_Plan_Tarifario,
-						RV_Cargo_Fijo_Plan:RV_Cargo_Fijo_Plan,
-						RV_Tipo_Producto:RV_Tipo_Producto,
-						RV_Accesorio_Regalo:RV_Accesorio_Regalo,
-						RV_SKU_Accesorio_Regalo1:RV_SKU_Accesorio_Regalo1,
-						RV_SKU_Accesorio_Regalo2:RV_SKU_Accesorio_Regalo2,
-						RV_SKU_Pack:RV_SKU_Pack,
-						RV_Precio_Equipo_Inicial_Total:RV_Precio_Equipo_Inicial_Total,
-						RV_Cuota_Equipo_Mensual:RV_Cuota_Equipo_Mensual,
-						RV_Cant_Accesorios:RV_Cant_Accesorios,
-						RV_SKU_Accesorio1:RV_SKU_Accesorio1,
-						RV_Precio_Accesorio1:RV_Precio_Accesorio1,
-						RV_SKU_Accesorio2:RV_SKU_Accesorio2,
-						RV_Precio_Accesorio2:RV_Precio_Accesorio2,
-						RV_SKU_Accesorio3:RV_SKU_Accesorio3,
-						RV_Precio_Accesorio3:RV_Precio_Accesorio3,
-						RV_SKU_Accesorio4:RV_SKU_Accesorio4,
-						RV_Precio_Accesorio4:RV_Precio_Accesorio4,
-						RV_SKU_Accesorio5:RV_SKU_Accesorio5,
-						RV_Precio_Accesorio5:RV_Precio_Accesorio5,
-						RV_Tipo_Pago:RV_Tipo_Pago,
-						RV_Promociones_Bancos:RV_Promociones_Bancos,
-						Supervisor_Vendedor:Supervisor_Vendedor,
-						Comentarios_Vendedor:Comentarios_Vendedor,
-						VBO_Estado_Venta_BO:VBO_Estado_Venta_BO,
-						VBO_Sub_Estado_Venta_BO:VBO_Sub_Estado_Venta_BO,
-						RBO_Cantidad_Ordenes_Ficha:RBO_Cantidad_Ordenes_Ficha,
-						RBO_Orden_One_Click1:RBO_Orden_One_Click1,
-						RBO_Orden_One_Click2:RBO_Orden_One_Click2,
-						RBO_Orden_One_Click3:RBO_Orden_One_Click3,
-						FBO_Ficha_Limpia:FBO_Ficha_Limpia,
-						FBO_Errores_Comunes_Ficha:FBO_Errores_Comunes_Ficha,
-						DGBO_Tipo_Atencion_Final:DGBO_Tipo_Atencion_Final,
-						DGBO_BO_Validador_Gestor:DGBO_BO_Validador_Gestor,
-						DGBO_BO_Recupero_Repro_Gestor:DGBO_BO_Recupero_Repro_Gestor,
-						Comentarios_BackOffice:Comentarios_BackOffice,
-						tipo_actualizacion:tipo_actualizacion
-				    },
-			      	//sync:false,        
-			      	success: function(data) {
-			        	
-			        	window.location="index.php?c=Ficha_Venta&a=v_Actualizar_Ficha&idFicha_Venta="+idFicha_Venta;        
-			      	},
-			      	dataType: 'json'
-			    });
+	    		count_actualizar++;
 
+	    		if(count_actualizar==1){
+	    			$("#loader-text").html("Actualizando..");
+	    			$(".loader-page").css({visibility:"inherit",opacity:"1"});
+		    		var idFicha_Venta=$("#idFicha_Venta").val();
+					var DE_Telf_Llamada_Venta=$("#DE_Telf_Llamada_Venta").val();
+					var DE_Base_Llamada=$("#DE_Base_Llamada").val();
+					var DE_Campana_Netcall=$("#DE_Campana_Netcall").val();
+					var DE_Sub_Campana=$("#DE_Sub_Campana").val();
+					var DE_Detalle_Sub_Campana=$("#DE_Detalle_Sub_Campana").val();
+					var DE_CF_Max_Linea_Movil=$("#DE_CF_Max_Linea_Movil").val();
+					var DE_Tipo_Etiqueta=$("#DE_Tipo_Etiqueta").val();
+					var DE_CF_Max_Linea_Pack=$("#DE_CF_Max_Linea_Pack").val();
+					var DE_Monto_Disp_Finan_Equipos=$("#DE_Monto_Disp_Finan_Equipos").val();
+					var DE_Cant_Meses_Finan_Equipos=$("#DE_Cant_Meses_Finan_Equipos").val();
+					var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
+					var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
+					var DP_TipoDocumento=$("#DP_TipoDocumento").val();
+					var DP_Documento=$("#DP_Documento").val();
+					var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
+					var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
+					var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
+					var DP_Nacionalidad=$("#DP_Nacionalidad").val();
+					var DP_Lugar_Nacimiento=$("#DP_Lugar_Nacimiento").val();
+					var DP_Fecha_Nacimiento=$("#DP_Fecha_Nacimiento").val();
+					var DP_Nombre_Padre=$("#DP_Nombre_Padre").val();
+					var DP_Nombre_Madre=$("#DP_Nombre_Madre").val();
+					var DF_Email_Facturacion_Otros=$("#DF_Email_Facturacion_Otros").val();
+					var DF_Dist_Facturacion=$("#DF_Dist_Facturacion").val();
+					var DF_Domicilio_Facturacion=$("#DF_Domicilio_Facturacion").val();
+					var RE_Tipo_Despacho=$("#RE_Tipo_Despacho").val();
+					var RE_Rango_Entrega_Despacho=$("#RE_Rango_Entrega_Despacho").val();
+					var RE_Rango_Horario_Despacho=$("#RE_Rango_Horario_Despacho").val();
+					var RE_Tienda_Retiro=$("#RE_Tienda_Retiro").val();
+					var RE_Retail_Retiro=$("#RE_Retail_Retiro").val();
+					var RE_Fecha_Entrega=$("#RE_Fecha_Entrega").val();
+					var RE_Venta_Entrega_para=$("#RE_Venta_Entrega_para").val();
+					var RE_Venta_Destino_para=$("#RE_Venta_Destino_para").val();
+					var RE_Dist_Entrega_Producto=$("#RE_Dist_Entrega_Producto").val();
+					var RE_Tipo_Direccion_Entrega=$("#RE_Tipo_Direccion_Entrega").val();
+					var RE_Direccion_Entrega=$("#RE_Direccion_Entrega").val();
+					var RE_Referencia_Principales=$("#RE_Referencia_Principales").val();
+					var RE_Referencias_Adicionales=$("#RE_Referencias_Adicionales").val();
+					var RE_Coordenadas_Direccion_Entrega=$("#RE_Coordenadas_Direccion_Entrega").val();
+					var RE_Telefono_Contacto1=$("#RE_Telefono_Contacto1").val();
+					var RE_Telefono_Contacto2=$("#RE_Telefono_Contacto2").val();
+					var RE_Tipo_Contacto_Ol=$("#RE_Tipo_Contacto_Ol").val();
+					var RV_Tipo_Ofrecimiento=$("#RV_Tipo_Ofrecimiento").val();
+					var RV_Tipo_Venta=$("#RV_Tipo_Venta").val();
+					var RV_Operador_Cedente=$("#RV_Operador_Cedente").val();
+					var RV_Origen=$("#RV_Origen").val();
+					var RV_Linea_Portar=$("#RV_Linea_Portar").val();
+					var RV_Plan_Tarifario=$("#RV_Plan_Tarifario").val();
+					var RV_Cargo_Fijo_Plan=$("#RV_Cargo_Fijo_Plan").val();
+					var RV_Tipo_Producto=$("#RV_Tipo_Producto").val();
+					var RV_Accesorio_Regalo=$("#RV_Accesorio_Regalo").val();
+					var RV_SKU_Accesorio_Regalo1=$("#RV_SKU_Accesorio_Regalo1").val();
+					var RV_SKU_Accesorio_Regalo2=$("#RV_SKU_Accesorio_Regalo2").val();
+					var RV_SKU_Pack=$("#RV_SKU_Pack").val();
+					var RV_Precio_Equipo_Inicial_Total=$("#RV_Precio_Equipo_Inicial_Total").val();
+					var RV_Cuota_Equipo_Mensual=$("#RV_Cuota_Equipo_Mensual").val();
+					var RV_Cant_Accesorios=$("#RV_Cant_Accesorios").val();
+					var RV_SKU_Accesorio1=$("#RV_SKU_Accesorio1").val();
+					var RV_Precio_Accesorio1=$("#RV_Precio_Accesorio1").val();
+					var RV_SKU_Accesorio2=$("#RV_SKU_Accesorio2").val();
+					var RV_Precio_Accesorio2=$("#RV_Precio_Accesorio2").val();
+					var RV_SKU_Accesorio3=$("#RV_SKU_Accesorio3").val();
+					var RV_Precio_Accesorio3=$("#RV_Precio_Accesorio3").val();
+					var RV_SKU_Accesorio4=$("#RV_SKU_Accesorio4").val();
+					var RV_Precio_Accesorio4=$("#RV_Precio_Accesorio4").val();
+					var RV_SKU_Accesorio5=$("#RV_SKU_Accesorio5").val();
+					var RV_Precio_Accesorio5=$("#RV_Precio_Accesorio5").val();
+					var RV_Tipo_Pago=$("#RV_Tipo_Pago").val();
+					var RV_Promociones_Bancos=$("#RV_Promociones_Bancos").val();
+					var Supervisor_Vendedor=$("#Supervisor_Vendedor").val();
+					var Comentarios_Vendedor=$("#Comentarios_Vendedor").val();
+					var Ingresado_por_Vendedor=$("#Ingresado_por_Vendedor").attr('idVendedor');
+					var Fecha_Registro_Vendedor=$("#Fecha_Registro_Vendedor").val();
+					var VBO_Estado_Venta_BO=$("#VBO_Estado_Venta_BO").val();
+					var VBO_Sub_Estado_Venta_BO=$("#VBO_Sub_Estado_Venta_BO").val();
+					var RBO_Cantidad_Ordenes_Ficha=$("#RBO_Cantidad_Ordenes_Ficha").val();
+					var RBO_Orden_One_Click1=$("#RBO_Orden_One_Click1").val();
+					var RBO_Orden_One_Click2=$("#RBO_Orden_One_Click2").val();
+					var RBO_Orden_One_Click3=$("#RBO_Orden_One_Click3").val();
+					var FBO_Ficha_Limpia=$("#FBO_Ficha_Limpia").val();
+					var FBO_Errores_Comunes_Ficha=$("#FBO_Errores_Comunes_Ficha").val();
+					var DGBO_Tipo_Atencion_Final=$("#DGBO_Tipo_Atencion_Final").val();
+					var DGBO_BO_Validador_Gestor=$("#idFicha_Venta").attr('DGBO_BO_Validador_Gestor');
+					var DGBO_BO_Recupero_Repro_Gestor=$("#idFicha_Venta").attr('DGBO_BO_Recupero_Repro_Gestor');
+					var Comentarios_BackOffice=$("#Comentarios_BackOffice").val();
+					var tipo_actualizacion=$("#idFicha_Venta").attr('tipo_actualizacion');
+
+					 $.ajax({
+				      	type: "POST",
+				      	url: 'index.php?c=Ficha_Venta&a=Actualizar',
+				      	data: {
+					        idFicha_Venta:idFicha_Venta,
+					        DE_Telf_Llamada_Venta:DE_Telf_Llamada_Venta,
+					        DE_Base_Llamada:DE_Base_Llamada,
+					        DE_Campana_Netcall:DE_Campana_Netcall,
+					        DE_Sub_Campana:DE_Sub_Campana,
+					        DE_Detalle_Sub_Campana:DE_Detalle_Sub_Campana,
+					        DE_CF_Max_Linea_Movil:DE_CF_Max_Linea_Movil,
+					        DE_Tipo_Etiqueta:DE_Tipo_Etiqueta,
+					        DE_CF_Max_Linea_Pack:DE_CF_Max_Linea_Pack,
+					        DE_Monto_Disp_Finan_Equipos:DE_Monto_Disp_Finan_Equipos,
+					        DE_Cant_Meses_Finan_Equipos:DE_Cant_Meses_Finan_Equipos,
+					        DE_Cliente_Entel:DE_Cliente_Entel,
+					        DE_Cliente_Promo_Dscto:DE_Cliente_Promo_Dscto,
+					        DP_TipoDocumento:DP_TipoDocumento,
+					        DP_Documento:DP_Documento,
+					        DP_Nombre_Cliente:DP_Nombre_Cliente,
+					        DP_Apellido_Paterno:DP_Apellido_Paterno,
+					        DP_Apellido_Materno:DP_Apellido_Materno,
+					        DP_Nacionalidad:DP_Nacionalidad,
+					        DP_Lugar_Nacimiento:DP_Lugar_Nacimiento,
+					        DP_Fecha_Nacimiento:DP_Fecha_Nacimiento,
+					        DP_Nombre_Padre:DP_Nombre_Padre,
+					        DP_Nombre_Madre:DP_Nombre_Madre,
+					        DF_Email_Facturacion_Otros,
+					        DF_Dist_Facturacion:DF_Dist_Facturacion,
+					        DF_Domicilio_Facturacion:DF_Domicilio_Facturacion,
+					       	RE_Tipo_Despacho:RE_Tipo_Despacho,
+					       	RE_Rango_Entrega_Despacho:RE_Rango_Entrega_Despacho,
+					       	RE_Rango_Horario_Despacho:RE_Rango_Horario_Despacho,
+					       	RE_Tienda_Retiro:RE_Tienda_Retiro,
+					       	RE_Retail_Retiro:RE_Retail_Retiro,
+					       	RE_Fecha_Entrega:RE_Fecha_Entrega,
+					       	RE_Venta_Entrega_para:RE_Venta_Entrega_para,
+					       	RE_Venta_Destino_para:RE_Venta_Destino_para,
+					       	RE_Dist_Entrega_Producto:RE_Dist_Entrega_Producto,
+					       	RE_Tipo_Direccion_Entrega:RE_Tipo_Direccion_Entrega,
+					       	RE_Direccion_Entrega:RE_Direccion_Entrega,
+					       	RE_Referencia_Principales:RE_Referencia_Principales,
+					       	RE_Referencias_Adicionales:RE_Referencias_Adicionales,
+					       	RE_Coordenadas_Direccion_Entrega:RE_Coordenadas_Direccion_Entrega,
+					       	RE_Telefono_Contacto1:RE_Telefono_Contacto1,
+					       	RE_Telefono_Contacto2:RE_Telefono_Contacto2,
+					       	RE_Tipo_Contacto_Ol:RE_Tipo_Contacto_Ol,
+					       	RV_Tipo_Ofrecimiento:RV_Tipo_Ofrecimiento,
+							RV_Tipo_Venta:RV_Tipo_Venta,
+							RV_Operador_Cedente:RV_Operador_Cedente,
+							RV_Origen:RV_Origen,
+							RV_Linea_Portar:RV_Linea_Portar,
+							RV_Plan_Tarifario:RV_Plan_Tarifario,
+							RV_Cargo_Fijo_Plan:RV_Cargo_Fijo_Plan,
+							RV_Tipo_Producto:RV_Tipo_Producto,
+							RV_Accesorio_Regalo:RV_Accesorio_Regalo,
+							RV_SKU_Accesorio_Regalo1:RV_SKU_Accesorio_Regalo1,
+							RV_SKU_Accesorio_Regalo2:RV_SKU_Accesorio_Regalo2,
+							RV_SKU_Pack:RV_SKU_Pack,
+							RV_Precio_Equipo_Inicial_Total:RV_Precio_Equipo_Inicial_Total,
+							RV_Cuota_Equipo_Mensual:RV_Cuota_Equipo_Mensual,
+							RV_Cant_Accesorios:RV_Cant_Accesorios,
+							RV_SKU_Accesorio1:RV_SKU_Accesorio1,
+							RV_Precio_Accesorio1:RV_Precio_Accesorio1,
+							RV_SKU_Accesorio2:RV_SKU_Accesorio2,
+							RV_Precio_Accesorio2:RV_Precio_Accesorio2,
+							RV_SKU_Accesorio3:RV_SKU_Accesorio3,
+							RV_Precio_Accesorio3:RV_Precio_Accesorio3,
+							RV_SKU_Accesorio4:RV_SKU_Accesorio4,
+							RV_Precio_Accesorio4:RV_Precio_Accesorio4,
+							RV_SKU_Accesorio5:RV_SKU_Accesorio5,
+							RV_Precio_Accesorio5:RV_Precio_Accesorio5,
+							RV_Tipo_Pago:RV_Tipo_Pago,
+							RV_Promociones_Bancos:RV_Promociones_Bancos,
+							Supervisor_Vendedor:Supervisor_Vendedor,
+							Comentarios_Vendedor:Comentarios_Vendedor,
+							Ingresado_por_Vendedor:Ingresado_por_Vendedor,
+							Fecha_Registro_Vendedor:Fecha_Registro_Vendedor,
+							VBO_Estado_Venta_BO:VBO_Estado_Venta_BO,
+							VBO_Sub_Estado_Venta_BO:VBO_Sub_Estado_Venta_BO,
+							RBO_Cantidad_Ordenes_Ficha:RBO_Cantidad_Ordenes_Ficha,
+							RBO_Orden_One_Click1:RBO_Orden_One_Click1,
+							RBO_Orden_One_Click2:RBO_Orden_One_Click2,
+							RBO_Orden_One_Click3:RBO_Orden_One_Click3,
+							FBO_Ficha_Limpia:FBO_Ficha_Limpia,
+							FBO_Errores_Comunes_Ficha:FBO_Errores_Comunes_Ficha,
+							DGBO_Tipo_Atencion_Final:DGBO_Tipo_Atencion_Final,
+							DGBO_BO_Validador_Gestor:DGBO_BO_Validador_Gestor,
+							DGBO_BO_Recupero_Repro_Gestor:DGBO_BO_Recupero_Repro_Gestor,
+							Comentarios_BackOffice:Comentarios_BackOffice,
+							tipo_actualizacion:tipo_actualizacion
+					    },
+				      	//sync:false,        
+				      	success: function(data) {
+				        	$("#loader-text").html("Ficha de venta actualizada");
+
+				        	setTimeout(function() {
+								window.location=<?php echo "'".$urlRetornoAct."'"; ?>;
+							}, 1000);
+								
+				        	
+
+				      	},
+				      	dataType: 'json'
+				    });
+ 				}
 	        });
 	    });
 
+
+ 		var count_registrar=0;
+
 	   $('#confirmar-registrar-ficha').on('show.bs.modal',function(){
 	    	$('.btn-ok-RegistrarFichaVenta').click(function(){
-				var DE_Telf_Llamada_Venta=$("#DE_Telf_Llamada_Venta").val();
-				var DE_Base_Llamada=$("#DE_Base_Llamada").val();
-				var DE_Campana_Netcall=$("#DE_Campana_Netcall").val();
-				var DE_Sub_Campana=$("#DE_Sub_Campana").val();
-				var DE_Detalle_Sub_Campana=$("#DE_Detalle_Sub_Campana").val();
-				var DE_CF_Max_Linea_Movil=$("#DE_CF_Max_Linea_Movil").val();
-				var DE_Tipo_Etiqueta=$("#DE_Tipo_Etiqueta").val();
-				var DE_CF_Max_Linea_Pack=$("#DE_CF_Max_Linea_Pack").val();
-				var DE_Monto_Disp_Finan_Equipos=$("#DE_Monto_Disp_Finan_Equipos").val();
-				var DE_Cant_Meses_Finan_Equipos=$("#DE_Cant_Meses_Finan_Equipos").val();
-				var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
-				var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
-				var DP_TipoDocumento=$("#DP_TipoDocumento").val();
-				var DP_Documento=$("#DP_Documento").val();
-				var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
-				var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
-				var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
-				var DP_Nacionalidad=$("#DP_Nacionalidad").val();
-				var DP_Lugar_Nacimiento=$("#DP_Lugar_Nacimiento").val();
-				var DP_Fecha_Nacimiento=$("#DP_Fecha_Nacimiento").val();
-				var DP_Nombre_Padre=$("#DP_Nombre_Padre").val();
-				var DP_Nombre_Madre=$("#DP_Nombre_Madre").val();
-				var DF_Email_Facturacion_Otros=$("#DF_Email_Facturacion_Otros").val();
-				var DF_Dist_Facturacion=$("#DF_Dist_Facturacion").val();
-				var DF_Domicilio_Facturacion=$("#DF_Domicilio_Facturacion").val();
-				var RE_Tipo_Despacho=$("#RE_Tipo_Despacho").val();
-				var RE_Rango_Entrega_Despacho=$("#RE_Rango_Entrega_Despacho").val();
-				var RE_Rango_Horario_Despacho=$("#RE_Rango_Horario_Despacho").val();
-				var RE_Tienda_Retiro=$("#RE_Tienda_Retiro").val();
-				var RE_Retail_Retiro=$("#RE_Retail_Retiro").val();
-				var RE_Fecha_Entrega=$("#RE_Fecha_Entrega").val();
-				var RE_Venta_Entrega_para=$("#RE_Venta_Entrega_para").val();
-				var RE_Venta_Destino_para=$("#RE_Venta_Destino_para").val();
-				var RE_Dist_Entrega_Producto=$("#RE_Dist_Entrega_Producto").val();
-				var RE_Tipo_Direccion_Entrega=$("#RE_Tipo_Direccion_Entrega").val();
-				var RE_Direccion_Entrega=$("#RE_Direccion_Entrega").val();
-				var RE_Referencia_Principales=$("#RE_Referencia_Principales").val();
-				var RE_Referencias_Adicionales=$("#RE_Referencias_Adicionales").val();
-				var RE_Coordenadas_Direccion_Entrega=$("#RE_Coordenadas_Direccion_Entrega").val();
-				var RE_Telefono_Contacto1=$("#RE_Telefono_Contacto1").val();
-				var RE_Telefono_Contacto2=$("#RE_Telefono_Contacto2").val();
-				var RE_Tipo_Contacto_Ol=$("#RE_Tipo_Contacto_Ol").val();
-				var RV_Tipo_Ofrecimiento=$("#RV_Tipo_Ofrecimiento").val();
-				var RV_Tipo_Venta=$("#RV_Tipo_Venta").val();
-				var RV_Operador_Cedente=$("#RV_Operador_Cedente").val();
-				var RV_Origen=$("#RV_Origen").val();
-				var RV_Linea_Portar=$("#RV_Linea_Portar").val();
-				var RV_Plan_Tarifario=$("#RV_Plan_Tarifario").val();
-				var RV_Cargo_Fijo_Plan=$("#RV_Cargo_Fijo_Plan").val();
-				var RV_Tipo_Producto=$("#RV_Tipo_Producto").val();
-				var RV_Accesorio_Regalo=$("#RV_Accesorio_Regalo").val();
-				var RV_SKU_Accesorio_Regalo1=$("#RV_SKU_Accesorio_Regalo1").val();
-				var RV_SKU_Accesorio_Regalo2=$("#RV_SKU_Accesorio_Regalo2").val();
-				var RV_SKU_Pack=$("#RV_SKU_Pack").val();
-				var RV_Precio_Equipo_Inicial_Total=$("#RV_Precio_Equipo_Inicial_Total").val();
-				var RV_Cuota_Equipo_Mensual=$("#RV_Cuota_Equipo_Mensual").val();
-				var RV_Cant_Accesorios=$("#RV_Cant_Accesorios").val();
-				var RV_SKU_Accesorio1=$("#RV_SKU_Accesorio1").val();
-				var RV_Precio_Accesorio1=$("#RV_Precio_Accesorio1").val();
-				var RV_SKU_Accesorio2=$("#RV_SKU_Accesorio2").val();
-				var RV_Precio_Accesorio2=$("#RV_Precio_Accesorio2").val();
-				var RV_SKU_Accesorio3=$("#RV_SKU_Accesorio3").val();
-				var RV_Precio_Accesorio3=$("#RV_Precio_Accesorio3").val();
-				var RV_SKU_Accesorio4=$("#RV_SKU_Accesorio4").val();
-				var RV_Precio_Accesorio4=$("#RV_Precio_Accesorio4").val();
-				var RV_SKU_Accesorio5=$("#RV_SKU_Accesorio5").val();
-				var RV_Precio_Accesorio5=$("#RV_Precio_Accesorio5").val();
-				var RV_Tipo_Pago=$("#RV_Tipo_Pago").val();
-				var RV_Promociones_Bancos=$("#RV_Promociones_Bancos").val();
-				var Supervisor_Vendedor=$("#Supervisor_Vendedor").val();
-				var Comentarios_Vendedor=$("#Comentarios_Vendedor").val();
 
-				 $.ajax({
-			      	type: "POST",
-			      	url: 'index.php?c=Ficha_Venta&a=Registrar',
-			      	data: {
-				        DE_Telf_Llamada_Venta:DE_Telf_Llamada_Venta,
-				        DE_Base_Llamada:DE_Base_Llamada,
-				        DE_Campana_Netcall:DE_Campana_Netcall,
-				        DE_Sub_Campana:DE_Sub_Campana,
-				        DE_Detalle_Sub_Campana:DE_Detalle_Sub_Campana,
-				        DE_CF_Max_Linea_Movil:DE_CF_Max_Linea_Movil,
-				        DE_Tipo_Etiqueta:DE_Tipo_Etiqueta,
-				        DE_CF_Max_Linea_Pack:DE_CF_Max_Linea_Pack,
-				        DE_Monto_Disp_Finan_Equipos:DE_Monto_Disp_Finan_Equipos,
-				        DE_Cant_Meses_Finan_Equipos:DE_Cant_Meses_Finan_Equipos,
-				        DE_Cliente_Entel:DE_Cliente_Entel,
-				        DE_Cliente_Promo_Dscto:DE_Cliente_Promo_Dscto,
-				        DP_TipoDocumento:DP_TipoDocumento,
-				        DP_Documento:DP_Documento,
-				        DP_Nombre_Cliente:DP_Nombre_Cliente,
-				        DP_Apellido_Paterno:DP_Apellido_Paterno,
-				        DP_Apellido_Materno:DP_Apellido_Materno,
-				        DP_Nacionalidad:DP_Nacionalidad,
-				        DP_Lugar_Nacimiento:DP_Lugar_Nacimiento,
-				        DP_Fecha_Nacimiento:DP_Fecha_Nacimiento,
-				        DP_Nombre_Padre:DP_Nombre_Padre,
-				        DP_Nombre_Madre:DP_Nombre_Madre,
-				        DF_Email_Facturacion_Otros,
-				        DF_Dist_Facturacion:DF_Dist_Facturacion,
-				        DF_Domicilio_Facturacion:DF_Domicilio_Facturacion,
-				       	RE_Tipo_Despacho:RE_Tipo_Despacho,
-				       	RE_Rango_Entrega_Despacho:RE_Rango_Entrega_Despacho,
-				       	RE_Rango_Horario_Despacho:RE_Rango_Horario_Despacho,
-				       	RE_Tienda_Retiro:RE_Tienda_Retiro,
-				       	RE_Retail_Retiro:RE_Retail_Retiro,
-				       	RE_Fecha_Entrega:RE_Fecha_Entrega,
-				       	RE_Venta_Entrega_para:RE_Venta_Entrega_para,
-				       	RE_Venta_Destino_para:RE_Venta_Destino_para,
-				       	RE_Dist_Entrega_Producto:RE_Dist_Entrega_Producto,
-				       	RE_Tipo_Direccion_Entrega:RE_Tipo_Direccion_Entrega,
-				       	RE_Direccion_Entrega:RE_Direccion_Entrega,
-				       	RE_Referencia_Principales:RE_Referencia_Principales,
-				       	RE_Referencias_Adicionales:RE_Referencias_Adicionales,
-				       	RE_Coordenadas_Direccion_Entrega:RE_Coordenadas_Direccion_Entrega,
-				       	RE_Telefono_Contacto1:RE_Telefono_Contacto1,
-				       	RE_Telefono_Contacto2:RE_Telefono_Contacto2,
-				       	RE_Tipo_Contacto_Ol:RE_Tipo_Contacto_Ol,
-				       	RV_Tipo_Ofrecimiento:RV_Tipo_Ofrecimiento,
-						RV_Tipo_Venta:RV_Tipo_Venta,
-						RV_Operador_Cedente:RV_Operador_Cedente,
-						RV_Origen:RV_Origen,
-						RV_Linea_Portar:RV_Linea_Portar,
-						RV_Plan_Tarifario:RV_Plan_Tarifario,
-						RV_Cargo_Fijo_Plan:RV_Cargo_Fijo_Plan,
-						RV_Tipo_Producto:RV_Tipo_Producto,
-						RV_Accesorio_Regalo:RV_Accesorio_Regalo,
-						RV_SKU_Accesorio_Regalo1:RV_SKU_Accesorio_Regalo1,
-						RV_SKU_Accesorio_Regalo2:RV_SKU_Accesorio_Regalo2,
-						RV_SKU_Pack:RV_SKU_Pack,
-						RV_Precio_Equipo_Inicial_Total:RV_Precio_Equipo_Inicial_Total,
-						RV_Cuota_Equipo_Mensual:RV_Cuota_Equipo_Mensual,
-						RV_Cant_Accesorios:RV_Cant_Accesorios,
-						RV_SKU_Accesorio1:RV_SKU_Accesorio1,
-						RV_Precio_Accesorio1:RV_Precio_Accesorio1,
-						RV_SKU_Accesorio2:RV_SKU_Accesorio2,
-						RV_Precio_Accesorio2:RV_Precio_Accesorio2,
-						RV_SKU_Accesorio3:RV_SKU_Accesorio3,
-						RV_Precio_Accesorio3:RV_Precio_Accesorio3,
-						RV_SKU_Accesorio4:RV_SKU_Accesorio4,
-						RV_Precio_Accesorio4:RV_Precio_Accesorio4,
-						RV_SKU_Accesorio5:RV_SKU_Accesorio5,
-						RV_Precio_Accesorio5:RV_Precio_Accesorio5,
-						RV_Tipo_Pago:RV_Tipo_Pago,
-						RV_Promociones_Bancos:RV_Promociones_Bancos,
-						Supervisor_Vendedor:Supervisor_Vendedor,
-						Comentarios_Vendedor:Comentarios_Vendedor
-				    },
-			      	//sync:false,        
-			      	success: function(data) {
-			        	console.log(data);
-			        	window.location="index.php?c=Ficha_Venta&a=v_Registrar_Ficha";        
-			      	},
-			      	dataType: 'json'
-			    });
+	    		count_registrar++;
+	    		if(count_registrar==1){
+	    			$("#loader-text").html("Registrando...");
+	    			$(".loader-page").css({visibility:"inherit",opacity:"1"});
+	    			var NroRegistrosPermitidos=$("#RV_Tipo_Ofrecimiento").attr("NroRegistrosPermitidos");
+					var DE_Telf_Llamada_Venta=$("#DE_Telf_Llamada_Venta").val();
+					var DE_Base_Llamada=$("#DE_Base_Llamada").val();
+					var DE_Campana_Netcall=$("#DE_Campana_Netcall").val();
+					var DE_Sub_Campana=$("#DE_Sub_Campana").val();
+					var DE_Detalle_Sub_Campana=$("#DE_Detalle_Sub_Campana").val();
+					var DE_CF_Max_Linea_Movil=$("#DE_CF_Max_Linea_Movil").val();
+					var DE_Tipo_Etiqueta=$("#DE_Tipo_Etiqueta").val();
+					var DE_CF_Max_Linea_Pack=$("#DE_CF_Max_Linea_Pack").val();
+					var DE_Monto_Disp_Finan_Equipos=$("#DE_Monto_Disp_Finan_Equipos").val();
+					var DE_Cant_Meses_Finan_Equipos=$("#DE_Cant_Meses_Finan_Equipos").val();
+					var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
+					var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
+					var DP_TipoDocumento=$("#DP_TipoDocumento").val();
+					var DP_Documento=$("#DP_Documento").val();
+					var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
+					var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
+					var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
+					var DP_Nacionalidad=$("#DP_Nacionalidad").val();
+					var DP_Lugar_Nacimiento=$("#DP_Lugar_Nacimiento").val();
+					var DP_Fecha_Nacimiento=$("#DP_Fecha_Nacimiento").val();
+					var DP_Nombre_Padre=$("#DP_Nombre_Padre").val();
+					var DP_Nombre_Madre=$("#DP_Nombre_Madre").val();
+					var DF_Email_Facturacion_Otros=$("#DF_Email_Facturacion_Otros").val();
+					var DF_Dist_Facturacion=$("#DF_Dist_Facturacion").val();
+					var DF_Domicilio_Facturacion=$("#DF_Domicilio_Facturacion").val();
+					var RE_Tipo_Despacho=$("#RE_Tipo_Despacho").val();
+					var RE_Rango_Entrega_Despacho=$("#RE_Rango_Entrega_Despacho").val();
+					var RE_Rango_Horario_Despacho=$("#RE_Rango_Horario_Despacho").val();
+					var RE_Tienda_Retiro=$("#RE_Tienda_Retiro").val();
+					var RE_Retail_Retiro=$("#RE_Retail_Retiro").val();
+					var RE_Fecha_Entrega=$("#RE_Fecha_Entrega").val();
+					var RE_Venta_Entrega_para=$("#RE_Venta_Entrega_para").val();
+					var RE_Venta_Destino_para=$("#RE_Venta_Destino_para").val();
+					var RE_Dist_Entrega_Producto=$("#RE_Dist_Entrega_Producto").val();
+					var RE_Tipo_Direccion_Entrega=$("#RE_Tipo_Direccion_Entrega").val();
+					var RE_Direccion_Entrega=$("#RE_Direccion_Entrega").val();
+					var RE_Referencia_Principales=$("#RE_Referencia_Principales").val();
+					var RE_Referencias_Adicionales=$("#RE_Referencias_Adicionales").val();
+					var RE_Coordenadas_Direccion_Entrega=$("#RE_Coordenadas_Direccion_Entrega").val();
+					var RE_Telefono_Contacto1=$("#RE_Telefono_Contacto1").val();
+					var RE_Telefono_Contacto2=$("#RE_Telefono_Contacto2").val();
+					var RE_Tipo_Contacto_Ol=$("#RE_Tipo_Contacto_Ol").val();
+					var RV_Tipo_Ofrecimiento=$("#RV_Tipo_Ofrecimiento").val();
+					var RV_Tipo_Venta=$("#RV_Tipo_Venta").val();
+					var RV_Operador_Cedente=$("#RV_Operador_Cedente").val();
+					var RV_Origen=$("#RV_Origen").val();
+					var RV_Linea_Portar=$("#RV_Linea_Portar").val();
+					var RV_Plan_Tarifario=$("#RV_Plan_Tarifario").val();
+					var RV_Cargo_Fijo_Plan=$("#RV_Cargo_Fijo_Plan").val();
+					var RV_Tipo_Producto=$("#RV_Tipo_Producto").val();
+					var RV_Accesorio_Regalo=$("#RV_Accesorio_Regalo").val();
+					var RV_SKU_Accesorio_Regalo1=$("#RV_SKU_Accesorio_Regalo1").val();
+					var RV_SKU_Accesorio_Regalo2=$("#RV_SKU_Accesorio_Regalo2").val();
+					var RV_SKU_Pack=$("#RV_SKU_Pack").val();
+					var RV_Precio_Equipo_Inicial_Total=$("#RV_Precio_Equipo_Inicial_Total").val();
+					var RV_Cuota_Equipo_Mensual=$("#RV_Cuota_Equipo_Mensual").val();
+					var RV_Cant_Accesorios=$("#RV_Cant_Accesorios").val();
+					var RV_SKU_Accesorio1=$("#RV_SKU_Accesorio1").val();
+					var RV_Precio_Accesorio1=$("#RV_Precio_Accesorio1").val();
+					var RV_SKU_Accesorio2=$("#RV_SKU_Accesorio2").val();
+					var RV_Precio_Accesorio2=$("#RV_Precio_Accesorio2").val();
+					var RV_SKU_Accesorio3=$("#RV_SKU_Accesorio3").val();
+					var RV_Precio_Accesorio3=$("#RV_Precio_Accesorio3").val();
+					var RV_SKU_Accesorio4=$("#RV_SKU_Accesorio4").val();
+					var RV_Precio_Accesorio4=$("#RV_Precio_Accesorio4").val();
+					var RV_SKU_Accesorio5=$("#RV_SKU_Accesorio5").val();
+					var RV_Precio_Accesorio5=$("#RV_Precio_Accesorio5").val();
+					var RV_Tipo_Pago=$("#RV_Tipo_Pago").val();
+					var RV_Promociones_Bancos=$("#RV_Promociones_Bancos").val();
+					var Supervisor_Vendedor=$("#Supervisor_Vendedor").val();
+					var Comentarios_Vendedor=$("#Comentarios_Vendedor").val();
 
+					 $.ajax({
+				      	type: "POST",
+				      	url: 'index.php?c=Ficha_Venta&a=Registrar',
+				      	data: {
+					        DE_Telf_Llamada_Venta:DE_Telf_Llamada_Venta,
+					        DE_Base_Llamada:DE_Base_Llamada,
+					        DE_Campana_Netcall:DE_Campana_Netcall,
+					        DE_Sub_Campana:DE_Sub_Campana,
+					        DE_Detalle_Sub_Campana:DE_Detalle_Sub_Campana,
+					        DE_CF_Max_Linea_Movil:DE_CF_Max_Linea_Movil,
+					        DE_Tipo_Etiqueta:DE_Tipo_Etiqueta,
+					        DE_CF_Max_Linea_Pack:DE_CF_Max_Linea_Pack,
+					        DE_Monto_Disp_Finan_Equipos:DE_Monto_Disp_Finan_Equipos,
+					        DE_Cant_Meses_Finan_Equipos:DE_Cant_Meses_Finan_Equipos,
+					        DE_Cliente_Entel:DE_Cliente_Entel,
+					        DE_Cliente_Promo_Dscto:DE_Cliente_Promo_Dscto,
+					        DP_TipoDocumento:DP_TipoDocumento,
+					        DP_Documento:DP_Documento,
+					        DP_Nombre_Cliente:DP_Nombre_Cliente,
+					        DP_Apellido_Paterno:DP_Apellido_Paterno,
+					        DP_Apellido_Materno:DP_Apellido_Materno,
+					        DP_Nacionalidad:DP_Nacionalidad,
+					        DP_Lugar_Nacimiento:DP_Lugar_Nacimiento,
+					        DP_Fecha_Nacimiento:DP_Fecha_Nacimiento,
+					        DP_Nombre_Padre:DP_Nombre_Padre,
+					        DP_Nombre_Madre:DP_Nombre_Madre,
+					        DF_Email_Facturacion_Otros,
+					        DF_Dist_Facturacion:DF_Dist_Facturacion,
+					        DF_Domicilio_Facturacion:DF_Domicilio_Facturacion,
+					       	RE_Tipo_Despacho:RE_Tipo_Despacho,
+					       	RE_Rango_Entrega_Despacho:RE_Rango_Entrega_Despacho,
+					       	RE_Rango_Horario_Despacho:RE_Rango_Horario_Despacho,
+					       	RE_Tienda_Retiro:RE_Tienda_Retiro,
+					       	RE_Retail_Retiro:RE_Retail_Retiro,
+					       	RE_Fecha_Entrega:RE_Fecha_Entrega,
+					       	RE_Venta_Entrega_para:RE_Venta_Entrega_para,
+					       	RE_Venta_Destino_para:RE_Venta_Destino_para,
+					       	RE_Dist_Entrega_Producto:RE_Dist_Entrega_Producto,
+					       	RE_Tipo_Direccion_Entrega:RE_Tipo_Direccion_Entrega,
+					       	RE_Direccion_Entrega:RE_Direccion_Entrega,
+					       	RE_Referencia_Principales:RE_Referencia_Principales,
+					       	RE_Referencias_Adicionales:RE_Referencias_Adicionales,
+					       	RE_Coordenadas_Direccion_Entrega:RE_Coordenadas_Direccion_Entrega,
+					       	RE_Telefono_Contacto1:RE_Telefono_Contacto1,
+					       	RE_Telefono_Contacto2:RE_Telefono_Contacto2,
+					       	RE_Tipo_Contacto_Ol:RE_Tipo_Contacto_Ol,
+					       	RV_Tipo_Ofrecimiento:RV_Tipo_Ofrecimiento,
+							RV_Tipo_Venta:RV_Tipo_Venta,
+							RV_Operador_Cedente:RV_Operador_Cedente,
+							RV_Origen:RV_Origen,
+							RV_Linea_Portar:RV_Linea_Portar,
+							RV_Plan_Tarifario:RV_Plan_Tarifario,
+							RV_Cargo_Fijo_Plan:RV_Cargo_Fijo_Plan,
+							RV_Tipo_Producto:RV_Tipo_Producto,
+							RV_Accesorio_Regalo:RV_Accesorio_Regalo,
+							RV_SKU_Accesorio_Regalo1:RV_SKU_Accesorio_Regalo1,
+							RV_SKU_Accesorio_Regalo2:RV_SKU_Accesorio_Regalo2,
+							RV_SKU_Pack:RV_SKU_Pack,
+							RV_Precio_Equipo_Inicial_Total:RV_Precio_Equipo_Inicial_Total,
+							RV_Cuota_Equipo_Mensual:RV_Cuota_Equipo_Mensual,
+							RV_Cant_Accesorios:RV_Cant_Accesorios,
+							RV_SKU_Accesorio1:RV_SKU_Accesorio1,
+							RV_Precio_Accesorio1:RV_Precio_Accesorio1,
+							RV_SKU_Accesorio2:RV_SKU_Accesorio2,
+							RV_Precio_Accesorio2:RV_Precio_Accesorio2,
+							RV_SKU_Accesorio3:RV_SKU_Accesorio3,
+							RV_Precio_Accesorio3:RV_Precio_Accesorio3,
+							RV_SKU_Accesorio4:RV_SKU_Accesorio4,
+							RV_Precio_Accesorio4:RV_Precio_Accesorio4,
+							RV_SKU_Accesorio5:RV_SKU_Accesorio5,
+							RV_Precio_Accesorio5:RV_Precio_Accesorio5,
+							RV_Tipo_Pago:RV_Tipo_Pago,
+							RV_Promociones_Bancos:RV_Promociones_Bancos,
+							Supervisor_Vendedor:Supervisor_Vendedor,
+							Comentarios_Vendedor:Comentarios_Vendedor
+					    },
+				      	//sync:false,        
+				      	success: function(data) {
+				      		$("#loader-text").html("Ficha de venta registrada");
+							
+							if (NroRegistrosPermitidos>1) {
+
+								
+								setTimeout(function() {
+									$("#loader-text").html("Continue registrando la siguiente ficha");
+									$("#RV_Tipo_Venta").val(0).trigger('change');
+								}, 1000);
+								setTimeout(function() {
+									$(".loader-page").css({visibility:"hidden",opacity:"0"});
+								}, 2000);	
+							}
+							
+
+							NroRegistrosPermitidos--;
+							$("#RV_Tipo_Ofrecimiento").attr('NroRegistrosPermitidos',NroRegistrosPermitidos);
+							BloquearMultiRegistro();	
+								
+							if(NroRegistrosPermitidos==0){
+								setTimeout(function() {
+								window.location="index.php?c=Ficha_Venta&a=v_Registrar_Ficha";
+								}, 1000);
+								
+							}else{
+								
+								
+							}
+							
+							count_registrar=0;
+				        	       
+				      	},
+				      	dataType: 'json'
+				    });
+				}
 	        });
 	    });
     		
@@ -2802,6 +3046,7 @@
         {	
         	
         	var valido=ValidarDatosRegistrar();
+        	//var valido="Completo";
         	if(valido=="Completo"){
             	$('#confirmar-registrar-ficha').modal('show');
            	}else{
@@ -2841,11 +3086,15 @@
            		
            	}           
            
-        })
+        });
+
+ 
+
 
         $('#btnActualizarFichaVenta_RRBO').click(function()
         {
         	var valido=ValidarDatosActualizar();
+        
         	if(valido=="Completo"){
         		$("#idFicha_Venta").attr("tipo_actualizacion","Recup_Repro_BO");
             	$('#confirmar-actualizar-ficha').modal('show');
@@ -2855,6 +3104,11 @@
 				$("#label_moda_validacion").text("Completar los campos sombreados de rojo");
            		$('#confirmar-validacion_datos').modal('show');
            	}           
+        });
+
+        $('#btnRetornarFichaVenta').click(function()
+        {
+        	window.location=<?php echo "'".$urlRetorno."'"; ?>;
         })
 
         $(".validar_txt").keypress(function() {
@@ -2884,7 +3138,6 @@
         	}else{
 
         		if (obligatorio=="NO") {
-        		
         			$("#div-"+id).removeClass('has-success').removeClass('has-error');
         		}else{
         			$("#div-"+id).removeClass('has-success').addClass('has-error');

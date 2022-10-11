@@ -1,4 +1,9 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
 		Modulo Administracion
@@ -44,14 +49,12 @@
                             		<a href="?c=Categoria&a=v_Actualizar&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<?php if ($_SESSION['Perfil_Actual']==1): ?>
                                		<a class="btn btn-danger btn-xs EliminarCategoria" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>
 									<a href="?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-info btn-xs VerSubCategorias" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
 										<i class="fa fa-eye" aria-hidden="true"></i>
 									</a>
-                               		<?php endif; ?>
                                	</td>
 	                    	</tr>
 

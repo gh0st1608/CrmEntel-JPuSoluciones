@@ -74,19 +74,8 @@ class InterfazController{
     {
         $interfaz = new Interfaz();
         $interfaz->__SET('idInterfaz',$idInterfaz);
-
+       
         $consulta = $this->model->ConsultarInterfaz($interfaz);
-        return $consulta;
-    }
-
-    public function BuscarInterfaz($ModuloPrincipal,$ModuloSecundario,$Nivel)
-    {
-        $interfaz = new Interfaz();
-        $interfaz->__SET('Modulo_Principal',$ModuloPrincipal);
-        $interfaz->__SET('idInterfaz_superior',$ModuloSecundario);
-        $interfaz->__SET('Nivel',$Nivel);
-
-        $consulta = $this->model->BuscarInterfaz($interfaz);
         return $consulta;
     }
 
@@ -214,23 +203,33 @@ class InterfazController{
     }
     public function ComboOrden()
     {
-        $IdInterfaz_superior =  $_POST['idInterfaz_superior'];
+
+        if (isset($_REQUEST['idInterfaz_superior']))
+        {
+            $idInterfaz_superior =  $_REQUEST['idInterfaz_superior'];
+
+            $consulta = $this->model->ComboOrden($idInterfaz_superior);
+
+            $cadena='';
+            $i= 0;
+            foreach($consulta as $orden){
+                $cadena.='<option value='.$orden['Orden'].'>'.$orden['Orden'].'</option>';
+                $i = $i+1;    
+            }  
+          
+            
+             echo $cadena; 
+        }
+        else{
+            $idInterfaz_superior  = 0 ;
  
-  
-        $consulta = $this->model->ComboOrden($IdInterfaz_superior);
-        
+           //$cadena ='<option value='.'"1"'.'>'.'1'.'</option>';
+       
+        } 
+
+
         
        
-        $i= 0;
-        foreach($consulta as $orden){
-            $cadena.='<option value='.$orden['Orden'].'>'.$orden['Orden'].'</option>';
-            $i = $i+1;    
-        }  
-        if( $i == 0)  {
-            $cadena ='<option value='.'"1"'.'>'.'1'.'</option>';
-        }
-        
-         echo $cadena; 
 
 
 

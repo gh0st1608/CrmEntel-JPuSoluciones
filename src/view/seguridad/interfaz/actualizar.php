@@ -1,5 +1,10 @@
- <!-- Content Header (Page header) -->
- <section class="content-header">  
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<!-- Content Header (Page header) -->
+<section class="content-header">  
 	<h1>
 		Modulo Seguridad
 	</h1>
@@ -82,7 +87,7 @@ $interfaz= $this->Consultar($_REQUEST['idInterfaz']);
  
 						<div class="form-group col-md-12">
 					        <label>Icono</label>
-					        <input type="text" name="Icono" id="Icono" value="<?php echo $interfaz->__GET('Icono'); ?>" class="form-control" placeholder=""  required />
+							<textarea rows="6" name="Icono" id="Icono" class="form-control" required><?php echo $interfaz->__GET('Icono'); ?></textarea>
 					    </div>			    
  
 					  	<div class="col-md-12" style="margin-top:2em;">

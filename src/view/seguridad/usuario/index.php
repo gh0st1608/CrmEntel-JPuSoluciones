@@ -1,3 +1,8 @@
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
 <?php
 require_once 'controller/perfil.controller.php'; 
 require_once 'controller/persona.controller.php'; 
@@ -50,16 +55,20 @@ $persona = new PersonaController;
 								<td><?php  echo $nombre->Apellido_Paterno.' '.$nombre->Apellido_Materno.' '.$nombre->Primer_Nombre.' '.$nombre->Segundo_Nombre;?></td>
 								<?php if ($usuario['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
-                                <?php else: ?>
+                                <?php endif ?>
+								<?php if ($usuario['Estado']==0): ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
+                                <?php endif ?>
+								<?php if ($usuario['Estado']==2): ?>
+								<td class=""><span class="label label-default"><i class="fa fa-square-o" aria-hidden="true"></i> Bloqueado</span></td>
                                 <?php endif ?>
                             	<td class="a_center">
                             		<a href="?c=Usuario&a=v_Actualizar&idUsuario=<?php echo $usuario['idUsuario']; ?>&Persona_id=<?php echo $usuario['Persona_id'];?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<a class="btn btn-danger btn-xs EliminarUsuario" data-id="<?php echo $usuario['idUsuario']; ?>" data-usuario="<?php echo $usuario['Login']; ?>">
-                                   		<i class="fa fa-trash"></i>   
-                               		</a>                             		
+									<a class="btn btn-danger btn-xs EliminarSesion" data-id="<?php echo $usuario['Login']; ?>" data-usuario="<?php echo $usuario['Login']; ?>">
+									<i class="fa fa-sign-out" aria-hidden="true"></i> 
+                               		</a>                            		
                                	</td>
 	                    	</tr>
 	                    	<?php endforeach; ?>
@@ -101,5 +110,35 @@ $persona = new PersonaController;
         });
 		});
 	});
+
+	$(document).ready(function() {
+		$(".EliminarSesion").click(function(event) {
+			Login=$(this).attr('data-id');
+			bootbox.dialog({
+            message: "¿Estas seguro de eliminar la sesión del usuario "+$(this).attr('data-usuario')+"?",
+            title: "Eliminar Sesión",
+            buttons: {
+                main: {
+                    label: "Eliminar Sesión",
+                    className: "btn-primary",
+                    callback: function() {
+                        //console.log('Eliminado al usuario');
+                        
+                              window.location.href = "?c=Usuario&a=EliminarSesion&Login="+Login;
+                         
+                    }
+                },
+                danger: {
+                    label: "Cancelar",
+                    className: "btn-danger",
+                    callback: function() {
+                        bootbox.hideAll();
+                    }
+                }
+            }
+        });
+		});
+	});
+
 </script>
 

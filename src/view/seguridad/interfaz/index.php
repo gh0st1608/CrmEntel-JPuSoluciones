@@ -1,4 +1,9 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
 		Modulo Seguridad
@@ -28,12 +33,13 @@
 			                    <th style="vertical-align: middle;">Nivel</th>
 								<th style="vertical-align: middle;">Orden</th>
 								<th style="vertical-align: middle;">Estado</th>
+								<th style="vertical-align: middle;">Acciones</th>
 	                     	</tr>
 	                    </thead>
 	                    <tbody>
 						<?php $id = 0 ?>
 	                    	<?php foreach ($modulos as $modulo): ?>
-	                    	<tr><td><?php $id = $id +1 ; echo $id ?></td>
+	                    	<tr><td><?php $id = $id +1; echo $id; ?></td>
 	                    		<td><?php echo $modulo['Nombre']; ?></td>
 	                    		<td><?php echo "--" ?></td>
 								<td><?php echo $modulo['Nivel']; ?></td>
@@ -47,7 +53,7 @@
                             		<a href="?c=Interfaz&a=v_Actualizar&idInterfaz=<?php echo $modulo['idInterfaz']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<a class="btn btn-danger btn-xs EliminarInterfaz" data-id="<?php echo $modulo['idInterfaz']; ?>" data-nombre="<?php echo $modulo['Nombre']."gaaaaaaa"; ?>">
+                               		<a class="btn btn-danger btn-xs EliminarInterfaz" data-id="<?php echo $modulo['idInterfaz']; ?>" data-nombre="<?php echo $modulo['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>                             		
                                	</td>

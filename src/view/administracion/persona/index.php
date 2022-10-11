@@ -1,3 +1,8 @@
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
 <?php
 require_once 'controller/subcategoria.controller.php';
 $subcategoria = new SubCategoriaController;
@@ -57,11 +62,6 @@ $subcategoria = new SubCategoriaController;
                             		<a href="?c=Persona&a=v_Actualizar&idPersona=<?php echo $persona['idPersona']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<?php if ($_SESSION['Perfil_Actual']==1): ?>
-                               		<a class="btn btn-danger btn-xs EliminarPersona" data-id="<?php echo $persona['idPersona']; ?>" data-persona="<?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?>">
-                                   		<i class="fa fa-trash"></i>   
-                               		</a>
-                               		<?php endif; ?>
                                	</td>
 	                    	</tr>
 	                    	<?php endforeach; ?>

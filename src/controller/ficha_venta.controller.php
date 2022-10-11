@@ -24,6 +24,7 @@ class Ficha_VentaController  extends IncludesController{
         if (isset($_REQUEST['idFicha_Venta']) && $_REQUEST['idFicha_Venta']!=''){
            header('Location: index.php?c=Ficha_Venta&a=v_Registrar_Ficha');
         }else{
+            $FVenta_Interfaz="FichaVenta_Registrar";
             require_once 'view/header.php';
             require_once 'view/ventas/Registrar_Ficha.php';
             require_once 'view/footer.php'; 
@@ -33,14 +34,24 @@ class Ficha_VentaController  extends IncludesController{
 
     public function v_Actualizar_Ficha(){
         if (isset($_REQUEST['idFicha_Venta']) && $_REQUEST['idFicha_Venta']!=''){
+            $FVenta_Interfaz="FichaVenta_Actualizar";
             require_once 'view/header.php';
             require_once 'view/ventas/Registrar_Ficha.php';
             require_once 'view/footer.php'; 
         }else{
             header('Location: index.php?c=Ficha_Venta');
         }
-      
-      
+    }    
+
+    public function v_Visualizar_Ficha(){
+        if (isset($_REQUEST['idFicha_Venta']) && $_REQUEST['idFicha_Venta']!=''){
+            $FVenta_Interfaz="disabled";
+            require_once 'view/header.php';
+            require_once 'view/ventas/Registrar_Ficha.php';
+            require_once 'view/footer.php'; 
+        }else{
+            header('Location: index.php?c=Ficha_Venta');
+        }
     }
 
     public function v_Registrar(){        
@@ -187,14 +198,11 @@ class Ficha_VentaController  extends IncludesController{
         $ficha_venta->__SET('Supervisor_Vendedor',$_REQUEST['Supervisor_Vendedor']);
         $ficha_venta->__SET('Comentarios_Vendedor',$_REQUEST['Comentarios_Vendedor']);
         $ficha_venta->__SET('Ingresado_por_Vendedor',$_SESSION['Usuario_Actual']);
+        $ficha_venta->__SET('VBO_Estado_Venta_BO',154);
 
 
         $idFecha_Venta=$registrar_ficha_venta = $this->model->Registrar($ficha_venta);
         
-
-         //$Gestion_id=$this->RegistrarGestion($Negociacion_id,$_REQUEST['Deudor_id'],$_REQUEST['ObligacionCartera_id'],$_REQUEST['Campana_id'],$FechaPagoCtaInicial,$_REQUEST['TipoNegociacion'],$_SESSION['Persona_Actual'],$_REQUEST['Operador_id'],$TipoGestion_id,$_REQUEST['Telefono_idTitular'],$_REQUEST['Direccion_id'],$_REQUEST['Correo_id'],$observaciones_gestion);
-
-        //$this->ActualizarGestionidCompromiso($Negociacion_id,$Gestion_id);
 
         echo  json_encode($idFecha_Venta);
     }
@@ -288,6 +296,8 @@ class Ficha_VentaController  extends IncludesController{
         $ficha_venta->__SET('RV_Promociones_Bancos',$_REQUEST['RV_Promociones_Bancos']);
         $ficha_venta->__SET('Supervisor_Vendedor',$_REQUEST['Supervisor_Vendedor']);
         $ficha_venta->__SET('Comentarios_Vendedor',$_REQUEST['Comentarios_Vendedor']);
+        $ficha_venta->__SET('Ingresado_por_Vendedor',$_REQUEST['Ingresado_por_Vendedor']);
+        $ficha_venta->__SET('Fecha_Registro_Vendedor',$_REQUEST['Fecha_Registro_Vendedor']);
         $ficha_venta->__SET('VBO_Estado_Venta_BO',$_REQUEST['VBO_Estado_Venta_BO']);
         $ficha_venta->__SET('VBO_Sub_Estado_Venta_BO',$_REQUEST['VBO_Sub_Estado_Venta_BO']);
         $ficha_venta->__SET('RBO_Cantidad_Ordenes_Ficha',$_REQUEST['RBO_Cantidad_Ordenes_Ficha']);
@@ -316,26 +326,205 @@ class Ficha_VentaController  extends IncludesController{
         $idFecha_Venta=$this->model->Actualizar($ficha_venta);
         
 
-         //$Gestion_id=$this->RegistrarGestion($Negociacion_id,$_REQUEST['Deudor_id'],$_REQUEST['ObligacionCartera_id'],$_REQUEST['Campana_id'],$FechaPagoCtaInicial,$_REQUEST['TipoNegociacion'],$_SESSION['Persona_Actual'],$_REQUEST['Operador_id'],$TipoGestion_id,$_REQUEST['Telefono_idTitular'],$_REQUEST['Direccion_id'],$_REQUEST['Correo_id'],$observaciones_gestion);
-
-        //$this->ActualizarGestionidCompromiso($Negociacion_id,$Gestion_id);
-
         echo  json_encode($idFecha_Venta);
     }
+
+        public function validarPermiso ($idPerfil = 0,$idInterfaz=0){
+
+              try
+                {
+                     ini_set('memory_limit', -1); 
+                $this->pdo = new Conexion();
+                    $result = array();
+
+                    $stm = $this->pdo->prepare("SELECT acceder     FROM Permiso
+                        WHERE Interfaz_id = $idInterfaz
+                        AND Perfil_id=$idPerfil");
+                    $stm->execute();
+                           
+                    return $stm->fetch(PDO::FETCH_ASSOC);
+                }
+                catch(Exception $e)
+                {
+                    die($e->getMessage());
+                }
+
+          }
 
 
     public function ListarFichaVentas()
     {   
-
-
-
         ini_set('memory_limit', '-1');
- 
-            $requestData= $_REQUEST;
-            $totalFichas = $this->consultar_row("SELECT count(idFicha_Venta) as Nro_Fichas from ficha_venta inner join cliente on cliente.idCliente=ficha_venta.Cliente_id where ficha_venta.Eliminado=0");
-        
-            $Fichas_Venta = $this->Consultas("SELECT * FROM ficha_venta inner join cliente on cliente.idCliente=ficha_venta.Cliente_id where ficha_venta.Eliminado=0 order by  RAND() LIMIT ".$requestData['start']." ,".$requestData['length']." ");
 
+        $SubCategorias=$this->Consultas("SELECT * from subcategoria");
+            $arraySubCat = array();
+            foreach ($SubCategorias as $item ) {
+                $arraySubCat[$item['idSubCategoria']]['idSubCategoria']=$item['idSubCategoria'];
+                $arraySubCat[$item['idSubCategoria']]['Nombre']=$item['Nombre'];
+            }
+
+            $Personas=$this->Consultas("SELECT idPersona,Documento,CONCAT(persona.Primer_Nombre,' ',persona.Segundo_Nombre,' ',persona.Apellido_Paterno,' ',persona.Apellido_Materno) as 'NombrePersona' from persona");
+            $arrayPersona = array();
+            $arrayPersona[0]['idPersona']="";
+            $arrayPersona[0]['NombrePersona']="";
+            $arrayPersona[0]['Documento']="";
+            foreach ($Personas as $item ) {
+                $arrayPersona[$item['idPersona']]['idPersona']=$item['idPersona'];
+                $arrayPersona[$item['idPersona']]['NombrePersona']=$item['NombrePersona'];
+                $arrayPersona[$item['idPersona']]['Documento']=$item['Documento'];
+            }
+            $Ubigeos=$this->Consultas("SELECT * from Ubigeo");
+            $arrayDist  = array();
+            $arrayProv = array();
+            $arrayDpto  = array(); 
+            foreach ($Ubigeos as $item ) {
+                $arrayDist[$item['idUbigeo']]['Cod_Dist']=$item['idUbigeo'];
+                $arrayDist[$item['idUbigeo']]['Descripcion']=$item['Descripcion'];
+                if ($item['Tipo_Ubigeo']=='DPTO') {
+                    $arrayDpto[$item['Cod_Dpto']]['Cod_Dpto']=$item['Cod_Prov'];
+                    $arrayDpto[$item['Cod_Dpto']]['Descripcion']=$item['Descripcion'];
+                }
+
+                if ($item['Tipo_Ubigeo']=='PROV') {
+                    $arrayProv[$item['Cod_Prov']]['Cod_Prov']=$item['Cod_Prov'];
+                    $arrayProv[$item['Cod_Prov']]['Descripcion']=$item['Descripcion'];
+                }
+
+            }
+
+            //Fecha Inicio
+            if (isset($_REQUEST['Busc_Fecha_Inicio']) && $_REQUEST['Busc_Fecha_Inicio']<>"" && isset($_REQUEST['Busc_Fecha_Fin']) && $_REQUEST['Busc_Fecha_Fin']<>"" ) { 
+                       
+               $RangoFechas=" and DATE(ficha_venta.Fecha_Registro_Vendedor)>='".$_REQUEST['Busc_Fecha_Inicio']."' and DATE(ficha_venta.Fecha_Registro_Vendedor)<='".$_REQUEST['Busc_Fecha_Fin']."'";
+            }else{
+                 $RangoFechas="";
+            }
+
+            //Documento
+            if (isset($_REQUEST['DP_Documento']) && $_REQUEST['DP_Documento']<>"" ) { 
+                
+                $DP_Documento = htmlspecialchars($_REQUEST['DP_Documento'], ENT_QUOTES);         
+               $DP_Documento=" and cliente.Documento='".$DP_Documento."'";
+            }else{
+                 $DP_Documento="";
+            }
+
+           //RE_Tipo_Despacho
+            if (isset($_REQUEST['RE_Tipo_Despacho']) && $_REQUEST['RE_Tipo_Despacho']<>0 ) { 
+                $RE_Tipo_Despacho=" and RE_Tipo_Despacho=".$_REQUEST['RE_Tipo_Despacho']."";
+            }else{
+                 $RE_Tipo_Despacho="";
+            }
+            //RE_Rango_Entrega_Despacho
+            if (isset($_REQUEST['RE_Rango_Entrega_Despacho']) && $_REQUEST['RE_Rango_Entrega_Despacho']<>0 ) { 
+                $RE_Rango_Entrega_Despacho=" and RE_Rango_Entrega_Despacho=".$_REQUEST['RE_Rango_Entrega_Despacho']."";
+            }else{
+                 $RE_Rango_Entrega_Despacho="";
+            }            
+
+            //RV_Tipo_Ofrecimiento
+            if (isset($_REQUEST['RV_Tipo_Ofrecimiento']) && $_REQUEST['RV_Tipo_Ofrecimiento']<>0 ) { 
+                $RV_Tipo_Ofrecimiento=" and RV_Tipo_Ofrecimiento=".$_REQUEST['RV_Tipo_Ofrecimiento']."";
+            }else{
+                 $RV_Tipo_Ofrecimiento="";
+            }            
+
+            //RV_Tipo_Venta
+            if (isset($_REQUEST['RV_Tipo_Venta']) && $_REQUEST['RV_Tipo_Venta']<>0 ) { 
+                $RV_Tipo_Venta=" and RV_Tipo_Venta=".$_REQUEST['RV_Tipo_Venta']."";
+            }else{
+                 $RV_Tipo_Venta="";
+            }            
+
+            //RV_Linea_Portar
+            if (isset($_REQUEST['RV_Linea_Portar']) && $_REQUEST['RV_Linea_Portar']<>"" ) { 
+                
+                $RV_Linea_Portar = htmlspecialchars($_REQUEST['RV_Linea_Portar'], ENT_QUOTES);         
+               $RV_Linea_Portar=" and RV_Linea_Portar='".$RV_Linea_Portar."'";
+            }else{
+                 $RV_Linea_Portar="";
+            }            
+
+            //RV_Tipo_Producto
+            if (isset($_REQUEST['RV_Tipo_Producto']) && $_REQUEST['RV_Tipo_Producto']<>0 ) { 
+                $RV_Tipo_Producto=" and RV_Tipo_Producto=".$_REQUEST['RV_Tipo_Producto']."";
+            }else{
+                 $RV_Tipo_Producto="";
+            }             
+
+            //VBO_Estado_Venta_BO
+            if (isset($_REQUEST['VBO_Estado_Venta_BO']) && $_REQUEST['VBO_Estado_Venta_BO']<>0 ) { 
+                $VBO_Estado_Venta_BO=" and VBO_Estado_Venta_BO=".$_REQUEST['VBO_Estado_Venta_BO']."";
+            }else{
+                 $VBO_Estado_Venta_BO="";
+            }           
+
+            //RV_Tipo_Producto
+            if (isset($_REQUEST['Supervisor_Vendedor']) && $_REQUEST['Supervisor_Vendedor']<>0 ) { 
+                $Supervisor_Vendedor=" and Supervisor_Vendedor=".$_REQUEST['Supervisor_Vendedor']."";
+            }else{
+                 $Supervisor_Vendedor="";
+            }            
+
+            //RV_Linea_Portar
+            if (isset($_REQUEST['Documento_Vendedor']) && $_REQUEST['Documento_Vendedor']<>"" ) { 
+                
+                $Documento_Vendedor = htmlspecialchars($_REQUEST['Documento_Vendedor'], ENT_QUOTES);         
+               $Documento_Vendedor=" and vendedor.Documento='".$Documento_Vendedor."'";
+            }else{
+                 $Documento_Vendedor="";
+            }
+
+            if($_SESSION['Perfil_Actual']==4){
+                $vendedor_id=" and ficha_venta.Ingresado_por_Vendedor=".$_SESSION['Usuario_Actual']."";
+                //$vendedor_id="";
+            }else{
+                $vendedor_id="";
+            }         
+  
+
+
+            $requestData= $_REQUEST;
+            $totalFichas = $this->consultar_row("SELECT count(idFicha_Venta) as Nro_Fichas FROM ficha_venta
+            inner join cliente on cliente.idCliente=ficha_venta.Cliente_id
+            left join usuario as usuario on usuario.idUsuario=ficha_venta.Ingresado_por_Vendedor
+            left join persona as vendedor on vendedor.idPersona=usuario.Persona_id
+             where ficha_venta.Eliminado=0 $RangoFechas $DP_Documento $RE_Tipo_Despacho $RE_Rango_Entrega_Despacho $RV_Tipo_Ofrecimiento  $RV_Tipo_Venta $RV_Linea_Portar  $RV_Tipo_Producto $VBO_Estado_Venta_BO $Supervisor_Vendedor $Documento_Vendedor  $vendedor_id order by Fecha_Registro_Vendedor");
+
+            $Fichas_Venta=$this->Consultas("SELECT idFicha_Venta
+            ,DATE(ficha_venta.Fecha_Registro_Vendedor) as Fecha_Venta
+            ,TIME(ficha_venta.Fecha_Registro_Vendedor) as Hora_Venta
+            ,cliente.Documento as 'DP_Documento'
+            ,RE_Tipo_Despacho
+            ,RE_Rango_Entrega_Despacho
+            ,RE_Rango_Horario_Despacho
+            ,RE_Ubigeo_Entrega as 'RE_Dist_Entrega_Producto'
+            ,DATEDIFF(RE_Fecha_Entrega,Fecha_Registro_Vendedor) as 'SLA_Entrega'
+            ,RV_Tipo_Ofrecimiento
+            ,RV_Tipo_Venta
+            ,RV_Linea_Portar
+            ,RV_Tipo_Producto
+            ,Supervisor_Vendedor
+            ,VBO_Estado_Venta_BO
+            ,VBO_Sub_Estado_Venta_BO
+            ,DGBO_Tipo_Atencion_Final
+            ,DGBO_BO_Validador_Gestor
+            ,DGBO_BO_Recupero_Repro_Gestor
+             FROM ficha_venta
+            inner join cliente on cliente.idCliente=ficha_venta.Cliente_id
+            left join usuario as usuario on usuario.idUsuario=ficha_venta.Ingresado_por_Vendedor
+            left join persona as vendedor on vendedor.idPersona=usuario.Persona_id
+             where ficha_venta.Eliminado=0 $RangoFechas $DP_Documento $RE_Tipo_Despacho $RE_Rango_Entrega_Despacho $RV_Tipo_Ofrecimiento  $RV_Tipo_Venta $RV_Linea_Portar $RV_Tipo_Producto $VBO_Estado_Venta_BO $Supervisor_Vendedor $Documento_Vendedor  $vendedor_id  order by Fecha_Registro_Vendedor LIMIT ".$requestData['start']." ,".$requestData['length'].""); 
+
+
+
+            $permiso=$this->validarPermiso($_SESSION['Perfil_Actual'],23);
+            if ($permiso['acceder']==1) {
+                $BloquearAct="";
+            }else{
+                
+                $BloquearAct="hidden";
+            }
 
             $totalData = $totalFichas['Nro_Fichas'];
             $totalFiltered = $totalData;
@@ -346,11 +535,30 @@ class Ficha_VentaController  extends IncludesController{
                 $nestedData=array();
                 $nestedData['Nro'] = $nro_registros;
                 $nestedData['idFicha_Venta'] = $Ficha["idFicha_Venta"];
-                $nestedData['Cliente_id'] = $Ficha["Documento"];                
-                $nestedData['DE_Campana_Netcall'] = $Ficha["Nombre_Cliente"].' '.$Ficha["Apellido_Paterno"].' '.$Ficha["Apellido_Materno"];
-                $idSubCategoria=$Ficha["VBO_Estado_Venta_BO"];
-                $VBO_Estado_Venta_BO = $this->consultar_row("SELECT * from subcategoria where idSubcategoria=$idSubCategoria");
-                $nestedData['VBO_Estado_Venta_BO'] = $VBO_Estado_Venta_BO["Nombre"];
+                $nestedData['Fecha_Venta'] = $Ficha["Fecha_Venta"];
+                $nestedData['Hora_Venta'] = $Ficha["Hora_Venta"];
+                $nestedData['DP_Documento'] = $Ficha["DP_Documento"];
+                $nestedData['RE_Tipo_Despacho'] = $arraySubCat[$Ficha['RE_Tipo_Despacho']]['Nombre'];
+                $nestedData['RE_Rango_Entrega_Despacho'] = $arraySubCat[$Ficha['RE_Rango_Entrega_Despacho']]['Nombre'];
+                $nestedData['RE_Rango_Horario_Despacho'] = $arraySubCat[$Ficha['RE_Rango_Horario_Despacho']]['Nombre'];
+                $RE_Dist_Entrega=str_pad($Ficha['RE_Dist_Entrega_Producto'],6,"0", STR_PAD_LEFT); 
+                $RE_Prov_Entrega=substr($RE_Dist_Entrega,0,4);
+                $RE_Dpto_Entrega=substr($RE_Dist_Entrega,0,2);
+                $nestedData['RE_Dpto_Entrega_Producto'] = $arrayDpto[$RE_Dpto_Entrega]['Descripcion'];
+                $nestedData['RE_Prov_Entrega_Producto'] = $arrayProv[$RE_Prov_Entrega]['Descripcion'];
+                $nestedData['RE_Dist_Entrega_Producto'] = $arrayDist[$Ficha['RE_Dist_Entrega_Producto']]['Descripcion'];
+                $nestedData['SLA_Entrega'] = $Ficha["SLA_Entrega"];
+                $nestedData['RV_Tipo_Ofrecimiento'] = $arraySubCat[$Ficha['RV_Tipo_Ofrecimiento']]['Nombre'];
+                $nestedData['RV_Tipo_Venta'] = $arraySubCat[$Ficha['RV_Tipo_Venta']]['Nombre'];
+                $nestedData['RV_Linea_Portar'] = $Ficha["RV_Linea_Portar"];
+                $nestedData['RV_Tipo_Producto'] = $arraySubCat[$Ficha['RV_Tipo_Producto']]['Nombre'];
+                $nestedData['Supervisor_Vendedor'] = $arrayPersona[$Ficha['Supervisor_Vendedor']]['NombrePersona'];
+                $nestedData['VBO_Estado_Venta_BO'] = $arraySubCat[$Ficha['VBO_Estado_Venta_BO']]['Nombre'];
+                $nestedData['VBO_Sub_Estado_Venta_BO'] = $arraySubCat[$Ficha['VBO_Sub_Estado_Venta_BO']]['Nombre'];
+                $nestedData['DGBO_Tipo_Atencion_Final'] = $arraySubCat[$Ficha['DGBO_Tipo_Atencion_Final']]['Nombre'];
+                $nestedData['DGBO_BO_Validador_Gestor'] = $arrayPersona[$Ficha['DGBO_BO_Validador_Gestor']]['NombrePersona'];
+                $nestedData['DGBO_BO_Recupero_Repro_Gestor'] = $arrayPersona[$Ficha['DGBO_BO_Recupero_Repro_Gestor']]['NombrePersona'];
+                $nestedData['BloquearAct'] = $BloquearAct;
                 $data[] = $nestedData;
                  $nro_registros++;
             }
@@ -371,7 +579,11 @@ class Ficha_VentaController  extends IncludesController{
         $idFicha_Venta=$_REQUEST['idFicha_Venta'];
  
           
-        $ficha_venta = $this->consultar_row("SELECT * FROM ficha_venta inner join cliente on cliente.idCliente=ficha_venta.Cliente_id where idFicha_Venta=$idFicha_Venta");
+        $ficha_venta = $this->consultar_row("SELECT ficha_venta.*,cliente.*,vendedor.Documento as Documento_Vendedor,CONCAT(vendedor.Primer_Nombre,' ',vendedor.Segundo_Nombre,' ',vendedor.Apellido_Paterno,' ',vendedor.Apellido_Materno) as Nombre_Vendedor FROM ficha_venta 
+            inner join cliente on cliente.idCliente=ficha_venta.Cliente_id
+            left join usuario as usuario on usuario.idUsuario=ficha_venta.Ingresado_por_Vendedor
+            left join persona as vendedor on vendedor.idPersona=usuario.Persona_id
+            where idFicha_Venta=$idFicha_Venta");
         echo json_encode($ficha_venta);
     }
 

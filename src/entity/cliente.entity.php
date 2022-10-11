@@ -4,7 +4,6 @@ class Cliente
 {
 
 
-
     private $idCliente;
     private $TipoDocumento;
     private $Documento;
@@ -22,14 +21,10 @@ class Cliente
     private $Eliminado;
 
     public function __GET($atributo){ 
-
       return $this->$atributo; 
-      
     }
 
     public function __SET($atributo, $variable){
-
-      return $this->$atributo = $variable; 
-
+      return $this->$atributo = $variable;
     }
 }

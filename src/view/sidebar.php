@@ -44,8 +44,8 @@ $interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
         $permiso= $includes->consultar_row("SELECT * FROM permiso WHERE Interfaz_id = $interfaz_id  AND Perfil_id = $perfil_id;"); ?>
         <?php if($permiso['Acceder'] == 1):?>
       <li class="treeview">
-        <a href="#"> 
-          <i class="fa fa-lock"></i>
+        <a href="#">
+          <?php echo  $modulo['Icono'];?> 
           <span><?php echo $modulo['Nombre'] ; ?> </span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
@@ -59,7 +59,7 @@ $interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
               <?php 
                 $interfaz_id = $nivel2['idInterfaz'];
                 $permiso= $includes->consultar_row("SELECT * FROM permiso WHERE Interfaz_id = $interfaz_id  AND Perfil_id = $perfil_id;"); ?>
-              <?php if($permiso['Acceder'] == 1):?>
+              <?php if($permiso['Acceder'] == 1 && $permiso['Estado'] == 1 ):?>
               <li><a href=<?php echo  $nivel2['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel2['Nombre'] ; ?> </a>
               
               <? $interfaces_nivel3 = new InterfazController();

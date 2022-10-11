@@ -1,4 +1,9 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<!-- Content Header (Page header) -->
  <section class="content-header">  
 	<h1>
 		Modulo Seguridad
@@ -20,7 +25,8 @@ $perfil = new PerfilController;
 $categoria = new CategoriaController;
 $subcategoria = new SubCategoriaController;
 
-$listatipodocumento = $subcategoria -> Listar_por_categoria(58);
+//colocar idcategoria
+$listatipodocumento = $subcategoria -> Listar_por_categoria(10);
 
 $perfiles = $perfil->Listar();
 
@@ -40,7 +46,7 @@ $perfiles = $perfil->Listar();
 								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control" onchange="ValidarInputs()">
 								<option value="0">-- Seleccionar Tipo Documento--</option>      
 								<?php foreach ($listatipodocumento as $lista): ?>                
-									<option value="<?php echo $lista['Nombre']; ?>"><?php echo $lista['Nombre']; ?></option>                      
+									<option value="<?php echo $lista['idSubCategoria']; ?>"><?php echo $lista['Nombre']; ?></option>                      
 								<?php endforeach; ?> 
 								</select>
 							</div>

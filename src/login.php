@@ -4,8 +4,7 @@ require_once 'controller/usuario.controller.php';
 $usuario = new UsuarioController();
 $resultado="";
 
-
-
+ 
 
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
@@ -19,24 +18,22 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     //almacenamos los datos enviados del formulario;
     $Login = $_POST['Usuario'];
     $Password = $_POST['Password'];
+   
 
     $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password);
     //verificar si existe el usuario y la contraseña
- 
+   
+    
     if ($_SESSION['Estado_usuario'] == 1 )
-    { 
-  
+    {  
       //si existe redireccionar al index.php
       $usuario->redirect('index.php');  
-    } 
-    elseif($_SESSION['Estado_usuario'] == 2)
-    {
-      
-       //si no existe mostrar el siguiente mensaje   
-       $resultado = "Usuario Bloqueado";
-    }
+ 
+    }  
     else{
-      $resultado = "Usuario o Contraseña Incorrecta";
+      
+      $resultado = $_SESSION['Nota_sesion'];;
+      
     }
   }  
 }
@@ -163,7 +160,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           $.ajax({
               data: parametro,
               type: "POST",
-              url: 'index.php?c=Usuario&a=v_RecuperarClave',
+              url: 'index.php?c=Usuario&a=RecuperarClave',
               //sync:false,        
               success: function(data) {
                 alert(data);
