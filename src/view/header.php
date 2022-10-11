@@ -17,7 +17,19 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo RUTA_HTTP; ?>/assets/dist/css/skins/_all-skins.css">
+    <?php if ((time()-$_SESSION["Tiempo"])>28800) { ?>
+      <script>
 
+          setInterval(() => {
+          
+            $('#myModal').modal({show:true}); 
+            console.log(new Date().toLocaleTimeString());
+          }, 60000); // 8 horas
+ 
+      </script>
+ 
+     <?php } ?>
+       
        <!-- jQuery 2.1.4 -->
     <script src="<?php echo RUTA_HTTP; ?>/assets/plugins/jQuery/jquery-1.12.0.min.js"></script>
   <!-- datatables -->
@@ -46,31 +58,60 @@
     <!-- style Sistema -->
      <link rel="stylesheet" href="<?php echo RUTA_HTTP; ?>/assets/css/style.css">
 
+   
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif]--> 
   </head>
  <?php 
   $UsuarioSession = new UsuarioController();
   $info_Persona=$UsuarioSession->Consultar_informacion_usuario($_SESSION['Usuario_Actual']);
   
  ?>
-  <body class="hold-transition skin-red sidebar-mini">
+  <body class="hold-transition skin-red sidebar-mini sidebar-collapse">
+
+      <!-- Modal iniio-->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal contenido-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h1 class="modal-title">¿Desea seguir conectado?</h1>
+                </div>
+                <div class="modal-body">
+
+                  <div class="form-group has-feedback text-center"  >
+                    <button type="submit" name="idEntrar" id="idEntrar" class="btn btn-success" name="btn-ingresar" data-dismiss="modal" ><b><i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> <h3>Seguir Conectado</h3></b></button>
+                    <button type="submit" name="idSalir" id="idSalir" class="btn btn-danger" name="btn-salir" style="width:120px" ><b><i class="fa fa-sign-out fa-3x fa-fw" aria-hidden="true"></i> <h3>Salir</h3></b></button>
+                  </div>
+        
+                </div>
+                
+            </div>
+          </div>
+        </div>
+     <!-- Modal Fin-->
+
+
     <div class="wrapper">
-
+ 
       <header class="main-header">
-
+ 
         <!-- Logo -->
         <a href="index.php" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">CSA <b>SpartaX</b></span>
+
+
+         
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>CSA</b> SpartaX</span>
         </a>
-
+       
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
@@ -195,7 +236,52 @@
           </div>
 
         </nav>
+
+
+
       </header>      
     <?php include('sidebar.php'); ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+
+     
+        <script> 
+            $('#idSalir').on('click',function(){
+        
+                $.ajax({ 
+                    type: "GET",
+                    url: 'index.php?c=Usuario&a=CerrarSesion'  
+                });
+                $.ajax({ 
+                    type: "GET",
+                    url: 'index.php'  
+                });
+                location.reload(true);
+                
+            });
+            $('#idEntrar').on('click',function(){
+            
+              
+                $.ajax({ 
+                      type: "GET",
+                      url: 'index.php?c=Usuario&a=ContinuarSesion'  
+                  });
+
+                location.reload(true);    
+           });
+
+
+          window.addEventListener("beforeunload", function (e) {
+          var confirmationMessage = "\o/";
+
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage;                            //Webkit, Safari, Chrome
+          });
+
+
+
+
+
+        </script>
+
+     

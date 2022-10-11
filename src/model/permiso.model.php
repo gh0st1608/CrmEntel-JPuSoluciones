@@ -22,11 +22,27 @@ class PermisoModel
         
 
     }
+
+    public function Listar_por_perfil(Permiso $permiso)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT * FROM permiso where Perfil_id = :Perfil_id AND Eliminado=0;" );
+        $stmt->bindValue(':Perfil_id', $permiso->__GET('Perfil_id'));
+        $stmt->execute();
+        
+        if (!$stmt->execute()) {
+            return 'error';
+            print_r($stmt->errorInfo());
+        }else{            
+             return $stmt->fetchAll(PDO::FETCH_ASSOC);;
+        }
+    }
+
     public function Consultar(Permiso $permiso)
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM permiso WHERE idPermiso = :idPermiso;");
-        $stmt->bindParam(':idPermiso', $Permiso->__GET('idPermiso'));
+        $stmt->bindValue(':idPermiso', $Permiso->__GET('idPermiso'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
@@ -39,17 +55,45 @@ class PermisoModel
         return $objPermiso;
     }
 
+    public function Listar_por_perfil2(Permiso $permiso)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT permiso.idPermiso as idPermiso, interfaz.Modulo_Principal as Modulo_Principal, interfaz.Modulo_Secundario as Modulo_Secundario, permiso.Acceder as Acceder, permiso.Estado as Estado FROM permiso INNER JOIN perfil ON perfil.idPerfil = permiso.Perfil_id INNER JOIN interfaz ON interfaz.idInterfaz = perfil.Interfaz_id WHERE idPermiso = :idPermiso;");
+        $stmt->bindValue(':idPermiso', $permiso->__GET('idPermiso'));
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+
+        $objPermiso = new Permiso(); 
+        
+        if ($stmt->rowCount() > 0) {
+            $objPermiso->__SET('idPermiso',$row->idPermiso);
+            $objPermiso->__SET('Modulo_Principal',$row->Modulo_Principal);
+            $objPermiso->__SET('Modulo_Secundario',$row->Modulo_Secundario);
+            //$objPermiso->__SET('Perfil_id',$row->Perfil_id);
+           // $objPermiso->__SET('Interfaz_id',$row->Interfaz_id);
+            $objPermiso->__SET('Acceder',$row->Acceder);
+            $objPermiso->__SET('Estado',$row->Estado);
+            return $objPermiso;
+        }
+        else
+        {
+            $objPermiso->__SET('idPermiso',0);
+            return $objPermiso;
+        }
+
+    }
+
     public function Actualizar(Permiso $permiso)
     {
       
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE permiso SET  Perfil_id=:Perfil_id,Interfaz_id=:Interfaz_id,Acceder=:Acceder,Ingresado_por=:Ingresado_por WHERE idPermiso = :idPermiso;");
 
-        $stmt->bindParam(':idPermiso',$permiso->__GET('idPermiso'));
-        $stmt->bindParam(':Perfil_id',$permiso->__GET('Perfil_id'));
-        $stmt->bindParam(':Interfaz_id',$permiso->__GET('Interfaz_id'));
-        $stmt->bindParam(':Acceder',$permiso->__GET('Acceder'));           
-        $stmt->bindParam(':Ingresado_por',$permiso->__GET('Ingresado_por')); 
+        $stmt->bindValue(':idPermiso',$permiso->__GET('idPermiso'));
+        $stmt->bindValue(':Perfil_id',$permiso->__GET('Perfil_id'));
+        $stmt->bindValue(':Interfaz_id',$permiso->__GET('Interfaz_id'));
+        $stmt->bindValue(':Acceder',$permiso->__GET('Acceder'));           
+        $stmt->bindValue(':Ingresado_por',$permiso->__GET('Ingresado_por')); 
         if (!$stmt->execute()) {
           return 'error';
       // print_r($stmt->errorInfo());
@@ -64,11 +108,11 @@ class PermisoModel
        
   
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("INSERT INTO permiso(Perfil_id,Interfaz_id,Acceder,Ingresado_por) VALUES(:Perfil_id,:Interfaz_id,:Acceder,:Ingresado_por)");
+        $stmt = $this->bd->prepare("INSERT INTO permiso(Perfil_id,Interfaz_id,Acceder,Ingresado_por) VALUES(:Perfil_id,:Interfaz_id,:Acceder,:Estado)");
         $stmt->bindValue(':Perfil_id', $permiso->__GET('Perfil_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Interfaz_id', $permiso->__GET('Interfaz_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Acceder', $permiso->__GET('Acceder'),PDO::PARAM_INT);
-        $stmt->bindValue(':Ingresado_por', $permiso->__GET('Ingresado_por'),PDO::PARAM_INT);     
+        $stmt->bindValue(':Estado', $permiso->__GET('Estado'),PDO::PARAM_INT);      
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
@@ -89,9 +133,30 @@ class PermisoModel
         $stmt = $this->bd->prepare("UPDATE permiso SET  Eliminado=:Eliminado,Ingresado_por=:Ingresado_por WHERE idPermiso = :idPermiso");
  
 
-        $stmt->bindParam(':idPermiso',$permiso->__GET('idPermiso'));         
-        $stmt->bindParam(':Ingresado_por',$permiso->__GET('Ingresado_por'));
-        $stmt->bindParam(':Eliminado',$permiso->__GET('Eliminado'));    
+        $stmt->bindValue(':idPermiso',$permiso->__GET('idPermiso'));         
+        $stmt->bindValue(':Ingresado_por',$permiso->__GET('Ingresado_por'));
+        $stmt->bindValue(':Eliminado',$permiso->__GET('Eliminado'));    
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+
+    public function Inhabilitar(Permiso $permiso)
+    {
+       
+        $this->bd = new Conexion();
+ 
+        $stmt = $this->bd->prepare("UPDATE permiso SET  Acceder=:Acceder,Ingresado_por=:Ingresado_por WHERE idPermiso = :idPermiso");
+ 
+
+        $stmt->bindValue(':idPermiso',$permiso->__GET('idPermiso'));         
+        $stmt->bindValue(':Ingresado_por',$permiso->__GET('Ingresado_por'));
+        $stmt->bindValue(':Acceder',$permiso->__GET('Acceder'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

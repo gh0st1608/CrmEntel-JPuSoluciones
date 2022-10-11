@@ -47,6 +47,7 @@ if(!$User->Verificar_InicioSesion()){
             //echo "El fichero $nombre_fichero existe";
             require_once 'controller/'.$control_name.'.controller.php';
 
+
         }else{
 
             // echo 'No existe el archivo controlador : '.$nombre_fichero.'<br>';
@@ -55,15 +56,17 @@ if(!$User->Verificar_InicioSesion()){
 
         //verificamos si la clase controladora existe
         if (class_exists($controller)) {
-
+            //error_reporting(E_ALL);
+            //ini_set('display_errors','1');
             // Instanciamos el controlador
             $controller = new $controller();
 
             //verificamos si el metodo existe    
             if (method_exists($controller, $action)) {
-
+                
                 // Llamar a la accion 
                 call_user_func( array( $controller, $action ) );
+              
 
             }else{
 

@@ -78,7 +78,8 @@ class PersonaController{
         $persona->__SET('Celular',$_REQUEST['Celular']);
         $persona->__SET('Correo',$_REQUEST['Correo']);
         $persona->__SET('Cargo_id_SubCategoria',$_REQUEST['Cargo_id_SubCategoria']);
-        $persona->__SET('Estado',$_REQUEST['Estado']);                  
+        $persona->__SET('Estado',$_REQUEST['Estado']);
+        $persona->__SET('Funcion',$_REQUEST['Funcion']);                    
         $persona->__SET('Modificado_por',$_SESSION['Usuario_Actual']);      
         $actualizar_persona = $this->model->Actualizar($persona);         
         if($actualizar_persona=='error'){

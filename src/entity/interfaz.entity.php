@@ -3,12 +3,12 @@
 class Interfaz
 {
  
-    private	$idInterfaz ; 
+  private	$idInterfaz; 
 	private $Nombre; 	  
-	private $Url	;   
+	private $Url;
 	private $Nivel; 	 
-	private $Modulo_Principal ; 
-	private $IdInterfaz_Superior	;  
+	private $Modulo_Principal;
+	private $IdInterfaz_Superior;  
 	private $Orden; 	   
 	private $Icono; 	 
 	private $Estado; 

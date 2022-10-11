@@ -1,4 +1,15 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<?php
+require_once 'controller/subcategoria.controller.php';
+$subcategoria = new SubCategoriaController;
+
+?>
+
+<!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
 		Modulo Administracion
@@ -36,7 +47,8 @@
 	                    	<?php foreach ($personas as $persona): ?>
 	                    	<tr>
 	                    		<td><?php echo  $persona['idPersona']; ?></td>
-								<td><?php echo  $persona['Perfil_id']; ?></td>
+								<?php $subcategorias = $subcategoria->Consultar($persona['Cargo_id_SubCategoria']) ?>
+								<td><?php echo $subcategorias->Nombre ?></td>
 	                    		<td><?php echo $persona['Documento']; ?></td>
 	                    		<td><?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?></td>
 	                    		<td><?php echo $persona['Celular']; ?></td>
@@ -50,11 +62,6 @@
                             		<a href="?c=Persona&a=v_Actualizar&idPersona=<?php echo $persona['idPersona']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-                               		<?php if ($_SESSION['Perfil_Actual']==1): ?>
-                               		<a class="btn btn-danger btn-xs EliminarPersona" data-id="<?php echo $persona['idPersona']; ?>" data-persona="<?php echo $persona['Apellido_Paterno'].' '.$persona['Apellido_Materno'].' '.$persona['Primer_Nombre'].' '.$persona['Segundo_Nombre']; ?>">
-                                   		<i class="fa fa-trash"></i>   
-                               		</a>
-                               		<?php endif; ?>
                                	</td>
 	                    	</tr>
 	                    	<?php endforeach; ?>

@@ -1,4 +1,10 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+
+<!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
 		Modulo Administracion
@@ -18,10 +24,14 @@
 	require_once 'controller/subcategoria.controller.php';
 	
 	$subcategoria = new SubCategoriaController;
-	$generos = $subcategoria -> Listar_por_categoria(59);
-	$cargos = $subcategoria -> Listar_por_categoria(56);
+	//colocar idcategoria de genero
+	$generos = $subcategoria -> Listar_por_categoria(40);
+
+	//colocar idcategoria de cargo
+	$cargos = $subcategoria -> Listar_por_categoria(37);
 
 	$persona= $this->Consultar($_REQUEST['idPersona']);
+	$idtipodocumento = $persona->Tipo_Documento;
 
 	$cargo = $subcategoria->Consultar($persona->Cargo_id_SubCategoria);
 ;
@@ -39,7 +49,8 @@
 	    				<input type="hidden" name="idPersona" value="<?php echo $persona->__GET('idPersona'); ?>" />
 						<div class="form-group col-md-6">
 					        <label>Tipo Documento</label>
-					        <input type="text" name="Tipo_Documento" value="<?php echo $persona->__GET('Tipo_Documento'); ?>" class="form-control" placeholder="" readonly  required />
+							<?php $subcategorias = $subcategoria->Consultar($idtipodocumento); ?>
+					        <input type="text" name="Tipo_Documento" value="<?php echo $subcategorias->Nombre; ?>" class="form-control" placeholder="" readonly  required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Documento</label>
@@ -71,7 +82,7 @@
 					        <select name="Sexo" id="Sexo" class="form-control" required >
 							<option value="0">-- Seleccionar Genero--</option>
 								<?php foreach ($generos as $genero): ?>                
-									<option value="<?php echo $genero['Nombre']; ?>"><?php echo $genero['Nombre']; ?></option>                      
+									<option value="<?php echo $genero['Nombre']; ?>" <?php if($genero['Nombre']==$persona->__GET('Sexo')){ echo "selected";}?>><?php echo $genero['Nombre']; ?></option>                      
 								<?php endforeach; ?>                                    
 							</select>
 					    </div>
@@ -85,10 +96,10 @@
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Cargo</label>
-					        <select name="Cargo" id="Cargo" class="form-control" >
-							<option value="0">-- Seleccionar Cargo--</option> 
+					        <select name="Cargo_id_SubCategoria" id="Cargo_id_SubCategoria" class="form-control" >
+									<option value="0">-- Seleccionar Cargo--</option> 
 									<?php foreach ($cargos as $cargo): ?>                
-										<option value="<?php echo $cargo['Nombre']; ?>"><?php echo $cargo['Nombre']; ?></option>                      
+										<option value="<?php echo $cargo['idSubCategoria']; ?>" <?php if($cargo['idSubCategoria']==$persona->__GET('Cargo_id_SubCategoria')){ echo "selected";}?>><?php echo $cargo['Nombre']; ?></option>                      
 									<?php endforeach; ?>                                    
 							</select>
 					    </div>
@@ -105,17 +116,27 @@
 								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($persona->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
 							</label>	
 						</div>
+						<div class="form-group col-md-12">
+					      <label>Función Supervisor</label>
+						</div>
+						<div class="form-group col-md-6">
+							<label class="radio-inline">
+								<input type="radio" name="Funcion" id="Funcion" value="1" <?php if ($persona->__GET('Funcion')==1) { echo 'checked';  } ?>> SI
+							</label>
+						</div>
+						<div class="form-group col-md-6">
+							<label class="radio-inline">
+								<input type="radio" name="Funcion" id="Funcion" value="0" <?php if ($persona->__GET('Funcion')==0) { echo 'checked'; }  ?>> NO
+							</label>	
+						</div>
 
 					  	<div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">
 					        
-					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
+					        <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
 					      
 					    </div>
 					     <div class="col-md-6 col-sm-12">
-
-					       
-					    
 					        <a href="index.php?c=Persona" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
 					    </div>  
 					  </div>
@@ -128,8 +149,8 @@
 <script>
 	
 	$(document).ready(function() {
-		$('#Cargo').val("<?php echo $cargo['Nombre']; ?>");
-		$('#Sexo').val("<?php echo $persona->__GET('Sexo');?>");
+		
+		
 		$("#btnSubmit").click(function(event) {
 			bootbox.dialog({
 	            message: "¿Estas seguro de actualizar?",
@@ -139,12 +160,7 @@
 	                    label: "Actualizar",
 	                    className: "btn-primary",
 	                    callback: function() {
-	                        //console.log('Eliminado al usuario');
-	                        
-	                              $( "#frmActualizarPersona" ).submit();
-	                         
-
-	                       
+	                        $( "#frmActualizarPersona" ).submit();       
 	                    }
 	                },
 	                danger: {

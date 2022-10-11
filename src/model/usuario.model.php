@@ -65,7 +65,7 @@ class UsuarioModel
     {
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT * FROM usuario WHERE idUsuario = :idUsuario");
-        $stmt->bindParam(':idUsuario', $usuario->__GET('idUsuario'));
+        $stmt->bindValue(':idUsuario', $usuario->__GET('idUsuario'));
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);      
 
@@ -87,12 +87,12 @@ class UsuarioModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
 
-        $stmt->bindParam(':idUsuario',$usuario->__GET('idUsuario'));
-        $stmt->bindParam(':Login',$usuario->__GET('Login'));
-        $stmt->bindParam(':Password',$usuario->__GET('Password'));
-        $stmt->bindParam(':Perfil_id',$usuario->__GET('Perfil_id'));
-        $stmt->bindParam(':Estado',$usuario->__GET('Estado'));      
-        $stmt->bindParam(':Modificado_por',$usuario->__GET('Modificado_por'));
+        $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));
+        $stmt->bindValue(':Login',$usuario->__GET('Login'));
+        $stmt->bindValue(':Password',$usuario->__GET('Password'));
+        $stmt->bindValue(':Perfil_id',$usuario->__GET('Perfil_id'));
+        $stmt->bindValue(':Estado',$usuario->__GET('Estado'));      
+        $stmt->bindValue(':Modificado_por',$usuario->__GET('Modificado_por'));
     
         if (!$stmt->execute()) {
             return 'error';
@@ -130,9 +130,65 @@ class UsuarioModel
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("UPDATE usuario SET  modificado_por=:modificado_por,eliminado=:eliminado WHERE idUsuario = :idUsuario");
 
-        $stmt->bindParam(':idUsuario',$usuario->__GET('idUsuario'));         
-        $stmt->bindParam(':modificado_por',$usuario->__GET('modificado_por'));
-        $stmt->bindParam(':eliminado',$usuario->__GET('eliminado'));    
+        $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));         
+        $stmt->bindValue(':modificado_por',$usuario->__GET('modificado_por'));
+        $stmt->bindValue(':eliminado',$usuario->__GET('eliminado'));    
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+    
+
+    public function Validar_Sesion($parametro)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT LoggedIn FROM log_sesion 
+        INNER JOIN usuario ON usuario.Login = log_sesion.Login
+        WHERE usuario.idUsuario = :idUsuario
+        AND  IdEstadoKanBanDetalle = 1
+        ORDER BY idLog_Sesion DESC LIMIT 1;");
+        $stmt->bindValue(':idUsuario',$parametro);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        $valor = $row->LoggedIn;
+        if ($valor == 'No') 
+        {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+
+    }
+
+    public function ObtenerSesion($parametro)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT MAX(idLog_Sesion) as idLog_Sesion FROM log_sesion WHERE Login = :Login");
+        $stmt->bindValue(':Login',$parametro);
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            return $row->idLog_Sesion;
+        }
+
+    }
+
+    public function EliminarSesion(Usuario $usuario)
+    {
+       
+        $this->bd = new Conexion();
+
+        $idsesion = $this->ObtenerSesion($usuario->__GET('Login'));
+        $stmt = $this->bd->prepare("UPDATE log_sesion SET  LoggedIn=:LoggedIn, Fecha_Cierre=sysdate() WHERE idLog_Sesion = :idLog_Sesion");
+        $stmt->bindValue(':idLog_Sesion',$idsesion);         
+        $stmt->bindValue(':LoggedIn',$usuario->__GET('LoggedIn'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());
@@ -152,7 +208,7 @@ class UsuarioModel
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
             $stmt = $this->bd->prepare("SELECT * FROM usuario WHERE login=:Login and eliminado=0");
-            $stmt->bindParam(':Login', $usuario->__GET('login'));
+            $stmt->bindValue(':Login', $usuario->__GET('login'));
             //ejecutamos la consulta sql        
             $stmt->execute();
             //almacenamos los registros obtenidos de la consulta
@@ -163,28 +219,24 @@ class UsuarioModel
                 //si se an encontrado registros comparamos las contraseñas
                 if(strtolower($usuario->__GET('password'))==strtolower($usuario_registrado['Password']))
                 {
-                    //validamos que el usuario este activo en la BD 
-                    if($usuario_registrado['Estado'] == 1 )
-	                {   
-                        $_SESSION['Estado_usuario'] = 1;
-	                    //devolvemos los datos del  usuario
-	                    return $usuario_registrado;
-	                }
-                    elseif ($usuario_registrado['Estado'] == 2 ) {
-                        $_SESSION['Estado_usuario'] = 2;
-                        return FALSE;
-   
-                    }       
-	                else
-	                {   
-                        $_SESSION['Estado_usuario'] = 3;
-	                    return FALSE;
-   
-                	}	
+                  //validamos que el usuario este activo en la BD 
+                  if($usuario_registrado['Estado'] == 1 )
+                  {   
+                      
+                      //devolvemos los datos del  usuario
+                      return $usuario_registrado;
+                  }    
+                  else
+                  {    // usuario bloqueado
+                      $_SESSION['Estado_usuario'] = 0;
+                      return FALSE;
+                      
+                  }		
                 }
                 else
                 {
-                    $_SESSION['Estado_usuario'] = 3;
+                    //$_SESSION['Estado_usuario'] = 3;
+                    $_SESSION['Estado_usuario'] = 0;
                      // contador
                     if (is_null($_SESSION['intentoSesion']) || $_SESSION['intentoSesion'] == 0  ){
                         $_SESSION['intentoSesion']  = 1 ;
@@ -214,13 +266,14 @@ class UsuarioModel
         	//instanciamos a la clase conexion 
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
-            $stmt = $this->bd->prepare( "CALL procInsertLogSesion(:Login,:Password,:LoggedIn,:IP,:Dispositivo,:NombreDispositivo)"     );
-            $stmt->bindParam(':Login', $loginiciosesion->__GET('login'));
-            $stmt->bindParam(':Password', $loginiciosesion->__GET('password'));
-            $stmt->bindParam(':LoggedIn', $loginiciosesion->__GET('loggedin'));
-            $stmt->bindParam(':IP', $loginiciosesion->__GET('ip_usuario'));
-            $stmt->bindParam(':Dispositivo', $loginiciosesion->__GET('dispositivo'));
-            $stmt->bindParam(':NombreDispositivo', $loginiciosesion->__GET('nombredispositivo'));
+            $stmt = $this->bd->prepare( "CALL procInsertLogSesion(:Login,:Password,:LoggedIn,:IP,:Dispositivo,:NombreDispositivo, :Equipo)"  );
+            $stmt->bindValue(':Login', $loginiciosesion->__GET('login'));
+            $stmt->bindValue(':Password', $loginiciosesion->__GET('password'));
+            $stmt->bindValue(':LoggedIn', $loginiciosesion->__GET('loggedin'));
+            $stmt->bindValue(':IP', $loginiciosesion->__GET('ip_usuario'));
+            $stmt->bindValue(':Dispositivo', $loginiciosesion->__GET('dispositivo'));
+            $stmt->bindValue(':NombreDispositivo', $loginiciosesion->__GET('nombredispositivo'));
+            $stmt->bindValue(':Equipo', $_COOKIE['Equipo']);
             //ejecutamos la consulta sql        
             $stmt->execute();
             //almacenamos los registros obtenidos de la consulta
@@ -238,7 +291,8 @@ class UsuarioModel
             }
             else
             {   
-                $_SESSION['EstadoUsuario'] = 'Usuario bloqueado';
+                $_SESSION['Estado_usuario'] = 0;
+                $_SESSION['Nota_sesion'] = $login_registro['Nota'];
                 return FALSE;
             }	
         
@@ -266,10 +320,10 @@ class UsuarioModel
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
             $stmt = $this->bd->prepare( "CALL ProcUpdateLogSesion(:Login,'','',:IP,:Dispositivo,:NombreDispositivo)"     );
-            $stmt->bindParam(':Login', $Login);
-            $stmt->bindParam(':IP', $ip_usuario);
-            $stmt->bindParam(':Dispositivo', $dispositivo);
-            $stmt->bindParam(':NombreDispositivo', $NombreDispositivo);
+            $stmt->bindValue(':Login', $Login);
+            $stmt->bindValue(':IP', $ip_usuario);
+            $stmt->bindValue(':Dispositivo', $dispositivo);
+            $stmt->bindValue(':NombreDispositivo', $NombreDispositivo);
             //ejecutamos la consulta sql        
             $stmt->execute();
         

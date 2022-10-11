@@ -1,4 +1,7 @@
 <?php
+require_once "controller/includes.controller.php";
+$includes = new IncludesController();
+
 $interfaces_modulo = new InterfazController();
 
  
@@ -35,9 +38,14 @@ $interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
     <ul class="sidebar-menu"> 
       <li class="header">Menú de Navegacion</li>
       <?php foreach ($interfaces_modulo as $modulo): ?>
+      <?php 
+        $interfaz_id = $modulo['idInterfaz'];
+        $perfil_id = $_SESSION['Perfil_Actual'];
+        $permiso= $includes->consultar_row("SELECT * FROM permiso WHERE Interfaz_id = $interfaz_id  AND Perfil_id = $perfil_id;"); ?>
+        <?php if($permiso['Acceder'] == 1):?>
       <li class="treeview">
-        <a href="#"> 
-          <i class="fa fa-lock"></i>
+        <a href="#">
+          <?php echo  $modulo['Icono'];?> 
           <span><?php echo $modulo['Nombre'] ; ?> </span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
@@ -48,27 +56,36 @@ $interfaces_modulo =  $interfaces_modulo->ConsultaModulo();
              $interfaces_nivel2 =  $interfaces_nivel2->ListarNivel($idInterfaz_modulo );
            ?>
             <?php foreach ($interfaces_nivel2 as $nivel2): ?>
+              <?php 
+                $interfaz_id = $nivel2['idInterfaz'];
+                $permiso= $includes->consultar_row("SELECT * FROM permiso WHERE Interfaz_id = $interfaz_id  AND Perfil_id = $perfil_id;"); ?>
+              <?php if($permiso['Acceder'] == 1 && $permiso['Estado'] == 1 ):?>
               <li><a href=<?php echo  $nivel2['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel2['Nombre'] ; ?> </a>
-            
+              
               <? $interfaces_nivel3 = new InterfazController();
                 $idInterfaz_nivel2 = $nivel2['idInterfaz'] ;
                 $interfaces_nivel3 =  $interfaces_nivel3->ListarNivel($idInterfaz_nivel2 );
               ?>
               <?php foreach ($interfaces_nivel3 as $nivel3): ?>
+                <?php
+                $interfaz_id = $nivel3['idInterfaz'];
+                $permiso= $includes->consultar_row("SELECT * FROM permiso WHERE Interfaz_id = $interfaz_id  AND Perfil_id = $perfil_id;"); ?>
+                <?php if($permiso['Acceder'] == 1):?>
                 <ul class="treeview-menu">                
                   <li>
                     <li><a href=<?php echo  $nivel3['Url'] ; ?>><i class="fa fa-circle-o" aria-hidden="true"></i><?php echo  $nivel3['Nombre'] ; ?> </a>
                  </li>
                 </ul>
- 
+                <?php endif;?>
               <?php endforeach; ?>
             </li>
-              
- 
+            <?php endif;?>
+
             <?php endforeach; ?>
           </li>
         </ul>
       </li>
+      <?php endif;?>
       <?php endforeach; ?>
       <li>            
     </ul>

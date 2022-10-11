@@ -155,6 +155,13 @@ class SubCategoriaController{
         echo  json_encode($registros);
     }
 
+    public function ListarSubCategoriasAjax()
+    {
+        
+        $SubCategorias = $this->model->ListarSubCategorias();
+        echo  json_encode($SubCategorias);
+    }
+
 
 
 }

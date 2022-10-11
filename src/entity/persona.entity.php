@@ -22,7 +22,6 @@ class Persona
     private $Fecha_Registro;
     private $Modificado_por;
     private $Fecha_Modificacion;
-    private $Fecha_Ingreso;
     private $Eliminado;
     
     public function __GET($atributo){ 

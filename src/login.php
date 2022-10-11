@@ -3,10 +3,14 @@ require_once 'controller/usuario.controller.php';
 
 $usuario = new UsuarioController();
 $resultado="";
+ 
+if( !isset($_COOKIE['Equipo'])) {
+ 
+   setcookie("Equipo", mt_rand(10000, 99999)); 
 
+ }  
 
-
-
+ 
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {
@@ -19,30 +23,28 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     //almacenamos los datos enviados del formulario;
     $Login = $_POST['Usuario'];
     $Password = $_POST['Password'];
+   
 
     $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password);
     //verificar si existe el usuario y la contraseña
- 
+   
+    
     if ($_SESSION['Estado_usuario'] == 1 )
-    { 
-  
+    {  
       //si existe redireccionar al index.php
       $usuario->redirect('index.php');  
-    } 
-    elseif($_SESSION['Estado_usuario'] == 2)
-    {
-      
-       //si no existe mostrar el siguiente mensaje   
-       $resultado = "Usuario Bloqueado";
-    }
+ 
+    }  
     else{
-      $resultado = "Usuario o Contraseña Incorrecta";
+      
+      $resultado = $_SESSION['Nota_sesion'];;
+      
     }
   }  
 }
-   
- 
 
+
+ 
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,7 +90,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
         <?php if ($_SESSION['intentoSesion'] == 3  ) { 
-                $_SESSION['intentoSesion'] = 0           ?>
+                $_SESSION['intentoSesion'] = 0 ?>
           <div class="row" >
             <div class="col-md-12">
             <p class="openBtn2" style="text-align: right;"><a href="#">Recuperar Contraseña</a></p>
@@ -144,7 +146,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 $('#myModal').modal({show:true});
             });
         });
-    
+      
       $('#Correo').on('keyup', function() {
           var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
           var buttonDisabled = $('#Correo').val().length == 0 ;
@@ -157,7 +159,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
               $('#EnviarMail').attr("disabled", buttonDisabled);
           }
       })
-
+      
       $('#EnviarMail').on('click',function(){
           var parametro= "Correo="+$("#Correo").val();
           $.ajax({
@@ -169,9 +171,11 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 alert(data);
               },
           });
-      }
+      });
 	
-
+  
     </script>
+    
+ 
   </body>
 </html>

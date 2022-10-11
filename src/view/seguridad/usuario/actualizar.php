@@ -1,4 +1,9 @@
- <!-- Content Header (Page header) -->
+<?php 
+error_reporting(E_ALL);
+ini_set('display_errors','1');
+
+?>
+<!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
 		Modulo Seguridad
@@ -26,7 +31,7 @@ $usuario = $this->Consultar($_REQUEST['idUsuario']);
 $persona = $persona->Consultar($_REQUEST['Persona_id']);
 
 $perfiles = $perfil->Listar();
-$listatipodocumento = $subcategoria -> Listar_por_categoria(58);
+$listatipodocumento = $subcategoria -> Listar_por_categoria(40);
 
 
 
@@ -49,10 +54,9 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(58);
 							</div>
 							<div class="form-group col-md-6">
 								<label>Tipo Documento</label>
-								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control" disabled="true" readonly>
-									<?php foreach ($listatipodocumento as $lista): ?>                
-										<option value="<?php echo $lista['Nombre']; ?>"><?php echo $lista['Nombre']; ?></option>                      
-									<?php endforeach; ?>                                    
+								<select name="Tipo_Documento" id="Tipo_Documento" class="form-control" readonly>
+									<?php $objsubcategoria = $subcategoria -> Consultar($persona -> Tipo_Documento);?>
+									<option value="<?php echo $persona -> Tipo_Documento; ?>"><?php echo $objsubcategoria->Nombre; ?></option>                                                     
 								</select>
 							</div>
 							<div class="form-group col-md-6">
@@ -72,17 +76,22 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(58);
 								<label>Clave</label>
 								<input type="text" name="Clave" id="Clave" value="<?php echo $usuario->__GET('Password');?>" class="form-control" placeholder=""  required />
 							</div>
-							<div class="form-group col-md-4">
-					      		<label>Activo</label>
+							<div class="form-group col-md-12">
+					      		<label>Estado</label>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-2">
 								<label class="radio-inline">
-									<input type="radio" name="Estado" id="Estado" value="1" <?php if ($usuario->__GET('Estado')==1) { echo 'checked';  } ?>> SI
+									<input type="radio" name="Estado" id="Estado" value="1" <?php if ($usuario->__GET('Estado')==1) { echo 'checked';  } ?>> Activo
 								</label>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-2">
 								<label class="radio-inline">
-									<input type="radio" name="Estado" id="Estado" value="0" <?php if ($usuario->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
+									<input type="radio" name="Estado" id="Estado" value="0" <?php if ($usuario->__GET('Estado')==0) { echo 'checked'; }  ?>> Inactivo
+								</label>	
+							</div>
+							<div class="form-group col-md-2">
+								<label class="radio-inline">
+									<input type="radio" name="Estado" id="Estado" value="2" <?php if ($usuario->__GET('Estado')==2) { echo 'checked'; }  ?>> Bloqueado
 								</label>	
 							</div>
 					    </div> 
