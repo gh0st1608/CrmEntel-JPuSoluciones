@@ -11,8 +11,8 @@ ini_set('display_errors','1');
 	</h1>
 	<ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li><a href="index.php?c=SubCategoria">Categoria</a></li>
-            <li class="active">Actualizar</li>
+            <li><a href="index.php?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $_REQUEST['Categoria_id'] ?>">Categoría</a></li>
+            <li class="active">Actualizar Subcategoría</li>
           </ol>
 </section>
 
@@ -41,7 +41,8 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 	    				<input type="hidden" name="idSubCategoria" value="<?php echo $subcategoria->__GET('idSubCategoria'); ?>" />    					    
 					    <div class="form-group col-md-12">
 							<label>Categoria</label>
-							<input type="text" name="Categoria_id" id="Categoria_id" value="<?php echo $categoria-> Nombre ?>" class="form-control" readonly="true" ></input>  
+							<input type="text" name="Categoria_id" id="Categoria_id" value="<?php echo $categoria-> idCategoria ?>" class="form-control hidden" placeholder=""  readonly="true" />
+							<input type="text" name="NombreCategoria" id="NombreCategoria" value="<?php echo $categoria-> Nombre ?>" class="form-control" readonly="true" ></input>  
 				    	</div>
 						<div class="form-group col-md-12">
 					        <label>Nombre SubCategoria</label>
@@ -61,25 +62,26 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 								?>
 					        </select>
 					    </div>
-						<div class="form-group col-md-4">
+						<div class="form-group col-md-12 Data">
+					        <label>Comentarios</label>
+					        <textarea name="Data" id="Data" rows="5" cols="40" id="Data" value="" class="form-control" placeholder=""  required><?php echo $subcategoria->__GET('Logica_Json'); ?>
+							</textarea>
+					    </div>
+					    <div class="form-group col-md-12">
 					      <label>Activo</label>
-						</div>
-						<div class="form-group col-md-4">
-							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($subcategoria->__GET('Estado')==1) { echo 'checked';  } ?>> SI
-							</label>
-						</div>
-						<div class="form-group col-md-4">
-							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($subcategoria->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
-							</label>	
-						</div>
+					      <label class="radio-inline">
+					          <input type="radio" name="Estado" id="Estado" value="1" <?php if ($subcategoria->__GET('Estado')==1) { echo 'checked';  } ?>> SI
+					      </label>
+					      <label class="radio-inline">
+					          <input type="radio" name="Estado" id="Estado" value="0" <?php if ($subcategoria->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
+					      </label>					    
+					    </div>
 					  	<div class="col-md-12" style="margin-top:2em;">
 							<div class="col-md-6 col-sm-12"> 
 								<button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
 							</div>
 							<div class="col-md-6 col-sm-12">
-								<a href="index.php?c=SubCategoria" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
+								<a href="index.php?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $_REQUEST['Categoria_id']; ?>" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
 							</div>  
 					  	</div>
 					</form>                   
@@ -115,13 +117,7 @@ $categoria = $categoria -> Consultar($subcategoria->Categoria_id);
 		});	
 	});
 
-	$(document).ready(function () {
-		$('#btnSubmit').attr("disabled", true);
-			$('#Nombre').keyup(function () {
-				var buttonDisabled = $('#Nombre').val().length == 0;
-				$('#btnSubmit').attr("disabled", buttonDisabled);
-			});
-		});
+
 
 
 

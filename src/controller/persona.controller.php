@@ -97,7 +97,7 @@ class PersonaController{
         $persona->__SET('Segundo_Nombre',$_REQUEST['Segundo_Nombre']);
         $persona->__SET('Apellido_Paterno',$_REQUEST['Apellido_Paterno']);
         $persona->__SET('Apellido_Materno',$_REQUEST['Apellido_Materno']);
-
+        $persona->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_persona = $this->model->Registrar($persona);  
          
         if($registrar_persona=='error'){

@@ -6,15 +6,15 @@ require_once 'controller/persona.controller.php';
 require_once 'entity/persona.entity.php';
 
 /*
-require_once 'model/mail.model.php';
-require_once 'entity/mail.entity.php';
+require_once 'service/mailing.service.php';
 */
+require_once 'entity/mail.entity.php';
 require_once "vendor/autoload.php";
 
 
 use UAParser\Parser;
-//ini_set("session.cookie_lifetime","216000");
-//ini_set("session.gc_maxlifetime","216000");
+ini_set("session.cookie_lifetime","43200");
+ini_set("session.gc_maxlifetime","43200");
 session_start();
 class UsuarioController{    
   
@@ -106,17 +106,18 @@ class UsuarioController{
         $consulta = $this->model->Consultar($usuario);
         return $consulta;
     }
-/*
+
     public function RecuperarClave()
     {
-        
-        $objmail = new Mail();
-        
+        $consulta = $this->model->RecuperarClave($_REQUEST['Correo']);
+
+        $mail->__SET('user',$consulta['Login']);
+        $mail->__SET('password',$consulta['Password']);
         $usuario->__SET('idUsuario',$_REQUEST['Correo']);
 
         
     }  
-*/
+
     public function Actualizar(){
         $usuario = new Usuario();
         $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);
@@ -279,21 +280,19 @@ class UsuarioController{
         }
     }
 
-    public function EliminarSesion()
+    public function DesbloquearEliminarSesion()
     {
         $usuario = new Usuario();
         //asignamos valores a las variables de la entidad
+        $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);
         $usuario->__SET('Login',$_REQUEST['Login']);
         $usuario->__SET('LoggedIn','No');
         $login = $this->model->EliminarSesion($usuario);
+        $idUsuario = $this->model->DesbloquearUsuario($usuario);
         //verifico si la session a sido iniciada
-        if($login && isset($_SESSION['Tipo_sistema'])=="Prejudicial")
-        {
-            header('Location: index.php?c=Usuario');
 
-        }else{
             header('Location: index.php?c=Usuario');
-        }
+       
     }
 
 

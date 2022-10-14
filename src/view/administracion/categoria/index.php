@@ -1,8 +1,4 @@
-<?php 
-error_reporting(E_ALL);
-ini_set('display_errors','1');
 
-?>
 <!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
@@ -45,14 +41,16 @@ ini_set('display_errors','1');
                                 <?php else: ?>
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
                                 <?php endif ?>
-								<td class="a_center">                            		
+								<td class="a_center">
+								    <?php if ($_SESSION['Perfil_Actual']==1): ?>                    		
                             		<a href="?c=Categoria&a=v_Actualizar&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
                                		<a class="btn btn-danger btn-xs EliminarCategoria" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
                                    		<i class="fa fa-trash"></i>   
                                		</a>
-									<a href="?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-info btn-xs VerSubCategorias" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>">
+                               		<?php endif; ?>
+									<a href="?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $categoria['idCategoria']; ?>" class="btn btn-info btn-xs VerSubCategorias" data-id="<?php echo $categoria['idCategoria']; ?>" data-categoria="<?php echo $categoria['Nombre']; ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ver lista de SubCategorias">
 										<i class="fa fa-eye" aria-hidden="true"></i>
 									</a>
                                	</td>

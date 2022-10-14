@@ -72,11 +72,12 @@ class SubCategoriaModel
     {
       
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE subcategoria SET Nombre=:Nombre,Aplicar_Logica=:Aplicar_Logica,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
+        $stmt = $this->bd->prepare("UPDATE subcategoria SET Nombre=:Nombre,Aplicar_Logica=:Aplicar_Logica,Logica_Json=:Logica_Json,Estado=:Estado,Ingresado_por=:Ingresado_por WHERE idSubCategoria = :idSubCategoria;");
         $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));
         //$stmt->bindValue(':Categoria_id',$subcategoria->__GET('Categoria_id'));
         $stmt->bindValue(':Nombre',$subcategoria->__GET('Nombre')); 
-        $stmt->bindValue(':Aplicar_Logica',$subcategoria->__GET('Aplicar_Logica'));
+        $stmt->bindValue(':Aplicar_Logica',$subcategoria->__GET('Aplicar_Logica')); 
+        $stmt->bindValue(':Logica_Json',$subcategoria->__GET('Logica_Json'));
         $stmt->bindValue(':Estado',$subcategoria->__GET('Estado')); 
         $stmt->bindValue(':Ingresado_por',$subcategoria->__GET('Ingresado_por'));
         if (!$stmt->execute()) {

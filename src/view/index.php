@@ -1,9 +1,4 @@
 
-<?php 
-
-
- ?>
-
 
 
 <section class="content">
