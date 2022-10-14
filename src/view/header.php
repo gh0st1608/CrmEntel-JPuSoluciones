@@ -19,17 +19,12 @@
     <link rel="stylesheet" href="<?php echo RUTA_HTTP; ?>/assets/dist/css/skins/_all-skins.css">
     <?php if ((time()-$_SESSION["Tiempo"])>28800) { ?>
       <script>
+ 
 
           setInterval(() => {
           
             $('#myModal').modal({show:true}); 
             console.log(new Date().toLocaleTimeString());
-
-
-
-
-          
- 
  
           }, 60000); // 8 horas
  
@@ -37,13 +32,8 @@
 
 
  
-     <?php } ?>
-      
-
-    
-     
- 
-
+     <?php } ?> 
+       
        <!-- jQuery 2.1.4 -->
     <script src="<?php echo RUTA_HTTP; ?>/assets/plugins/jQuery/jquery-1.12.0.min.js"></script>
   <!-- datatables -->

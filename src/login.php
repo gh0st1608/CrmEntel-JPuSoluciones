@@ -12,6 +12,8 @@ if( !isset($_COOKIE['Equipo'])) {
 } 
 
 
+
+
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {
