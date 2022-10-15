@@ -4,11 +4,14 @@ require_once 'controller/usuario.controller.php';
 $usuario = new UsuarioController();
 $resultado="";
 
+
 if( !isset($_COOKIE['Equipo'])) {
  
-  setcookie("Equipo", mt_rand(10000, 99999)); 
+  setcookie("Equipo", mt_rand(10000, 99999),time()+99999); 
 
-}  
+} 
+
+ 
  
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
@@ -88,41 +91,6 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
-        <?php if ($_SESSION['intentoSesion'] == 3  ) { 
-                $_SESSION['intentoSesion'] = 0 ?>
-          <div class="row" >
-            <div class="col-md-12">
-            <p class="openBtn2" style="text-align: right;"><a href="#">Recuperar Contraseña</a></p>
-            </div>
-          </div>
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-            <!-- Modal contenido-->
-            <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Recuperar Contraseña</h4>
-                </div>
-                <div class="modal-body">
-                <div class="form-group has-feedback">
-                  <label>Ingresa Correo</label>
-                  <input type="email" class="form-control" name="Correo" id="Correo"  placeholder="Ingresar Correo" required>
-                  <span id="error" style="display:none;color:red;">Correo no válido</span>
-                  <span id="success" style="display:none;color:green;">Correo válido</span>
-                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                  <button type="submit" name="EnviarMail" id="EnviarMail" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
-                </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" name="Regresar" id="Regresar" class="btn btn-default" data-dismiss="modal">Regresar</button>
-                </div>
-            </div>
-            </div>
-          </div>
-          <?php }  ?>
-
           <div class="row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar Sesión</b></button>

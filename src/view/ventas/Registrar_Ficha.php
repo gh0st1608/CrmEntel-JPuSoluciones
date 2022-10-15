@@ -2660,7 +2660,7 @@
 					var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
 					var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
 					var DP_TipoDocumento=$("#DP_TipoDocumento").val();
-					var DP_Documento=$("#DP_Documento").val();
+					var DP_Documento=$("#DP_Documento").val().trim();
 					var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
 					var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
 					var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
@@ -2826,7 +2826,6 @@
 							Comentarios_BackOffice:Comentarios_BackOffice,
 							tipo_actualizacion:tipo_actualizacion
 					    },
-				      	//sync:false,        
 				      	success: function(data) {
 				        	$("#loader-text").html("Ficha de venta actualizada");
 
@@ -2867,7 +2866,7 @@
 					var DE_Cliente_Entel=$("#DE_Cliente_Entel").val();
 					var DE_Cliente_Promo_Dscto=$("#DE_Cliente_Promo_Dscto").val();
 					var DP_TipoDocumento=$("#DP_TipoDocumento").val();
-					var DP_Documento=$("#DP_Documento").val();
+					var DP_Documento=$("#DP_Documento").val().trim();
 					var DP_Nombre_Cliente=$("#DP_Nombre_Cliente").val();
 					var DP_Apellido_Paterno=$("#DP_Apellido_Paterno").val();
 					var DP_Apellido_Materno=$("#DP_Apellido_Materno").val();
@@ -3061,7 +3060,8 @@
 
         $('#btnBuscarDocumento').click(function()
         {
-        	DP_Documento=$("#DP_Documento").val();
+        	DP_Documento=$("#DP_Documento").val().trim();
+        	$("#DP_Documento").val(DP_Documento);
         	DP_TipoDocumento=$("#DP_TipoDocumento").val();
 
         	if(DP_TipoDocumento==0){

@@ -18,8 +18,8 @@ $categorias = $categoria->Listar();
 	</h1>
 	<ol class="breadcrumb">
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li><a href="index.php?c=SubCategoria">Origen de Información</a></li>
-            <li class="active">Registrar</li>
+            <li><a href="index.php?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $_REQUEST['Categoria_id'] ?>">Categoría</a></li>
+            <li class="active">Registrar SubCategoría</li>
           </ol>
 </section>
 
@@ -36,15 +36,11 @@ $categorias = $categoria->Listar();
 					        <label>SubCategoria</label>
 					        <input type="text" name="Nombre" id="Nombre" value="" class="form-control" placeholder=""  required />
 					    </div>
-						<div class="form-group col-md-12">
-							<label>Categoria</label>
-							<select name="Categoria_id" id="Categoria_id" class="form-control">
-							<option value="0">-- Seleccionar Categoría--</option>      
-							<?php foreach ($categorias as $categoria): ?>                
-								<option value="<?php echo $categoria['idCategoria']; ?>"><?php echo $categoria['Nombre']; ?></option>                      
-							<?php endforeach; ?>           
-				        	</select>
-				    	</div>
+					    <div class="form-group col-md-12">
+					        <label>Categoria</label>
+					        <input type="text" name="Categoria_id" id="Categoria_id" value="<?php echo  $_REQUEST['Categoria_id'];?>" class="form-control hidden" placeholder=""  readonly="true" />
+					        <input type="text" name="NombreCategoria" id="NombreCategoria" value="<?php echo  $_REQUEST['NombreCategoria'];?>" class="form-control" placeholder=""  readonly="true"/>
+					    </div>
 					    <div class="form-group col-md-12">
 					        <label>Aplicar Lógica</label>
 					        <select name="Logica" id="Logica" class="form-control">
@@ -53,17 +49,16 @@ $categorias = $categoria->Listar();
 					            <option value="0">No</option> 
 					        </select>
 					    </div>
-						<div class="form-group col-md-12 Data" style="display:none;">
-					        <label>Logica Json</label>
-					        <textarea name="Data" id="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required>
-							</textarea>
+						<div class="form-group col-md-12 Data">
+					        <label>Comentarios</label>
+					        <textarea name="Data" id="Data" rows="10" cols="40" id="Data" value="" class="form-control" placeholder=""  required></textarea>
 					    </div>					   
 					  <div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">
 					        <button type="button" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Registrar</button>    
 					    </div>
 					     <div class="col-md-6 col-sm-12">
-					        <a href="index.php?c=SubCategoria" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
+					        <a href="index.php?c=SubCategoria&a=ListarxCategoria&idCategoria=<?php echo $_REQUEST['Categoria_id']; ?>" class="btn btn-danger col-md-12 col-xs-12 "><i class="fa fa-times-circle"></i> Cancelar</a>
 					    </div>  
 					  </div>
 					</form>                    
@@ -121,17 +116,5 @@ $categorias = $categoria->Listar();
 			});
 		});
 
-	$(document).ready(function () {
-		$('#Logica').on('change',function(){
-			var selectValor = $(this).val();
-			if (selectValor == '1') {
-				$('.Data').show();
-				$('#Nombre').prop("disabled",true)
-			}else {
-			$('.Data').hide();
-			$('#Nombre').prop("disabled",false)
-				//alert('esta es la opcion 2')
-			}
-		});
-	});
+
 </script>

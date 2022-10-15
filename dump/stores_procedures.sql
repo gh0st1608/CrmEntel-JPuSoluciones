@@ -54,20 +54,12 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE `ProcInsertLogSesion`(IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcInsertLogSesion`(IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))
 BEGIN
   
   IF (P_Password = '' OR  P_Login = '' )
   THEN 
-    select 0 as Estado, 'Ingrese Usuario y/o contraseña' as Nota ;
-  ELSEIF EXISTS (
-   SELECT * FROM usuario
-   WHERE Login =P_Login
-   and Estado = 2
- ) THEN
-
-    select 0 as Estado, 'Usuario Bloqueado' as Nota ;
- 
+    select 0 as Estado  ;
  ELSEIF EXISTS (
    SELECT * FROM log_sesion
    WHERE LoggedIn = 'Si'
@@ -129,7 +121,7 @@ IdEstadoKanBanDetalle		)
     VALUES (P_Login,	P_Password,	'No',	P_IP,	P_Dispositivo,	P_NombreDispositivo,
 3
  );
-  select 0 as Estado, 'Existe una sesion activa' as Nota  ;
+  select 0 as Estado;
    
 ELSE
 
@@ -138,7 +130,7 @@ IdEstadoKanBanDetalle		)
     VALUES (P_Login,	P_Password,	P_LoggedIn,	P_IP,	P_Dispositivo,	P_NombreDispositivo,
 2
  );
-select 0 as Estado, 'Usuario y/o contraseña incorrectos' as Nota;
+select 0 as Estado;
 
 END IF;
 --
@@ -164,29 +156,6 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE `ProcUpdateInterfaz`(IN `P_IdInterfaz` INT, IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)
-BEGIN
- 
-     UPDATE interfaz
-     SET Orden = Orden + 1
-     WHERE Orden >= P_Orden AND
-     Nivel = P_Nivel ;
-    
-    UPDATE   interfaz
-    SET Nombre = P_Nombre,
-    Url = P_Url,
-    Orden = P_Orden, 
-    IdInterfaz_superior = P_IdInterfaz_Superior,
-    Modificado_por = P_Ingresado_por,
-    Fecha_Modificacion = sysdate() 
-    WHERE idInterfaz = P_idInterfaz;
-      
- 
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
 CREATE PROCEDURE `ProcUpdateLogSesion`(IN `P_Login` VARCHAR(20), IN `P_Password` VARCHAR(40), IN `P_LoggedIn` VARCHAR(40), IN `P_IP` VARCHAR(40), IN `P_Dispositivo` VARCHAR(40), IN `P_NombreDispositivo` VARCHAR(40))
 BEGIN
  
@@ -201,3 +170,13 @@ BEGIN
     
 END $$
 DELIMITER ;
+
+SET GLOBAL event_scheduler = ON;
+
+
+DROP EVENT borrar_sesiones_activas;
+
+CREATE EVENT borrar_sesiones_activas
+ON SCHEDULE EVERY 1 DAY STARTS '2022-10-12 01:35:00'
+ENDS '2024-01-01 01:35:00'
+DO update log_sesion set LoggedIn='No',Fecha_Cierre = sysdate() WHERE  Fecha_Cierre IS NULL;

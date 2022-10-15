@@ -19,12 +19,12 @@ $infocategoria = $categoria->Consultar($_REQUEST['idCategoria']);
 <!-- Content Header (Page header) -->
 <section class="content-header">  
 <h1>
-    Administracion <small>Categoria</small>
+    Administracion <small>Subcategorías</small>
 </h1>
 <ol class="breadcrumb">
     <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
-     <li><a href="index.php?c=SubCategoria">SubCategoria</a></li>     
-    <li class="active">SubCategoria</li>
+     <li><a href="index.php?c=Categoria">Categoría</a></li>     
+    <li class="active">SubCategoría</li>
 </ol>
 </section>
 
@@ -33,8 +33,8 @@ $infocategoria = $categoria->Consultar($_REQUEST['idCategoria']);
 		<div class="col-xs-12">
 	  		<div class="box">
 	    		<div class='box-header with-border'>
-                    <h3 class='box-title' ><b> Lista de SubCategorias de <?php echo $infocategoria->__GET('Nombre');  ?></b></h3> 
-	      			<a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar"> Registrar Categoria</a>
+                    <h3 class='box-title' >Lista de SubCategorias de la categoría <b> <?php echo $infocategoria->__GET('Nombre');  ?></b></h3> 
+	      			<a class="btn btn-sm btn-primary pull-right" href="?c=SubCategoria&a=v_Registrar&Categoria_id=<?php echo $infocategoria->__GET('idCategoria'); ?>&NombreCategoria=<?php echo $infocategoria->__GET('Nombre'); ?>"> Registrar SubCategoría</a>
 	    		</div>
 	    		<div class="box-body box-body_table">
                 <?php  $subcategorias = $subcategoria->Listar_por_categoria($_REQUEST['idCategoria']);?>
@@ -61,7 +61,7 @@ $infocategoria = $categoria->Consultar($_REQUEST['idCategoria']);
                                 <td class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
                                 <?php endif ?>
 								<td class="a_center">                            		
-                            		<a href="?c=SubCategoria&a=v_Actualizar&idSubCategoria=<?php echo $subcategoria['idSubCategoria']; ?>" class="btn btn-primary btn-xs ">
+                            		<a href="?c=SubCategoria&a=v_Actualizar&idSubCategoria=<?php echo $subcategoria['idSubCategoria']; ?>&Categoria_id=<?php echo $subcategoria['Categoria_id']; ?>" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar Subcategoría">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
                                		<?php if ($_SESSION['Perfil_Actual']==1): ?>

@@ -47,12 +47,10 @@ $persona = new PersonaController;
 							<?php foreach ($usuarios as $usuario): ?>
 	                    	<tr>
 								<td><?php echo $usuario['idUsuario']; ?></td>
-								<?php  $nombre = $perfil -> Consultar($usuario['Perfil_id']);?>
-								<td><?php  echo $nombre -> Nombre;?></td>
+								<td><?php  echo $usuario['Nombre_Perfil'];?></td>
 								<td><?php echo $usuario['Login']; ?></td>
-								<?php  $nombre = $persona -> Consultar($usuario['Persona_id']);?>
-								<td><?php  echo $nombre->Documento; ?> 
-								<td><?php  echo $nombre->Apellido_Paterno.' '.$nombre->Apellido_Materno.' '.$nombre->Primer_Nombre.' '.$nombre->Segundo_Nombre;?></td>
+								<td><?php  echo $usuario['Documento']; ?> 
+								<td><?php  echo $usuario['Primer_Nombre'].' '.$usuario['Segundo_Nombre'].' '.$usuario['Apellido_Paterno'].' '.$usuario['Apellido_Materno'];?></td>
 								<?php if ($usuario['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php endif ?>
@@ -66,8 +64,8 @@ $persona = new PersonaController;
                             		<a href="?c=Usuario&a=v_Actualizar&idUsuario=<?php echo $usuario['idUsuario']; ?>&Persona_id=<?php echo $usuario['Persona_id'];?>" class="btn btn-primary btn-xs ">
                                    		<i class="fa fa-pencil"></i>   
                                		</a>
-									<a class="btn btn-danger btn-xs EliminarSesion" data-id="<?php echo $usuario['Login']; ?>" data-usuario="<?php echo $usuario['Login']; ?>">
-									<i class="fa fa-sign-out" aria-hidden="true"></i> 
+									<a class="btn btn-danger btn-xs DesbloquearyEliminarSesion" data-id="<?php echo $usuario['idUsuario']; ?>" data-usuario="<?php echo $usuario['Login']; ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Desbloquear Usuario y Cerrar Sesiones Activas">
+									<i class="fa fa-unlock" aria-hidden="true"></i>
                                		</a>                            		
                                	</td>
 	                    	</tr>
@@ -82,49 +80,23 @@ $persona = new PersonaController;
 
 <script>
 	
-	$(document).ready(function() {
-		$(".EliminarUsuario").click(function(event) {
-			idUsuario=$(this).attr('data-id');
-			bootbox.dialog({
-            message: "¿Estas seguro de eliminar al usuario "+$(this).attr('data-usuario')+"?",
-            title: "Eliminar Usuario",
-            buttons: {
-                main: {
-                    label: "Eliminar",
-                    className: "btn-primary",
-                    callback: function() {
-                        //console.log('Eliminado al usuario');
-                        
-                              window.location.href = "?c=Usuario&a=Eliminar&idUsuario="+idUsuario;
-                         
-                    }
-                },
-                danger: {
-                    label: "Cancelar",
-                    className: "btn-danger",
-                    callback: function() {
-                        bootbox.hideAll();
-                    }
-                }
-            }
-        });
-		});
-	});
+
 
 	$(document).ready(function() {
-		$(".EliminarSesion").click(function(event) {
-			Login=$(this).attr('data-id');
+		$(".DesbloquearyEliminarSesion").click(function(event) {
+			idUsuario=$(this).attr('data-id');
+			Login=$(this).attr('data-usuario');
 			bootbox.dialog({
-            message: "¿Estas seguro de eliminar la sesión del usuario "+$(this).attr('data-usuario')+"?",
-            title: "Eliminar Sesión",
+            message: "¿Estas seguro de desbloquear al usuario "+$(this).attr('data-usuario')+" y cerrar las sesiones activas?",
+            title: "Desbloquear Usuario y Cerrar Sesión",
             buttons: {
                 main: {
-                    label: "Eliminar Sesión",
+                    label: "Aceptar",
                     className: "btn-primary",
                     callback: function() {
                         //console.log('Eliminado al usuario');
                         
-                              window.location.href = "?c=Usuario&a=EliminarSesion&Login="+Login;
+                              window.location.href = "?c=Usuario&a=DesbloquearEliminarSesion&idUsuario="+idUsuario+"&Login="+Login;
                          
                     }
                 },

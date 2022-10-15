@@ -10,8 +10,11 @@ class UsuarioModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,usuario.idUsuario as idUsuario, usuario.Persona_id as Persona_id,usuario.Login as Login, usuario.Estado as Estado FROM usuario 
-        INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,perfil.Nombre as Nombre_Perfil,usuario.idUsuario as idUsuario,usuario.Login as Login, usuario.Estado as Estado, 
+usuario.Persona_id as Persona_id,persona.Documento,persona.Primer_Nombre,persona.Segundo_Nombre,persona.Apellido_Materno,persona.Apellido_Paterno 
+FROM usuario 
+INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+INNER JOIN persona on persona.idPersona=usuario.Persona_id
         where usuario.eliminado=0 order by idUsuario desc" );
         $stmt->execute();
 
@@ -107,12 +110,12 @@ class UsuarioModel
     {
         $this->bd = new Conexion();
  
-        $stmt = $this->bd->prepare("INSERT INTO usuario(Persona_id,Login,Password,Perfil_id) VALUES(:Persona_id,:Login,:Password,:Perfil_id)");
+        $stmt = $this->bd->prepare("INSERT INTO usuario(Persona_id,Login,Password,Perfil_id,Ingresado_por) VALUES(:Persona_id,:Login,:Password,:Perfil_id,:Ingresado_por)");
         $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'),PDO::PARAM_INT);
         $stmt->bindValue(':Login', $usuario->__GET('Login'),PDO::PARAM_STR);
         $stmt->bindValue(':Password', $usuario->__GET('Password'),PDO::PARAM_STR);
         $stmt->bindValue(':Perfil_id', $usuario->__GET('Perfil_id'),PDO::PARAM_INT);
-        
+        $stmt->bindValue(':Ingresado_por', $usuario->__GET('Ingresado_por'),PDO::PARAM_INT);
   
         if (!$stmt->execute()) {
             // echo($errors[2]);
@@ -185,10 +188,28 @@ class UsuarioModel
        
         $this->bd = new Conexion();
 
-        $idsesion = $this->ObtenerSesion($usuario->__GET('Login'));
-        $stmt = $this->bd->prepare("UPDATE log_sesion SET  LoggedIn=:LoggedIn, Fecha_Cierre=sysdate() WHERE idLog_Sesion = :idLog_Sesion");
-        $stmt->bindValue(':idLog_Sesion',$idsesion);         
+        //$idsesion = $this->ObtenerSesion($usuario->__GET('Login'));
+        $stmt = $this->bd->prepare("UPDATE log_sesion SET  LoggedIn=:LoggedIn, Fecha_Cierre=sysdate() WHERE Login = :Login AND Fecha_Cierre IS NULL; ");
+        $stmt->bindValue(':Login',$usuario->__GET('Login'));    
         $stmt->bindValue(':LoggedIn',$usuario->__GET('LoggedIn'));    
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+
+    public function DesbloquearUsuario(Usuario $usuario)
+    {
+       
+        $this->bd = new Conexion();
+
+        //$idsesion = $this->ObtenerSesion($usuario->__GET('Login'));
+        $stmt = $this->bd->prepare("UPDATE usuario SET  Estado=1 WHERE idUsuario = :idUsuario; ");
+        $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));    
         if (!$stmt->execute()) {
             return 'error';
         //print_r($stmt->errorInfo());

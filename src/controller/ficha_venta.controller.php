@@ -222,12 +222,18 @@ class Ficha_VentaController  extends IncludesController{
         $DP_Nombre_Padre=$_REQUEST['DP_Nombre_Padre'];
         $DP_Nombre_Madre=$_REQUEST['DP_Nombre_Madre'];
 
-        $cliente = new ClienteController;
+
+
+            $cliente = new ClienteController;
         $ObjCliente=$cliente->Consultar_Documento($DP_TipoDocumento,$DP_Documento);
         
-
+        if ($ObjCliente->__GET('idCliente')==0) {
+            $Cliente_id=$cliente->RegistrarCliente($DP_TipoDocumento,$DP_Documento,$DP_Nombre_Cliente,$DP_Apellido_Paterno,$DP_Apellido_Materno,$DP_Nacionalidad,$DP_Lugar_Nacimiento,$DP_Fecha_Nacimiento,$DP_Nombre_Padre,$DP_Nombre_Madre);
+        }else{
             $Cliente_id=$ObjCliente->__GET('idCliente');
             $cliente->ActualizarCliente($Cliente_id,$DP_TipoDocumento,$DP_Documento,$DP_Nombre_Cliente,$DP_Apellido_Paterno,$DP_Apellido_Materno,$DP_Nacionalidad,$DP_Lugar_Nacimiento,$DP_Fecha_Nacimiento,$DP_Nombre_Padre,$DP_Nombre_Madre);
+        }
+        
 
       
         /*Fin Datos Cliente*/    

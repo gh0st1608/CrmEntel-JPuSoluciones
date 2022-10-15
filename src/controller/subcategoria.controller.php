@@ -79,18 +79,19 @@ class SubCategoriaController{
     public function Actualizar(){
         $subcategoria = new SubCategoria();
         $subcategoria->__SET('idSubCategoria',$_REQUEST['idSubCategoria']);
-        //$subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
+        $subcategoria->__SET('Categoria_id',$_REQUEST['Categoria_id']);
         $subcategoria->__SET('Nombre',$_REQUEST['Nombre']); 
-        $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);  
+        $subcategoria->__SET('Aplicar_Logica',$_REQUEST['Logica']);
+        $subcategoria->__SET('Logica_Json',$_REQUEST['Data']); 
         $subcategoria->__SET('Estado',$_REQUEST['Estado']);              
         $subcategoria->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
 
         $actualizar_subcategoria = $this->model->Actualizar($subcategoria);  
         
-        if($actualizar_subcategoria=='error'){
-            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='. $subcategoria->__GET('idSubCategoria'));
-        }else{
-            header('Location: index.php?c=SubCategoria');
+        if($registrar_subcategoria=='error'){
+            header('Location: index.php?c=SubCategoria&a=ListarxCategoria&idCategoria='.$_REQUEST['Categoria_id']);
+         }else{
+            header('Location: index.php?c=SubCategoria&a=ListarxCategoria&idCategoria='.$_REQUEST['Categoria_id']);
          }
     }
 
@@ -127,9 +128,9 @@ class SubCategoriaController{
 
  
         if($registrar_subcategoria=='error'){
-            header('Location: index.php?c=SubCategoria&a=v_Registrar');
+            header('Location: index.php?c=SubCategoria&a=ListarxCategoria&idCategoria='.$_REQUEST['Categoria_id']);
          }else{
-            header('Location: index.php?c=SubCategoria');
+            header('Location: index.php?c=SubCategoria&a=ListarxCategoria&idCategoria='.$_REQUEST['Categoria_id']);
          }
 }
 
