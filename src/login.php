@@ -9,8 +9,7 @@ if( !isset($_COOKIE['Equipo'])) {
   setcookie("Equipo", mt_rand(10000, 99999)); 
 
 }  
-
-
+ 
 //verificar si ya se ha iniciado sesion anteriormente
 if($usuario->Verificar_InicioSesion()==TRUE)
 {
