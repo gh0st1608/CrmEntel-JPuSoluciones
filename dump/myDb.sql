@@ -51,6 +51,17 @@ INSERT INTO `categoria` VALUES (0,'SIN CATEGORIA',1,0,'2022-09-26 10:48:41',0),(
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+CREATE TABLE `equipo` (
+  `idEquipo` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Equipo` int(11) DEFAULT NULL,
+  `Ingresado_por` int(11) DEFAULT NULL,
+  `Fecha_Registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `Fecha_Modificacion` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Table structure for table `cliente`
 --
