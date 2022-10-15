@@ -7,7 +7,7 @@ $resultado="";
 
 if( !isset($_COOKIE['Equipo'])) {
  
-  setcookie("Equipo", mt_rand(10000, 99999),time()+99999); 
+  setcookie("Equipo", mt_rand(10000, 99999),time()+999999999); 
 
 } 
 
