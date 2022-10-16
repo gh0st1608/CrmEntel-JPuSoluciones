@@ -39,7 +39,7 @@ if (!isset($_REQUEST['idPerfil'])==''){
 	    			<form id="frmRegistrarPermiso" action="?c=Permiso&a=Registrar" method="post" enctype="multipart/form-data" role="form">
 					    <div class="form-group col-md-12">
 					        <label>idPerfil</label>
-					        <input type="text" name="idPerfil" id="idPerfil"  value="<?php echo $_REQUEST['idPerfil']; ?>" class="form-control" placeholder="" disabled  required />
+					        <input type="text" name="idPerfil" id="idPerfil"  value="<?php echo $_REQUEST['idPerfil']; ?>" class="form-control" placeholder="" readonly  required />
 					    </div>
 						<div class="form-group col-md-12">
 							<label>Modulo Principal</label>

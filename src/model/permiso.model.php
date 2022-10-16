@@ -106,13 +106,13 @@ class PermisoModel
     public function Registrar(Permiso $permiso)
     {
        
-  
+
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("INSERT INTO permiso(Perfil_id,Interfaz_id,Acceder,Ingresado_por) VALUES(:Perfil_id,:Interfaz_id,:Acceder,:Estado)");
-        $stmt->bindValue(':Perfil_id', $permiso->__GET('Perfil_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':Interfaz_id', $permiso->__GET('Interfaz_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':Acceder', $permiso->__GET('Acceder'),PDO::PARAM_INT);
-        $stmt->bindValue(':Estado', $permiso->__GET('Estado'),PDO::PARAM_INT);      
+        $stmt->bindValue(':Perfil_id', $permiso->__GET('Perfil_id'));
+        $stmt->bindValue(':Interfaz_id', $permiso->__GET('Interfaz_id'));
+        $stmt->bindValue(':Acceder', $permiso->__GET('Acceder'));
+        $stmt->bindValue(':Estado', $permiso->__GET('Estado'));      
 
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();

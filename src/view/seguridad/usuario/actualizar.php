@@ -76,7 +76,11 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(40);
 								<label>Clave</label>
 								<input type="text" name="Clave" id="Clave" value="<?php echo $usuario->__GET('Password');?>" class="form-control" placeholder=""  required />
 							</div>
-							<div class="form-group col-md-12">
+							<div class="form-group col-md-6">
+								<label>Clave Equipo</label>
+								<input type="text" name="PasswordEquipo" id="PasswordEquipo" value="<?php echo $usuario->__GET('PasswordEquipo');?>" class="form-control" placeholder=""  required />
+							</div>
+							<div class="form-group col-md-6">
 					      		<label>Estado</label>
 							</div>
 							<div class="form-group col-md-2">
@@ -94,6 +98,7 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(40);
 									<input type="radio" name="Estado" id="Estado" value="2" <?php if ($usuario->__GET('Estado')==2) { echo 'checked'; }  ?>> Bloqueado
 								</label>	
 							</div>
+							
 					    </div> 
 					  
 

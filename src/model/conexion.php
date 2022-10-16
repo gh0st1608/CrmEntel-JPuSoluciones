@@ -4,7 +4,7 @@
    private $host = 'db';
    private $usuario = 'root';
    private $contrasena = 'passlocalhost123';    
-   private $nombre_de_base = 'bd_csa_spartax';
+   private $nombre_de_base = 'myDb';
  
 
    

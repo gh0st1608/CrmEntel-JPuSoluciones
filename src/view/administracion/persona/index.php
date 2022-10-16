@@ -1,8 +1,4 @@
-<?php 
-error_reporting(E_ALL);
-ini_set('display_errors','1');
 
-?>
 <?php
 require_once 'controller/subcategoria.controller.php';
 $subcategoria = new SubCategoriaController;

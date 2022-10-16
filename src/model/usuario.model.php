@@ -88,11 +88,12 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
+        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, PasswordEquipo=:PasswordEquipo, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
 
         $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));
         $stmt->bindValue(':Login',$usuario->__GET('Login'));
         $stmt->bindValue(':Password',$usuario->__GET('Password'));
+        $stmt->bindValue(':PasswordEquipo',$usuario->__GET('PasswordEquipo'));
         $stmt->bindValue(':Perfil_id',$usuario->__GET('Perfil_id'));
         $stmt->bindValue(':Estado',$usuario->__GET('Estado'));      
         $stmt->bindValue(':Modificado_por',$usuario->__GET('Modificado_por'));
@@ -110,19 +111,20 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
     {
         $this->bd = new Conexion();
  
-        $stmt = $this->bd->prepare("INSERT INTO usuario(Persona_id,Login,Password,Perfil_id,Ingresado_por) VALUES(:Persona_id,:Login,:Password,:Perfil_id,:Ingresado_por)");
-        $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':Login', $usuario->__GET('Login'),PDO::PARAM_STR);
-        $stmt->bindValue(':Password', $usuario->__GET('Password'),PDO::PARAM_STR);
-        $stmt->bindValue(':Perfil_id', $usuario->__GET('Perfil_id'),PDO::PARAM_INT);
-        $stmt->bindValue(':Ingresado_por', $usuario->__GET('Ingresado_por'),PDO::PARAM_INT);
-  
+        $stmt = $this->bd->prepare("INSERT INTO usuario(Persona_id,Login,Password,Password_Digital,Perfil_id,Ingresado_por) VALUES(:Persona_id,:Login,:Password,:PasswordEquipo,:Perfil_id,:Ingresado_por)");
+        $stmt->bindValue(':Persona_id', $usuario->__GET('Persona_id'));
+        $stmt->bindValue(':Login', $usuario->__GET('Login'));
+        $stmt->bindValue(':Password', $usuario->__GET('Password'));
+        $stmt->bindValue(':PasswordEquipo', $usuario->__GET('PasswordEquipo'));
+        $stmt->bindValue(':Perfil_id', $usuario->__GET('Perfil_id'));
+        $stmt->bindValue(':Ingresado_por', $usuario->__GET('Ingresado_por'));
         if (!$stmt->execute()) {
-            // echo($errors[2]);
-           return $errors[2];          
+            $errors = $stmt->errorInfo();
+            print_r($errors[2]);
+            return $errors[2];          
             //print_r($stmt->errorInfo());
         }else{
-            
+
             return 'exito';
         }
     }

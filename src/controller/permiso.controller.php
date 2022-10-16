@@ -29,6 +29,8 @@ class PermisoController{
             header('Location: index.php?c=Perfil');
         }    
     }
+
+
     /**=======================================================================*/   
     public function Listar()
     {
@@ -90,11 +92,10 @@ class PermisoController{
 
         }
 
-       
         if($registrar_permiso=='error'){
-            header('Location: index.php?c=Permiso');
+            header('Location: index.php?c=Permiso&a=v_ListarxPerfil&idPerfil='.$_REQUEST['idPerfil']);
          }else{
-            header('Location: index.php?c=Permiso');
+            header('Location: index.php?c=Permiso&a=v_ListarxPerfil&idPerfil='.$_REQUEST['idPerfil']);
          }
  
     }

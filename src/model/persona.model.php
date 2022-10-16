@@ -141,9 +141,10 @@ class PersonaModel
 
            
         if (!$stmt->execute()) {
-          return 'error';
-            //$errors = $stmt->errorInfo();
-             //print_r($errors);
+            $errors = $stmt->errorInfo();
+            print_r($errors[2]);
+            return 'error';
+
            //return $errors[2];  
         }else{
             
@@ -158,15 +159,16 @@ class PersonaModel
         $this->bd = new Conexion();
 
 
-        $stmt = $this->bd->prepare("INSERT INTO persona(Tipo_Documento,Documento,Primer_Nombre,Segundo_Nombre,Apellido_Paterno,Apellido_Materno,Ingresado_por) VALUES
-                                                (:Tipo_Documento,:Documento,:Primer_Nombre,:Segundo_Nombre,:Apellido_Paterno,:Apellido_Materno,:Ingresado_por)");
+        $stmt = $this->bd->prepare("INSERT INTO persona(Tipo_Documento,Documento,Primer_Nombre,Segundo_Nombre,Apellido_Paterno,Apellido_Materno,Sexo,Ingresado_por) VALUES
+                                                (:Tipo_Documento,:Documento,:Primer_Nombre,:Segundo_Nombre,:Apellido_Paterno,:Apellido_Materno,:Sexo,:Ingresado_por)");
 
         $stmt->bindValue(':Tipo_Documento',$persona->__GET('Tipo_Documento'));
         $stmt->bindValue(':Documento',$persona->__GET('Documento'));
         $stmt->bindValue(':Primer_Nombre',$persona->__GET('Primer_Nombre'));
         $stmt->bindValue(':Segundo_Nombre',$persona->__GET('Segundo_Nombre'));
         $stmt->bindValue(':Apellido_Paterno',$persona->__GET('Apellido_Paterno'));
-        $stmt->bindValue(':Apellido_Materno',$persona->__GET('Apellido_Materno')); 
+        $stmt->bindValue(':Apellido_Materno',$persona->__GET('Apellido_Materno'));
+        $stmt->bindValue(':Sexo',$persona->__GET('Sexo'));
         $stmt->bindValue(':Ingresado_por',$persona->__GET('Ingresado_por'));        
 
         if (!$stmt->execute()) {

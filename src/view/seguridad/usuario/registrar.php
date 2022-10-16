@@ -1,8 +1,3 @@
-<?php 
-error_reporting(E_ALL);
-ini_set('display_errors','1');
-
-?>
 <!-- Content Header (Page header) -->
  <section class="content-header">  
 	<h1>
@@ -83,6 +78,10 @@ $perfiles = $perfil->Listar();
 								<label>Clave</label>
 								<input type="text" name="Clave" id="Clave" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
+							<div class="form-group col-md-6">
+								<label>Clave Registro Equipo</label>
+								<input type="text" name="PasswordEquipo" id="PasswordEquipo" readonly value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
+							</div>
 					    </div> 
 					  
 					  <div class="col-md-12" style="margin-top:2em;">
@@ -105,17 +104,16 @@ $perfiles = $perfil->Listar();
     </div><!-- /.row -->
 </section><!-- /.content -->
 <script>
+
+	$(document).ready(function() {	
+		$("#Documento").keyup(function () {
+			var value = $(this).val().substr(4,4);
+            $("#PasswordEquipo").val(value);
+        });	
+		
+	});
 	
 	$(document).ready(function() {
-		$( "#Persona_id" ).change(function ()
-	{ 			
-		var Persona_id=$("#Persona_id").val();
-		var codigo=$("#Persona_id option[value='"+Persona_id+"']").attr('data-codigo');
-		$("#login").val(codigo);
-		$("#password").val(codigo);
-		$("#password2").val(codigo);	
-	});
-
 		$("#btnSubmit").click(function(event) {
 
 			bootbox.dialog({

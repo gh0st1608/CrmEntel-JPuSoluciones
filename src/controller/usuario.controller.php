@@ -123,6 +123,7 @@ class UsuarioController{
         $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);
         $usuario->__SET('Login',$_REQUEST['Documento']);
         $usuario->__SET('Password',$_REQUEST['Clave']);
+        $usuario->__SET('PasswordEquipo',$_REQUEST['PasswordEquipo']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);         
         $usuario->__SET('Estado',$_REQUEST['Estado']);
         $usuario->__SET('Modificado_por',$_SESSION['Usuario_Actual']);       
@@ -136,7 +137,7 @@ class UsuarioController{
     }
 
     public function Registrar(){
-
+        
         $persona = new PersonaController;
         $persona->Registrar();
 
@@ -147,10 +148,10 @@ class UsuarioController{
         $usuario->__SET('Persona_id',$indice);
         $usuario->__SET('Login',$_REQUEST['Documento']);
         $usuario->__SET('Password',$_REQUEST['Clave']);
+        $usuario->__SET('PasswordEquipo',$_REQUEST['PasswordEquipo']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);
-
+        $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_usuario = $this->model->Registrar($usuario);
-
         if($registrar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Registrar');
          }else{
