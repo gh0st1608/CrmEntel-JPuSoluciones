@@ -229,6 +229,10 @@
                     <div class="pull-right">
                       <a href="index.php?c=Usuario&a=CerrarSesion" class="btn btn-default btn-flat"> <b><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión </b></a>
                     </div>
+                    <!--
+                    <div class="pull-left">
+                      <a href="index.php?c=Usuario&a=MostrarClaveDigital" class="btn btn-default btn-flat"> <b><i class="fa fa-sign-out" aria-hidden="true"></i> Clave Digital </b></a>
+                    </div>-->
                   </li>
                 </ul>
               </li>

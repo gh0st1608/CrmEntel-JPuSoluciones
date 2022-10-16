@@ -10,12 +10,32 @@ class UsuarioModel
     public function Listar()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,perfil.Nombre as Nombre_Perfil,usuario.idUsuario as idUsuario,usuario.Login as Login, usuario.Estado as Estado, 
+        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,perfil.Nombre as Nombre_Perfil,usuario.idUsuario as idUsuario,usuario.Login as Login,usuario.Password_Digital as Password_Digital, usuario.Estado as Estado, 
 usuario.Persona_id as Persona_id,persona.Documento,persona.Primer_Nombre,persona.Segundo_Nombre,persona.Apellido_Materno,persona.Apellido_Paterno 
 FROM usuario 
 INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
 INNER JOIN persona on persona.idPersona=usuario.Persona_id
         where usuario.eliminado=0 order by idUsuario desc" );
+        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            return 'error';
+            print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);       }
+        
+
+    }
+
+    public function Listar_por_usuario($usuario)
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT usuario.idUsuario as idUsuario,usuario.Perfil_id as Perfil_id,perfil.Nombre as Nombre_Perfil,usuario.idUsuario as idUsuario,usuario.Login as Login,usuario.Password_Digital as Password_Digital, usuario.Estado as Estado, 
+        usuario.Persona_id as Persona_id,persona.Documento,persona.Primer_Nombre,persona.Segundo_Nombre,persona.Apellido_Materno,persona.Apellido_Paterno 
+        FROM usuario 
+        INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+        INNER JOIN persona on persona.idPersona=usuario.Persona_id
+        where usuario.eliminado=0 AND usuario.idUsuario = $usuario order by idUsuario desc" );
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -88,7 +108,7 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, PasswordEquipo=:PasswordEquipo, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
+        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Password_Digital=:PasswordEquipo, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
 
         $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));
         $stmt->bindValue(':Login',$usuario->__GET('Login'));
@@ -99,8 +119,8 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
         $stmt->bindValue(':Modificado_por',$usuario->__GET('Modificado_por'));
     
         if (!$stmt->execute()) {
+            //print_r($stmt->errorInfo());
             return 'error';
-        //print_r($stmt->errorInfo());
         }else{
             
             return 'exito';

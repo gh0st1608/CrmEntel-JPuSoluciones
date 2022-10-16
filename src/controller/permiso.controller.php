@@ -77,11 +77,16 @@ class PermisoController{
 
         if (isset($_REQUEST['ModuloPrincipal']) && isset($_REQUEST['ModuloSecundario']))
         {
-            $permiso->__SET('Perfil_id',$_REQUEST['idPerfil']);
-            $permiso->__SET('Interfaz_id',$_REQUEST['ModuloSecundario']);
-            $permiso->__SET('Acceder',1);
-            $permiso->__SET('Estado',1);
-            $registrar_permiso = $this->model->Registrar($permiso);  
+            $modulos = array($_REQUEST['ModuloPrincipal'],$_REQUEST['ModuloSecundario']);
+            foreach($modulos as $modulo)
+            {
+                $permiso->__SET('Perfil_id',$_REQUEST['idPerfil']);
+                $permiso->__SET('Interfaz_id',$modulo);
+                $permiso->__SET('Acceder',1);
+                $permiso->__SET('Estado',1);
+                $registrar_permiso = $this->model->Registrar($permiso); 
+            }
+             
         }else
         {
             $permiso->__SET('Perfil_id',$_REQUEST['idPerfil']);

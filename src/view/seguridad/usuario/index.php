@@ -33,6 +33,7 @@ $persona = new PersonaController;
 								<th style="vertical-align: middle;">Perfil</th>   
 								<th style="vertical-align: middle;">Usuario</th>
 								<th style="vertical-align: middle;">Documento</th>
+								<th style="vertical-align: middle;">Clave Digital</th>
 								<th style="vertical-align: middle;">Nombres y Apellidos</th>                 
 								<th style="vertical-align: middle;">Estado</th>
 			                    <th style="vertical-align: middle;">Acciones</th>
@@ -44,7 +45,8 @@ $persona = new PersonaController;
 								<td><?php echo $usuario['idUsuario']; ?></td>
 								<td><?php  echo $usuario['Nombre_Perfil'];?></td>
 								<td><?php echo $usuario['Login']; ?></td>
-								<td><?php  echo $usuario['Documento']; ?> 
+								<td><?php  echo $usuario['Documento']; ?>
+								<td><?php echo $usuario['Password_Digital']; ?></td>
 								<td><?php  echo $usuario['Primer_Nombre'].' '.$usuario['Segundo_Nombre'].' '.$usuario['Apellido_Paterno'].' '.$usuario['Apellido_Materno'];?></td>
 								<?php if ($usuario['Estado']==1): ?>
                                 <td class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>

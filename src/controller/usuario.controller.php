@@ -86,9 +86,17 @@ class UsuarioController{
     /**=======================================================================*/   
     public function Listar()
     {
-
-        $usuarios = $this->model->Listar();
-        return $usuarios;
+        $perfil_id = $_SESSION['Perfil_Actual'];
+        if ($perfil_id == 1)
+        {
+            $usuarios = $this->model->Listar();
+            return $usuarios;
+        }else
+        {
+            $usuarios = $this->model->Listar_por_usuario($_SESSION['Usuario_Actual']);
+            return $usuarios;
+        }
+        
     }
 
 

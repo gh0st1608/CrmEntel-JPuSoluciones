@@ -79,7 +79,7 @@ $perfiles = $perfil->Listar();
 								<input type="text" name="Clave" id="Clave" value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 							<div class="form-group col-md-6">
-								<label>Clave Registro Equipo</label>
+								<label>Clave Digital</label>
 								<input type="text" name="PasswordEquipo" id="PasswordEquipo" readonly value="" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 							</div>
 					    </div> 

@@ -55,33 +55,7 @@ class PermisoModel
         return $objPermiso;
     }
 
-    public function Listar_por_perfil2(Permiso $permiso)
-    {
-        $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT permiso.idPermiso as idPermiso, interfaz.Modulo_Principal as Modulo_Principal, interfaz.Modulo_Secundario as Modulo_Secundario, permiso.Acceder as Acceder, permiso.Estado as Estado FROM permiso INNER JOIN perfil ON perfil.idPerfil = permiso.Perfil_id INNER JOIN interfaz ON interfaz.idInterfaz = perfil.Interfaz_id WHERE idPermiso = :idPermiso;");
-        $stmt->bindValue(':idPermiso', $permiso->__GET('idPermiso'));
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_OBJ);      
-
-        $objPermiso = new Permiso(); 
-        
-        if ($stmt->rowCount() > 0) {
-            $objPermiso->__SET('idPermiso',$row->idPermiso);
-            $objPermiso->__SET('Modulo_Principal',$row->Modulo_Principal);
-            $objPermiso->__SET('Modulo_Secundario',$row->Modulo_Secundario);
-            //$objPermiso->__SET('Perfil_id',$row->Perfil_id);
-           // $objPermiso->__SET('Interfaz_id',$row->Interfaz_id);
-            $objPermiso->__SET('Acceder',$row->Acceder);
-            $objPermiso->__SET('Estado',$row->Estado);
-            return $objPermiso;
-        }
-        else
-        {
-            $objPermiso->__SET('idPermiso',0);
-            return $objPermiso;
-        }
-
-    }
+    
 
     public function Actualizar(Permiso $permiso)
     {
