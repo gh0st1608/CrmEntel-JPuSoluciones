@@ -25,9 +25,10 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     //almacenamos los datos enviados del formulario;
     $Login = $_POST['Usuario'];
     $Password = $_POST['Password'];
-   
-
-    $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password);
+    $Digital = $_POST['Digital'];
+    
+    
+    $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password,$Digital);
     //verificar si existe el usuario y la contraseña
    
     
@@ -39,7 +40,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     }  
     else{
       
-      $resultado = $_SESSION['Nota_sesion'];;
+      $resultado = $_SESSION['Nota_sesion'];
       
     }
   }  
@@ -88,12 +89,19 @@ if($usuario->Verificar_InicioSesion()==TRUE)
             <input type="password" class="form-control" name="Password" placeholder="Contraseña">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
+          <?php if($resultado == "Existe una sesion activa") {?>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" name="Digital" placeholder="Clave digital">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <?php } ?>
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
+          
           <div class="row">
             <div class="col-md-12">
-              <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar Sesión</b></button>
+              <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciars Sesión</b></button>
             </div><!-- /.col -->
           </div>
         </form>

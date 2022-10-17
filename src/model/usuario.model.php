@@ -174,10 +174,14 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
         $this->bd = new Conexion();
         $stmt = $this->bd->prepare("SELECT LoggedIn FROM log_sesion 
         INNER JOIN usuario ON usuario.Login = log_sesion.Login
+        INNER JOIN equipo ON usuario.idUsuario = equipo.idUsuario AND equipo.idLog_Sesion =log_sesion.idLog_Sesion 
         WHERE usuario.idUsuario = :idUsuario
-        AND  IdEstadoKanBanDetalle = 1
-        ORDER BY idLog_Sesion DESC LIMIT 1;");
+        AND  IdEstadoKanBanDetalle = 1 
+        AND  equipo.Equipo = :Equipo
+       ORDER BY log_sesion.idLog_Sesion DESC LIMIT 1;");
         $stmt->bindValue(':idUsuario',$parametro);
+        $stmt->bindValue(':Equipo', $_COOKIE['Equipo']);
+        
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         $valor = $row->LoggedIn;
@@ -246,7 +250,9 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
 	public function Validar_Usuario(Usuario $usuario)
     {
         try
-        {   $_SESSION['Estado_usuario'] = 1;
+        {   
+            $digital = $usuario->__GET('digital');
+            $_SESSION['Estado_usuario'] = 1;
         	//instanciamos a la clase conexion 
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
@@ -262,19 +268,54 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
                 //si se an encontrado registros comparamos las contraseñas
                 if(strtolower($usuario->__GET('password'))==strtolower($usuario_registrado['Password']))
                 {
-                  //validamos que el usuario este activo en la BD 
-                  if($usuario_registrado['Estado'] == 1 )
-                  {   
-                      
-                      //devolvemos los datos del  usuario
-                      return $usuario_registrado;
-                  }    
-                  else
-                  {    // usuario bloqueado
-                      $_SESSION['Estado_usuario'] = 0;
-                      return FALSE;
-                      
-                  }		
+                 
+                  if( isset($digital))
+                  {
+                    if(strtolower($usuario->__GET('digital'))==strtolower($usuario_registrado['Password_Digital']))
+                    {  
+
+                       
+ 
+                        $this->bd = new Conexion();
+
+                        //$idsesion = $this->ObtenerSesion($usuario->__GET('Login'));
+                        $stmt = $this->bd->prepare("UPDATE log_sesion SET  LoggedIn='No', Fecha_Cierre=sysdate() WHERE Login = :Login AND Fecha_Cierre IS NULL; ");
+                        $stmt->bindValue(':Login',$usuario->__GET('login'));    
+                        $stmt->execute();
+
+
+
+
+                        if($usuario_registrado['Estado'] == 1 )
+                        {   
+                            
+                            //devolvemos los datos del  usuario
+                            return $usuario_registrado;
+                        }    
+                        else
+                        {    // usuario bloqueado
+                            $_SESSION['Estado_usuario'] = 0;
+                            return FALSE;
+                            
+                        }	 
+                    }
+
+                  }
+                  else{
+                        //validamos que el usuario este activo en la BD Z
+                    if($usuario_registrado['Estado'] == 1 )
+                    {   
+                        
+                        //devolvemos los datos del  usuario
+                        return $usuario_registrado;
+                    }    
+                    else
+                    {    // usuario bloqueado
+                        $_SESSION['Estado_usuario'] = 0;
+                        return FALSE;
+                        
+                    }		
+                  }
                 }
                 else
                 {
@@ -361,16 +402,17 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
             $ip_usuario =  $_SESSION['IP']  ;
             $dispositivo = $_SESSION['Dispositivo']  ;
             $NombreDispositivo = $_SESSION['NombreDispositivo'] ;
-
+            $Equipo = $_COOKIE['Equipo'] ;
 
             //instanciamos a la clase conexion 
             $this->bd = new Conexion();
             //preparamos la consulta sql para verificar si el usuario existe en la BD
-            $stmt = $this->bd->prepare( "CALL ProcUpdateLogSesion(:Login,'','',:IP,:Dispositivo,:NombreDispositivo)"     );
+            $stmt = $this->bd->prepare( "CALL ProcUpdateLogSesion(:Login,'','',:IP,:Dispositivo,:NombreDispositivo,:Equipo)"     );
             $stmt->bindValue(':Login', $Login);
             $stmt->bindValue(':IP', $ip_usuario);
             $stmt->bindValue(':Dispositivo', $dispositivo);
             $stmt->bindValue(':NombreDispositivo', $NombreDispositivo);
+            $stmt->bindValue(':Equipo', $Equipo);
             //ejecutamos la consulta sql        
             $stmt->execute();
         
