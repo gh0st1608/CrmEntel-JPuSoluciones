@@ -9,7 +9,7 @@ class Usuario
     private $Login;
     private $Perfil_id;
     private $Password;
-    private $PasswordEquipo;
+    private $Password_Digital;
     private $Estado;
     private $Fecha_registro;
     private $Ingresado_por;

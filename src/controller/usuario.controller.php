@@ -204,7 +204,7 @@ class UsuarioController{
 
      /**============================Login===========================================*/  
 
-    public function Iniciar_Sesion($Login,$Password)
+    public function Iniciar_Sesion($Login,$Password,$Password_Digital)
     {   
         // log inicio session
         $loginiciosesion = new LogSesion();
@@ -225,7 +225,7 @@ class UsuarioController{
         $loginiciosesion->__SET('dispositivo',$dispositivo);
         $loginiciosesion->__SET('nombredispositivo',$nombredispositivo); 
     /*  ----------------------------------- */
-      
+        
  
 
         //instanciamos ala entidad usuario.
@@ -233,13 +233,15 @@ class UsuarioController{
         //asignamos valores a las variables de la entidad
         $usuario->__SET('login',$Login);
         $usuario->__SET('password',$Password);
+        $usuario->__SET('digital',$Password_Digital);
+     
         //validamos al usuario en el clase modelo del usuario
         //print_r($usuario);
         $usuario_registrado = $this->model->Validar_Usuario($usuario);
          //validamos que el resultado de la validacion sea diferente a FALSE
      
         if(!$usuario_registrado==FALSE ){
-          
+           
 
             $LoggedIn = "Si";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
@@ -258,7 +260,7 @@ class UsuarioController{
                 $_SESSION['NombreDispositivo'] = $log_inicio_session['NombreDispositivo'];
                 $_SESSION['Tiempo'] =  time();
                 //confirmamos que el usuario y la contraseña son correctas
-                
+        
                 return TRUE;
                 
             }  
