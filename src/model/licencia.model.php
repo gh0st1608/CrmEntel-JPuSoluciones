@@ -71,7 +71,7 @@ class LicenciaModel
         $stmt->bindValue(':Ingresado_por', $licencia->__GET('Ingresado_por'));
         if (!$stmt->execute()) {
             $errors = $stmt->errorInfo();
-            // echo($errors[2]);
+            echo($errors[2]);
            return $errors[2];          
             //print_r($stmt->errorInfo());
         }else{

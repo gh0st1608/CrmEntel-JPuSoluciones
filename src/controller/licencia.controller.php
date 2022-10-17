@@ -38,15 +38,20 @@ class LicenciaController{
         $Licencia = new Licencia();
         $fecha_hoy_año = date("Y");
         $fecha_hoy_mes = date("m");
-        $fecha_hoy_mes = date("t");
+        $fecha_hoy_dia = date("d");
         $fecha_actual = date("d-M");
-        $periodo = date("Y-m");
-        $fecha_referencia_actual = $fecha_hoy_año + "-" + $fecha_hoy_mes + "-" +$fecha_hoy_mes;
-        $ultima_dia_fecha_actual = date("d-M", strtotime($fecha_referencia_actual));
+        $periodo_año_actual = date("Y");
+        $periodo_mes_actual = date("m");
+        $periodo_actual = $periodo_año_actual.$periodo_mes_actual;
+        $fecha_referencia_actual = $fecha_hoy_año . "-" . $fecha_hoy_mes . "-" . $fecha_hoy_dia;
+        $ultima_dia_fecha_actual = date("t-M", strtotime(date("Y-m-d")));
 
-
+        print_r("periodo actual".$periodo_actual);
+        print_r("fecha actual".$fecha_actual);
+        print_r("ultima fecha actual".$ultima_dia_fecha_actual);
+        print_r("fecha referencia actual".$fecha_referencia_actual);
         $Licencia->__SET('Usuario_id',$indice);
-        $Licencia->__SET('Periodo',$periodo);
+        $Licencia->__SET('Periodo',$periodo_actual);
         $Licencia->__SET('Fecha_Inicio',$fecha_actual);
         $Licencia->__SET('Fecha_Fin',$ultima_dia_fecha_actual);
         $Licencia->__SET('Estado',1);           
