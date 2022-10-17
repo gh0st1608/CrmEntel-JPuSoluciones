@@ -5,6 +5,19 @@ class UsuarioModel
 	
  private $bd;
 
+    public function ObtenerIndice()
+    {
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1;");
+        $stmt->execute();
+        print_r('ENTRO A OBTENER INDICE DE USUARIO');
+        if (!$stmt->execute()) {
+            return 'error';
+            //print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }       
+    }
    
 
     public function Listar()

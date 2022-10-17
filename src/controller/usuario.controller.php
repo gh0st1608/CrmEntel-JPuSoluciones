@@ -4,6 +4,8 @@ require_once 'entity/usuario.entity.php';
 require_once 'entity/logsesion.entity.php';
 require_once 'controller/persona.controller.php';
 require_once 'entity/persona.entity.php';
+require_once 'controller/licencia.controller.php';
+require_once 'entity/licencia.entity.php';
 
 /*
 require_once 'service/mailing.service.php';
@@ -115,6 +117,12 @@ class UsuarioController{
         return $consulta;
     }
 
+    public function ObtenerIndice()
+    {
+        $consulta = $this->model->ObtenerIndice();
+        return $consulta;     
+    }
+
     public function RecuperarClave()
     {
         $consulta = $this->model->RecuperarClave($_REQUEST['Correo']);
@@ -145,6 +153,8 @@ class UsuarioController{
     }
 
     public function Registrar(){
+
+        
         
         $persona = new PersonaController;
         $persona->Registrar();
@@ -160,6 +170,13 @@ class UsuarioController{
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);
         $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_usuario = $this->model->Registrar($usuario);
+
+        $usuario_id = $this->ObtenerIndice();
+        $indice = $usuario_id[0]['idUsuario'];
+
+        $licencia = new LicenciaController;
+        $licencia->Registrar($indice);
+
         if($registrar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Registrar');
          }else{
