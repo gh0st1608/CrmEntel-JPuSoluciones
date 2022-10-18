@@ -67,7 +67,6 @@ $User = new UsuarioController();
 
 
                     }else{
-
                         // echo 'No existe el archivo controlador : '.$nombre_fichero.'<br>';
                         header('Location: index.php?c=index&a=error');           
                     }
@@ -87,12 +86,11 @@ $User = new UsuarioController();
                         
 
                         }else{
-
                             // echo 'No existe el metodo';
                             header('Location: index.php?c=index&a=error');
 
                         }       
-                    }else{            
+                    }else{    
                         //echo 'No existe el controlador';
                         header('Location: index.php?c=index&a=error');
                     }

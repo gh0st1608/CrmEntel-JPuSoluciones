@@ -11,12 +11,28 @@ class LicenciaModel
     {
         $this->bd = new Conexion();
         //$stmt = $this->bd->prepare("SELECT * FROM Licencia where Estado = 1 AND Eliminado=0" );
-        $stmt = $this->bd->prepare("SELECT * FROM Licencia where Eliminado=0" );
+        $stmt = $this->bd->prepare("SELECT licencia.idLicencia as idLicencia,perfil.Nombre as NombrePerfil,persona.Documento as Documento,persona.Primer_Nombre as Primer_Nombre,persona.Segundo_Nombre as Segundo_Nombre,persona.Apellido_Materno as Apellido_Materno,persona.Apellido_Paterno as Apellido_Paterno,usuario.Estado as Estado_Usuario,licencia.Periodo as Periodo,licencia.Fecha_Inicio as Fecha_Inicio,licencia.Fecha_Fin as Fecha_Fin,licencia.Estado as Estado_Licencia 
+        FROM licencia 
+        INNER JOIN usuario ON usuario.idUsuario = licencia.Usuario_id
+        INNER JOIN perfil on perfil.idPerfil=usuario.perfil_id
+        INNER JOIN persona on persona.idPersona=usuario.Persona_id
+        where licencia.Eliminado=0;");
         $stmt->execute();
 
         if (!$stmt->execute()) {
             return 'error';
-            print_r($stmt->errorInfo());
+        }else{            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+    public function ListarPeriodos()
+    {
+        $this->bd = new Conexion();
+        //$stmt = $this->bd->prepare("SELECT * FROM Licencia where Estado = 1 AND Eliminado=0" );
+        $stmt = $this->bd->prepare("SELECT DISTINCT(Periodo) FROM licencia;");
+        $stmt->execute();
+        if (!$stmt->execute()) {
+            return 'error';
         }else{            
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }

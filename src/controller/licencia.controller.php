@@ -1,9 +1,10 @@
 <?php
 require_once 'model/licencia.model.php';
 require_once 'entity/licencia.entity.php';
+require_once 'includes.controller.php';
 
 
-class LicenciaController{    
+class LicenciaController extends IncludesController{    
   
     private $model;
     
@@ -14,15 +15,21 @@ class LicenciaController{
     /**==========================Vistas=======================================*/
     public function Index(){        
         require_once 'view/header.php';
-        require_once 'view/seguridad/licencia/index.php';
+        require_once 'view/licencias/index.php';
         require_once 'view/footer.php';       
     }
 
     /**=======================================================================*/   
     public function Listar()
     {
-        $Licenciaes = $this->model->Listar();
-        return $Licenciaes;
+        $Licencia = $this->model->Listar();
+        return $Licencia;
+    }
+
+    public function ListarPeriodos()
+    {
+        $Licencia = $this->model->ListarPeriodos();
+        return $Licencia;
     }
 
     public function Consultar($idLicencia)
@@ -34,26 +41,50 @@ class LicenciaController{
         return $consulta;
     }
 
+    public function Reporte_Excel_Licencia(){
+        $Periodo=$_REQUEST['Periodo'];
+
+   
+        if (isset($_REQUEST['Periodo']) && $_REQUEST['Periodo']!='null') {
+            $VBO_Periodo=$_REQUEST['Periodo']; 
+            $sqlVBO_Periodo="and licencia.Periodo in($VBO_Periodo)";
+
+        }else{
+            $sqlVBO_Periodo="";
+        }
+
+
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=Reporte_Licencias_".$Periodo.".xls");
+        header("Pragma: no-cache");
+        header("Expires: 0");    
+        require_once 'view/licencias/excel_reporte_periodo.php';        
+    }
+
     public function Registrar($indice){
         $Licencia = new Licencia();
-        $fecha_hoy_año = date("Y");
-        $fecha_hoy_mes = date("m");
-        $fecha_hoy_dia = date("d");
+
+        /*Fecha Actual*/
         $fecha_actual = date("d-M");
+        $date_fecha_actual = new DateTime($fecha_actual);
+        $fecha_actual_formato=$date_fecha_actual->format('Y-m-d');
+        
+
+        /*ultimo dia del mes*/
+        $ultima_dia_fecha_actual = date("t-M", strtotime(date("Y-m-d")));
+        $date_ultima_dia_fecha_actual = new DateTime($ultima_dia_fecha_actual);
+        $ultima_dia_fecha_actual_formato = $date_ultima_dia_fecha_actual->format('Y-m-d');
+
+        /*Periodo*/
         $periodo_año_actual = date("Y");
         $periodo_mes_actual = date("m");
         $periodo_actual = $periodo_año_actual.$periodo_mes_actual;
-        $fecha_referencia_actual = $fecha_hoy_año . "-" . $fecha_hoy_mes . "-" . $fecha_hoy_dia;
-        $ultima_dia_fecha_actual = date("t-M", strtotime(date("Y-m-d")));
 
-        print_r("periodo actual".$periodo_actual);
-        print_r("fecha actual".$fecha_actual);
-        print_r("ultima fecha actual".$ultima_dia_fecha_actual);
-        print_r("fecha referencia actual".$fecha_referencia_actual);
+
         $Licencia->__SET('Usuario_id',$indice);
         $Licencia->__SET('Periodo',$periodo_actual);
-        $Licencia->__SET('Fecha_Inicio',$fecha_actual);
-        $Licencia->__SET('Fecha_Fin',$ultima_dia_fecha_actual);
+        $Licencia->__SET('Fecha_Inicio',$fecha_actual_formato);
+        $Licencia->__SET('Fecha_Fin',$ultima_dia_fecha_actual_formato);
         $Licencia->__SET('Estado',1);           
         $Licencia->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
         $registrar_Licencia = $this->model->Registrar($Licencia);  
