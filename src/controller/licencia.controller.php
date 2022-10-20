@@ -61,7 +61,7 @@ class LicenciaController extends IncludesController{
         require_once 'view/licencias/excel_reporte_periodo.php';        
     }
 
-    public function Registrar($indice){
+    public function Registrar($indice,$bolFlujo){
         $Licencia = new Licencia();
 
         /*Fecha Actual*/
@@ -92,33 +92,37 @@ class LicenciaController extends IncludesController{
         if($registrar_Licencia=='error'){
             header('Location: index.php?c=Licencia&a=v_Registrar');
          }else{
-            header('Location: index.php?c=Licencia');
+            if($bolFlujo)
+            {
+                header('Location: index.php?c=Licencia');
+            }else{
+                //nothing
+            }
+            
          }
     }
 
-    public function Inactivar_Licencia($indice){
+    public function Inactivar_Licencia($idUsuario){
         $Licencia = new Licencia();
-        $fecha_hoy_año = date("Y");
-        $fecha_hoy_mes = date("m");
-        $fecha_hoy_mes = date("t");
-        $fecha_referencia_actual = $fecha_hoy_año + "-" + $fecha_hoy_mes + "-" +$fecha_hoy_mes;
-        $ultima_dia_fecha_actual = date("m-t", strtotime($fecha_referencia_actual));
+        /*Fecha Actual*/
+        $fecha_actual = date("d-M");
+        $date_fecha_actual = new DateTime($fecha_actual);
+        $fecha_actual_formato=$date_fecha_actual->format('Y-m-d');
 
 
-        $Licencia->__SET('Usuario_id',$indice);
-        $Licencia->__SET('Periodo',$indice);
-        $Licencia->__SET('Fecha_Inicio',$_REQUEST['Nombre']);
-        $Licencia->__SET('Fecha_Fin',$_REQUEST['Nombre']);
-        $Licencia->__SET('Estado',1);           
+        $Licencia->__SET('Usuario_id',$idUsuario);
+        $Licencia->__SET('Fecha_Fin',$fecha_actual_formato);
+        $Licencia->__SET('Estado',0);           
         $Licencia->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
-        $registrar_Licencia = $this->model->Registrar($Licencia);  
+        $Inactivar_Licencia = $this->model->Inactivar_Licencia($Licencia);  
          
-        if($registrar_Licencia=='error'){
+        if($Inactivar_Licencia=='error'){
             header('Location: index.php?c=Licencia&a=v_Registrar');
          }else{
-            header('Location: index.php?c=Licencia');
+            //header('Location: index.php?c=Licencia');
          }
     }
+
 
 
     /*

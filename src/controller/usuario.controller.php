@@ -139,10 +139,23 @@ class UsuarioController{
         $usuario->__SET('idUsuario',$_REQUEST['idUsuario']);
         $usuario->__SET('Login',$_REQUEST['Documento']);
         $usuario->__SET('Password',$_REQUEST['Clave']);
-        $usuario->__SET('PasswordEquipo',$_REQUEST['PasswordEquipo']);
+        $usuario->__SET('Password_Digital',$_REQUEST['Password_Digital']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);         
         $usuario->__SET('Estado',$_REQUEST['Estado']);
-        $usuario->__SET('Modificado_por',$_SESSION['Usuario_Actual']);       
+        $usuario->__SET('Modificado_por',$_SESSION['Usuario_Actual']);
+        $bolFlujo = FALSE;
+        
+        if($_REQUEST['Estado'] == 0)
+        {
+            $licencia = new LicenciaController;
+            $licencia->Inactivar_Licencia($_REQUEST['idUsuario']);
+        }
+
+        if($_REQUEST['Estado'] == 1)
+        {
+            $licencia = new LicenciaController;
+            $licencia->Registrar($_REQUEST['idUsuario'],$bolFlujo);
+        }
         $actualizar_usuario = $this->model->actualizar($usuario);  
          
         if($actualizar_usuario=='error'){
@@ -169,13 +182,14 @@ class UsuarioController{
         $usuario->__SET('PasswordEquipo',$_REQUEST['PasswordEquipo']);
         $usuario->__SET('Perfil_id',$_REQUEST['Perfil']);
         $usuario->__SET('Ingresado_por',$_SESSION['Usuario_Actual']);
+        $bolFlujo = TRUE;
         $registrar_usuario = $this->model->Registrar($usuario);
 
         $usuario_id = $this->ObtenerIndice();
         $indice = $usuario_id[0]['idUsuario'];
 
         $licencia = new LicenciaController;
-        $licencia->Registrar($indice);
+        $licencia->Registrar($indice,$bolFlujo);
 
         if($registrar_usuario=='error'){
             header('Location: index.php?c=Usuario&a=v_Registrar');

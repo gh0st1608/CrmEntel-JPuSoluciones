@@ -96,6 +96,9 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
         
 
     }
+
+
+
     public function Consultar(Usuario $usuario)
     {
         $this->bd = new Conexion();
@@ -109,6 +112,7 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
         $objUsuario->__SET('Persona_id',$row->Persona_id);
         $objUsuario->__SET('Login',$row->Login);
         $objUsuario->__SET('Password',$row->Password);
+        $objUsuario->__SET('Password_Digital',$row->Password_Digital);
         $objUsuario->__SET('Perfil_id',$row->Perfil_id);
         $objUsuario->__SET('Estado',$row->Estado);      
 
@@ -120,12 +124,12 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
     {
        
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Password_Digital=:PasswordEquipo, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
+        $stmt = $this->bd->prepare("UPDATE usuario SET  Login = :Login, Password=:Password, Password_Digital=:Password_Digital, Perfil_id=:Perfil_id, Estado=:Estado, Modificado_por=:Modificado_por, Estado=:Estado WHERE idUsuario = :idUsuario");
 
         $stmt->bindValue(':idUsuario',$usuario->__GET('idUsuario'));
         $stmt->bindValue(':Login',$usuario->__GET('Login'));
         $stmt->bindValue(':Password',$usuario->__GET('Password'));
-        $stmt->bindValue(':PasswordEquipo',$usuario->__GET('PasswordEquipo'));
+        $stmt->bindValue(':Password_Digital',$usuario->__GET('Password_Digital'));
         $stmt->bindValue(':Perfil_id',$usuario->__GET('Perfil_id'));
         $stmt->bindValue(':Estado',$usuario->__GET('Estado'));      
         $stmt->bindValue(':Modificado_por',$usuario->__GET('Modificado_por'));

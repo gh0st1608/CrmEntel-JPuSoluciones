@@ -74,6 +74,47 @@ class LicenciaModel
         }
     }
     */
+    public function Inactivar_Licencia(Licencia $licencia)
+    {
+       
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("UPDATE licencia SET  Fecha_Fin = :Fecha_Fin,Estado = :Estado,Modificado_por = :Modificado_por WHERE Usuario_id = :Usuario_id");
+
+        $stmt->bindValue(':Usuario_id',$licencia->__GET('Usuario_id'));
+        $stmt->bindValue(':Fecha_Fin', $licencia->__GET('Fecha_Fin'));
+        $stmt->bindValue(':Estado',$licencia->__GET('Estado'));      
+        $stmt->bindValue(':Modificado_por',$licencia->__GET('Modificado_por'));
+    
+        if (!$stmt->execute()) {
+            //print_r($stmt->errorInfo());
+            return 'error';
+        }else{
+            
+            return 'exito';
+        }
+    } 
+    
+    public function Activar_Licencia(Licencia $licencia)
+    {
+       
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("UPDATE licencia SET Fecha_Inicio = :Fecha_Inicio, Fecha_Fin = :Fecha_Fin,Estado = :Estado,Modificado_por = :Modificado_por WHERE Usuario_id = :Usuario_id");
+
+        $stmt->bindValue(':Usuario_id',$licencia->__GET('Usuario_id'));
+        $stmt->bindValue(':Fecha_Inicio', $licencia->__GET('Fecha_Inicio'));
+        $stmt->bindValue(':Fecha_Fin', $licencia->__GET('Fecha_Fin'));
+        $stmt->bindValue(':Estado',$licencia->__GET('Estado'));      
+        $stmt->bindValue(':Modificado_por',$licencia->__GET('Modificado_por'));
+    
+        if (!$stmt->execute()) {
+            //print_r($stmt->errorInfo());
+            return 'error';
+        }else{
+            
+            return 'exito';
+        }
+    }  
+
 
     public function Registrar(Licencia $licencia)
     {

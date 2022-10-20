@@ -1,8 +1,3 @@
-<?php 
-error_reporting(E_ALL);
-ini_set('display_errors','1');
-
-?>
 <!-- Content Header (Page header) -->
 <section class="content-header">  
 	<h1>
@@ -78,7 +73,7 @@ $listatipodocumento = $subcategoria -> Listar_por_categoria(40);
 							</div>
 							<div class="form-group col-md-6">
 								<label>Clave Digital</label>
-								<input type="text" name="PasswordEquipo" id="PasswordEquipo" value="<?php echo $usuario->__GET('PasswordEquipo');?>" class="form-control" placeholder=""  required />
+								<input type="text" name="Password_Digital" id="Password_Digital" value="<?php echo $usuario->__GET('Password_Digital');?>" class="form-control" placeholder=""  required />
 							</div>
 							<div class="form-group col-md-6">
 					      		<label>Estado</label>

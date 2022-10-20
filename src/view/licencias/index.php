@@ -75,7 +75,7 @@ $periodos = $this->ListarPeriodos();
                                 <td style="text-align: center;" class=""><span class="label label-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Activo</span></td>
                                 <?php endif ?>
 								<?php if ($licencia['Estado_Usuario']==0): ?>
-                                <td sstyle="text-align: center;" class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
+                                <td style="text-align: center;" class=""><span class="label label-danger"><i class="fa fa-square-o" aria-hidden="true"></i> Inactivo</span></td>
                                 <?php endif ?>
 								<?php if ($licencia['Estado_Usuario']==2): ?>
 								<td style="text-align: center;" class=""><span class="label label-default"><i class="fa fa-square-o" aria-hidden="true"></i> Bloqueado</span></td>
