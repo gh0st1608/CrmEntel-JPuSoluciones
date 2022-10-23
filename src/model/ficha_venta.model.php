@@ -345,5 +345,19 @@ class Ficha_VentaModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function ConsultarSubCategoria($idSubCategoria,$NomVariable, $NumAccion,$NomAccion)
+    {
+        $this->pdo = new Conexion();
+        $stmt = $this->pdo->prepare("CALL ProcSelectAccionesSubCategoria(:idSubCategoria, :NomVariable,:NumAccion,:NomAccion)" );
+        $stmt->bindValue(':idSubCategoria', $idSubCategoria);
+        $stmt->bindValue(':NomVariable', $NomVariable);
+        $stmt->bindValue(':NumAccion', $NumAccion);
+        $stmt->bindValue(':NomAccion', $NomAccion);
+        $stmt->execute();
+     //  $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return   $data  ;
+    }
  
 }
