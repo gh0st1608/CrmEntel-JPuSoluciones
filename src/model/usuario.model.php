@@ -62,14 +62,16 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
     public function RecuperarClave($correo){
 
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT usuario.Password as Clave FROM usuario 
-        INNER JOIN persona ON persona.idPersona = usuario.Persona_id WHERE persona.Correo = $correo" );
+        $stmt = $this->bd->prepare("SELECT usuario.Login as Login, usuario.Password as Password FROM usuario 
+        INNER JOIN persona ON persona.idPersona = usuario.Persona_id WHERE persona.Correo = :Correo;");
+        $stmt->bindValue(':Correo', $correo);
         $stmt->execute();
 
         if (!$stmt->execute()) {
-            return 'error';
             print_r($stmt->errorInfo());
-        }else{            
+            print_r($errors[2]);
+            return 'error';
+        }else{        
             return $stmt->fetchAll(PDO::FETCH_ASSOC);       
         }
 

@@ -9,7 +9,15 @@ $User = new UsuarioController();
     //verificamos si el usuario no esta logueado
     if(!$User->Verificar_InicioSesion()){
         //si no esta logueado redireccionamo al formulario login.php
-        $User->redirect('login.php');
+
+        if(isset($_REQUEST['Correo']))
+        {
+            $User->RecuperarClave(isset($_REQUEST['Correo']));
+        }else
+        {
+            $User->redirect('login.php');
+        }
+
         
         
     }else{ 
