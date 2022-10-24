@@ -1,0 +1,32 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "reference": "1054.AS.400",
+        "attributes": {
+          "color": [
+            {"id": 5, "value": "Red"},
+            {"id": 91, "value": "Orange"}       
+          ],
+          "size": [
+            {"id": 62, "value": "X"},
+            {"id": 4, "value": "XXL"}       
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "reference": "2594.RF.400",
+        "attributes": {
+          "color": [
+            {"id": 5, "value": "Red"},
+            {"id": 14, "value": "Blue"}       
+          ],
+          "size": [
+            {"id": 2, "value": "S"},
+            {"id": 4, "value": "XXL"}       
+          ]
+        }
+      }
+    ]
+  }

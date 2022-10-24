@@ -593,5 +593,17 @@ class Ficha_VentaController  extends IncludesController{
         echo json_encode($ficha_venta);
     }
 
+    public function ConsultarSubCategoria()
+    {   
+  
+        $idSubCategoria = $_POST['idSubCategoria'];
+        $NomVariable = $_POST['NomVariable'];
+        $NumAccion = $_POST['NumAccion'];
+        $NomAccion = $_POST['NomAccion']; 
+        $consulta = $this->model->ConsultarSubCategoria($idSubCategoria,$NomVariable,$NumAccion,$NomAccion);
+        echo  json_encode($consulta);
+      
+    }
+
 
 }

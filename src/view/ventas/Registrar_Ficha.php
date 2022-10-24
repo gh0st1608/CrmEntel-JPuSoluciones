@@ -1,5 +1,17 @@
 
 <?php 
+
+	$json = file_get_contents('categoria.json',true);
+	$s =json_encode($json); 
+	$decode =json_decode($s,true); 
+	//$ha = fopen("./view/ventas/gaaa.json","w+");
+ 	//fwrite($ha,$s );
+
+	// $haa = fopen("./view/ventas/gaaa2.json","w+");
+	// fwrite($haa,$sa );
+ 
+ 	
+
 		if(isset($_REQUEST['Busc_Fecha_Inicio'])){$Busc_Fecha_Inicio=$_REQUEST['Busc_Fecha_Inicio'];}else{$Busc_Fecha_Inicio="";} 
 		if(isset($_REQUEST['Busc_Fecha_Fin'])){$Busc_Fecha_Fin=$_REQUEST['Busc_Fecha_Fin'];}else{$Busc_Fecha_Fin="";}
 		if(isset($_REQUEST['DP_Documento'])){$DP_Documento=$_REQUEST['DP_Documento'];}else{$DP_Documento="";}
@@ -16,6 +28,8 @@
 		$urlRetorno="index.php?c=Ficha_Venta&Busc_Fecha_Inicio=$Busc_Fecha_Inicio&Busc_Fecha_Fin=$Busc_Fecha_Fin&DP_Documento=$DP_Documento&RE_Tipo_Despacho=$RE_Tipo_Despacho&RE_Rango_Entrega_Despacho=$RE_Rango_Entrega_Despacho&RV_Tipo_Ofrecimiento=$RV_Tipo_Ofrecimiento&RV_Tipo_Venta=$RV_Tipo_Venta&RV_Linea_Portar=$RV_Linea_Portar&RV_Tipo_Producto=$RV_Tipo_Producto&VBO_Estado_Venta_BO=$VBO_Estado_Venta_BO&Supervisor_Vendedor=$Supervisor_Vendedor&Documento_Vendedor=$Documento_Vendedor";
 
 		
+
+        
 
 ?>
  <!-- Content Header (Page header) -->
@@ -1535,6 +1549,41 @@
         });
 
 	}
+ 
+ 
+
+
+	function ConsultarSubCategoria(idSubCategoria, NomVariable,NumAccion,NomAccion ){
+	 
+    	 m = $.ajax({
+            type: "POST",
+            url: 'index.php?c=Ficha_Venta&a=ConsultarSubCategoria',
+            data:{
+				idSubCategoria:idSubCategoria,
+				NomVariable:NomVariable, 
+				NumAccion:NumAccion,
+				NomAccion:NomAccion
+            },
+			dataType: "json",
+			async: false,           
+            success: function(response) {
+              
+			   
+			     valor =  response   ;
+			     
+			   
+            } 
+             
+ 
+        } ) ;
+		return readData(valor);
+
+	} 
+	function readData(data) {
+     //   console.log(data)
+        return data;
+    }
+	 
 
 
 	$(document).ready(function() {
@@ -2523,33 +2572,165 @@
 				}
 			}
 
-		/*FIN APLICAR LOGICA DE FILTROS*/
 		
+		/*FIN APLICAR LOGICA DE FILTROS*/
+
 		$( ".filter_logica" ).change(function()
 		{
 			
+		 
 			id=$(this).attr('id');
 			
         	var idSubCategoria=$("#"+id).val();
         	
 			var Aplicar_Logica=$("#"+id+" option[value='"+idSubCategoria+"']").attr('aplicar_logica');
-			
+		 
+			A_Acciones =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Accion') ;
+			A_Nombre =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Nombre') ;
+			A_ItemsFilter = ConsultarSubCategoria(idSubCategoria,'Acciones',0,'ItemsFilter') ;
+			A_Ocultar =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Ocultar');
+			A_NroRegistrosPermitidos =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'NroRegistrosPermitidos'); 
+			A_Mostrar =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Mostrar'); 
+			A_Nombre_Key =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Nombre_Key'); 
+ 
+			 
+		 
+			 b =  ConsultarSubCategoria(idSubCategoria,'Acciones',1,'')   ;
+			  console.log(idSubCategoria);
+		 
+		      console.log( b[0].NroAcciones);
+ 
+			  console.log(A_Acciones.length);
+			  console.log(A_Nombre.length);
+			  console.log(A_ItemsFilter.length);
+			  console.log(A_Ocultar.length);
+			  console.log(A_NroRegistrosPermitidos.length);
+			  console.log(A_Nombre_Key.length);
 			if(Aplicar_Logica==1){
-				var NroIteraciones=LogicaRE[idSubCategoria]['NroAcciones'];
+			 	//var NroIteraciones = LogicaRE[idSubCategoria]['NroAcciones'];  
+				 var NroIteraciones =  b[0].NroAcciones;
 				var SubCat_LogicaRE=LogicaRE[idSubCategoria]['Acciones'];
+				 
+				 
 				for (var i = 1; i <= NroIteraciones; i++) {
-					
-					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='MultiRegistro'){
+				    
+					/*if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='MultiRegistro'){
 						$("#"+id).attr('NroRegistrosPermitidos', LogicaRE[idSubCategoria]['Acciones'][i]['NroRegistrosPermitidos']);
-					}
+					}*/
+					V_Accion ='';
+					V_Nombre ='';
+					V_ItemsFilter='';
+					V_Ocultar='';
+					V_NroRegistrosPermitidos='';
+					V_Mostrar='';
+					V_Nombre_Key='';
+					if (A_Acciones.length >0) {
+						for (var j = 0; j < A_Acciones.length; j++) {
+				
+							if(i== Number(A_Acciones[j].Num_Accion) ) {
 
-					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Filtrar_Items'){
+								V_Acciones = A_Acciones[j].Desc_Accion;
+
+							}
+						}
+					}
+					 
+					
+					if (A_Nombre.length >0) {
+					 
+						for (var j = 0; j < A_Nombre.length; j++) {
+							
+							if(i== Number(A_Nombre[j].Num_Accion) ) {
+
+								V_Nombre = A_Nombre[j].Desc_Accion;
+
+							}
+						}
+					}
+					if (A_ItemsFilter.length >0) {
+						for (var j = 0; j < A_ItemsFilter.length; j++) {
+						
+							if(i== Number(A_ItemsFilter[j].Num_Accion) ) {
+
+								V_ItemsFilter = A_ItemsFilter[j].Desc_Accion;
+
+							}
+						}
+
+
+					}
+					if (A_Ocultar.length >0) {
+						 
+						for (var j = 0; j < A_Ocultar.length; j++) {
+						 
+							if(i== Number(A_Ocultar[j].Num_Accion) ) {
+
+								V_Ocultar = A_Ocultar[j].Desc_Accion;
+
+							}
+						}
+
+
+					}
+					if (A_NroRegistrosPermitidos.length >0) {
+
+						for (var j = 0; j <  A_NroRegistrosPermitidos.length; j++) {
+							if(i== Number(A_NroRegistrosPermitidos[j].Num_Accion) ) {
+
+								V_NroRegistrosPermitidos = A_NroRegistrosPermitidos[j].Desc_Accion;
+
+						   }
+						}
+	
+					}
+					if (A_Mostrar.length >0) {
+
+						for (var j = 0; j <  A_Mostrar.length; j++) {
+							if(i== Number(A_Mostrar[j].Num_Accion) ) {
+
+								V_Mostrar = A_Mostrar[j].Desc_Accion;
+
+						   }
+						}
+	
+					}
+				 
+					if (A_Nombre_Key.length >0) {
+
+						for (var j = 0; j <  A_Nombre_Key.length; j++) {
+							if(i== Number(A_Nombre_Key[j].Num_Accion) ) {
+
+								V_Nombre_Key = A_Nombre_Key[j].Desc_Accion;
+
+						   }
+						}
+	
+					}
+					
+
+				
+
+
+					if(V_Acciones =='MultiRegistro'){
+						$("#"+id).attr('NroRegistrosPermitidos', V_NroRegistrosPermitidos );
+					}
+ 
+					/*if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Filtrar_Items'){
 						ListarSubCategoriasxIds(LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'],LogicaRE[idSubCategoria]['Acciones'][i]['ItemsFilter'])
 					}
+					*/
+ 
+					if(V_Acciones=='Filtrar_Items'){
+						ListarSubCategoriasxIds(V_Nombre,V_ItemsFilter  );
+					}
 
-					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Mostrar_Campos'){
-
-						NombreCampos_Ocultar=LogicaRE[idSubCategoria]['Acciones'][i]['Ocultar'];
+					if(V_Acciones=='Mostrar_Campos'){
+				  //  if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Mostrar_Campos'){	
+				 	 	NombreCampos_Ocultar = V_Ocultar ; 
+						//  console.log(NombreCampos_Ocultar);
+					    //NombreCampos_Ocultar=LogicaRE[idSubCategoria]['Acciones'][i]['Ocultar'];	
+						//console.log(NombreCampos_Ocultar);
+				 		 
 						var NombreCampos_Ocultar = NombreCampos_Ocultar.split(",");
 						for (var j = 0 ; j <= NombreCampos_Ocultar.length-1; j++) {
 							$("#div-"+NombreCampos_Ocultar[j]).addClass('hide');
@@ -2565,26 +2746,44 @@
 
 							$("#div-"+NombreCampos_Ocultar[j]).removeClass('has-error').removeClass('has-success');
 						}
-
-						NombreCampos_Mostrar=LogicaRE[idSubCategoria]['Acciones'][i]['Mostrar'];
+						NombreCampos_Mostrar=V_Mostrar;
+						//NombreCampos_Mostrar=LogicaRE[idSubCategoria]['Acciones'][i]['Mostrar'];
 						var NombreCampos_Mostrar = NombreCampos_Mostrar.split(",");
 						for (var k = 0 ; k <= NombreCampos_Mostrar.length-1; k++) {
 							$("#div-"+NombreCampos_Mostrar[k]).removeClass('hide');
 							$("#"+NombreCampos_Mostrar[k]).attr('obligatorio',"SI");
 						}
 					}
+				 	if(V_Acciones=='Filtro_Superior'){
 
-					if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Filtro_Superior'){
-						var NombreFiltroSuperior=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'];
-						var NombreKey=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre_Key'];
-
+				 
+					// if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='Filtro_Superior'){
+					     var NombreFiltroSuperior=V_Nombre;
+					 	 var NombreKey=V_Nombre_Key;
+						// var NombreFiltroSuperior=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'];
+						// var NombreKey=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre_Key'];
+						 
+ 
+						  idSubCategoriaSuperior=$("#"+NombreFiltroSuperior).val();
+					 
+						 var SubCat_Logica=LogicaRE[idSubCategoriaSuperior][NombreKey];
+						 A_SubCat_Logica  =  ConsultarSubCategoria(idSubCategoriaSuperior,NombreKey,0,''); 
 						
-						idSubCategoriaSuperior=$("#"+NombreFiltroSuperior).val();
+						 for (var j = 0; j <  A_SubCat_Logica.length; j++) {
+							if(idSubCategoria == Number(A_SubCat_Logica[j].Num_Accion) ) {
 
-					
+								if  (A_SubCat_Logica[j].Nom_Accion == 'Nombre'){
+									V_SubCat_Logica_Nombre = A_SubCat_Logica[j].Desc_Accion;
+								}	
+								if  (A_SubCat_Logica[j].Nom_Accion == 'ItemsFilter'){
+									V_SubCat_Logica_ItemsFilter = A_SubCat_Logica[j].Desc_Accion;
+								}
+						   }
+						}
+	 
 						var SubCat_Logica=LogicaRE[idSubCategoriaSuperior][NombreKey];
-						
-						ListarSubCategoriasxIds(SubCat_Logica[idSubCategoria]['Nombre'],SubCat_Logica[idSubCategoria]['ItemsFilter'])
+					    ListarSubCategoriasxIds(V_SubCat_Logica_Nombre ,  V_SubCat_Logica_ItemsFilter)
+						//ListarSubCategoriasxIds(SubCat_Logica[idSubCategoria]['Nombre'],SubCat_Logica[idSubCategoria]['ItemsFilter'])
 					}
 
 				}

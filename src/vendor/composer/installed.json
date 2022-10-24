@@ -145,6 +145,7 @@
             "install-path": "../graham-campbell/result-type"
         },
         {
+<<<<<<< HEAD
             "name": "phpmailer/phpmailer",
             "version": "v6.6.5",
             "version_normalized": "6.6.5.0",
@@ -226,6 +227,8 @@
             "install-path": "../phpmailer/phpmailer"
         },
         {
+=======
+>>>>>>> b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb
             "name": "phpoption/phpoption",
             "version": "1.9.0",
             "version_normalized": "1.9.0.0",
