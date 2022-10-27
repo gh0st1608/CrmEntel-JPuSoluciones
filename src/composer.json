@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "ua-parser/uap-php": "^3.9",
-        "vlucas/phpdotenv": "^5.5",
-        "phpmailer/phpmailer": "^6.6"
+        "ua-parser/uap-php": "^3.9", 
+        "vlucas/phpdotenv": "^5.3",
+        "phpmailer/phpmailer": "^6.5" 
     }
 }

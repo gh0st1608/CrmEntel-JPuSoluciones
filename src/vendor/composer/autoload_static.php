@@ -26,7 +26,9 @@ class ComposerStaticInitb7b92c7279dc7927d2e3032a0fa9fa13
         'P' => 
         array (
             'PhpOption\\' => 10,
+ 
             'PHPMailer\\PHPMailer\\' => 20,
+ 
         ),
         'M' => 
         array (
@@ -67,10 +69,19 @@ class ComposerStaticInitb7b92c7279dc7927d2e3032a0fa9fa13
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
         'Michael\\Src\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',

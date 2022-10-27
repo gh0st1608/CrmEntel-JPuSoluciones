@@ -3,7 +3,15 @@
         'name' => 'michael/src',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
+<<<<<<< HEAD
         'reference' => 'b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb',
+=======
+<<<<<<< HEAD
+        'reference' => 'b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb',
+=======
+        'reference' => 'beb6b5a143398432bfad9b8f5a9d2bc7ed2b1dbf',
+>>>>>>> b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,12 +39,24 @@
         'michael/src' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
+<<<<<<< HEAD
             'reference' => 'b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb',
+=======
+<<<<<<< HEAD
+            'reference' => 'b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb',
+=======
+            'reference' => 'beb6b5a143398432bfad9b8f5a9d2bc7ed2b1dbf',
+>>>>>>> b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.6.5',
             'version' => '6.6.5.0',
@@ -46,6 +66,11 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> b86bbf4b2704f0cd1c310a11791c4d1e3b293cbb
+>>>>>>> 6b478a06286906e1467a46f3a20c68aa5d23621f
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.0',
             'version' => '1.9.0.0',

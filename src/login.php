@@ -98,6 +98,38 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
+          <!-- Modal INCIO -->
+          <div id="recuperar_clave" class="row">
+            <div class="col-md-12">
+            <p class="openBtn2"><a href="#">Recuperar Contraseña</a></p>
+            </div>
+          </div>
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            <!-- Modal contenido-->
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Recuperar Contraseña</h4>
+                </div>
+                <div class="modal-body">
+                <div class="form-group has-feedback">
+                  <input type="input" class="form-control" id="Correo" name="Correo" placeholder="Ingresar Correo">
+                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  <span id="error" style="display:none;color:red;">Correo no válido</span>
+                  <span id="success" style="display:none;color:green;">Correo válido</span>
+                </div>
+                <div class="form-group has-feedback">
+                  <button type="submit" class="btn btn-default btn-block btn-flat" id="EnviarMail" name="EnviarMail" disabled><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+            </div>
+          </div>
+          <!-- MODAL FIN-->
           
           <div class="row">
             <div class="col-md-12">
@@ -115,19 +147,21 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
    
     <script>
-        /* Llamando al fichero CargarContenido.php */
-        $('.openBtn2').on('click',function(){
-            $('.modal-body').load('RecuperarContraseña.php',function(){
-                $('#myModal').modal({show:true});
-            });
-        });
+      /* Llamando al fichero CargarContenido.php */
+      $('.openBtn2').on('click',function(){
+            $('#myModal').modal({show:true});
+      });
+     
+
     
       $('#Correo').on('keyup', function() {
           var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
           var buttonDisabled = $('#Correo').val().length == 0 ;
+          var bool = true;
           if(!re) {
               $('#error').show();
               $('#success').hide();
+              $('#EnviarMail').attr("disabled", bool);
           } else {
               $('#error').hide();
               $('#success').show();
@@ -135,16 +169,20 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           }
       })
       
-      $('#EnviarMail').on('click',function(){
-          var parametro= "Correo="+$("#Correo").val();
+      $('#EnviarMail').click(function(){
+          var Correo= $("#Correo").val();
           $.ajax({
-              data: parametro,
-              type: "POST",
-              url: 'index.php?c=Usuario&a=RecuperarClave',
-              //sync:false,        
-              success: function(data) {
-                alert(data);
-              },
+              type: "GET",
+              url: 'index.php?c=Usuario',
+              data: 'Correo='+Correo,
+              beforeSend: function () { },
+                success:  function (response) {        	
+                    alert(response);
+                },
+                error:function(){
+                	alert("error");
+                }
+             
           });
       });
 	

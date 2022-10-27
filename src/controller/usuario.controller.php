@@ -7,16 +7,14 @@ require_once 'entity/persona.entity.php';
 require_once 'controller/licencia.controller.php';
 require_once 'entity/licencia.entity.php';
 
-/*
-require_once 'service/mailing.service.php';
-*/
 require_once 'entity/mail.entity.php';
+require_once 'controller/mail.controller.php';
 require_once "vendor/autoload.php";
 
 
 use UAParser\Parser;
-ini_set("session.cookie_lifetime","43200");
-ini_set("session.gc_maxlifetime","43200");
+//ini_set("session.cookie_lifetime","43200");
+//ni_set("session.gc_maxlifetime","43200");
 session_start();
 class UsuarioController{    
   
@@ -125,13 +123,20 @@ class UsuarioController{
 
     public function RecuperarClave()
     {
-        $consulta = $this->model->RecuperarClave($_REQUEST['Correo']);
 
-        $mail->__SET('user',$consulta['Login']);
-        $mail->__SET('password',$consulta['Password']);
-        $usuario->__SET('idUsuario',$_REQUEST['Correo']);
-
-        
+        if(isset($_REQUEST['Correo']))
+        {    
+            print_r($_REQUEST['Correo']);
+            $consulta = $this->model->RecuperarClave(strval($_REQUEST['Correo']));
+            $mail = new Mail();
+            $mail->__SET('user',$consulta[0]['Login']);
+            $mail->__SET('password',$consulta[0]['Password']);
+            $mail->__SET('correo_recuperacion',$_REQUEST['Correo']);
+            $mailing = new MailController;
+            $respuesta = $mailing->EnviarCorreo($mail);
+        }else{
+            echo 'error al enviar el correo';
+        }  
     }  
 
     public function Actualizar(){
