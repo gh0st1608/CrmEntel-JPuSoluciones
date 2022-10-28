@@ -148,4 +148,157 @@ class SubCategoriaModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+ 
+    public function ConsultarSubCategoriaAccion()
+    {
+        $this->pdo = new Conexion();
+        $stmt = $this->pdo->prepare("SELECT  Desc_SubCategoria_Accion FROM subcategoria_accion 
+                                     GROUP BY Desc_SubCategoria_Accion" );
+        $stmt->execute(); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+ 
+
+    }
+ 
+    public function ConsultarLogicaAccion()
+    {
+        $this->pdo = new Conexion();
+        $stmt = $this->pdo->prepare("SELECT idAccion, Nom_Accion FROM acciones_logica 
+                                     ORDER BY idAccion  ASC;" );
+        $stmt->execute(); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+ 
+    }
+
+    public function ConsultarAccion()
+    {
+        $this->pdo = new Conexion();
+        $stmt = $this->pdo->prepare("SELECT Desc_SubCategoria_Accion FROM subcategoria_accion
+                                    where Desc_SubCategoria_Accion <> 'NroAcciones'
+                                     GROUP BY Desc_SubCategoria_Accion ;" );
+        $stmt->execute(); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+ 
+    }
+
+    public function ConsultarLogicaAccionDetalle($idsubcategoria)
+    {
+        $this->pdo = new Conexion();
+        $stmt = $this->pdo->prepare("SELECT sa.idSubCategoria, sa.Desc_SubCategoria_Accion Acciones ,
+        (
+        SELECT  max(Num_Accion) 
+        from acciones_logica_detalle lod INNER JOIN subcategoria_accion sac 
+        on lod.idSubCategoria_Accion =sac.idSubCategoria_Accion
+        WHERE sac.Desc_SubCategoria_Accion ='Acciones' and sac.idSubCategoria = sa.idSubCategoria  
+        ) NroAcciones,
+        ld.Num_Accion, al.Nom_Accion,  ld.Desc_Accion ,
+        ld.id_AccionDetalle ,
+        ld.id_Accion
+        from acciones_logica_detalle ld INNER JOIN acciones_logica al
+        on ld.id_Accion = al.idAccion INNER JOIN subcategoria_accion sa 
+        on sa.idSubCategoria_Accion = ld.idSubCategoria_Accion
+        WHERE sa.idSubCategoria= :idSubCategoria
+        and ld.Estado = 1
+        order by sa.Desc_SubCategoria_Accion ASC , ld.Num_Accion ASC, al.idAccion ASC" );
+        $stmt->bindValue(':idSubCategoria',$idsubcategoria);   
+        $stmt->execute(); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+ 
+    }
+
+    public function EliminarAccion(SubCategoria $subcategoria)
+    {
+       
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("UPDATE acciones_logica_detalle SET Estado=:Eliminado WHERE id_AccionDetalle = :id_AccionDetalle and Estado = 1;");
+
+        $stmt->bindValue(':id_AccionDetalle',$subcategoria->__GET('id_AccionDetalle'));         
+ 
+        $stmt->bindValue(':Eliminado',$subcategoria->__GET('Eliminado'));   
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+    public function ActualizaAccion(SubCategoria $subcategoria)
+    {
+       
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare("UPDATE acciones_logica_detalle SET  Num_Accion= :Num_Accion , id_Accion= :id_Accion , Desc_Accion=:Desc_Accion  WHERE  id_AccionDetalle =:id_AccionDetalle AND Estado= 1;");
+        $stmt->bindValue(':id_AccionDetalle',$subcategoria->__GET('id_AccionDetalle'));  
+        $stmt->bindValue(':Num_Accion',$subcategoria->__GET('Num_Accion'));
+        $stmt->bindValue(':id_Accion',$subcategoria->__GET('id_Accion'));   
+        $stmt->bindValue(':Desc_Accion',$subcategoria->__GET('Desc_Accion'));  
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+    public function RegistraAccion(SubCategoria $subcategoria)
+    {
+       
+        $this->bd = new Conexion();
+        $stmt = $this->bd->prepare(" SELECT COUNT(1) CANT FROM  subcategoria_accion WHERE Desc_SubCategoria_Accion= :Desc_SubCategoria_Accion AND 	idSubCategoria =:idSubCategoria");
+         $stmt->bindValue(':Desc_SubCategoria_Accion',$subcategoria->__GET('Desc_SubCategoria_Accion'));  
+         $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));  
+         $stmt->execute();
+         
+        $row = $stmt->fetch(PDO::FETCH_OBJ);      
+ 
+        $cant = $row->CANT;  
+
+      
+        if (intval($cant) >0){
+           
+            $stmt = $this->bd->prepare(" SELECT  * FROM  subcategoria_accion WHERE Desc_SubCategoria_Accion= :Desc_SubCategoria_Accion AND 	idSubCategoria =:idSubCategoria");
+            $stmt->bindValue(':Desc_SubCategoria_Accion',$subcategoria->__GET('Desc_SubCategoria_Accion'));  
+            $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));  
+            $stmt->execute();
+             
+
+           $row2 = $stmt->fetch(PDO::FETCH_OBJ);   
+           $idsubcategoriaaccion = $row2->idSubCategoria_Accion;   
+         
+           
+        }
+        else {
+         
+            $stmt = $this->bd->prepare("INSERT INTO  subcategoria_accion ( idSubCategoria , Desc_SubCategoria_Accion) VALUES (:Desc_SubCategoria_Accion , :idSubCategoria)");
+            $stmt->bindValue(':Desc_SubCategoria_Accion',$subcategoria->__GET('Desc_SubCategoria_Accion'));  
+            $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));  
+            $stmt->execute();
+   
+            $stmt = $this->bd->prepare(" SELECT  * FROM  subcategoria_accion WHERE Desc_SubCategoria_Accion= :Desc_SubCategoria_Accion AND 	idSubCategoria =:idSubCategoria");
+            $stmt->bindValue(':Desc_SubCategoria_Accion',$subcategoria->__GET('Desc_SubCategoria_Accion'));  
+            $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));  
+            $stmt->execute();
+            
+           $row2 = $stmt->fetch(PDO::FETCH_OBJ);   
+           $idsubcategoriaaccion = $row2->idSubCategoria_Accion;    
+        }
+        $stmt = $this->bd->prepare(" INSERT INTO  acciones_logica_detalle(idSubCategoria_Accion, Num_Accion, id_Accion, Desc_Accion) VALUES(:idSubCategoria_Accion, :Num_Accion, :id_Accion, :Desc_Accion);");
+        $stmt->bindValue(':idSubCategoria_Accion',$idsubcategoriaaccion);
+        $stmt->bindValue(':Num_Accion',$subcategoria->__GET('Num_Accion'));
+        $stmt->bindValue(':id_Accion',$subcategoria->__GET('id_Accion'));   
+        $stmt->bindValue(':Desc_Accion',$subcategoria->__GET('Desc_Accion'));  
+        
+        if (!$stmt->execute()) {
+            return 'error';
+        //print_r($stmt->errorInfo());
+        }else{
+            
+            return 'exito';
+        }
+         
+    }
+
+
 }

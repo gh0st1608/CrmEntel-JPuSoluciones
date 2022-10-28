@@ -163,6 +163,84 @@ class SubCategoriaController{
         echo  json_encode($SubCategorias);
     }
 
+    public function ConsultarSubCategoriaAccion()
+    { 
+  
+        $consulta = $this->model->ConsultarSubCategoriaAccion();
+        return $consulta;
+    }
+ 
+    public function ConsultarLogicaAccion()
+    {
+        
+        $consulta = $this->model->ConsultarLogicaAccion();
+        return $consulta;
+ 
+    }
+    public function ConsultarAccion()
+    {
+        
+        $consulta = $this->model->ConsultarAccion();
+        return $consulta;
+ 
+    }
+
+    public function ConsultarLogicaAccionDetalle($idsubcategoria)
+    {
+
+  
+        $consulta = $this->model->ConsultarLogicaAccionDetalle($idsubcategoria);
+        return $consulta;
+    }
+
+    public function EliminarAccion(){
+        $subcategoria = new SubCategoria();
+ 
+        $subcategoria->__SET('id_AccionDetalle',$_REQUEST['id_AccionDetalle']);       
+        $subcategoria->__SET('Eliminado',2);    
+        $eliminar_subcategoria = $this->model->EliminarAccion($subcategoria);  
+         
+   
+        if($eliminar_subcategoria=='error'){
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);            
+         }else{
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);         
+         }
+    }
+
+    public function ActualizaAccion(){
+        $subcategoria = new SubCategoria();
+        
+        $subcategoria->__SET('id_AccionDetalle',$_REQUEST['id_AccionDetalle']);  
+        $subcategoria->__SET('Num_Accion',$_REQUEST['Num_Accion']);    
+        $subcategoria->__SET('id_Accion',$_REQUEST['id_Accion']);  
+        $subcategoria->__SET('Desc_Accion',TRIM($_REQUEST['Desc_Accion']));     
+        $eliminar_subcategoria = $this->model->ActualizaAccion($subcategoria);  
+      
+   
+        if($eliminar_subcategoria=='error'){
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);            
+         }else{
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);         
+         }
+    }
+    public function RegistraAccion(){
+        $subcategoria = new SubCategoria();
+        $subcategoria->__SET('idSubCategoria',$_REQUEST['idSubCategoria']);  
+        $subcategoria->__SET('Desc_SubCategoria_Accion',$_REQUEST['Desc_SubCategoria_Accion']);   
+        $subcategoria->__SET('Num_Accion',$_REQUEST['Num_Accion']);    
+        $subcategoria->__SET('id_Accion',$_REQUEST['id_Accion']);  
+        $subcategoria->__SET('Desc_Accion',TRIM($_REQUEST['Desc_Accion']));  
+
+        $eliminar_subcategoria = $this->model->RegistraAccion($subcategoria);  
+      
+   
+        if($eliminar_subcategoria=='error'){
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);            
+         }else{
+            header('Location: index.php?c=SubCategoria&a=v_Actualizar&idSubCategoria='.$_REQUEST['idSubCategoria'].'&Categoria_id='.$_REQUEST['idCategoria']);         
+         }
+    }
 
 
 }
