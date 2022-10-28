@@ -190,6 +190,7 @@ class SubCategoriaModel
         from acciones_logica_detalle lod INNER JOIN subcategoria_accion sac 
         on lod.idSubCategoria_Accion =sac.idSubCategoria_Accion
         WHERE sac.Desc_SubCategoria_Accion ='Acciones' and sac.idSubCategoria = sa.idSubCategoria  
+        and lod.Estado = 1
         ) NroAcciones,
         ld.Num_Accion, al.Nom_Accion,  ld.Desc_Accion ,
         ld.id_AccionDetalle ,

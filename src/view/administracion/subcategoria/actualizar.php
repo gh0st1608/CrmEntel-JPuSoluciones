@@ -32,8 +32,6 @@ $LogicaAcciones = $this->ConsultarLogicaAccion();
 $LogicaAccionesdetalles = $this->ConsultarLogicaAccionDetalle($_REQUEST['idSubCategoria']);
 $id_subcategoria =$_REQUEST['idSubCategoria'];
 $id_categoria= $categoria-> idCategoria;
- print_r($consultaracciones);
-
  
 ?>
 <section class="content">
