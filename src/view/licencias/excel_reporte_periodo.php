@@ -15,6 +15,7 @@
                     <th>Usuario</th>
                     <th>Nombres y Apellidos</th>
                     <th>Estado Usuario</th>
+                    <th>Periodo</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
                     <th>Estado Licencia</th>

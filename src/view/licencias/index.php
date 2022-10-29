@@ -120,7 +120,8 @@ $periodos = $this->ListarPeriodos();
 
     function buscar(){
         var Periodo=$("#Periodo").val();
-        window.open("index.php?c=Licencias&a=Reporte_Excel_Licencia&Periodo="+Periodo);
+        console.log(Periodo);
+        window.open("index.php?c=Licencia&a=Reporte_Excel_Licencia&Periodo="+Periodo+"", '_blank');
         
     }
 
