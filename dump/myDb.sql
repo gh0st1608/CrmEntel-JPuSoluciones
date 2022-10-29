@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 29-10-2022 a las 17:03:58
+-- Tiempo de generación: 29-10-2022 a las 23:17:52
 -- Versión del servidor: 5.7.39
 -- Versión de PHP: 8.0.19
 
@@ -2535,7 +2535,9 @@ CREATE TABLE `equipo` (
 
 INSERT INTO `equipo` (`idEquipo`, `idUsuario`, `Equipo`, `idLog_Sesion`, `Ingresado_por`, `Fecha_Registro`, `Fecha_Modificacion`) VALUES
 (17, 1, 85364, 2419, NULL, '2022-10-17 05:39:26', '2022-10-27 03:25:40'),
-(18, 1, 90977, NULL, NULL, '2022-10-17 05:39:37', '2022-10-17 05:40:11');
+(18, 1, 90977, NULL, NULL, '2022-10-17 05:39:37', '2022-10-17 05:40:11'),
+(19, 1, 42419, 2421, NULL, '2022-10-29 17:55:39', NULL),
+(20, 1, 36137, 2424, NULL, '2022-10-29 19:31:44', '2022-10-29 22:48:14');
 
 -- --------------------------------------------------------
 
@@ -4603,7 +4605,7 @@ INSERT INTO `interfaz` (`idInterfaz`, `Nombre`, `Url`, `Nivel`, `Modulo_Principa
 (17, 'Visualizar Ficha', 'index.php?c=Ficha_Venta&a=v_Visualizar_Ficha', 2, 8, 8, 1, '', 1, 350, '2022-10-04 13:19:07', NULL, NULL, 0),
 (18, 'Permisos', '#', 2, 1, 1, 1, '', 1, 350, '2022-10-04 13:20:20', NULL, NULL, 0),
 (19, 'Licencias', '#', 1, NULL, 0, 2, '<i class=\"fa fa-credit-card\" aria-hidden=\"true\"></i>', 1, 350, '2022-10-04 13:21:05', NULL, '2022-10-05 16:05:37', 0),
-(20, 'Gestionar Licencia', '#', 2, 19, 19, 1, '', 1, 350, '2022-10-04 13:21:23', NULL, NULL, 0),
+(20, 'Gestionar Licencia', 'index.php?c=Licencia', 2, 19, 19, 1, '', 1, 350, '2022-10-04 13:21:23', NULL, '2022-10-29 17:56:52', 0),
 (21, 'Procesos', '#', 1, NULL, 0, 1, '<i class=\"fa fa-cogs\" aria-hidden=\"true\"></i>', 1, 350, '2022-10-04 13:28:43', NULL, '2022-10-05 15:54:41', 0),
 (22, 'Importar Clientes', '#', 2, 21, 21, 1, '', 1, 350, '2022-10-04 13:29:41', NULL, NULL, 0),
 (23, 'Actualizar Ficha', 'index.php?c=Ficha_Venta&a=v_Actualizar_Ficha', 2, 8, 8, 2, NULL, 1, 350, '2022-10-04 14:33:34', 0, '2022-10-04 14:34:40', 0);
@@ -4628,6 +4630,13 @@ CREATE TABLE `licencia` (
   `Eliminado` tinyint(1) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `licencia`
+--
+
+INSERT INTO `licencia` (`idLicencia`, `Usuario_id`, `Periodo`, `Fecha_Inicio`, `Fecha_Fin`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
+(1, 444, '202210', '2022-10-29', '2022-10-31', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -4646,22 +4655,6 @@ CREATE TABLE `log_sesion` (
   `Fecha_Cierre` timestamp NULL DEFAULT NULL,
   `IdEstadoKanBanDetalle` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `log_sesion`
---
-
-INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES
-(2410, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-20 02:13:58', '2022-10-20 02:14:02', 1),
-(2411, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-20 02:14:05', '2022-10-20 02:16:00', 1),
-(2412, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-20 02:16:03', '2022-10-20 02:18:41', 1),
-(2413, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-20 02:18:43', '2022-10-21 19:44:31', 1),
-(2414, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-22 02:05:27', '2022-10-27 02:29:24', 1),
-(2415, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-27 02:30:13', '2022-10-27 02:34:04', 1),
-(2416, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-27 02:42:42', '2022-10-27 02:44:35', 1),
-(2417, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-27 02:44:37', '2022-10-27 03:20:10', 1),
-(2418, '46789180', 'MHUAPAYAQ', 'No', '172.19.0.1', 'Windows', 'Other', '2022-10-27 03:20:13', '2022-10-27 03:25:26', 1),
-(2419, '46789180', 'MHUAPAYAQ', 'Si', '172.19.0.1', 'Windows', 'Other', '2022-10-27 03:25:40', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -4957,8 +4950,8 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Funcion`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
-(1, '33', '46789180', 'MIRIAM', 'YOLANDA', 'HUAPAYA', 'QUISPE', '1990-11-17', 'F', NULL, NULL, 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
-(2, '33', '73061637', 'ALBERTO', 'VALENTINO', 'HUAMANI', 'OBREGON', '1996-03-20', 'M', NULL, NULL, 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
+(1, '33', '46789180', 'MIRIAM', 'YOLANDA', 'HUAPAYA', 'QUISPE', '1990-11-17', 'F', NULL, 'erickmga123@gmail.com', 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, '2022-10-29 22:53:46', 0),
+(2, '33', '73061637', 'ALBERTO', 'VALENTINO', 'HUAMANI', 'OBREGON', '1996-03-20', 'M', NULL, 'egalindoa@uni.pe', 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, '2022-10-29 22:54:34', 0),
 (3, '33', '76535245', 'KAROLINE', 'CELIA', 'HILARIO', 'AVILES', '1997-10-08', 'F', NULL, NULL, 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (4, '33', '46545684', 'CARLOS', 'ALFREDO', 'HONORATTO', 'FLORES', '1990-05-10', 'M', NULL, NULL, 383, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (5, '33', '70881318', 'VIOLETA', 'JANETH', 'COBEÑAS', 'ACUÑA', '2000-01-05', 'F', '', '', 383, 0, 1, 0, '2022-09-30 14:35:57', 44, '2022-10-06 23:14:34', 0),
@@ -5287,9 +5280,9 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 (328, '33', '42873621', 'FERNANDO', 'ANATOLY', 'ENCINAS', 'ROMERO', '1984-12-15', 'M', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (329, '33', '45296840', 'DAMARIS', 'EVELYN', 'VENTURA', 'GARCIA', '1988-04-08', 'F', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (330, '33', '72853925', 'CARLOS', 'JEANPIER', 'CARREÑO', 'VICENTE', '1994-10-18', 'M', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, '2022-10-11 13:13:11', 0),
-(331, '33', '73180920', 'CLAUDIA', 'SOFIA', 'GONZALEZ', 'PLACIDO', '1994-01-18', 'F', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
-(332, '33', '71406832', 'EDUARDO', 'ANDRES', 'ARELLANO', 'MATHEUS', '1993-11-27', 'M', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0);
+(331, '33', '73180920', 'CLAUDIA', 'SOFIA', 'GONZALEZ', 'PLACIDO', '1994-01-18', 'F', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0);
 INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Apellido_Paterno`, `Apellido_Materno`, `Fecha_Nacimiento`, `Sexo`, `Celular`, `Correo`, `Cargo_id_SubCategoria`, `Funcion`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
+(332, '33', '71406832', 'EDUARDO', 'ANDRES', 'ARELLANO', 'MATHEUS', '1993-11-27', 'M', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (333, '33', '41403861', 'AGUSTIN', 'ALBERTO', 'ZENOZAIN', 'CALIXTO', '1982-05-09', 'M', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (334, '33', '73247752', 'IOLEXI', 'SARAHI', 'RUIZ', 'ZETA', '1997-10-16', 'F', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
 (335, '33', '72573607', 'MARIELA', 'VANESSA', 'COLQUE', 'PAREDES', '1993-09-03', 'F', NULL, NULL, 381, 0, 1, 0, '2022-09-30 14:35:57', NULL, NULL, 0),
@@ -5400,7 +5393,8 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 (440, '33', '74292142', 'LESLY', 'VIVIANA', 'BERMEJO', 'VASQUEZ', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:19:53', NULL, NULL, 0),
 (441, '33', '72714167', 'KATHERINE', 'DEL ROCIO', 'SIALER', 'RIVAS', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:13', NULL, NULL, 0),
 (442, '33', '75015815', 'JENNIFER', 'ALEJANDRA', 'RIVAS', 'OLIVA', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:30', NULL, NULL, 0),
-(443, '33', '73423631', 'KATHERINE', 'YESSENIA', 'MONTALVO', 'SANCHEZ', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0);
+(443, '33', '73423631', 'KATHERINE', 'YESSENIA', 'MONTALVO', 'SANCHEZ', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0),
+(444, '33', '51515151', 'test', 'test', 'test', 'test', NULL, 'N', NULL, NULL, NULL, 0, 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -8188,8 +8182,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Password_Digital`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
-(1, 1, 3, '46789180', 'MHUAPAYAQ', '9180', 1, 0, '2022-10-04 15:51:26', 23, '2022-10-28 19:47:59', 0),
-(2, 2, 3, '73061637', 'AHUAMANIO', NULL, 1, 0, '2022-10-04 15:51:27', NULL, NULL, 0),
+(1, 1, 1, '46789180', 'MHUAPAYAQ', '9180', 1, 0, '2022-10-04 15:51:26', 23, '2022-10-29 23:14:00', 0),
+(2, 2, 3, '73061637', 'AHUAMANIO', NULL, 1, 0, '2022-10-04 15:51:27', NULL, '2022-10-29 23:13:57', 0),
 (3, 3, 3, '76535245', 'KHILARIOA', NULL, 1, 0, '2022-10-04 15:51:28', NULL, NULL, 0),
 (4, 4, 3, '46545684', 'CHONORATTOF', NULL, 1, 0, '2022-10-04 15:51:29', NULL, NULL, 0),
 (5, 5, 3, '70881318', 'VCOBENASA', NULL, 1, 0, '2022-10-04 15:51:30', NULL, NULL, 0),
@@ -8630,7 +8624,8 @@ INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Passwor
 (440, 440, 4, '74292142', 'LBERMEJOV', NULL, 1, 0, '2022-10-13 17:19:53', NULL, NULL, 0),
 (441, 441, 4, '72714167', 'KSIALERR', NULL, 1, 0, '2022-10-13 17:20:13', NULL, NULL, 0),
 (442, 442, 4, '75015815', 'JRIVASO', NULL, 1, 0, '2022-10-13 17:20:30', NULL, NULL, 0),
-(443, 443, 4, '73423631', 'KMONTALVOS', NULL, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0);
+(443, 443, 4, '73423631', 'KMONTALVOS', NULL, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0),
+(444, 444, 3, '51515151', 'test', '5151', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
 
 --
 -- Índices para tablas volcadas
@@ -8790,7 +8785,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `ficha_venta`
@@ -8814,13 +8809,13 @@ ALTER TABLE `interfaz`
 -- AUTO_INCREMENT de la tabla `licencia`
 --
 ALTER TABLE `licencia`
-  MODIFY `idLicencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLicencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `log_sesion`
 --
 ALTER TABLE `log_sesion`
-  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2420;
+  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2435;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -8838,7 +8833,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=444;
+  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
 
 --
 -- AUTO_INCREMENT de la tabla `reporte_ficha_venta`
@@ -8862,7 +8857,7 @@ ALTER TABLE `subcategoria_accion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=444;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
 
 DELIMITER $$
 --
