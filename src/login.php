@@ -98,6 +98,8 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           <div class="form-group has-feedback">
             <label for="" class="text-danger"><?php echo $resultado; ?></label>
           </div>
+          <?php if ($_SESSION['intentoSesion'] == 3  ) { 
+                $_SESSION['intentoSesion'] = 0?>
           <!-- Modal INCIO -->
           <div id="recuperar_clave" class="row">
             <div class="col-md-12">
@@ -130,7 +132,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
             </div>
           </div>
           <!-- MODAL FIN-->
-          
+          <?php } ?>
           <div class="row">
             <div class="col-md-12">
               <button type="submit" class="btn btn-default btn-block btn-flat" name="btn-ingresar"><b><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciars Sesión</b></button>

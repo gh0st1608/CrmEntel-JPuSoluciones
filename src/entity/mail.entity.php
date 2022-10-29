@@ -19,6 +19,7 @@ class Mail
     private $bodyHtml;
 
 
+
     public function __GET($atributo){ 
 
       return $this->$atributo; 
@@ -31,4 +32,10 @@ class Mail
 
     }
 
+    public function __construct(){
+      $this->subject = 'Notificacion sobre la Recuperacion de Clave';
+      $this->bodyText = 'Las credenciales son: ';
+      $this->bodyHtml = '<h1>Mensaje</h1><p>Se envía su usuario y contraseña actual, de tener alguna observación por favor contactar al administrador del sistema. Gracias</p>';
+		}
+    
 }
