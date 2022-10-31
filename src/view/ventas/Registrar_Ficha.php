@@ -2574,38 +2574,124 @@
 
 		
 		/*FIN APLICAR LOGICA DE FILTROS*/
-
+		json_logica =  ConsultarSubCategoria(0,'',0,'') ;
+		localStorage.setItem("json_logica", JSON.stringify(json_logica) );
+		json_acciones = JSON.stringify(json_logica);
+		
+ 
+	 
 		$( ".filter_logica" ).change(function()
 		{
-			
-		 
+				
+			V_json_logica = localStorage.getItem("json_logica");	
+			A_json_logica = JSON.parse(V_json_logica);
 			id=$(this).attr('id');
 			
         	var idSubCategoria=$("#"+id).val();
         	
 			var Aplicar_Logica=$("#"+id+" option[value='"+idSubCategoria+"']").attr('aplicar_logica');
-		 
-			A_Acciones =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Accion') ;
-			A_Nombre =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Nombre') ;
-			A_ItemsFilter = ConsultarSubCategoria(idSubCategoria,'Acciones',0,'ItemsFilter') ;
-			A_Ocultar =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Ocultar');
-			A_NroRegistrosPermitidos =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'NroRegistrosPermitidos'); 
-			A_Mostrar =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Mostrar'); 
-			A_Nombre_Key =  ConsultarSubCategoria(idSubCategoria,'Acciones',0,'Nombre_Key'); 
- 
+
+  
+			A_sub_categoria = [];
+			j=0;
+			for ( i = 0; i < A_json_logica.length; i++) {
+				if (A_json_logica[i].idSubCategoria == idSubCategoria) {
+					A_sub_categoria[j]  = A_json_logica[i];
+					j=j+1;
+				}
+				 
+			}
 			 
 		 
-			 b =  ConsultarSubCategoria(idSubCategoria,'Acciones',1,'')   ;
-			  console.log(idSubCategoria);
-		 
-		      console.log( b[0].NroAcciones);
  
-			  console.log(A_Acciones.length);
-			  console.log(A_Nombre.length);
-			  console.log(A_ItemsFilter.length);
-			  console.log(A_Ocultar.length);
-			  console.log(A_NroRegistrosPermitidos.length);
-			  console.log(A_Nombre_Key.length);
+		 
+			A_sub_categorias = JSON.parse(JSON.stringify(A_sub_categoria));	
+ 
+			//
+			J_Accion = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				 
+				if (A_sub_categorias[i].Nom_Accion == "Accion" ) { 
+					J_Accion[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+	 
+			A_Acciones = JSON.parse(JSON.stringify(J_Accion));	
+			//
+			J_Nombre = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				if (A_sub_categorias[i].Nom_Accion == "Nombre" && A_sub_categorias[i].Acciones == "Acciones"   )  {
+					J_Nombre[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+			A_Nombre = JSON.parse(JSON.stringify(J_Nombre));	
+			//
+			J_ItemsFilter = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				if (A_sub_categorias[i].Nom_Accion == "ItemsFilter" &&  A_sub_categorias[i].Acciones == "Acciones") {
+					J_ItemsFilter[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+			A_ItemsFilter = JSON.parse(JSON.stringify(J_ItemsFilter));	
+			//
+			J_Ocultar = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				if (A_sub_categorias[i].Nom_Accion == "Ocultar"  &&  A_sub_categorias[i].Acciones == "Acciones") {
+					J_Ocultar[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+			A_Ocultar = JSON.parse(JSON.stringify(J_Ocultar));	
+			//
+			J_NroRegistrosPermitidos = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				if (A_sub_categorias[i].Nom_Accion == "NroRegistrosPermitidos"  &&  A_sub_categorias[i].Acciones == "Acciones") {
+					J_NroRegistrosPermitidos[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+			A_NroRegistrosPermitidos = JSON.parse(JSON.stringify(J_NroRegistrosPermitidos));	
+			//
+			J_Mostrar = [];
+			j=0;
+			for ( i = 0; i < A_sub_categorias.length; i++) {
+				if (A_sub_categorias[i].Nom_Accion == "Mostrar"  &&  A_sub_categorias[i].Acciones == "Acciones") {
+					J_Mostrar[j]  = A_sub_categorias[i];
+					j=j+1;
+				}
+				 
+			}
+			A_Mostrar = JSON.parse(JSON.stringify(J_Mostrar));	
+			//
+			J_Nombre_Key = [];
+			j=0;
+			for ( i = 0; i < A_sub_categoria.length; i++) {
+				if (A_sub_categoria[i].Nom_Accion == "Nombre_Key"  &&  A_sub_categorias[i].Acciones == "Acciones") {
+					J_Nombre_Key[j]  = A_sub_categoria[i];
+					j=j+1;
+				}
+				 
+			}
+			A_Nombre_Key = JSON.parse(JSON.stringify(J_Nombre_Key));	
+ 
+				 
+ 
+			
+			 b =  ConsultarSubCategoria(idSubCategoria,'Acciones',1,'')   ;
+ 
 			if(Aplicar_Logica==1){
 			 	//var NroIteraciones = LogicaRE[idSubCategoria]['NroAcciones'];  
 				 var NroIteraciones =  b[0].NroAcciones;
@@ -2617,7 +2703,7 @@
 					/*if(LogicaRE[idSubCategoria]['Acciones'][i]['Accion']=='MultiRegistro'){
 						$("#"+id).attr('NroRegistrosPermitidos', LogicaRE[idSubCategoria]['Acciones'][i]['NroRegistrosPermitidos']);
 					}*/
-					V_Accion ='';
+					V_Acciones ='';
 					V_Nombre ='';
 					V_ItemsFilter='';
 					V_Ocultar='';
