@@ -314,7 +314,7 @@ class Ficha_VentaModel
     public function ListarSupervisoresVenta()
     {
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT idPersona,CONCAT(persona.Primer_Nombre,' ',persona.Segundo_Nombre,' ',persona.Apellido_Paterno,' ',persona.Apellido_Materno) as NombreSupervisor,subcat.Nombre as Cargo FROM persona inner join SubCategoria as subcat on subcat.idSubCategoria=persona.Cargo_id_SubCategoria where Funcion=1 and persona.Estado=1 and persona.Eliminado=0 order by Cargo_id_SubCategoria,NombreSupervisor" );
+        $stmt = $this->bd->prepare("SELECT idPersona,CONCAT(persona.Primer_Nombre,' ',persona.Segundo_Nombre,' ',persona.Apellido_Paterno,' ',persona.Apellido_Materno) as NombreSupervisor,subcat.Nombre as Cargo FROM persona inner join subcategoria as subcat on subcat.idSubCategoria=persona.Cargo_id_SubCategoria where Funcion=1 and persona.Estado=1 and persona.Eliminado=0 order by Cargo_id_SubCategoria,NombreSupervisor" );
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
