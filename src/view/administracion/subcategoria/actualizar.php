@@ -79,43 +79,47 @@ $id_categoria= $categoria-> idCategoria;
 										 
 									<div class='box-header with-border'>
 									<?php if ($scatacciones['Desc_SubCategoria_Accion']  <> "NroAcciones") { ?>
+								 	<?php   $i =0; ?>
 									<?php foreach ($LogicaAccionesdetalles as $LogicaAccionesdetalle): ?> 
+										<?php   $i =$i+1; ?>
 										<?php     if ($LogicaAccionesdetalle['Acciones'] ==  $scatacciones['Desc_SubCategoria_Accion'] ) {  ?> 
 									 <table class="default">
-									 	<tr>
-										 <td><input type="number" name="Num_Accion" id="Num_Accion" value="<?php echo $LogicaAccionesdetalle['Num_Accion'] ;?>" placeholder=""  required /></td>	
-										 <td class="a_center">
-										 
-											<select  type="text" style="text-align:center" name="id_Accion" id="id_Accion" required >
-											<option text-align: center value="<?php echo $LogicaAccionesdetalle["id_Accion"]?>"><?php echo $LogicaAccionesdetalle["Nom_Accion"]?></option>
-	
-											<?php foreach ($LogicaAcciones as $LogicaAccion): ?> 
-											<option text-align: center value="<?php echo $LogicaAccion["idAccion"]?>"><?php echo $LogicaAccion["Nom_Accion"]?></option>
-											 
-											<?php endforeach; ?> 
-										 </td>	
-										 
-										 <td><input type="text" name="Desc_Accion" id="Desc_Accion" value="<?php echo $LogicaAccionesdetalle['Desc_Accion'] ;?>"  placeholder=""  required /></td>
-										
-										 <td class="a_center">                            		
-											 <a class="btn btn-primary btn-xs ActualizaAccion" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar Accion"  
-												sub-cat-id="<?php echo $id_subcategoria; ?>" 
-												cat-id="<?php echo $id_categoria; ?>" 
-												data-id="<?php echo $LogicaAccionesdetalle['id_AccionDetalle']; ?>" 
-											  > 	 
-										 		<i id="save" class="fa fa-floppy-o"></i>   
-											</a>
-										 </td>
-										 <td class="a_center">  
-											<a class="btn btn-danger btn-xs EliminarAccion" 
-												sub-cat-id="<?php echo $id_subcategoria; ?>" 
-												cat-id="<?php echo $id_categoria; ?>" 
-												data-id="<?php echo $LogicaAccionesdetalle['id_AccionDetalle']; ?>" 
-											  >
-										        <i class="fa fa-trash"></i> 
-											</a>
-										</td>
+									 	<tr> 	
+												<td><input action ="" method="post" type="number" name="Num_Accion3" id="Num_Accion<?php echo $i ;?>" value="<?php echo $LogicaAccionesdetalle['Num_Accion'] ;?>" placeholder=""  required /></td>	
+												<td class="a_center"> 
+													<select  type="text" style="text-align:center" name="id_Accion3" id="id_Accion<?php echo $i ;?>" required >
+														<option text-align: center value="<?php echo $LogicaAccionesdetalle["id_Accion"]?>"><?php echo $LogicaAccionesdetalle["Nom_Accion"]?></option>
+													<?php foreach ($LogicaAcciones as $LogicaAccion): ?> 
+														<option text-align: center value="<?php echo $LogicaAccion["idAccion"]?>"><?php echo $LogicaAccion["Nom_Accion"]?></option>
+													<?php endforeach; ?> 
+												</td>	
+												
+												<td><input type="text" name="Desc_Accion3" id="Desc_Accion<?php echo $i ;?>" value="<?php echo $LogicaAccionesdetalle['Desc_Accion'] ;?>"   /></td>
+												
+												<td class="a_center">                            		
+													<a class="btn btn-primary btn-xs ActualizaAccion" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar Accion"  
+														sub-cat-id="<?php echo $id_subcategoria; ?>" 
+														cat-id="<?php echo $id_categoria; ?>" 
+														id-accion-de= "<?php   echo $LogicaAccionesdetalle['id_AccionDetalle'] ; ?>"  	 
+														id-orden ="<?php   echo $i  ?>">		 
+														<i   class="fa fa-floppy-o"></i>   
+													</a> 
+												</td>
+												<td class="a_center">  
+													<a class="btn btn-danger btn-xs EliminarAccion" 
+														sub-cat-id="<?php echo $id_subcategoria; ?>" 
+														cat-id="<?php echo $id_categoria; ?>"
+														id-accion-de= "<?php   echo $LogicaAccionesdetalle['id_AccionDetalle'] ; ?>">
+															
+														
+														<i class="fa fa-trash"></i> 
+													</a>
+												</td>
+			 
 										</tr>
+
+
+
 										<?php $NroAcciones = $LogicaAccionesdetalle['NroAcciones'] ;  } ?> 		
 									</table>
 									<?php endforeach; ?> 
@@ -138,7 +142,7 @@ $id_categoria= $categoria-> idCategoria;
 							<tr>
 								<td class="a_center">
 										 
-									<select  type="text" style="text-align:center" name="Accion2" id="Accion2" required >
+									<select  type="text" style="text-align:center" name="Accion0" id="Accion0" required >
 									<option text-align: center value="0">-- Seleccionar Accion --</option>
 
 									<?php foreach ($consultaracciones as $consultaraccion): ?> 
@@ -146,10 +150,10 @@ $id_categoria= $categoria-> idCategoria;
 									<?php endforeach; ?> 
 							    </td>		
 										
-								<td><input type="number" name="Num_Accion2" id="Num_Accion2" value="0" placeholder=""  required /></td>	
+								<td><input type="number" name="Num_Accion0" id="Num_Accion0" value="0" placeholder=""  required /></td>	
 								<td class="a_center">
 								
-									<select  type="text" style="text-align:center" name="id_Accion2" id="id_Accion2" required >
+									<select  type="text" style="text-align:center" name="id_Accion0" id="id_Accion0" required >
 									<option text-align: center value="0">Seleccion</option>
 
 									<?php foreach ($LogicaAcciones as $LogicaAccion): ?> 
@@ -158,7 +162,7 @@ $id_categoria= $categoria-> idCategoria;
 									<?php endforeach; ?> 
 								</td>	
 								
-								<td><input type="text" name="Desc_Accion2" id="Desc_Accion2" value=""  placeholder=""  required /></td>
+								<td><input type="text" name="Desc_Accion0" id="Desc_Accion0" value=""  placeholder=""  required /></td>
 							
 								<td class="a_center">                            		
 									<a class="btn btn-primary btn-xs RegistrarAccion" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar Accion"  
@@ -231,18 +235,17 @@ $id_categoria= $categoria-> idCategoria;
 		});	
 	});
 
-
+ 
 	$(document).ready(function() {
+		
 		$(".EliminarAccion").click(function(event) {
 			idSubCategoria=$(this).attr('sub-cat-id'); 
-			idCategoria=$(this).attr('cat-id'); 
-			id_AccionDetalle=$(this).attr('data-id'); 
-		 
-
+			idCategoria=$(this).attr('cat-id');  
+			id_AccionDetalle = $(this).attr('id-accion-de');  
+	
  
-		 
 			bootbox.dialog({
-            message: "¿Estas seguro de eliminar a <b>"+$(this).attr('data-subcategoria')+"</b>?",
+            message: "¿Estas seguro de eliminar?",
             title: "Eliminar SubCategoria",
             buttons: {
                 main: {
@@ -264,21 +267,26 @@ $id_categoria= $categoria-> idCategoria;
             }
         });
 		});
+ 
 
 
 		$(".ActualizaAccion").click(function(event) {
 			idSubCategoria=$(this).attr('sub-cat-id'); 
-			idCategoria=$(this).attr('cat-id'); 
-			id_AccionDetalle=$(this).attr('data-id'); 
-			Num_Accion =$('#Num_Accion').val();
-			id_Accion =$('#id_Accion').val();
-			Desc_Accion =$('#Desc_Accion').val();
+			idCategoria=$(this).attr('cat-id');    
+			id_AccionDetalle = $(this).attr('id-accion-de');   
+			id_orden = $(this).attr('id-orden');  
+			console.log(id_orden  );
+			 
+			 
 
-		
-			
-		 
+			Num_Accion = $("#Num_Accion"+id_orden).val();
+			id_Accion = $("#id_Accion"+id_orden).val();
+			Desc_Accion = $("#Desc_Accion"+id_orden).val();
+
+ 
+
 			bootbox.dialog({
-            message: "¿Estas seguro de eliminar a <b>"+$(this).attr('data-subcategoria')+"</b>?",
+            message: "¿Estas seguro de Actualizar ?",
             title: "Actualizar Accion",
             buttons: {
                 main: {
@@ -304,21 +312,12 @@ $id_categoria= $categoria-> idCategoria;
 		$(".RegistrarAccion").click(function(event) {
 			idSubCategoria=$(this).attr('sub-cat-id'); 
 			idCategoria=$(this).attr('cat-id');  
-			Num_Accion =$('#Num_Accion2').val();
-			id_Accion =$('#id_Accion2').val();
-			Desc_Accion =$('#Desc_Accion2').val();
-			Desc_SubCategoria_Accion =$('#Accion2').val(); 
+			Num_Accion =$('#Num_Accion0').val();
+			id_Accion =$('#id_Accion0').val();
+			Desc_Accion =$('#Desc_Accion0').val();
+			Desc_SubCategoria_Accion =$('#Accion0').val(); 
 			
-
-			console.log(idSubCategoria);
-			console.log(idCategoria); 
-			console.log(Num_Accion);
-			console.log(id_Accion);
-			console.log(Desc_Accion);
-			console.log(Desc_SubCategoria_Accion);
  
-
-
 			bootbox.dialog({
             message: "¿Estas seguro de registrar una nueva accion?",
             title: "Registrar Accion",
