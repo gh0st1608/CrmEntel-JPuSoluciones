@@ -44,36 +44,36 @@
 						<div class="form-group col-md-6">
 					        <label>Tipo Documento</label>
 							<?php $subcategorias = $subcategoria->Consultar($idtipodocumento); ?>
-					        <input type="text" name="Tipo_Documento" value="<?php echo $subcategorias->Nombre; ?>" class="form-control" placeholder="" readonly  required />
+					        <input type="text" name="Tipo_Documento" id="Tipo_Documento" value="<?php echo $subcategorias->Nombre; ?>" class="form-control" placeholder="" readonly  required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Documento</label>
-					        <input type="text" name="Documento" value="<?php echo $persona->__GET('Documento'); ?>" class="form-control" placeholder="" readonly required />
+					        <input type="text" name="Documento" id="Documento" value="<?php echo $persona->__GET('Documento'); ?>" class="form-control" placeholder="" readonly required />
 					    </div> 
 					    <div class="form-group col-md-6">
 					        <label>Primer Nombre</label>
-					        <input type="text" name="Primer_Nombre" value="<?php echo $persona->__GET('Primer_Nombre'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Primer_Nombre" id="Primer_Nombre" value="<?php echo $persona->__GET('Primer_Nombre'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Segundo Nombre</label>
-					        <input type="text" name="Segundo_Nombre" value="<?php echo $persona->__GET('Segundo_Nombre'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Segundo_Nombre" id="Segundo_Nombre" value="<?php echo $persona->__GET('Segundo_Nombre'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 					    </div>					   
 					    <div class="form-group col-md-6">
 					        <label>Apellido Paterno</label>
-					        <input type="text" name="Apellido_Paterno" value="<?php echo $persona->__GET('Apellido_Paterno'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Apellido_Paterno" id="Apellido_Paterno" value="<?php echo $persona->__GET('Apellido_Paterno'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Apellido Materno</label>
-					        <input type="text" name="Apellido_Materno" value="<?php echo $persona->__GET('Apellido_Materno'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Apellido_Materno" id="Apellido_Materno" value="<?php echo $persona->__GET('Apellido_Materno'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 					    </div>
 						
 					    <div class="form-group col-md-6">
 					        <label>Fecha de Nacimiento</label>
-					        <input type="date" name="Fecha_Nacimiento" value="<?php echo $persona->__GET('Fecha_Nacimiento'); ?>" class="form-control" placeholder=""  required />
+					        <input type="date" name="Fecha_Nacimiento" id="Fecha_Nacimiento" value="<?php echo $persona->__GET('Fecha_Nacimiento'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Sexo</label>
-					        <select name="Sexo" id="Sexo" class="form-control" required >
+					        <select name="Sexo" id="Sexo" class="form-control" onchange="ValidarInputs()" required >
 							<option value="0">-- Seleccionar Genero--</option>
 								<?php foreach ($generos as $genero): ?>                
 									<option value="<?php echo $genero['Nombre']; ?>" <?php if($genero['Nombre']==$persona->__GET('Sexo')){ echo "selected";}?>><?php echo $genero['Nombre']; ?></option>                      
@@ -82,15 +82,15 @@
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Celular</label>
-					        <input type="text" name="Celular" value="<?php echo $persona->__GET('Celular'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Celular" id="Celular" value="<?php echo $persona->__GET('Celular'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()"  required />
 					    </div>
 						<div class="form-group col-md-6">
 					        <label>Correo</label>
-					        <input type="text" name="Correo" value="<?php echo $persona->__GET('Correo'); ?>" class="form-control" placeholder=""  required />
+					        <input type="text" name="Correo" id="Correo" value="<?php echo $persona->__GET('Correo'); ?>" class="form-control" placeholder="" onchange="ValidarInputs()" required />
 					    </div>
 					    <div class="form-group col-md-6">
 					        <label>Cargo</label>
-					        <select name="Cargo_id_SubCategoria" id="Cargo_id_SubCategoria" class="form-control" >
+					        <select name="Cargo_id_SubCategoria" id="Cargo_id_SubCategoria" class="form-control" onchange="ValidarInputs()" >
 									<option value="0">-- Seleccionar Cargo--</option> 
 									<?php foreach ($cargos as $cargo): ?>                
 										<option value="<?php echo $cargo['idSubCategoria']; ?>" <?php if($cargo['idSubCategoria']==$persona->__GET('Cargo_id_SubCategoria')){ echo "selected";}?>><?php echo $cargo['Nombre']; ?></option>                      
@@ -102,12 +102,12 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="1" <?php if ($persona->__GET('Estado')==1) { echo 'checked';  } ?>> SI
+								<input type="radio" name="Estado" id="Estado" value="1" onchange="ValidarInputs()" <?php if ($persona->__GET('Estado')==1) { echo 'checked';  } ?>> SI
 							</label>
 						</div>
 						<div class="form-group col-md-6">
 							<label class="radio-inline">
-								<input type="radio" name="Estado" id="Estado" value="0" <?php if ($persona->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
+								<input type="radio" name="Estado" id="Estado" value="0" onchange="ValidarInputs()" <?php if ($persona->__GET('Estado')==0) { echo 'checked'; }  ?>> NO
 							</label>	
 						</div>
 						<div class="form-group col-md-12">
@@ -115,19 +115,19 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label class="radio-inline">
-								<input type="radio" name="Funcion" id="Funcion" value="1" <?php if ($persona->__GET('Funcion')==1) { echo 'checked';  } ?>> SI
+								<input type="radio" name="Funcion" id="Funcion" value="1" onchange="ValidarInputs()" <?php if ($persona->__GET('Funcion')==1) { echo 'checked';  } ?>> SI
 							</label>
 						</div>
 						<div class="form-group col-md-6">
 							<label class="radio-inline">
-								<input type="radio" name="Funcion" id="Funcion" value="0" <?php if ($persona->__GET('Funcion')==0) { echo 'checked'; }  ?>> NO
+								<input type="radio" name="Funcion" id="Funcion" value="0" onchange="ValidarInputs()" <?php if ($persona->__GET('Funcion')==0) { echo 'checked'; }  ?>> NO
 							</label>	
 						</div>
 
 					  	<div class="col-md-12" style="margin-top:2em;">
 					    <div class="col-md-6 col-sm-12">
 					        
-					        <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
+					        <button type="button" name="btnSubmit" id="btnSubmit" disabled class="btn btn-primary col-md-12 col-xs-12"><i class="fa fa-save"></i> Actualizar</button>    
 					      
 					    </div>
 					     <div class="col-md-6 col-sm-12">
@@ -142,6 +142,26 @@
 </section><!-- /.content -->
 <script>
 	
+	function ValidarInputs() 
+	{
+		//var Documento = $('#Documento').val();
+		//var Tipo_Documento = $('#Tipo_Documento').val();
+		var Primer_Nombre = $('#Primer_Nombre').val();
+		var Apellido_Paterno = $('#Apellido_Paterno').val();
+		var Apellido_Materno = $('#Apellido_Materno').val();
+		var Fecha_Nacimiento = $('#Fecha_Nacimiento').val();
+		var Celular = $('#Celular').val();
+		var Correo = $('#Correo').val();
+		var Cargo_id_SubCategoria = $('#Cargo_id_SubCategoria').val();
+		var Estado = $('#Estado').val();
+		var Funcion = $('#Funcion').val();
+
+		if (Primer_Nombre && Apellido_Paterno && Apellido_Materno && Fecha_Nacimiento && Celular && Correo && Cargo_id_SubCategoria && Estado && Funcion)
+		{
+			$('#btnSubmit').attr("disabled", false);
+		}
+	}
+
 	$(document).ready(function() {
 		
 		
@@ -167,6 +187,9 @@
 	            }
         	}); 
 		});
+
+
+
 
 	});	
 </script>

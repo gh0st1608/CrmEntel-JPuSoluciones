@@ -52,14 +52,14 @@ class PersonaModel
         }
     }
 
-    public function consultar_codigo(Persona $persona)
+    public function ConsultarxDocumento(Persona $persona)
     {       
 
 
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT * FROM persona WHERE codigo=:codigo and eliminado=0 and activo=1;" );
+        $stmt = $this->bd->prepare("SELECT * FROM persona WHERE Documento=:Documento and eliminado=0 and activo=1;" );
 
-         $stmt->bindValue(':codigo', $persona->__GET('codigo'));
+         $stmt->bindValue(':Documento', $persona->__GET('Documento'));
 
         if (!$stmt->execute()) {
             return 'error';

@@ -5,14 +5,12 @@ require_once 'controller/usuario.controller.php';
 $User = new UsuarioController();
 
 
-
     //verificamos si el usuario no esta logueado
     if(!$User->Verificar_InicioSesion()){
         //si no esta logueado redireccionamo al formulario login.php
-
-        if(isset($_REQUEST['Correo']))
+        if(isset($_SESSION['LoginInicial']))
         {
-            $User->RecuperarClave(isset($_REQUEST['Correo']));
+            $User->RecuperarClave(isset($_SESSION['LoginInicial']));
         }else
         {
             $User->redirect('login.php');

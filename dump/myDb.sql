@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 03-11-2022 a las 02:50:08
+-- Tiempo de generación: 05-11-2022 a las 11:01:27
 -- Versión del servidor: 5.7.39
 -- Versión de PHP: 8.0.19
 
@@ -2532,7 +2532,9 @@ INSERT INTO `equipo` (`idEquipo`, `idUsuario`, `Equipo`, `idLog_Sesion`, `Ingres
 (17, 1, 85364, 2419, NULL, '2022-10-17 05:39:26', '2022-10-27 03:25:40'),
 (18, 1, 90977, NULL, NULL, '2022-10-17 05:39:37', '2022-10-17 05:40:11'),
 (19, 1, 42419, 2421, NULL, '2022-10-29 17:55:39', NULL),
-(20, 1, 36137, 2438, NULL, '2022-10-29 19:31:44', '2022-10-31 06:50:48');
+(20, 1, 36137, 2453, NULL, '2022-10-29 19:31:44', '2022-11-05 08:35:55'),
+(21, 445, 36137, 2440, NULL, '2022-11-05 00:41:46', NULL),
+(22, 445, 19380, 2442, NULL, '2022-11-05 00:43:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -4642,7 +4644,8 @@ CREATE TABLE `licencia` (
 --
 
 INSERT INTO `licencia` (`idLicencia`, `Usuario_id`, `Periodo`, `Fecha_Inicio`, `Fecha_Fin`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
-(1, 444, '202210', '2022-10-29', '2022-10-31', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
+(1, 444, '202210', '2022-10-29', '2022-10-31', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0),
+(2, 445, '202211', '2022-11-04', '2022-11-04', 0, 1, '2022-11-05 00:40:42', NULL, '2022-11-05 00:45:56', 0);
 
 -- --------------------------------------------------------
 
@@ -4668,10 +4671,9 @@ CREATE TABLE `log_sesion` (
 --
 
 INSERT INTO `log_sesion` (`idLog_Sesion`, `Login`, `Password`, `LoggedIn`, `IP`, `Dispositivo`, `NombreDispositivo`, `Fecha_Registro`, `Fecha_Cierre`, `IdEstadoKanBanDetalle`) VALUES
-(2438, '46789180', 'MHUAPAYAQ', 'Si', '172.20.0.1', 'Windows', 'Other', '2022-10-31 06:50:48', NULL, 1),
-(2437, '46789180', 'MHUAPAYAQ', 'No', '172.20.0.1', 'Windows', 'Other', '2022-10-31 06:49:38', '2022-10-31 06:49:58', 1),
-(2436, '46789180', 'MHUAPAYAQ', 'No', '172.20.0.1', 'Windows', 'Other', '2022-10-31 06:48:48', '2022-10-31 06:49:21', 1),
-(2435, '46789180', 'MHUAPAYAQ', 'No', '172.20.0.1', 'Windows', 'Other', '2022-10-31 05:48:25', '2022-10-31 06:47:50', 1);
+(2482, '46789180', 'adasdas', 'No', '172.20.0.1', 'Windows', 'Other', '2022-11-05 10:22:13', NULL, 2),
+(2481, '46789180', 'asddasas', 'No', '172.20.0.1', 'Windows', 'Other', '2022-11-05 10:12:34', NULL, 2),
+(2480, '46789180', 'dasdsdas', 'No', '172.20.0.1', 'Windows', 'Other', '2022-11-05 10:12:19', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -5411,7 +5413,8 @@ INSERT INTO `persona` (`idPersona`, `Tipo_Documento`, `Documento`, `Primer_Nombr
 (441, '33', '72714167', 'KATHERINE', 'DEL ROCIO', 'SIALER', 'RIVAS', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:13', NULL, NULL, 0),
 (442, '33', '75015815', 'JENNIFER', 'ALEJANDRA', 'RIVAS', 'OLIVA', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:30', NULL, NULL, 0),
 (443, '33', '73423631', 'KATHERINE', 'YESSENIA', 'MONTALVO', 'SANCHEZ', NULL, '', NULL, NULL, NULL, 0, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0),
-(444, '33', '51515151', 'test', 'test', 'test', 'test', NULL, 'N', NULL, NULL, NULL, 0, 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
+(444, '33', '51515151', 'test', 'test', 'test', 'test', NULL, 'N', NULL, NULL, NULL, 0, 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0),
+(445, 'DNI', '15123456', 'TEST2', 'TEST2', 'TEST2', 'TEST2', '1994-02-15', 'M', '923928966', 'egalindoa@uni.pe', 379, 0, 1, 1, '2022-11-05 00:40:42', 1, '2022-11-05 00:53:37', 0);
 
 -- --------------------------------------------------------
 
@@ -8199,7 +8202,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Password`, `Password_Digital`, `Estado`, `Ingresado_por`, `Fecha_Registro`, `Modificado_por`, `Fecha_Modificacion`, `Eliminado`) VALUES
-(1, 1, 2, '46789180', 'MHUAPAYAQ', '9180', 1, 0, '2022-10-04 15:51:26', 23, '2022-10-31 06:50:19', 0),
+(1, 1, 1, '46789180', 'MHUAPAYAQ', '9180', 2, 0, '2022-10-04 15:51:26', 23, '2022-11-05 10:22:13', 0),
 (2, 2, 3, '73061637', 'AHUAMANIO', NULL, 1, 0, '2022-10-04 15:51:27', NULL, '2022-10-29 23:13:57', 0),
 (3, 3, 3, '76535245', 'KHILARIOA', NULL, 1, 0, '2022-10-04 15:51:28', NULL, NULL, 0),
 (4, 4, 3, '46545684', 'CHONORATTOF', NULL, 1, 0, '2022-10-04 15:51:29', NULL, NULL, 0),
@@ -8642,7 +8645,8 @@ INSERT INTO `usuario` (`idUsuario`, `Persona_id`, `Perfil_id`, `Login`, `Passwor
 (441, 441, 4, '72714167', 'KSIALERR', NULL, 1, 0, '2022-10-13 17:20:13', NULL, NULL, 0),
 (442, 442, 4, '75015815', 'JRIVASO', NULL, 1, 0, '2022-10-13 17:20:30', NULL, NULL, 0),
 (443, 443, 4, '73423631', 'KMONTALVOS', NULL, 1, 0, '2022-10-13 17:20:48', NULL, NULL, 0),
-(444, 444, 3, '51515151', 'test', '5151', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0);
+(444, 444, 3, '51515151', 'test', '5151', 1, 1, '2022-10-29 17:57:26', NULL, NULL, 0),
+(445, 445, 3, '15123456', 'TEST2', '3456', 1, 1, '2022-11-05 00:40:42', 1, '2022-11-05 09:28:11', 0);
 
 --
 -- Índices para tablas volcadas
@@ -8802,7 +8806,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idEquipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `ficha_venta`
@@ -8826,13 +8830,13 @@ ALTER TABLE `interfaz`
 -- AUTO_INCREMENT de la tabla `licencia`
 --
 ALTER TABLE `licencia`
-  MODIFY `idLicencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idLicencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `log_sesion`
 --
 ALTER TABLE `log_sesion`
-  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2439;
+  MODIFY `idLog_Sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2483;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -8850,7 +8854,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
+  MODIFY `idPersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=446;
 
 --
 -- AUTO_INCREMENT de la tabla `reporte_ficha_venta`
@@ -8874,7 +8878,7 @@ ALTER TABLE `subcategoria_accion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=446;
 
 DELIMITER $$
 --

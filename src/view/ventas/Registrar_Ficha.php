@@ -1,14 +1,7 @@
 
 <?php 
 
-	$json = file_get_contents('categoria.json',true);
-	$s =json_encode($json); 
-	$decode =json_decode($s,true); 
-	//$ha = fopen("./view/ventas/gaaa.json","w+");
- 	//fwrite($ha,$s );
-
-	// $haa = fopen("./view/ventas/gaaa2.json","w+");
-	// fwrite($haa,$sa );
+ 
  
  	
 
@@ -1421,10 +1414,14 @@
 				/*Fin 5.- Registro para Entrega*/
 				$("#RE_Tipo_Despacho").val(data['RE_Tipo_Despacho']).trigger('change');
 				setTimeout(function () {
+				 
 				 $("#RE_Rango_Entrega_Despacho").val(data['RE_Rango_Entrega_Despacho']).trigger('change');
+				 
 				 setTimeout(function () {
+					 
 				 	$("#RE_Rango_Horario_Despacho").val(data['RE_Rango_Horario_Despacho']).trigger('change');
 				 		setTimeout(function () {
+							 
 					 		$("#RE_Tienda_Retiro").val(data['RE_Tienda_Retiro']);
 							$("#RE_Retail_Retiro").val(data['RE_Retail_Retiro']);
 							$("#RE_Venta_Entrega_para").val(data['RE_Venta_Entrega_para']);
@@ -1447,7 +1444,7 @@
 						}, 2000);
 					}, 2000);
 
-				}, 1000);
+				}, 4000);
 
 
 				
@@ -2793,7 +2790,7 @@
 	
 					}
 					
-
+					 
 				
 
 
@@ -2805,7 +2802,8 @@
 						ListarSubCategoriasxIds(LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'],LogicaRE[idSubCategoria]['Acciones'][i]['ItemsFilter'])
 					}
 					*/
- 
+				 
+
 					if(V_Acciones=='Filtrar_Items'){
 						ListarSubCategoriasxIds(V_Nombre,V_ItemsFilter  );
 					}

@@ -123,20 +123,18 @@ class UsuarioController{
 
     public function RecuperarClave()
     {
+ 
 
-        if(isset($_REQUEST['Correo']))
-        {    
-            print_r($_REQUEST['Correo']);
-            $consulta = $this->model->RecuperarClave(strval($_REQUEST['Correo']));
             $mail = new Mail();
-            $mail->__SET('user',$consulta[0]['Login']);
+            $mail->__SET('user',$_REQUEST['Usuario']);
+            //Obtener password y correo
+            $consulta = $this->model->RecuperarClave($_REQUEST['Usuario']);
             $mail->__SET('password',$consulta[0]['Password']);
-            $mail->__SET('correo_recuperacion',$_REQUEST['Correo']);
+            $mail->__SET('correo_recuperacion',$consulta[0]['Correo']);
+            print_r($mail);
+            //$mail->__SET('correo_recuperacion',$_REQUEST['Correo']);
             $mailing = new MailController;
             $respuesta = $mailing->EnviarCorreo($mail);
-        }else{
-            echo 'error al enviar el correo';
-        }  
     }  
 
     public function Actualizar(){
@@ -285,6 +283,7 @@ class UsuarioController{
             }  
             else  
             {
+                
                 return FALSE;
             } 
         }else 
@@ -292,7 +291,6 @@ class UsuarioController{
             $LoggedIn = "No";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
             $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion);    
- 
             //Usuario o Contraseña Incorrecta
  
             return FALSE;

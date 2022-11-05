@@ -528,7 +528,6 @@ class Ficha_VentaController  extends IncludesController{
             if ($permiso['acceder']==1) {
                 $BloquearAct="";
             }else{
-                
                 $BloquearAct="hidden";
             }
 

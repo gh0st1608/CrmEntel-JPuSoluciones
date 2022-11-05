@@ -59,12 +59,12 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
 
     }
 
-    public function RecuperarClave($correo){
+    public function RecuperarClave($Usuario){
 
         $this->bd = new Conexion();
-        $stmt = $this->bd->prepare("SELECT usuario.Login as Login, usuario.Password as Password FROM usuario 
-        INNER JOIN persona ON persona.idPersona = usuario.Persona_id WHERE persona.Correo = :Correo;");
-        $stmt->bindValue(':Correo', $correo);
+        $stmt = $this->bd->prepare("SELECT  usuario.Login as Login, usuario.Password as Password, persona.Correo as Correo FROM usuario 
+        INNER JOIN persona ON persona.idPersona = usuario.Persona_id WHERE persona.Documento LIKE :Login;");
+        $stmt->bindValue(':Login', $Usuario);
         $stmt->execute();
 
         if (!$stmt->execute()) {

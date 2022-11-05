@@ -41,11 +41,11 @@ class PersonaController{
         $personas = $this->model->Listar_Sin_Usuario();
         return $personas;
     }
-    public function consultar_codigo($codigo)
+    public function ConsultarxDocumento($documento)
     {   
         $persona = new Persona();
-        $persona->__SET('codigo',$codigo);
-        $consulta = $this->model->consultar_codigo($persona);
+        $persona->__SET('Documento',$documento);
+        $consulta = $this->model->ConsultarxDocumento($documento);
         return $consulta;
     }
 

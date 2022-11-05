@@ -82,7 +82,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
         <p class="login-box-msg">Ingresa tus datos</p>
         <form action="" method="post">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" name="Usuario" placeholder="Usuario">
+            <input type="text" class="form-control" name="Usuario" id="Usuario" placeholder="Usuario">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
@@ -116,13 +116,16 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                 </div>
                 <div class="modal-body">
                 <div class="form-group has-feedback">
+                <label> Desea enviar sus credenciales a su correo ?</label>
+                </div>
+                <!--<div class="form-group has-feedback">
                   <input type="input" class="form-control" id="Correo" name="Correo" placeholder="Ingresar Correo">
                   <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   <span id="error" style="display:none;color:red;">Correo no válido</span>
                   <span id="success" style="display:none;color:green;">Correo válido</span>
-                </div>
+                </div>-->
                 <div class="form-group has-feedback">
-                  <button type="submit" class="btn btn-default btn-block btn-flat" id="EnviarMail" name="EnviarMail" disabled><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
+                  <button type="submit" class="btn btn-default btn-block btn-flat" id="EnviarMail" name="EnviarMail"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
                 </div>
                 </div>
                 <div class="modal-footer">
@@ -149,13 +152,22 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
    
     <script>
+      // get the text
+      
+      //var Usuario = $('#Usuario').val();
+
+      // set the item in localStorage
+      //localStorage.setItem('Usuario', Usuario);
+
+      // alert the value to check if we got it
+      //alert(localStorage.getItem('Usuario'));
       /* Llamando al fichero CargarContenido.php */
       $('.openBtn2').on('click',function(){
             $('#myModal').modal({show:true});
       });
      
 
-    
+      /*
       $('#Correo').on('keyup', function() {
           var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
           var buttonDisabled = $('#Correo').val().length == 0 ;
@@ -170,13 +182,13 @@ if($usuario->Verificar_InicioSesion()==TRUE)
               $('#EnviarMail').attr("disabled", buttonDisabled);
           }
       })
-      
+      */
       $('#EnviarMail').click(function(){
-          var Correo= $("#Correo").val();
+          
           $.ajax({
               type: "GET",
               url: 'index.php?c=Usuario',
-              data: 'Correo='+Correo,
+              data: 'Usuario='+Usuario,
               beforeSend: function () { },
                 success:  function (response) {        	
                     alert(response);
