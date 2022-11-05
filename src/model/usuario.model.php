@@ -281,6 +281,7 @@ INNER JOIN persona on persona.idPersona=usuario.Persona_id
             //almacenamos los registros obtenidos de la consulta
             $usuario_registrado=$stmt->fetch(PDO::FETCH_ASSOC);
             //verificamos si se han encontrado registros
+           
             if($stmt->rowCount() > 0)
             {
                 //si se an encontrado registros comparamos las contraseñas

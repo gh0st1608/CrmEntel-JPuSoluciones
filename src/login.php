@@ -3,6 +3,7 @@ require_once 'controller/usuario.controller.php';
 
 $usuario = new UsuarioController();
 $resultado="";
+ 
 
 
 if( !isset($_COOKIE['Equipo'])) {
@@ -27,8 +28,9 @@ if($usuario->Verificar_InicioSesion()==TRUE)
     $Password = $_POST['Password'];
     $Digital = $_POST['Digital'];
     
-    
+    setcookie("Usuario",  $Login,time()+999999999); 
     $estado_usuario =  $usuario->Iniciar_Sesion($Login,$Password,$Digital);
+    
     //verificar si existe el usuario y la contraseña
    
     
@@ -125,7 +127,7 @@ if($usuario->Verificar_InicioSesion()==TRUE)
                   <span id="success" style="display:none;color:green;">Correo válido</span>
                 </div>-->
                 <div class="form-group has-feedback">
-                  <button type="submit" class="btn btn-default btn-block btn-flat" id="EnviarMail" name="EnviarMail"><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
+                  <button type="submit" class="btn btn-default btn-block btn-flat" id="EnviarMail" name="EnviarMail" value=<?php echo $_COOKIE['Usuario'] ?>><b><i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar Mail de Recuperación</b></button>
                 </div>
                 </div>
                 <div class="modal-footer">
@@ -183,14 +185,17 @@ if($usuario->Verificar_InicioSesion()==TRUE)
           }
       })
       */
+     
       $('#EnviarMail').click(function(){
-          
+        Usuario =$('#EnviarMail').val();
+        console.log(Usuario);
           $.ajax({
               type: "GET",
               url: 'index.php?c=Usuario',
               data: 'Usuario='+Usuario,
               beforeSend: function () { },
-                success:  function (response) {        	
+                success:  function (response) {   
+                   console.log(Usuario);     	
                     alert(response);
                 },
                 error:function(){

@@ -223,6 +223,7 @@ class UsuarioController{
 
     public function Iniciar_Sesion($Login,$Password,$Password_Digital)
     {   
+     
         // log inicio session
         $loginiciosesion = new LogSesion();
         //asignamos valores a las variables de la entidad
@@ -283,11 +284,14 @@ class UsuarioController{
             }  
             else  
             {
-                
+               
                 return FALSE;
             } 
         }else 
         {   
+           
+            
+            
             $LoggedIn = "No";
             $loginiciosesion->__SET('loggedin',$LoggedIn); 
             $log_inicio_session = $this->model->AddLogInicioSession($loginiciosesion);    
