@@ -195,8 +195,6 @@ if($usuario->Verificar_InicioSesion()==TRUE)
               data: 'Usuario='+Usuario,
               beforeSend: function () { },
                 success:  function (response) {   
-                   console.log(Usuario);     	
-                    alert(response);
                 },
                 error:function(){
                 	alert("error");
