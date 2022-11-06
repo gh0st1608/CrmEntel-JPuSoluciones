@@ -3,6 +3,7 @@ DROP PROCEDURE IF EXISTS `ProcInsertInterfaz`;
 DROP PROCEDURE IF EXISTS `ProcInsertLogSesion`;
 DROP PROCEDURE IF EXISTS `ProcUpdateInterfaz`;
 DROP PROCEDURE IF EXISTS `ProcUpdateLogSesion`;
+DROP PROCEDURE IF EXISTS `ProcSelectAccionesSubCategoria`;
 
 DELIMITER $$
 CREATE PROCEDURE `ProcInsertInterfaz`(IN `P_Nombre` VARCHAR(50), IN `P_Url` VARCHAR(255), IN `P_Nivel` INT, IN `P_Modulo_principal` INT, IN `P_IdInterfaz_superior` INT, IN `P_Orden` INT, IN `P_Icono` VARCHAR(30), IN `P_Estado` INT, IN `P_Ingresado_por` INT, IN `P_Fecha_Registro` DATE, IN `P_Modificado_por` INT, IN `P_Fecha_Modificacion` DATE)
@@ -255,3 +256,25 @@ CREATE EVENT borrar_sesiones_activas
 ON SCHEDULE EVERY 1 DAY STARTS '2022-10-12 01:35:00'
 ENDS '2024-01-01 01:35:00'
 DO update log_sesion set LoggedIn='No',Fecha_Cierre = sysdate() WHERE  Fecha_Cierre IS NULL;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`%` PROCEDURE `ProcSelectAccionesSubCategoria`(IN `P_idSubCategoria` INT, IN `P_NomVariable` VARCHAR(100), IN `P_NumAccion` INT, IN `P_Nom_Accion` VARCHAR(200))
+select sa.idSubCategoria, sa.Desc_SubCategoria_Accion Acciones ,
+(
+select  max(Num_Accion) 
+from acciones_logica_detalle lod INNER JOIN subcategoria_accion sac 
+on lod.idSubCategoria_Accion =sac.idSubCategoria_Accion
+ WHERE sac.idSubCategoria = sa.idSubCategoria and lod.idSubCategoria_Accion = sa.idSubCategoria_Accion 
+  AND   lod.Estado =1
+) NroAcciones,
+ld.Num_Accion, al.Nom_Accion,  ld.Desc_Accion 
+from acciones_logica_detalle ld inner join acciones_logica al
+on ld.id_Accion = al.idAccion inner join subcategoria_accion sa 
+on sa.idSubCategoria_Accion = ld.idSubCategoria_Accion
+WHERE sa.idSubCategoria= CASE WHEN P_idSubCategoria = 0 THEN sa.idSubCategoria ELSE P_idSubCategoria END 
+AND sa.Desc_SubCategoria_Accion= CASE WHEN P_NomVariable = '' THEN sa.Desc_SubCategoria_Accion ELSE P_NomVariable END 
+AND ld.Num_Accion = CASE WHEN P_NumAccion = 0 THEN ld.Num_Accion ELSE P_NumAccion END
+AND al.Nom_Accion = CASE WHEN P_Nom_Accion ='' THEN al.Nom_Accion  ELSE P_Nom_Accion END
+AND ld.Estado = 1
+order by sa.Desc_SubCategoria_Accion ASC , ld.Num_Accion ASC, al.idAccion ASC$$
+DELIMITER ;
