@@ -69,7 +69,7 @@ $id_categoria= $categoria-> idCategoria;
 					        </select>
 					    </div>
 					 
-						<div class='box-header with-border'>
+						<div class='box-body'>
 							<h3 class='box-title'><i class="fa fa-rocket"></i> Acciones</h3>
 							<div>
 							<div class="form-group col-md-5"> 
@@ -77,7 +77,7 @@ $id_categoria= $categoria-> idCategoria;
 								 <label><?php  echo $scatacciones['Desc_SubCategoria_Accion']  ; ?></label>
 									<div>
 										 
-									<div class='box-header with-border'>
+									<div class='box-body'>
 									<?php if ($scatacciones['Desc_SubCategoria_Accion']  <> "NroAcciones") { ?>
 								 	<?php   $i =0; ?>
 									<?php foreach ($LogicaAccionesdetalles as $LogicaAccionesdetalle): ?> 

@@ -2683,15 +2683,12 @@
 				 
 			}
 			A_Nombre_Key = JSON.parse(JSON.stringify(J_Nombre_Key));	
- 
-				 
- 
-			
-			 b =  ConsultarSubCategoria(idSubCategoria,'Acciones',1,'')   ;
+		 
  
 			if(Aplicar_Logica==1){
 			 	//var NroIteraciones = LogicaRE[idSubCategoria]['NroAcciones'];  
-				 var NroIteraciones =  b[0].NroAcciones;
+				 var NroIteraciones =  A_sub_categorias[0].NroAcciones;
+ 
 				var SubCat_LogicaRE=LogicaRE[idSubCategoria]['Acciones'];
 				 
 				 
@@ -2789,11 +2786,7 @@
 						}
 	
 					}
-					
 					 
-				
-
-
 					if(V_Acciones =='MultiRegistro'){
 						$("#"+id).attr('NroRegistrosPermitidos', V_NroRegistrosPermitidos );
 					}
@@ -2846,21 +2839,35 @@
 					 	 var NombreKey=V_Nombre_Key;
 						// var NombreFiltroSuperior=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre'];
 						// var NombreKey=LogicaRE[idSubCategoria]['Acciones'][i]['Nombre_Key'];
-						 
  
-						  idSubCategoriaSuperior=$("#"+NombreFiltroSuperior).val();
-					 
-						 var SubCat_Logica=LogicaRE[idSubCategoriaSuperior][NombreKey];
-						 A_SubCat_Logica  =  ConsultarSubCategoria(idSubCategoriaSuperior,NombreKey,0,''); 
-						
-						 for (var j = 0; j <  A_SubCat_Logica.length; j++) {
-							if(idSubCategoria == Number(A_SubCat_Logica[j].Num_Accion) ) {
+ 
+						idSubCategoriaSuperior=$("#"+NombreFiltroSuperior).val();
+				 
 
-								if  (A_SubCat_Logica[j].Nom_Accion == 'Nombre'){
-									V_SubCat_Logica_Nombre = A_SubCat_Logica[j].Desc_Accion;
+						A_categoria = [];
+						j=0;
+						for ( i = 0; i < A_json_logica.length; i++) {
+							if (A_json_logica[i].idSubCategoria == idSubCategoriaSuperior &&  A_json_logica[i].Acciones == NombreKey ) {
+								A_categoria[j]  = A_json_logica[i];
+								j=j+1;
+							}
+							
+						}
+						
+						A_categorias = JSON.parse(JSON.stringify(A_categoria));	
+				 
+
+						 var SubCat_Logica=LogicaRE[idSubCategoriaSuperior][NombreKey];
+	 
+
+						 for (var j = 0; j <  A_categorias.length; j++) {
+							if(idSubCategoria == Number(A_categorias[j].Num_Accion) ) {
+
+								if  (A_categorias[j].Nom_Accion == 'Nombre'){
+									V_SubCat_Logica_Nombre = A_categorias[j].Desc_Accion;
 								}	
-								if  (A_SubCat_Logica[j].Nom_Accion == 'ItemsFilter'){
-									V_SubCat_Logica_ItemsFilter = A_SubCat_Logica[j].Desc_Accion;
+								if  (A_categorias[j].Nom_Accion == 'ItemsFilter'){
+									V_SubCat_Logica_ItemsFilter = A_categorias[j].Desc_Accion;
 								}
 						   }
 						}

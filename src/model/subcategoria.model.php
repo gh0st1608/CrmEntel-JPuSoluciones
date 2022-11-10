@@ -272,7 +272,7 @@ class SubCategoriaModel
         }
         else {
          
-            $stmt = $this->bd->prepare("INSERT INTO  subcategoria_accion ( idSubCategoria , Desc_SubCategoria_Accion) VALUES (:Desc_SubCategoria_Accion , :idSubCategoria)");
+            $stmt = $this->bd->prepare("INSERT INTO  subcategoria_accion ( idSubCategoria , Desc_SubCategoria_Accion) VALUES (:idSubCategoria,:Desc_SubCategoria_Accion)");
             $stmt->bindValue(':Desc_SubCategoria_Accion',$subcategoria->__GET('Desc_SubCategoria_Accion'));  
             $stmt->bindValue(':idSubCategoria',$subcategoria->__GET('idSubCategoria'));  
             $stmt->execute();
